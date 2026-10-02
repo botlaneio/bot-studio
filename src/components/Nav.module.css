@@ -1,9 +1,31 @@
-/* 60px tall on the artboard. */
+/* Fixed over the page. Transparent at load, so the hero photo runs up behind
+   it; once the visitor scrolls it takes a semi-transparent black. */
 .nav {
-  position: relative;
-  z-index: 5;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  height: calc(var(--nav-h) + env(safe-area-inset-top, 0px));
+  padding-top: env(safe-area-inset-top, 0px);
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition:
+    background-color 0.35s ease,
+    border-color 0.35s ease,
+    backdrop-filter 0.35s ease;
+}
+
+.scrolled {
+  background: rgba(0, 0, 0, 0.55);
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+}
+
+.inner {
   max-width: 1600px;
-  height: calc(60 * var(--u));
+  height: 100%;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -13,11 +35,11 @@
   letter-spacing: 0.02em;
 }
 
-.nav a {
+.inner a {
   transition: color 0.2s ease;
 }
 
-.nav a:hover {
+.inner a:hover {
   color: var(--accent);
 }
 
@@ -38,8 +60,7 @@
 }
 
 @media (max-width: 899px) {
-  .nav {
-    height: 56px;
+  .inner {
     padding: 0 16px;
     font-size: 12px;
   }

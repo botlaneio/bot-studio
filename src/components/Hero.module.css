@@ -9,9 +9,10 @@
   margin: 0 auto;
 }
 
+/* Runs up behind the fixed nav, which is transparent at the top of the page. */
 .bg {
   position: absolute;
-  inset: 0;
+  inset: calc(-1 * var(--nav-h)) 0 0;
   overflow: hidden;
   background: #0b0d10 url("/hero.jpg") center 42% / cover no-repeat;
 }

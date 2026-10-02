@@ -14,6 +14,8 @@
   /* The Figma artboard is 1280px wide. Desktop layouts size and place things
      as "artboard px × --u", so the page scales as one piece up to 1600px. */
   --u: calc(min(100vw, 1600px) / 1280);
+  /* The fixed nav's height; the page is padded by it so the hero starts below. */
+  --nav-h: calc(60 * var(--u));
   color-scheme: dark;
 }
 
@@ -27,6 +29,15 @@ html,
 body {
   background: var(--bg);
   color: var(--ink);
+}
+
+/* In-page links land below the fixed nav, not under it. */
+html {
+  scroll-padding-top: var(--nav-h);
+}
+
+main {
+  padding-top: var(--nav-h);
 }
 
 body {
@@ -50,6 +61,7 @@ a:focus-visible {
 @media (max-width: 899px) {
   :root {
     --u: 1px;
+    --nav-h: 56px;
   }
 }
 

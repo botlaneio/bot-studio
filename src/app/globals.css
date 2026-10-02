@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+/* Brand tokens. The accent is the Studios blue; the rest are the template's
+   black-and-white surfaces. */
+:root {
+  --bg: #000000;
+  --ink: #ffffff;
+  --ink-dim: rgba(255, 255, 255, 0.55);
+  --accent: #0077e6;
+  --scrim: rgba(0, 0, 0, 0.36);
+  --rule: rgba(255, 255, 255, 0.35);
+  --display: var(--font-figtree), "Helvetica Neue", Arial, sans-serif;
+  --mono: var(--font-fragment-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+  /* The Figma artboard is 1280px wide. Desktop layouts size and place things
+     as "artboard px × --u", so the page scales as one piece up to 1600px. */
+  --u: calc(min(100vw, 1600px) / 1280);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-accent: var(--accent);
+  --font-display: var(--display);
+  --font-mono: var(--mono);
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+body {
+  margin: 0;
+  font-family: var(--display);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+@media (max-width: 899px) {
+  :root {
+    --u: 1px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

@@ -1,0 +1,52 @@
+import type { Metadata } from "next";
+import { Figtree, Fragment_Mono } from "next/font/google";
+import "./globals.css";
+
+const figtree = Figtree({
+  variable: "--font-figtree",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const fragmentMono = Fragment_Mono({
+  variable: "--font-fragment-mono",
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+});
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://botlane.studios";
+
+const TITLE = "Botlane Studios — Ultra-premium websites";
+const DESCRIPTION =
+  "Botlane Studios designs and builds ultra-premium websites for brands that care about craft, clarity and performance. A BotLane LLC studio.";
+
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  title: TITLE,
+  description: DESCRIPTION,
+  applicationName: "Botlane Studios",
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
+  openGraph: {
+    type: "website",
+    siteName: "Botlane Studios",
+    title: TITLE,
+    description: DESCRIPTION,
+    url: SITE_URL,
+  },
+};
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  return (
+    <html lang="en" className={`${figtree.variable} ${fragmentMono.variable}`}>
+      <body>{children}</body>
+    </html>
+  );
+}

@@ -1,0 +1,54 @@
+/* 60px tall on the artboard. */
+.nav {
+  position: relative;
+  z-index: 5;
+  max-width: 1600px;
+  height: calc(60 * var(--u));
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  padding: 0 calc(20 * var(--u));
+  font: 400 calc(14 * var(--u)) / 1 var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.nav a {
+  transition: color 0.2s ease;
+}
+
+.nav a:hover {
+  color: var(--accent);
+}
+
+.logo img {
+  display: block;
+  height: calc(24 * var(--u));
+  width: auto;
+}
+
+.links {
+  display: flex;
+  gap: calc(32 * var(--u));
+  margin-left: calc(108 * var(--u));
+}
+
+.contact {
+  margin-left: auto;
+}
+
+@media (max-width: 899px) {
+  .nav {
+    height: 56px;
+    padding: 0 16px;
+    font-size: 12px;
+  }
+
+  .logo img {
+    height: 20px;
+  }
+
+  .links {
+    display: none;
+  }
+}

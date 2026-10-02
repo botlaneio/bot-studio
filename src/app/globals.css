@@ -154,6 +154,14 @@ a:focus-visible {
   }
 }
 
+/* Portrait tablets (iPad Pro and similar): sized to their own width rather
+   than shrunk from the 1280 desktop artboard. */
+@media (max-width: 1366px) and (min-width: 900px) and (orientation: portrait) {
+  :root {
+    --u: calc(100vw / 1032);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

@@ -70,3 +70,12 @@
     border-radius: 10px;
   }
 }
+
+/* Portrait screens: a 16:9 frame centred in a tall screen leaves a band of
+   black above it as it scrolls in. Pin the frame itself, centred, instead. */
+@media (orientation: portrait) {
+  .pin {
+    height: auto;
+    top: max(var(--nav-h), calc(50svh - (100vw - 40 * var(--u)) * 9 / 32));
+  }
+}

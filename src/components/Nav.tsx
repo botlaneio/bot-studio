@@ -6,12 +6,42 @@ import styles from "./Nav.module.css";
 
 /** The six areas from the template's "What we do best" section. */
 const CAPABILITIES = [
-  { tag: "Foundation", title: "Brand Identity", line: "Names, marks and visual systems" },
-  { tag: "Growth", title: "Strategy", line: "Positioning and the roadmap to launch" },
-  { tag: "Creative", title: "Design & Innovation", line: "Interfaces, motion and 3D" },
-  { tag: "Smart AI", title: "AI Systems", line: "Assistants and automations built in" },
-  { tag: "Discoverable", title: "SEO", line: "Found by the people you want" },
-  { tag: "Build", title: "Development", line: "Fast, accessible, production sites" },
+  {
+    tag: "Foundation",
+    title: "Brand Identity",
+    line: "Names, marks and visual systems",
+    detail: "A name, a mark and the system around them, so every page, post and pitch looks like the same company.",
+  },
+  {
+    tag: "Growth",
+    title: "Strategy",
+    line: "Positioning and the roadmap to launch",
+    detail: "Who it's for, what makes it different and what ships first, agreed before a pixel is drawn.",
+  },
+  {
+    tag: "Creative",
+    title: "Design & Innovation",
+    line: "Interfaces, motion and 3D",
+    detail: "Interfaces with a point of view: considered type, motion that explains, and 3D where it earns its place.",
+  },
+  {
+    tag: "Smart AI",
+    title: "AI Systems",
+    line: "Assistants and automations built in",
+    detail: "Assistants, search and automations wired into the site, so it answers questions and does the busywork.",
+  },
+  {
+    tag: "Discoverable",
+    title: "SEO",
+    line: "Found by the people you want",
+    detail: "Clean structure, fast pages and content shaped for search, so the right people find you first.",
+  },
+  {
+    tag: "Build",
+    title: "Development",
+    line: "Fast, accessible, production sites",
+    detail: "Production code on a modern stack, fast on every device, accessible, and easy for your team to run.",
+  },
 ];
 
 const LINKS = [
@@ -27,6 +57,7 @@ const LINKS = [
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState(0);
   const closeTimer = useRef(0);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -98,22 +129,50 @@ export function Nav() {
             </button>
 
             <div id="capabilities-menu" className={styles.panel}>
-              <ul className={styles.grid}>
-                {CAPABILITIES.map((item, i) => (
-                  <li key={item.title} style={{ ["--i" as string]: i }}>
-                    <a href="#capabilities" className={`${styles.item} arrowHost`} onClick={() => setOpen(false)}>
-                      <span className={styles.tag}>
-                        {`// ${String(i + 1).padStart(2, "0")} ${item.tag}`}
-                      </span>
-                      <span className={styles.itemTitle}>
-                        {item.title}
+              <div className={styles.sheet}>
+                <ul className={styles.list}>
+                  {CAPABILITIES.map((item, i) => (
+                    <li key={item.title} style={{ ["--i" as string]: i }}>
+                      <a
+                        href="#capabilities"
+                        className={`${styles.item} arrowHost`}
+                        data-active={active === i || undefined}
+                        onMouseEnter={() => setActive(i)}
+                        onFocus={() => setActive(i)}
+                        onClick={() => setOpen(false)}
+                      >
+                        <span className={styles.num}>{String(i + 1).padStart(2, "0")}</span>
+                        <span className={styles.itemText}>
+                          <span className={styles.itemTitle}>{item.title}</span>
+                          <span className={styles.itemLine}>{item.line}</span>
+                        </span>
                         <Arrow className={styles.itemArrow} />
-                      </span>
-                      <span className={styles.itemLine}>{item.line}</span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* Follows the hovered item. Decorative: the list carries the content. */}
+                <div className={styles.preview} aria-hidden="true">
+                  <div className={styles.previewGlow} />
+                  {CAPABILITIES.map((item, i) => (
+                    <div key={item.title} className={styles.slide} data-active={active === i || undefined}>
+                      <span className={styles.previewTag}>{`// ${item.tag}`}</span>
+                      <span className={styles.bigNum}>{String(i + 1).padStart(2, "0")}</span>
+                      <p className={styles.previewTitle}>{item.title}</p>
+                      <p className={styles.previewDetail}>{item.detail}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className={styles.foot}>
+                  <span>Not sure where to start?</span>
+                  <a href="#contact" className={`${styles.footLink} arrowHost`} onClick={() => setOpen(false)}>
+                    Book a call
+                    <Arrow className={styles.footArrow} />
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
 

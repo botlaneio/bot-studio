@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import { Arrow } from "./motion/Arrow";
 import { Scramble } from "./motion/Scramble";
 import { SheridanClock } from "./SheridanClock";
+import { ShowreelVideo } from "./ShowreelVideo";
 import styles from "./Hero.module.css";
 
 /** Side ticks, at their artboard y positions. */
@@ -90,7 +91,7 @@ export function Hero() {
             <span>\\2026</span>
           </div>
           <div className={styles.reelVideo}>
-            <video src="/botlane-intro.mp4" poster="/botlane-intro-poster.jpg" autoPlay muted loop playsInline preload="auto" />
+            <ShowreelVideo src="/botlane-intro.mp4" poster="/botlane-intro-poster.jpg" />
           </div>
           <div className={styles.reelCap}>Meet botlane.io ↗</div>
         </a>

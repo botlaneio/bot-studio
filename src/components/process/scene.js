@@ -170,6 +170,8 @@ function cameraAt(p) {
 const FLASH_AT = 0.86
 // When the real button takes over from the 3D one.
 const CTA_AT = 0.95
+// Scroll, in screen heights, that holds the finished page at the end.
+const HOLD = 0.8
 
 /**
  * Mounts the scene. Returns a cleanup function.
@@ -570,8 +572,10 @@ export function mountProcessScene({ track: wrapEl, mount, flash, images, onCta }
     let current = target
     const readScroll = () => {
         if (isCanvas) return
+        // The last HOLD screen-heights of the track are a pause: the finished
+        // page (and the real button over it) stays pinned before moving on.
         const r = wrapEl.getBoundingClientRect()
-        const total = r.height - window.innerHeight
+        const total = r.height - window.innerHeight - HOLD * window.innerHeight
         target = total > 0 ? clamp(-r.top / total) : 0
     }
     readScroll()

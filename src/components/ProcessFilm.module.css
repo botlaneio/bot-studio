@@ -1,10 +1,11 @@
 /* The section is the scroll track: its extra height is how far the visitor
-   scrolls to play the scene through. The pinned stage stays on screen while
-   they do. Its colour is the scene's own fog colour, so distant grid lines
+   scrolls to play the scene through, plus a pause of 80vh at the end that
+   holds the finished page (scene.js, HOLD). The pinned stage stays on
+   screen while they do. Its colour is the scene's own fog colour, so distant grid lines
    fade into the page rather than ending. */
 .section {
   position: relative;
-  height: 320vh;
+  height: 400vh;
   background: #f6f9fb;
   color: #0a0a0a;
 }
@@ -203,7 +204,7 @@
 /* On phones a shorter track keeps the scroll from feeling endless. */
 @media (max-width: 899px) {
   .section {
-    height: 240vh;
+    height: 320vh;
   }
 
   .labelRow {

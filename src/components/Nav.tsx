@@ -1,15 +1,16 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Arrow } from "./motion/Arrow";
 import { lockScroll } from "./motion/SmoothScroll";
-import { CAPABILITIES } from "./capabilities";
+import { CAPABILITIES, capabilityHref } from "./capabilities";
 import styles from "./Nav.module.css";
 
-
 const LINKS = [
-  { href: "#about", label: "About Us" },
-  { href: "#pricing", label: "Pricing" },
+  { href: "/about", label: "About Us" },
+  { href: "/pricing", label: "Pricing" },
   { href: "#contact", label: "Contact" },
 ];
 
@@ -26,6 +27,16 @@ export function Nav() {
   const [mobileCaps, setMobileCaps] = useState(false);
   const closeTimer = useRef(0);
   const menuRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+  const [shownPath, setShownPath] = useState(pathname);
+
+  // A new page closes any open menu (adjusted during render, not in an effect).
+  if (pathname !== shownPath) {
+    setShownPath(pathname);
+    setOpen(false);
+    setMobileOpen(false);
+    setMobileCaps(false);
+  }
 
   useEffect(() => {
     // Light over sections marked data-nav-theme="light" (the white film
@@ -44,7 +55,9 @@ export function Nav() {
     update();
     window.addEventListener("scroll", update, { passive: true });
     return () => window.removeEventListener("scroll", update);
-  }, []);
+  }, [pathname]);
+
+
 
   useEffect(() => {
     if (!open) return;
@@ -100,15 +113,15 @@ export function Nav() {
       <div className={styles.inner}>
         {/* The logo SVG carries its own shutter-flash animation, so it stays an
             <img>. A dark-lettered copy fades in over light sections. */}
-        <a className={styles.logo} href="#top" aria-label="Botlane Studios home">
+        <Link className={styles.logo} href="/" aria-label="Botlane Studios home">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/logo.svg" alt="Botlane Studios" width={897} height={100} />
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img className={styles.logoDark} src="/logo-dark.svg" alt="" width={897} height={100} />
-        </a>
+        </Link>
 
         <nav className={styles.links} aria-label="Main">
-          <a href="#craft">Studio</a>
+          <Link href="/">Studio</Link>
 
           <div
             ref={menuRef}
@@ -139,8 +152,8 @@ export function Nav() {
                 <ul className={styles.list}>
                   {CAPABILITIES.map((item, i) => (
                     <li key={item.title} style={{ ["--i" as string]: i }}>
-                      <a
-                        href="#capabilities"
+                      <Link
+                        href={capabilityHref(item.slug)}
                         className={`${styles.item} arrowHost`}
                         data-active={active === i || undefined}
                         onMouseEnter={() => setActive(i)}
@@ -153,7 +166,7 @@ export function Nav() {
                           <span className={styles.itemLine}>{item.line}</span>
                         </span>
                         <Arrow className={styles.itemArrow} />
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -183,9 +196,9 @@ export function Nav() {
           </div>
 
           {LINKS.map((link) => (
-            <a key={link.href} href={link.href}>
+            <Link key={link.href} href={link.href}>
               {link.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -215,9 +228,9 @@ export function Nav() {
         <nav className={styles.mobileInner} aria-label="Main">
           <ul className={styles.mobileList}>
             <li style={{ ["--i" as string]: 0 }}>
-              <a href="#craft" onClick={closeMobile}>
+              <Link href="/" onClick={closeMobile}>
                 Studio
-              </a>
+              </Link>
             </li>
             <li style={{ ["--i" as string]: 1 }}>
               <button
@@ -236,13 +249,13 @@ export function Nav() {
                 <ul>
                   {CAPABILITIES.map((item, i) => (
                     <li key={item.title}>
-                      <a href="#capabilities" onClick={closeMobile} tabIndex={mobileCaps ? 0 : -1}>
+                      <Link href={capabilityHref(item.slug)} onClick={closeMobile} tabIndex={mobileCaps ? 0 : -1}>
                         <span className={styles.mobileCapNum}>{String(i + 1).padStart(2, "0")}</span>
                         <span>
                           <span className={styles.mobileCapTitle}>{item.title}</span>
                           <span className={styles.mobileCapLine}>{item.line}</span>
                         </span>
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -250,9 +263,9 @@ export function Nav() {
             </li>
             {LINKS.map((link, i) => (
               <li key={link.href} style={{ ["--i" as string]: i + 2 }}>
-                <a href={link.href} onClick={closeMobile}>
+                <Link href={link.href} onClick={closeMobile}>
                   {link.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

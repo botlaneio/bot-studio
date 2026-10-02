@@ -1,18 +1,24 @@
 "use client";
 
+import Link from "next/link";
 import { useRef, useState, type CSSProperties } from "react";
-import { CAPABILITIES } from "./capabilities";
+import { CAPABILITIES, capabilityHref } from "./capabilities";
 import { Arrow } from "./motion/Arrow";
 import { ChatModal } from "./process/ChatModal";
 import { SheridanClock } from "./SheridanClock";
 import styles from "./Footer.module.css";
 
 const SITE = [
-  { href: "#craft", label: "Studio" },
-  { href: "#process", label: "How we build" },
-  { href: "#capabilities", label: "Capabilities" },
-  { href: "#about", label: "About us" },
-  { href: "#pricing", label: "Pricing" },
+  { href: "/", label: "Studio" },
+  { href: "/#process", label: "How we build" },
+  { href: "/capabilities", label: "Capabilities" },
+  { href: "/about", label: "About us" },
+  { href: "/pricing", label: "Pricing" },
+];
+
+const LEGAL = [
+  { href: "/privacy", label: "Privacy" },
+  { href: "/terms", label: "Terms" },
 ];
 
 const WHATSAPP = `https://wa.me/13072185715?text=${encodeURIComponent("Hi Botlane Studios, I'd like to talk about a project.")}`;
@@ -94,9 +100,9 @@ export function Footer() {
           <ul>
             {SITE.map((l) => (
               <li key={l.href}>
-                <a className={styles.link} href={l.href}>
+                <Link className={styles.link} href={l.href}>
                   {l.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
@@ -107,9 +113,9 @@ export function Footer() {
           <ul>
             {CAPABILITIES.map((c) => (
               <li key={c.title}>
-                <a className={styles.link} href="#capabilities">
+                <Link className={styles.link} href={capabilityHref(c.slug)}>
                   {c.title}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
@@ -160,10 +166,17 @@ export function Footer() {
 
       {/* ---------- Bottom bar ---------- */}
       <div className={styles.bar}>
-        <span>© {new Date().getFullYear()} BotLane LLC</span>
-        <a className={styles.link} href="https://botlane.io" target="_blank" rel="noopener">
-          Part of botLane ↗
-        </a>
+        <span>© {new Date().getFullYear()} BotLane LLC. All rights reserved.</span>
+        <span className={styles.barLinks}>
+          {LEGAL.map((l) => (
+            <Link key={l.href} className={styles.link} href={l.href}>
+              {l.label}
+            </Link>
+          ))}
+          <a className={styles.link} href="https://botlane.io" target="_blank" rel="noopener">
+            Part of botLane ↗
+          </a>
+        </span>
         <a className={`${styles.top} arrowHost`} href="#top">
           Back to top
           <Arrow className={styles.topArrow} />

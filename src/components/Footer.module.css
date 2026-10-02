@@ -325,6 +325,11 @@
   color: var(--ink-dim);
 }
 
+.barLinks {
+  display: flex;
+  gap: calc(28 * var(--u));
+}
+
 .top {
   display: inline-flex;
   align-items: center;
@@ -413,6 +418,10 @@
 
   .top {
     margin-left: auto;
+  }
+
+  .barLinks {
+    gap: 18px;
   }
 
   .mark {

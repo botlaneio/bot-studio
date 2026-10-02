@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Figtree, Fragment_Mono } from "next/font/google";
 import "./globals.css";
+import { Footer } from "@/components/Footer";
 import { RevealObserver } from "@/components/motion/RevealObserver";
+import { Nav } from "@/components/Nav";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
 
 const figtree = Figtree({
@@ -18,7 +20,7 @@ const fragmentMono = Fragment_Mono({
   display: "swap",
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://botlane.studios";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://botlane.tech";
 
 const TITLE = "Botlane Studios — Ultra-premium websites";
 const DESCRIPTION =
@@ -26,7 +28,7 @@ const DESCRIPTION =
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: TITLE,
+  title: { default: TITLE, template: "%s — Botlane Studios" },
   description: DESCRIPTION,
   applicationName: "Botlane Studios",
   icons: {
@@ -56,7 +58,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <SmoothScroll />
         <RevealObserver />
+        {/* "Back to top" lands here on every page. */}
+        <div id="top" />
+        <Nav />
         {children}
+        <Footer />
       </body>
     </html>
   );

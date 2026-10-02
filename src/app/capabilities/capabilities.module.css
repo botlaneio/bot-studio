@@ -1,0 +1,150 @@
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Number and tag, then the area, then what it includes. A blue rule draws
+   across the top of a row on hover. */
+.row {
+  position: relative;
+  display: grid;
+  grid-template-columns: calc(170 * var(--u)) 1fr calc(330 * var(--u));
+  gap: calc(40 * var(--u));
+  padding: calc(44 * var(--u)) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  scroll-margin-top: calc(var(--nav-h) + 24px);
+}
+
+.row::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -1px;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s var(--ease-out);
+}
+
+.row:hover::before,
+.row:target::before {
+  transform: scaleX(1);
+}
+
+.meta {
+  display: grid;
+  align-content: start;
+  gap: calc(10 * var(--u));
+}
+
+.num {
+  font: 500 calc(56 * var(--u)) / 0.9 var(--display);
+  letter-spacing: -0.04em;
+  color: rgba(255, 255, 255, 0.16);
+  transition: color 0.4s ease;
+}
+
+.row:hover .num,
+.row:target .num {
+  color: var(--accent);
+}
+
+.tag {
+  font: 400 calc(11 * var(--u)) / 1 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.title {
+  margin: 0;
+  font: 500 calc(44 * var(--u)) / 1.05 var(--display);
+  letter-spacing: -0.035em;
+}
+
+.detail {
+  max-width: calc(520 * var(--u));
+  margin: calc(16 * var(--u)) 0 0;
+  font: 400 calc(17 * var(--u)) / 1.6 var(--display);
+  color: rgba(255, 255, 255, 0.74);
+}
+
+.includes ul {
+  display: grid;
+  gap: calc(10 * var(--u));
+  margin: calc(16 * var(--u)) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.includes li {
+  display: flex;
+  align-items: baseline;
+  gap: calc(12 * var(--u));
+  font: 400 calc(15 * var(--u)) / 1.4 var(--display);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.includes li::before {
+  content: "";
+  flex: none;
+  width: calc(6 * var(--u));
+  height: calc(6 * var(--u));
+  border-radius: 1px;
+  background: var(--accent);
+  transform: translateY(-2px) rotate(45deg);
+}
+
+@media (max-width: 899px) {
+  .row {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 32px 0;
+  }
+
+  .meta {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+  }
+
+  .num {
+    font-size: 36px;
+  }
+
+  .tag {
+    font-size: 11px;
+  }
+
+  .title {
+    font-size: 30px;
+  }
+
+  .detail {
+    font-size: 16px;
+  }
+
+  .includes li {
+    gap: 10px;
+    font-size: 15px;
+  }
+
+  .includes li::before {
+    width: 5px;
+    height: 5px;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1100px) {
+  .row {
+    grid-template-columns: calc(120 * var(--u)) 1fr;
+  }
+
+  .includes {
+    grid-column: 2;
+  }
+}

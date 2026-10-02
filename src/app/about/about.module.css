@@ -1,0 +1,206 @@
+.band {
+  width: calc(1280 * var(--u) - 80 * var(--u));
+  max-width: calc(100% - 40px);
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 18px;
+  aspect-ratio: 21 / 8;
+}
+
+.bandImage {
+  width: 100%;
+  height: 100%;
+  background: url("/craft/tile-2.jpg") center / cover no-repeat;
+  transform: scale(1.06);
+  transition: transform 1.6s var(--ease-out);
+}
+
+.band[data-shown] .bandImage {
+  transform: none;
+}
+
+.spaced {
+  margin-top: calc(22 * var(--u)) !important;
+}
+
+.inline {
+  color: #5fb0ff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.headRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: calc(30 * var(--u));
+}
+
+.more {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: calc(10 * var(--u));
+  font: 400 calc(13 * var(--u)) / 1 var(--mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.moreArrow {
+  width: calc(15 * var(--u));
+  height: calc(15 * var(--u));
+  color: var(--accent);
+}
+
+/* Steps on a line, each with a blue tick on top. */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: calc(28 * var(--u));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.step {
+  position: relative;
+  padding-top: calc(26 * var(--u));
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.step::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: calc(48 * var(--u));
+  height: 2px;
+  background: var(--accent);
+}
+
+.stepNum {
+  font: 400 calc(12 * var(--u)) / 1 var(--mono);
+  letter-spacing: 0.06em;
+  color: var(--accent);
+}
+
+.stepTitle {
+  margin: calc(14 * var(--u)) 0 calc(10 * var(--u));
+  font: 500 calc(24 * var(--u)) / 1.15 var(--display);
+  letter-spacing: -0.02em;
+}
+
+.stepText {
+  margin: 0;
+  font: 400 calc(15 * var(--u)) / 1.55 var(--display);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.where {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: calc(30 * var(--u));
+  padding: calc(40 * var(--u));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  background:
+    radial-gradient(60% 120% at 100% 0%, rgba(0, 119, 230, 0.25), rgba(0, 119, 230, 0) 70%),
+    #0a0b0d;
+}
+
+.whereTitle {
+  margin: calc(16 * var(--u)) 0 calc(8 * var(--u));
+  font: 500 calc(44 * var(--u)) / 1.05 var(--display);
+  letter-spacing: -0.035em;
+}
+
+.whereText {
+  margin: 0;
+  font: 400 calc(17 * var(--u)) / 1.5 var(--display);
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.clockBox {
+  display: grid;
+  justify-items: end;
+  gap: calc(12 * var(--u));
+}
+
+.clock {
+  font: 500 calc(56 * var(--u)) / 1 var(--mono);
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 899px) {
+  .band {
+    max-width: calc(100% - 40px);
+    aspect-ratio: 4 / 3;
+    border-radius: 12px;
+  }
+
+  .spaced {
+    margin-top: 16px !important;
+  }
+
+  .headRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .more {
+    font-size: 12px;
+  }
+
+  .steps {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .step {
+    padding-top: 18px;
+  }
+
+  .stepNum {
+    font-size: 11px;
+  }
+
+  .stepTitle {
+    font-size: 21px;
+  }
+
+  .stepText {
+    font-size: 15px;
+  }
+
+  .where {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px;
+  }
+
+  .whereTitle {
+    font-size: 30px;
+  }
+
+  .whereText {
+    font-size: 16px;
+  }
+
+  .clockBox {
+    justify-items: start;
+  }
+
+  .clock {
+    font-size: 40px;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1100px) {
+  .steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

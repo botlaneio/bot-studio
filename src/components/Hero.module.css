@@ -1,9 +1,11 @@
-/* Hero: 1280 × 797 on the Figma artboard. On desktop every element is placed
-   at its artboard position × --u. Under 900px it re-flows into one column. */
+/* Hero: 1280 × 797 on the Figma artboard, plus 23px so the showreel caption
+   (which the artboard lets hang off the bottom edge) stays on the dark photo
+   instead of running into the white section below. On desktop every element is
+   placed at its artboard position × --u. Under 900px it re-flows into one column. */
 .hero {
   position: relative;
   max-width: 1600px;
-  height: calc(797 * var(--u));
+  height: calc(820 * var(--u));
   margin: 0 auto;
 }
 

@@ -1,0 +1,29 @@
+/* Full-bleed at every width. The film is 16:9 and has text near its edges, so
+   the box keeps that ratio rather than cropping it. Its near-white matches the
+   film's own background while it loads. */
+.section {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #f6f9fb;
+  overflow: hidden;
+}
+
+.film {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}

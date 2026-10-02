@@ -87,6 +87,8 @@
 
 .links > a {
   position: relative;
+  font-family: var(--font-poppins), "Helvetica Neue", Arial, sans-serif;
+  text-transform: none;
   transition: color 0.2s ease;
 }
 
@@ -126,8 +128,9 @@
   background: none;
   color: inherit;
   font: inherit;
+  font-family: var(--font-poppins), "Helvetica Neue", Arial, sans-serif;
   letter-spacing: inherit;
-  text-transform: inherit;
+  text-transform: none;
   cursor: pointer;
   transition: color 0.2s ease;
 }
@@ -616,7 +619,8 @@
     border: 0;
     background: none;
     color: inherit;
-    font: 500 22px / 1.1 var(--display);
+    font: 500 22px / 1.1 var(--font-poppins), "Helvetica Neue", Arial, sans-serif;
+    text-transform: none;
     letter-spacing: -0.03em;
     text-align: left;
     cursor: pointer;

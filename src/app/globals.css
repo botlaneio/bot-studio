@@ -170,3 +170,9 @@ a:focus-visible {
     animation: none !important;
   }
 }
+
+/* Lenis clips the page while stopped (for a modal); that breaks sticky
+   sections behind the modal, and lockScroll already blocks scrolling. */
+html.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: visible;
+}

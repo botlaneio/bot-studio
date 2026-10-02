@@ -168,14 +168,19 @@ function cameraAt(p) {
 }
 
 const FLASH_AT = 0.86
+// When the real button takes over from the 3D one.
+const CTA_AT = 0.95
 
 /**
  * Mounts the scene. Returns a cleanup function.
- * @param {{ track: HTMLElement, mount: HTMLElement, flash: HTMLElement, images: string[] }} opts
+ * @param {{ track: HTMLElement, mount: HTMLElement, flash: HTMLElement, images: string[],
+ *   onCta?: (rect: { x: number, y: number, w: number, h: number } | null) => void }} opts
  *   track: the tall scroll section that drives progress; mount: where the
- *   canvas goes; flash: an overlay for the launch flash.
+ *   canvas goes; flash: an overlay for the launch flash; onCta: told where the
+ *   3D "Let's chat" button sits on screen (in mount pixels) once the page has
+ *   locked together, and null before that, so a real button can sit over it.
  */
-export function mountProcessScene({ track: wrapEl, mount, flash, images }) {
+export function mountProcessScene({ track: wrapEl, mount, flash, images, onCta }) {
     const theme = "Light"
     const accent = "#0077E6"
     const background = "#F6F9FB"
@@ -595,6 +600,37 @@ export function mountProcessScene({ track: wrapEl, mount, flash, images }) {
     const ident = new THREE.Quaternion()
     const tau = Math.max(0, smoothing)
 
+    // Where the 3D call-to-action sits on screen: its front face's corners,
+    // projected. Reported only when it moves, so the page does little work.
+    const ctaPiece = pieces.find((pc) => pc.s.id === "cta")
+    const corner = new THREE.Vector3()
+    let ctaKey = ""
+    const reportCta = (p) => {
+        if (!onCta || !ctaPiece) return
+        if (p < CTA_AT) {
+            if (ctaKey !== "none") onCta(null)
+            ctaKey = "none"
+            return
+        }
+        const { w: cw, h: ch, d: cd } = ctaPiece.s
+        const w = mount.clientWidth
+        const h = mount.clientHeight
+        let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity
+        for (const [sx, sy] of [[-1, -1], [1, -1], [1, 1], [-1, 1]]) {
+            corner.set((sx * cw) / 2, (sy * ch) / 2, cd / 2)
+            ctaPiece.mesh.localToWorld(corner).project(camera)
+            const px = (corner.x * 0.5 + 0.5) * w
+            const py = (-corner.y * 0.5 + 0.5) * h
+            x0 = Math.min(x0, px); x1 = Math.max(x1, px)
+            y0 = Math.min(y0, py); y1 = Math.max(y1, py)
+        }
+        const rect = { x: x0, y: y0, w: x1 - x0, h: y1 - y0 }
+        const key = [rect.x, rect.y, rect.w, rect.h].map((v) => Math.round(v * 2)).join()
+        if (key === ctaKey) return
+        ctaKey = key
+        onCta(rect)
+    }
+
     const frame = (now) => {
         raf = requestAnimationFrame(frame)
         const dt = Math.min(0.1, (now - last) / 1000)
@@ -676,7 +712,9 @@ export function mountProcessScene({ track: wrapEl, mount, flash, images }) {
         cursor.position.y += Math.sin(ca * Math.PI) * 2.2
         cursor.rotation.set(0, lerp(-0.6, 0, ca), lerp(0.4, 0, ca))
         const click = Math.max(0, 1 - Math.abs(p - 0.835) / 0.012)
-        cursor.scale.setScalar(lerp(0.0001, 1, smooth(0.56, 0.64, p)) * (1 - 0.18 * click))
+        // ...then fades as the real button takes its place.
+        const handOff = smooth(CTA_AT - 0.04, CTA_AT, p)
+        cursor.scale.setScalar(Math.max(0.0001, lerp(0.0001, 1, smooth(0.56, 0.64, p)) * (1 - 0.18 * click) * (1 - handOff)))
 
         // Confetti drifts in the opening, then clears out of the way.
         const gone = smooth(0.38, 0.6, p)
@@ -695,6 +733,7 @@ export function mountProcessScene({ track: wrapEl, mount, flash, images }) {
         root.rotation.x += ((reduce ? 0 : my * 0.04) - root.rotation.x) * 0.05
 
         renderer.render(scene, camera)
+        reportCta(p)
     }
     raf = requestAnimationFrame(frame)
 

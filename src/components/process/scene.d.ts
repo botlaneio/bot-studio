@@ -7,4 +7,7 @@ export function mountProcessScene(opts: {
   flash: HTMLElement;
   /** Hero tile, then the three cards. */
   images: string[];
+  /** Where the 3D "Let's chat" button sits (mount pixels) once the page has
+   *  locked together; null before. */
+  onCta?: (rect: { x: number; y: number; w: number; h: number } | null) => void;
 }): () => void;

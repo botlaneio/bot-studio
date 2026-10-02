@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useRef, useState, type CSSProperties } from "react";
 import { CAPABILITIES, capabilityHref } from "./capabilities";
 import { Arrow } from "./motion/Arrow";
@@ -33,6 +34,7 @@ const delay = (s: number) => ({ "--reveal-delay": `${s}s` }) as CSSProperties;
 export function Footer() {
   const [chatFrom, setChatFrom] = useState<{ x: number; y: number } | null>(null);
   const markRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
 
   // The light follows the pointer across the wordmark.
   const onMove = (e: React.PointerEvent) => {
@@ -44,6 +46,10 @@ export function Footer() {
     el.setAttribute("data-pointer", "");
   };
   const onLeave = () => markRef.current?.removeAttribute("data-pointer");
+
+
+  // The design preview (/preview) brings its own closing.
+  if (pathname.startsWith("/preview")) return null;
 
   return (
     <footer id="contact" className={styles.footer}>

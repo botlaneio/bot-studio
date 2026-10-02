@@ -18,21 +18,28 @@
   padding: calc(20 * var(--u)) calc(20 * var(--u));
 }
 
-/* 16:9, inset from the screen edges, and never taller than the screen. Its
+/* Full width inside the padding, 16:9 where the screen is tall enough. On
+   wider screens the height is capped to the screen so the frame stays pinned,
+   and the film fills it, trimming a little from its top and bottom. Its
    near-white matches the film's own background while it loads. */
 .frame {
-  width: min(100%, calc((100svh - 40 * var(--u)) * 16 / 9));
+  width: 100%;
   aspect-ratio: 16 / 9;
+  max-height: calc(100svh - 40 * var(--u));
   overflow: hidden;
   border-radius: 14px;
   background: #f6f9fb;
 }
 
+/* When the frame is shorter than 16:9, take most of the trim from the top:
+   the film's top edge is empty space, and its chapter text and progress line
+   sit along the bottom. */
 .film {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: 50% 80%;
 }
 
 .srOnly {

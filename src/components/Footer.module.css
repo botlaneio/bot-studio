@@ -1,0 +1,425 @@
+/* The closing block: dark, on the 1280u stage like the hero and nav. */
+.footer {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: #060708;
+  color: var(--ink);
+}
+
+/* A faint blue dawn behind the call to action. */
+.footer::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: -1;
+  height: calc(620 * var(--u));
+  background:
+    radial-gradient(60% 70% at 50% 0%, rgba(0, 119, 230, 0.22), rgba(0, 119, 230, 0) 70%),
+    linear-gradient(rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0) 1px);
+  pointer-events: none;
+}
+
+.cta,
+.columns,
+.bar {
+  width: calc(1280 * var(--u));
+  max-width: 100%;
+  margin: 0 auto;
+  padding-inline: calc(40 * var(--u));
+}
+
+/* ---------- Call to action ---------- */
+.cta {
+  display: grid;
+  gap: calc(28 * var(--u));
+  padding-top: calc(130 * var(--u));
+  padding-bottom: calc(90 * var(--u));
+}
+
+.kicker,
+.colTitle {
+  font: 400 calc(12 * var(--u)) / 1 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+.headline {
+  max-width: calc(980 * var(--u));
+  margin: 0;
+  font: 500 calc(96 * var(--u)) / 0.98 var(--display);
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+
+.headline b {
+  font-weight: inherit;
+  color: var(--accent);
+}
+
+.ctaRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: calc(40 * var(--u));
+}
+
+.ctaText {
+  max-width: calc(420 * var(--u));
+  margin: 0;
+  font: 400 calc(17 * var(--u)) / 1.5 var(--display);
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.ctaButtons {
+  display: flex;
+  gap: calc(14 * var(--u));
+}
+
+.btnPrimary,
+.btnGhost {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(10 * var(--u));
+  height: calc(54 * var(--u));
+  padding: 0 calc(22 * var(--u));
+  border-radius: 10px;
+  font: 400 calc(14 * var(--u)) / 1 var(--mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    transform 0.25s var(--ease-out),
+    box-shadow 0.25s ease,
+    background-color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.btnPrimary {
+  border: 0;
+  background: var(--accent);
+  color: #ffffff;
+  box-shadow: 0 14px 34px -14px rgba(0, 119, 230, 0.95);
+}
+
+.btnPrimary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px -14px rgba(0, 119, 230, 1);
+}
+
+.btnGhost {
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--ink);
+}
+
+.btnGhost:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.btnArrow {
+  width: calc(16 * var(--u));
+  height: calc(16 * var(--u));
+}
+
+/* ---------- Ticker ---------- */
+.ticker {
+  overflow: hidden;
+  border-block: 1px solid rgba(255, 255, 255, 0.08);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.tickerTrack {
+  display: flex;
+  width: max-content;
+}
+
+.tickerSet {
+  display: flex;
+}
+
+.tickerItem {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(40 * var(--u));
+  padding: calc(26 * var(--u)) calc(20 * var(--u));
+  font: 500 calc(30 * var(--u)) / 1 var(--display);
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.9);
+  white-space: nowrap;
+}
+
+.tickerDot {
+  width: calc(8 * var(--u));
+  height: calc(8 * var(--u));
+  border-radius: 2px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tickerTrack {
+    animation: ticker 38s linear infinite;
+  }
+
+  .ticker:hover .tickerTrack {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes ticker {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---------- Columns ---------- */
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1.2fr 1.2fr;
+  gap: calc(40 * var(--u));
+  padding-top: calc(80 * var(--u));
+  padding-bottom: calc(40 * var(--u));
+}
+
+.col ul {
+  display: grid;
+  gap: calc(12 * var(--u));
+  margin: calc(22 * var(--u)) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  position: relative;
+  font: 400 calc(16 * var(--u)) / 1.3 var(--display);
+  color: rgba(255, 255, 255, 0.82);
+  transition: color 0.2s ease;
+}
+
+.link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s var(--ease-out);
+}
+
+.link:hover {
+  color: #ffffff;
+}
+
+.link:hover::after {
+  transform: scaleX(1);
+}
+
+.address {
+  margin-top: calc(22 * var(--u));
+  font: 400 calc(16 * var(--u)) / 1.6 var(--display);
+  font-style: normal;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.time {
+  margin: calc(16 * var(--u)) 0 0;
+  font: 400 calc(12 * var(--u)) / 1 var(--mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+.clock {
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Wordmark ---------- */
+@property --mx {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 30%;
+}
+
+@property --my {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 60%;
+}
+
+/* Edge to edge: the type is sized from the window so the word fills it. */
+.mark {
+  --mx: 30%;
+  --my: 60%;
+  padding: 0 calc(16 * var(--u)) calc(18 * var(--u));
+  line-height: 0.8;
+  user-select: none;
+}
+
+.markText {
+  display: block;
+  font: 600 calc((100vw - 32 * var(--u)) / 6.62) / 0.84 var(--display);
+  letter-spacing: -0.05em;
+  white-space: nowrap;
+  text-align: center;
+  /* Dim type, lit by a blue light at --mx/--my. */
+  background:
+    radial-gradient(circle calc(26 * var(--u) * 10) at var(--mx) var(--my), #3d9bff 0%, #0077e6 28%, rgba(0, 119, 230, 0) 62%),
+    linear-gradient(rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transition: --mx 0.6s var(--ease-out), --my 0.6s var(--ease-out);
+}
+
+.markSlash {
+  display: inline-block;
+}
+
+/* Without a pointer on it, the light drifts slowly across by itself. */
+@media (prefers-reduced-motion: no-preference) {
+  .mark:not([data-pointer]) .markText {
+    animation: drift 14s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes drift {
+  0% {
+    --mx: 8%;
+    --my: 70%;
+  }
+  50% {
+    --mx: 55%;
+    --my: 35%;
+  }
+  100% {
+    --mx: 94%;
+    --my: 65%;
+  }
+}
+
+/* ---------- Bottom bar ---------- */
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(20 * var(--u));
+  padding-top: calc(26 * var(--u));
+  padding-bottom: calc(30 * var(--u));
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font: 400 calc(12 * var(--u)) / 1 var(--mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+.bar .link {
+  font: inherit;
+  color: var(--ink-dim);
+}
+
+.top {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(8 * var(--u));
+  color: var(--ink);
+}
+
+.topArrow {
+  width: calc(14 * var(--u));
+  height: calc(14 * var(--u));
+  transform: rotate(-90deg);
+}
+
+/* ---------- Phones ---------- */
+@media (max-width: 899px) {
+  .cta,
+  .columns,
+  .bar {
+    padding-inline: 20px;
+  }
+
+  .cta {
+    gap: 20px;
+    padding-top: 80px;
+    padding-bottom: 56px;
+  }
+
+  .kicker,
+  .colTitle {
+    font-size: 11px;
+  }
+
+  .headline {
+    font-size: clamp(40px, 12vw, 64px);
+  }
+
+  .ctaRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .ctaText {
+    font-size: 16px;
+  }
+
+  .btnPrimary,
+  .btnGhost {
+    height: 46px;
+    padding: 0 16px;
+    font-size: 12px;
+  }
+
+  .btnArrow {
+    width: 14px;
+    height: 14px;
+  }
+
+  .tickerItem {
+    gap: 24px;
+    padding: 18px 12px;
+    font-size: 20px;
+  }
+
+  .tickerDot {
+    width: 6px;
+    height: 6px;
+  }
+
+  .columns {
+    grid-template-columns: 1fr 1fr;
+    gap: 36px 20px;
+    padding-top: 48px;
+  }
+
+  .link,
+  .address {
+    font-size: 15px;
+  }
+
+  .bar {
+    flex-wrap: wrap;
+    gap: 14px 20px;
+    font-size: 11px;
+  }
+
+  .top {
+    margin-left: auto;
+  }
+
+  .mark {
+    padding: 0 8px 10px;
+  }
+
+  .markText {
+    font-size: calc((100vw - 16px) / 6.62);
+  }
+}

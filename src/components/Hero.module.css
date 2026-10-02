@@ -8,16 +8,15 @@
   padding-block: calc(14 * var(--u));
 }
 
-/* Always at least a full screen below the nav: on squarer screens (an iPad
-   in landscape) the artboard is shorter than the window, so the stage is
-   centred in the extra height and the photo fills all of it. */
-@media (min-width: 900px) {
-  .hero {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: calc(100svh - var(--nav-h));
-  }
+/* Always at least a full screen below the nav: where the artboard is
+   shorter than the window (an iPad in landscape, most phones) the stage is
+   centred in the extra height (on phones, set at the bottom) and the photo
+   fills all of it. */
+.hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(100svh - var(--nav-h));
 }
 
 /* Runs up behind the fixed nav, which is transparent at the top of the page. */
@@ -408,6 +407,7 @@
 /* Phones, and portrait tablets (refined below): one stacked column. */
 @media (max-width: 899px), (max-width: 1366px) and (min-width: 900px) and (orientation: portrait) {
   .hero {
+    justify-content: flex-end;
     padding-block: 0;
   }
 

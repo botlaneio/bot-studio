@@ -4,7 +4,8 @@
 .section {
   position: relative;
   height: 320vh;
-  background: var(--bg);
+  /* The film's own near-white, so the frame scrolls through white, not black. */
+  background: #f6f9fb;
 }
 
 .pin {

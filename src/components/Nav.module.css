@@ -434,3 +434,35 @@
     height: 14px;
   }
 }
+
+/* Portrait tablets: a lighter bar, so logo, links and button breathe. */
+@media (max-width: 1366px) and (min-width: 900px) and (orientation: portrait) {
+  .inner {
+    font-size: 12px;
+  }
+
+  .logo img {
+    height: 19px;
+  }
+
+  .links {
+    gap: 26px;
+  }
+
+  .chevron {
+    width: 10px;
+    height: 10px;
+  }
+
+  .cta {
+    height: 34px;
+    gap: 8px;
+    padding: 0 12px;
+    font-size: 11px;
+  }
+
+  .ctaArrow {
+    width: 14px;
+    height: 14px;
+  }
+}

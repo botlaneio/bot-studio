@@ -247,6 +247,8 @@ export function Nav() {
         </button>
       </div>
 
+      {/* The uncovered third dims; a tap there closes the drawer. */}
+      <div className={styles.mobileScrim} data-open={mobileOpen || undefined} onClick={closeMobile} aria-hidden="true" />
       <div id="mobile-menu" className={styles.mobile} data-open={mobileOpen || undefined}>
         <nav className={styles.mobileInner} aria-label="Main">
           <ul className={styles.mobileList}>

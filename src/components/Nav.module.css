@@ -448,7 +448,8 @@
 }
 
 .burger,
-.mobile {
+.mobile,
+.mobileScrim {
   display: none;
 }
 
@@ -535,36 +536,62 @@
     border-radius: 8px;
   }
 
-  /* Drops down from under the bar and fills the rest of the screen. */
+  /* A drawer from the right edge, two-thirds of the screen wide, under the
+     bar so the X stays in reach. */
   .mobile {
+    position: fixed;
+    top: calc(var(--nav-h) + env(safe-area-inset-top, 0px));
+    right: 0;
+    bottom: 0;
+    display: block;
+    width: 66.667vw;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    background: #0b0c0e;
+    color: #ffffff;
+    box-shadow: -30px 0 60px -20px rgba(0, 0, 0, 0.6);
+    visibility: hidden;
+    transform: translateX(100%);
+    transition:
+      transform 0.45s cubic-bezier(0.7, 0, 0.2, 1),
+      visibility 0s linear 0.45s;
+  }
+
+  .mobile[data-open] {
+    visibility: visible;
+    transform: none;
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .mobileScrim {
     position: fixed;
     top: calc(var(--nav-h) + env(safe-area-inset-top, 0px));
     left: 0;
     right: 0;
     bottom: 0;
     display: block;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    background: #0b0c0e;
-    color: #ffffff;
+    background: rgba(0, 0, 0, 0.5);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    opacity: 0;
     visibility: hidden;
-    clip-path: inset(0 0 100% 0);
     transition:
-      clip-path 0.5s cubic-bezier(0.7, 0, 0.2, 1),
-      visibility 0s linear 0.5s;
+      opacity 0.35s ease,
+      visibility 0s linear 0.35s;
   }
 
-  .mobile[data-open] {
+  .mobileScrim[data-open] {
+    opacity: 1;
     visibility: visible;
-    clip-path: inset(0 0 0 0);
-    transition: clip-path 0.55s cubic-bezier(0.7, 0, 0.2, 1);
+    transition: opacity 0.35s ease;
   }
 
   .mobileInner {
     display: flex;
     flex-direction: column;
     min-height: 100%;
-    padding: 12px 16px calc(24px + env(safe-area-inset-bottom, 0px));
+    padding: 8px 20px calc(24px + env(safe-area-inset-bottom, 0px));
     text-transform: none;
     letter-spacing: 0;
   }
@@ -585,19 +612,19 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: 18px 0;
+    padding: 16px 0;
     border: 0;
     background: none;
     color: inherit;
-    font: 500 30px / 1.1 var(--display);
+    font: 500 22px / 1.1 var(--display);
     letter-spacing: -0.03em;
     text-align: left;
     cursor: pointer;
   }
 
   .mobileChevron {
-    width: 18px;
-    height: 18px;
+    width: 15px;
+    height: 15px;
     color: var(--accent);
     transition: transform 0.35s var(--ease-out);
   }
@@ -626,9 +653,9 @@
 
   .mobileCaps a {
     display: grid;
-    grid-template-columns: 28px 1fr;
-    gap: 10px;
-    padding: 10px 0;
+    grid-template-columns: 22px 1fr;
+    gap: 8px;
+    padding: 8px 0;
   }
 
   .mobileCaps li:last-child a {
@@ -644,41 +671,43 @@
 
   .mobileCapTitle {
     display: block;
-    font: 500 16px / 1.2 var(--display);
+    font: 500 15px / 1.2 var(--display);
   }
 
   .mobileCapLine {
     display: block;
     margin-top: 3px;
-    font: 400 13px / 1.35 var(--display);
+    font: 400 12px / 1.35 var(--display);
     color: var(--ink-dim);
   }
 
   .mobileFoot {
     display: grid;
-    gap: 16px;
+    justify-items: start;
+    gap: 18px;
     margin-top: auto;
     padding-top: 28px;
   }
 
+  /* Sized to its label, on the left. */
   .mobileCta {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
-    height: 52px;
-    border-radius: 10px;
+    gap: 8px;
+    height: 40px;
+    padding: 0 14px;
+    border-radius: 8px;
     background: var(--accent);
     color: #ffffff;
     box-shadow: 0 10px 30px -12px rgba(0, 119, 230, 0.9);
-    font: 400 13px / 1 var(--mono);
+    font: 400 12px / 1 var(--mono);
     letter-spacing: 0.04em;
     text-transform: uppercase;
   }
 
   .mobileContact {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    gap: 10px;
     font: 400 12px / 1 var(--mono);
     letter-spacing: 0.04em;
     color: var(--ink-dim);
@@ -689,12 +718,12 @@
   }
 }
 
-/* Rows rise in, one after another, as the menu opens. */
+/* Rows slide in after the drawer, one after another. */
 @media (max-width: 899px) and (prefers-reduced-motion: no-preference) {
   .mobileList > li,
   .mobileFoot {
     opacity: 0;
-    transform: translateY(18px);
+    transform: translateX(24px);
     transition:
       opacity 0.3s ease,
       transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);

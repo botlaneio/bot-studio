@@ -53,7 +53,7 @@ export function Hero() {
       </div>
 
       <div className={styles.ctas}>
-        <a className={`${styles.btn} ${styles.btnPrimary}`} href="#work">
+        <a className={`${styles.btn} ${styles.btnPrimary}`} href="#craft">
           See work <Arrow />
         </a>
         <a className={`${styles.btn} ${styles.btnLight}`} href="#contact">

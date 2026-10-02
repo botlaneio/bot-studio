@@ -1,4 +1,70 @@
-/* Byline keeps the author's casing. Shared page labels are uppercased. */
+/* Echoes hero. Horizontal measure and the word size are the homepage
+   lockup (Hero.module.css .lockup / .stage), not a full-bleed word.
+   Desktop: stage is 1280u and centred; the lockup sits at left 132u,
+   padding-left 18u, width 901u, font 600 130u/1 Figtree, tracking -0.045em.
+   Phones: stage padding 28px 20px 40px, lockup padding 8px 12px,
+   font-size clamp(30px, 10.4vw, 86px).
+   Portrait tablets: stage padding 0 48px 56px, lockup padding 10px 16px,
+   font-size 116px. */
+
+.hero {
+  padding-top: calc(72 * var(--u));
+  padding-bottom: calc(56 * var(--u));
+}
+
+.stage {
+  width: calc(1280 * var(--u));
+  margin: 0 auto;
+}
+
+.measure {
+  box-sizing: border-box;
+  width: calc(901 * var(--u));
+  margin-left: calc(132 * var(--u));
+  padding-left: calc(18 * var(--u));
+}
+
+.word {
+  margin: 0;
+  font: 600 calc(130 * var(--u)) / 1 var(--display);
+  letter-spacing: -0.045em;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.rule {
+  display: flex;
+  align-items: center;
+  margin-top: calc(18 * var(--u));
+}
+
+.tick {
+  flex: none;
+  width: calc(20 * var(--u));
+  height: calc(3 * var(--u));
+  background: var(--accent);
+}
+
+.hairline {
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: calc(40 * var(--u));
+  align-items: start;
+  margin-top: calc(28 * var(--u));
+}
+
+.subtitle {
+  max-width: calc(420 * var(--u));
+  margin: 0;
+  font: 400 calc(19 * var(--u)) / 1.5 var(--display);
+  color: rgba(255, 255, 255, 0.72);
+}
+
 .byline {
   margin: 0;
   font: 500 calc(15 * var(--u)) / 1.4 var(--display);
@@ -10,12 +76,69 @@
   margin-top: calc(18 * var(--u));
 }
 
-@media (max-width: 899px) {
+/* Phones, and the shared stacked breakpoint the homepage hero uses. */
+@media (max-width: 899px), (max-width: 1366px) and (min-width: 900px) and (orientation: portrait) {
+  .hero {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .stage {
+    width: auto;
+    padding: 28px 20px 40px;
+  }
+
+  .measure {
+    width: auto;
+    margin-left: 0;
+    padding: 8px 12px;
+  }
+
+  .word {
+    font-size: clamp(30px, 10.4vw, 86px);
+  }
+
+  .rule {
+    margin-top: 16px;
+  }
+
+  .tick {
+    width: 20px;
+    height: 3px;
+  }
+
+  .row {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-top: 20px;
+  }
+
+  .subtitle {
+    max-width: none;
+    font-size: 17px;
+  }
+
   .byline {
     font-size: 15px;
   }
 
   .sectionBody {
     margin-top: 14px;
+  }
+}
+
+/* Portrait tablets: the homepage hero's own padding and lockup size. */
+@media (max-width: 1366px) and (min-width: 900px) and (orientation: portrait) {
+  .stage {
+    width: 100%;
+    padding: 0 48px 56px;
+  }
+
+  .measure {
+    padding: 10px 16px;
+  }
+
+  .word {
+    font-size: 116px;
   }
 }

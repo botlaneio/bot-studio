@@ -14,23 +14,26 @@ const delay = (s: number) => ({ "--reveal-delay": `${s}s` }) as CSSProperties;
 export default function EchoesPage() {
   return (
     <main className={page.page}>
-      <header className={page.hero}>
-        <span className={page.kicker} data-reveal="">
-          // Echoes
-        </span>
-        <h1
-          className={page.title}
-          data-reveal=""
-          style={{ ["--reveal-delay" as string]: "0.05s", ["--reveal-y" as string]: "60px" }}
-        >
-          Echoes
-        </h1>
-        <p className={page.lede} data-reveal="" style={delay(0.15)}>
-          Articles, notes on creativity, strategy and making things work.
-        </p>
-        <p className={styles.byline} data-reveal="" style={delay(0.2)}>
-          {ECHOES_AUTHOR}
-        </p>
+      <header className={styles.hero}>
+        <div className={styles.stage}>
+          <div className={styles.measure}>
+            <h1 className={styles.word} data-reveal="" style={{ ["--reveal-y" as string]: "60px" }}>
+              echoes
+            </h1>
+            <div className={styles.rule} data-reveal="" style={delay(0.08)} aria-hidden="true">
+              <span className={styles.tick} />
+              <span className={styles.hairline} />
+            </div>
+            <div className={styles.row}>
+              <p className={styles.subtitle} data-reveal="" style={delay(0.12)}>
+                Articles, notes on creativity, strategy and making things work.
+              </p>
+              <p className={styles.byline} data-reveal="" style={delay(0.16)}>
+                {ECHOES_AUTHOR}
+              </p>
+            </div>
+          </div>
+        </div>
       </header>
 
       {ECHOES_POSTS.map((post) => (

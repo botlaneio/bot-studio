@@ -1,0 +1,24 @@
+// Cloudflare Worker that serves the site, built by @opennextjs/cloudflare.
+// The bindings match the bot-studio Worker in the Cloudflare dashboard.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "main": ".open-next/worker.js",
+  "name": "bot-studio",
+  "compatibility_date": "2026-10-02",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "services": [
+    {
+      // Self-reference for OpenNext's caching; must match the Worker name.
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "bot-studio"
+    }
+  ],
+  "images": {
+    // Next.js image optimization through Cloudflare Images.
+    "binding": "IMAGES"
+  }
+}

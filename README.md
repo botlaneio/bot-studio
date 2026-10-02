@@ -32,6 +32,19 @@ and each section switches to a single-column layout.
 
 ## Deploy
 
-Any Next.js host works. Cloudflare Pages and Netlify both have free tiers that
-allow commercial sites; point `botlane.studios` at the deployment and set
-`NEXT_PUBLIC_SITE_URL=https://botlane.studios`.
+The site runs as the `bot-studio` Cloudflare Worker, built with
+[OpenNext for Cloudflare](https://opennext.js.org/cloudflare) (`wrangler.jsonc`,
+`open-next.config.ts`). Cloudflare builds it from this repo on every push.
+
+Worker settings in the Cloudflare dashboard (Settings → Builds):
+
+- Branch control: `main`
+- Build command: `npx opennextjs-cloudflare build`
+- Deploy command: `npx wrangler deploy`
+
+Locally:
+
+```bash
+npm run preview  # build and serve the Worker locally
+npm run deploy   # build and deploy from your machine (needs `wrangler login`)
+```

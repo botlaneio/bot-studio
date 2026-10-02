@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import styles from "./ProcessFilm.module.css";
 
 const STEPS = ["Discovery", "Strategy", "Design & Build", "Launch & Grow"];
+const FILM = "/process-film.mp4";
 
 /** The section under the hero: the 16:9 process film, scrubbed by scroll.
  *  The section is taller than the screen; its inner frame stays pinned while
@@ -66,17 +67,47 @@ export function ProcessFilm() {
         .catch(() => {});
       update();
     };
-    if (video.readyState >= 1) prime();
-    else video.addEventListener("loadedmetadata", prime, { once: true });
+    video.addEventListener("loadedmetadata", prime, { once: true });
+
+    // Scrubbing needs a seekable source. Rather than rely on the host answering
+    // range requests (Safari will not even play without them), download the
+    // film once into memory when the section comes near; a blob URL always
+    // seeks. Falls back to streaming the file if the download fails.
+    let objectUrl = "";
+    let cancelled = false;
+    const load = () => {
+      fetch(FILM)
+        .then((res) => (res.ok ? res.blob() : Promise.reject(new Error(String(res.status)))))
+        .then((blob) => {
+          if (cancelled) return;
+          objectUrl = URL.createObjectURL(blob);
+          video.src = objectUrl;
+        })
+        .catch(() => {
+          if (!cancelled) video.src = FILM;
+        });
+    };
+    const near = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        near.disconnect();
+        load();
+      },
+      { rootMargin: "150% 0px" },
+    );
+    near.observe(section);
 
     window.addEventListener("scroll", update, { passive: true });
     window.addEventListener("resize", update);
     return () => {
+      cancelled = true;
       cancelAnimationFrame(raf);
       io.disconnect();
+      near.disconnect();
       window.removeEventListener("scroll", update);
       window.removeEventListener("resize", update);
       video.removeEventListener("loadedmetadata", prime);
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
     };
   }, []);
 
@@ -90,7 +121,6 @@ export function ProcessFilm() {
           <video
             ref={videoRef}
             className={styles.film}
-            src="/process-film.mp4"
             poster="/process-film-poster.jpg"
             muted
             playsInline

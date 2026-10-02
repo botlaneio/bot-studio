@@ -106,9 +106,6 @@ export function Nav() {
   };
 
 
-  // The design preview (/preview) brings its own nav.
-  if (pathname.startsWith("/preview")) return null;
-
   return (
     <header
       className={`${styles.nav} ${scrolled || open || mobileOpen ? styles.scrolled : ""} ${light && !mobileOpen ? styles.light : ""}`}

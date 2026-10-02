@@ -234,6 +234,8 @@
 .btnLight {
   background: #ffffff;
   color: #0a0a0a;
+  /* A little less vertical size than the paired craft button. */
+  height: calc(46 * var(--u));
 }
 
 .btnLight .btnArrow {
@@ -303,7 +305,10 @@
 @media (prefers-reduced-motion: no-preference) {
   /* Photo: fades in, zooming down from 130% and settling up (1s). */
   .photo {
-    animation: photo-in 1.2s var(--ease-zoom) both;
+    transform-origin: center center;
+    animation:
+      photo-in 1.2s var(--ease-zoom) both,
+      hero-breathe 16s ease-in-out 1.2s infinite alternate;
   }
 
   /* Ticks: the bar slides in from the left, the line from the right. */
@@ -359,6 +364,16 @@
   from {
     opacity: 0;
     transform: translateY(40px) scale(1.3);
+  }
+}
+
+/* Continuous Ken Burns after the entrance settles. */
+@keyframes hero-breathe {
+  from {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.07) translate3d(-1.2%, -0.8%, 0);
   }
 }
 
@@ -488,6 +503,10 @@
     font-size: 12px;
   }
 
+  .btnLight {
+    height: 38px;
+  }
+
   .btnArrow {
     width: 15px;
     height: 15px;
@@ -570,6 +589,10 @@
     height: 52px;
     padding: 0 22px;
     font-size: 14px;
+  }
+
+  .btnLight {
+    height: 46px;
   }
 
   .btnArrow {

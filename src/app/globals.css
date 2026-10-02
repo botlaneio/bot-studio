@@ -18,7 +18,7 @@
   --scale: 0.9;
   --u: calc(min(100vw, 1600px) / 1280 * var(--scale));
   /* The fixed nav's height; the page is padded by it so the hero starts below. */
-  --nav-h: calc(64 * var(--u));
+  --nav-h: calc(56 * var(--u));
   /* The template's easing curves. */
   --ease-out: cubic-bezier(0.2, 0.75, 0.2, 1);
   --ease-rise: cubic-bezier(0.29, 0.84, 0.56, 1);
@@ -150,7 +150,7 @@ a:focus-visible {
 @media (max-width: 899px) {
   :root {
     --u: 1px;
-    --nav-h: 56px;
+    --nav-h: 50px;
   }
 }
 

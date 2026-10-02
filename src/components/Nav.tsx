@@ -111,7 +111,7 @@ export function Nav() {
 
   return (
     <header
-      className={`${styles.nav} ${scrolled || open || mobileOpen ? styles.scrolled : ""} ${light && !mobileOpen ? styles.light : ""}`}
+      className={`${styles.nav} ${scrolled ? styles.scrolled : ""} ${scrolled && light && !mobileOpen ? styles.light : ""}`}
       data-mobile-open={mobileOpen || undefined}
     >
       <div className={styles.inner}>

@@ -12,10 +12,18 @@
   --display: var(--font-figtree), "Helvetica Neue", Arial, sans-serif;
   --mono: var(--font-fragment-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
   /* The Figma artboard is 1280px wide. Desktop layouts size and place things
-     as "artboard px × --u", so the page scales as one piece up to 1600px. */
-  --u: calc(min(100vw, 1600px) / 1280);
+     as "artboard px × --u". --scale draws everything a little smaller than
+     the artboard; the hero's 1280u stage then sits centred with a margin on
+     each side. Scales with the window up to 1600px. */
+  --scale: 0.9;
+  --u: calc(min(100vw, 1600px) / 1280 * var(--scale));
   /* The fixed nav's height; the page is padded by it so the hero starts below. */
-  --nav-h: calc(60 * var(--u));
+  --nav-h: calc(64 * var(--u));
+  /* The template's easing curves. */
+  --ease-out: cubic-bezier(0.2, 0.75, 0.2, 1);
+  --ease-rise: cubic-bezier(0.29, 0.84, 0.56, 1);
+  --ease-zoom: cubic-bezier(0.68, 0, 0.2, 0.89);
+  --ease-slide: cubic-bezier(0.55, 0.58, 0.34, 1.04);
   color-scheme: dark;
 }
 
@@ -56,6 +64,87 @@ a:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 6px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Button arrow (components/motion/Arrow): two arrows in a clipped box; on hover
+   the first slides out right while the second slides in from the left. */
+.arrow {
+  position: relative;
+  display: inline-block;
+  flex: none;
+  overflow: hidden;
+}
+
+.arrow svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.45s var(--ease-out);
+}
+
+.arrow svg + svg {
+  position: absolute;
+  inset: 0;
+  transform: translateX(-110%);
+}
+
+.arrowHost:hover .arrow svg:first-child {
+  transform: translateX(110%);
+}
+
+.arrowHost:hover .arrow svg + svg {
+  transform: translateX(0);
+}
+
+/* Over the image tiles the cursor disc (components/motion/TileEffects)
+   replaces the system pointer, on mouse-driven devices only. */
+[data-custom-cursor] [data-cursor],
+[data-custom-cursor] [data-cursor] * {
+  cursor: none;
+}
+
+/* Motion only for visitors who have not asked for less, and only once the
+   page's script has marked <html class="js">, so nothing stays hidden if
+   JavaScript does not run. */
+@media (prefers-reduced-motion: no-preference) {
+  /* Scroll reveals (components/motion/RevealObserver). */
+  .js [data-reveal] {
+    opacity: 0;
+    transform: translateY(var(--reveal-y, 36px));
+    transition:
+      opacity 0.9s var(--ease-out) var(--reveal-delay, 0s),
+      transform 1.1s var(--ease-rise) var(--reveal-delay, 0s);
+  }
+
+  .js [data-reveal][data-shown] {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Decoding text (components/motion/Scramble) stays hidden until it starts;
+     the failsafe shows it after 3s regardless. */
+  .js [data-scramble] {
+    visibility: hidden;
+    animation: scramble-failsafe 0s linear 3s forwards;
+  }
+}
+
+@keyframes scramble-failsafe {
+  to {
+    visibility: visible;
+  }
 }
 
 @media (max-width: 899px) {

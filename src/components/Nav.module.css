@@ -23,8 +23,10 @@
   backdrop-filter: blur(14px) saturate(140%);
 }
 
+/* Lined up with the hero's 1280u stage, so the logo sits over the side ticks. */
 .inner {
-  max-width: 1600px;
+  width: calc(1280 * var(--u));
+  max-width: 100%;
   height: 100%;
   margin: 0 auto;
   display: flex;
@@ -35,14 +37,6 @@
   letter-spacing: 0.02em;
 }
 
-.inner a {
-  transition: color 0.2s ease;
-}
-
-.inner a:hover {
-  color: var(--accent);
-}
-
 .logo img {
   display: block;
   height: calc(24 * var(--u));
@@ -51,25 +45,246 @@
 
 .links {
   display: flex;
-  gap: calc(32 * var(--u));
-  margin-left: calc(108 * var(--u));
+  gap: calc(34 * var(--u));
+  margin-left: auto;
 }
 
-.contact {
-  margin-left: auto;
+.links > a {
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+/* A short underline draws in from the left on hover. */
+.links > a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s var(--ease-out);
+}
+
+.links > a:hover {
+  color: var(--accent);
+}
+
+.links > a:hover::after {
+  transform: scaleX(1);
+}
+
+/* ---------- Capabilities menu ---------- */
+.menu {
+  position: relative;
+}
+
+.menuButton {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(6 * var(--u));
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.menuButton:hover,
+.menu[data-open] .menuButton {
+  color: var(--accent);
+}
+
+.menuButton:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.chevron {
+  width: calc(12 * var(--u));
+  height: calc(12 * var(--u));
+  transition: transform 0.35s var(--ease-out);
+}
+
+.menu[data-open] .chevron {
+  transform: rotate(180deg);
+}
+
+/* Hangs below the bar; the transparent top padding bridges the gap so the
+   pointer can travel into it without the menu closing. */
+.panel {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: calc(620 * var(--u));
+  padding-top: calc(22 * var(--u));
+  transform: translateX(-50%);
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.9);
+  opacity: 0;
+  transform: translateY(-8px) scale(0.98);
+  transform-origin: top center;
+  transition:
+    opacity 0.25s ease,
+    transform 0.35s var(--ease-out);
+}
+
+.menu[data-open] .panel {
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.menu[data-open] .grid {
+  opacity: 1;
+  transform: none;
+}
+
+.grid li {
+  background: rgba(12, 13, 15, 0.94);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+}
+
+.item {
+  display: grid;
+  gap: calc(8 * var(--u));
+  padding: calc(18 * var(--u)) calc(20 * var(--u));
+  text-transform: none;
+  letter-spacing: 0;
+  transition: background-color 0.25s ease;
+}
+
+/* Items rise in one after another as the menu opens. */
+@media (prefers-reduced-motion: no-preference) {
+  .item {
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+      background-color 0.25s ease,
+      opacity 0.35s ease calc(var(--i) * 0.035s),
+      transform 0.45s var(--ease-out) calc(var(--i) * 0.035s);
+  }
+
+  .menu[data-open] .item {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.item:hover,
+.item:focus-visible {
+  background: rgba(0, 119, 230, 0.12);
+}
+
+.tag {
+  font: 400 calc(10 * var(--u)) / 1 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.itemTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font: 500 calc(17 * var(--u)) / 1.2 var(--display);
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.itemArrow {
+  width: calc(15 * var(--u));
+  height: calc(15 * var(--u));
+  color: var(--accent);
+}
+
+.itemLine {
+  font: 400 calc(13 * var(--u)) / 1.4 var(--display);
+  color: var(--ink-dim);
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(10 * var(--u));
+  height: calc(40 * var(--u));
+  margin-left: calc(40 * var(--u));
+  padding: 0 calc(16 * var(--u));
+  border-radius: 8px;
+  background: var(--accent);
+  color: #ffffff;
+  box-shadow: 0 8px 24px -12px rgba(0, 119, 230, 0.9);
+  transition: transform 0.25s var(--ease-out);
+}
+
+.cta:hover {
+  transform: translateY(-1px);
+}
+
+.ctaArrow {
+  width: calc(16 * var(--u));
+  height: calc(16 * var(--u));
+}
+
+/* Drops in from above on load (template: y -57 → 0, 1s, from 0.5s). */
+@media (prefers-reduced-motion: no-preference) {
+  .inner {
+    animation: nav-in 1s var(--ease-rise) 0.5s both;
+  }
+}
+
+@keyframes nav-in {
+  from {
+    opacity: 0;
+    transform: translateY(-57px);
+  }
 }
 
 @media (max-width: 899px) {
   .inner {
+    width: auto;
     padding: 0 16px;
     font-size: 12px;
   }
 
   .logo img {
-    height: 20px;
+    height: 19px;
   }
 
   .links {
     display: none;
+  }
+
+  .cta {
+    height: 34px;
+    margin-left: auto;
+    padding: 0 12px;
+    font-size: 11px;
+  }
+
+  .ctaArrow {
+    width: 14px;
+    height: 14px;
   }
 }

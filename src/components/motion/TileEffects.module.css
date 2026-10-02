@@ -1,0 +1,37 @@
+/* The disc that follows the pointer over the image tiles. Its position is set
+   by script; the scale and fade are CSS. */
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  pointer-events: none;
+}
+
+.label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  place-items: center;
+  width: calc(96 * var(--u));
+  height: calc(96 * var(--u));
+  border-radius: 50%;
+  background: var(--accent);
+  color: #ffffff;
+  font: 400 calc(12 * var(--u)) / 1.2 var(--mono);
+  letter-spacing: 0.04em;
+  text-align: center;
+  text-transform: uppercase;
+  box-shadow: 0 12px 40px -12px rgba(0, 119, 230, 0.8);
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  transition:
+    transform 0.45s var(--ease-rise),
+    opacity 0.3s ease;
+}
+
+.cursor[data-on] .label {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}

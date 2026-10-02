@@ -1,8 +1,15 @@
+import type { CSSProperties } from "react";
+import { Arrow } from "./motion/Arrow";
+import { TileEffects } from "./motion/TileEffects";
 import styles from "./Craft.module.css";
 
 /** Full-height image tiles in the template's "featured" layout. These are the
  *  template's licensed images used as atmosphere: the copy describes what the
- *  studio makes, never a client, a project or a year. */
+ *  studio makes, never a client, a project or a year.
+ *
+ *  Motion, as on the template: the photos drift against the scroll, the
+ *  titles rise in as each tile arrives, and over a tile the pointer becomes a
+ *  "Let's talk" disc; a tile clicks through to the contact section. */
 const TILES = [
   {
     image: "/craft/tile-1.jpg",
@@ -24,38 +31,51 @@ const TILES = [
   },
 ];
 
+const delay = (s: number) => ({ "--reveal-delay": `${s}s` }) as CSSProperties;
+
 export function Craft() {
   return (
     <section id="craft" className={styles.section} aria-labelledby="craft-title">
-      <h2 id="craft-title" className={styles.srOnly}>
+      <h2 id="craft-title" className="sr-only">
         What we craft
       </h2>
+      <TileEffects scope="craft" />
 
       {TILES.map((tile, i) => {
         const index = String(i + 1).padStart(2, "0");
         return (
           <article key={tile.title} className={styles.tile} aria-labelledby={`craft-${index}`}>
-            <div className={styles.image} style={{ backgroundImage: `url(${tile.image})` }} aria-hidden="true" />
+            <div className={styles.media} aria-hidden="true">
+              <div className={styles.image} style={{ backgroundImage: `url(${tile.image})` }} data-parallax="0.1" />
+            </div>
+
+            <a className={styles.tileLink} href="#contact" data-cursor="Let's talk" aria-label={`${tile.title}: talk to us about it`} />
 
             <div className={styles.top} aria-hidden="true">
-              <span className={styles.index}>\\{index}</span>
+              <span className={styles.index} data-reveal="" style={delay(0.1)}>
+                \\{index}
+              </span>
               <span className={styles.ruler} />
             </div>
 
             <div className={styles.info}>
-              <h3 id={`craft-${index}`} className={styles.title}>
+              <h3 id={`craft-${index}`} className={styles.title} data-reveal="" style={{ ...delay(0), ["--reveal-y" as string]: "70px" }}>
                 {tile.title}
               </h3>
-              <p className={styles.line}>{tile.line}</p>
+              <p className={styles.line} data-reveal="" style={delay(0.15)}>
+                {tile.line}
+              </p>
             </div>
 
             <div className={styles.bottom}>
               <ul className={styles.toolkit} aria-label="Toolkit">
-                {tile.toolkit.map((tool) => (
-                  <li key={tool}>{tool}</li>
+                {tile.toolkit.map((tool, t) => (
+                  <li key={tool} data-reveal="" style={{ ...delay(0.2 + t * 0.05), ["--reveal-y" as string]: "14px" }}>
+                    {tool}
+                  </li>
                 ))}
               </ul>
-              <span className={styles.count} aria-hidden="true">
+              <span className={styles.count} aria-hidden="true" data-reveal="" style={delay(0.3)}>
                 {index}/{String(TILES.length).padStart(2, "0")}
               </span>
             </div>
@@ -63,14 +83,12 @@ export function Craft() {
         );
       })}
 
-      <div className={styles.more}>
+      <div className={styles.more} data-reveal="">
         <span>\\2026</span>
         <hr />
-        <a href="#contact" className={styles.moreLink}>
-          <span className={styles.arrow} aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M4 12h15M13 6l6 6-6 6" />
-            </svg>
+        <a href="#contact" className={`${styles.moreLink} arrowHost`}>
+          <span className={styles.arrowBox}>
+            <Arrow className={styles.arrowIcon} />
           </span>
           Let&apos;s build yours
         </a>

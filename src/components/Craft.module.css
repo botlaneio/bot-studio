@@ -17,16 +17,24 @@
   isolation: isolate;
 }
 
-.image {
+.media {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: #0b0c0e center / cover no-repeat;
-  transition: transform 1.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+  overflow: hidden;
+  background: #0b0c0e;
+}
+
+/* Taller than its tile so the parallax drift (TileEffects) never shows an edge. */
+.image {
+  position: absolute;
+  inset: -12% 0;
+  background: center / cover no-repeat;
+  will-change: transform;
 }
 
 /* Keeps white type readable on bright photos without flattening them. */
-.image::after {
+.media::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -35,8 +43,15 @@
     linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0) 22%, rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, 0.45));
 }
 
-.tile:hover .image {
-  transform: scale(1.025);
+/* The whole tile clicks through to the contact section. */
+.tileLink {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.tileLink:focus-visible {
+  outline-offset: -6px;
 }
 
 .top,
@@ -145,7 +160,7 @@
   font: 400 calc(15 * var(--u)) / 1 var(--display);
 }
 
-.arrow {
+.arrowBox {
   display: grid;
   place-items: center;
   width: calc(36 * var(--u));
@@ -153,28 +168,11 @@
   border-radius: 8px;
   background: var(--accent);
   color: #ffffff;
-  transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
-.arrow svg {
+.arrowIcon {
   width: 55%;
   height: 55%;
-}
-
-.moreLink:hover .arrow {
-  transform: translateX(3px);
-}
-
-.srOnly {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-  border: 0;
 }
 
 @media (max-width: 899px) {
@@ -222,7 +220,7 @@
     font-size: 14px;
   }
 
-  .arrow {
+  .arrowBox {
     width: 32px;
     height: 32px;
   }

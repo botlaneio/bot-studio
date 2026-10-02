@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Figtree, Fragment_Mono } from "next/font/google";
 import "./globals.css";
+import { RevealObserver } from "@/components/motion/RevealObserver";
+import { SmoothScroll } from "@/components/motion/SmoothScroll";
 
 const figtree = Figtree({
   variable: "--font-figtree",
@@ -45,8 +47,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${figtree.variable} ${fragmentMono.variable}`}>
-      <body>{children}</body>
+    <html lang="en" className={`${figtree.variable} ${fragmentMono.variable}`} suppressHydrationWarning>
+      <head>
+        {/* Marks that scripts run, before first paint, so entrance animations
+            can start hidden without hiding anything when they do not. */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+      </head>
+      <body>
+        <SmoothScroll />
+        <RevealObserver />
+        {children}
+      </body>
     </html>
   );
 }

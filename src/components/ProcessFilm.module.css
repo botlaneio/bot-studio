@@ -1,12 +1,31 @@
-/* Full-bleed at every width. The film is 16:9 and has text near its edges, so
-   the box keeps that ratio rather than cropping it. Its near-white matches the
-   film's own background while it loads. */
+/* The section is the scroll track: its extra height is how far the visitor
+   scrolls to play the film through. The pinned frame stays on screen while
+   they do. */
 .section {
   position: relative;
-  width: 100%;
+  height: 320vh;
+  background: var(--bg);
+}
+
+.pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(20 * var(--u)) calc(20 * var(--u));
+}
+
+/* 16:9, inset from the screen edges, and never taller than the screen. Its
+   near-white matches the film's own background while it loads. */
+.frame {
+  width: min(100%, calc((100svh - 40 * var(--u)) * 16 / 9));
   aspect-ratio: 16 / 9;
-  background: #f6f9fb;
   overflow: hidden;
+  border-radius: 14px;
+  background: #f6f9fb;
 }
 
 .film {
@@ -26,4 +45,21 @@
   clip: rect(0 0 0 0);
   white-space: nowrap;
   border: 0;
+}
+
+/* On phones the film is small, so a shorter track keeps the scroll from
+   feeling endless. */
+@media (max-width: 899px) {
+  .section {
+    height: 220vh;
+  }
+
+  .pin {
+    padding: 16px;
+  }
+
+  .frame {
+    width: 100%;
+    border-radius: 10px;
+  }
 }

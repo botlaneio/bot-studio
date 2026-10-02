@@ -1,27 +1,104 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import styles from "./ProcessFilm.module.css";
 
 const STEPS = ["Discovery", "Strategy", "Design & Build", "Launch & Grow"];
 
-/** The section under the hero: the 16:9 process film, full-bleed, playing
- *  silently on a loop. The film carries its own chapter titles, so the steps
- *  are repeated here only for screen readers. */
+/** The section under the hero: the 16:9 process film, scrubbed by scroll.
+ *  The section is taller than the screen; its inner frame stays pinned while
+ *  the visitor scrolls through it, and the film's position follows the scroll
+ *  (scrolling back plays it backwards). The film carries its own chapter
+ *  titles, so the steps are repeated here only for screen readers.
+ *
+ *  The MP4 is encoded with a keyframe every second frame so seeking is close
+ *  to instant; a normally compressed file would stutter here. */
 export function ProcessFilm() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const video = videoRef.current;
+    if (!section || !video) return;
+
+    let target = 0;
+    let shown = -1;
+    let raf = 0;
+    let visible = false;
+
+    const readScroll = () => {
+      const rect = section.getBoundingClientRect();
+      const travel = rect.height - window.innerHeight;
+      const progress = travel > 0 ? Math.min(1, Math.max(0, -rect.top / travel)) : 0;
+      if (video.duration) target = progress * video.duration;
+    };
+
+    // Ease toward the scroll position so fast flicks still read as motion,
+    // and only seek when the frame would actually change.
+    const frame = () => {
+      raf = 0;
+      if (!video.duration) return;
+      const next = shown < 0 ? target : shown + (target - shown) * 0.25;
+      if (Math.abs(next - shown) > 1 / 60) {
+        shown = Math.abs(target - next) < 1 / 60 ? target : next;
+        video.currentTime = shown;
+      }
+      if (visible && Math.abs(target - shown) > 1 / 60) raf = requestAnimationFrame(frame);
+    };
+
+    const update = () => {
+      readScroll();
+      if (!raf) raf = requestAnimationFrame(frame);
+    };
+
+    const io = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      if (visible) update();
+    });
+    io.observe(section);
+
+    // Some mobile browsers only decode a video after it has been played once.
+    const prime = () => {
+      video
+        .play()
+        .then(() => video.pause())
+        .catch(() => {});
+      update();
+    };
+    if (video.readyState >= 1) prime();
+    else video.addEventListener("loadedmetadata", prime, { once: true });
+
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      cancelAnimationFrame(raf);
+      io.disconnect();
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+      video.removeEventListener("loadedmetadata", prime);
+    };
+  }, []);
+
   return (
-    <section id="process" className={styles.section} aria-labelledby="process-title">
+    <section ref={sectionRef} id="process" className={styles.section} aria-labelledby="process-title">
       <h2 id="process-title" className={styles.srOnly}>
         How we build: {STEPS.join(", ")}
       </h2>
-      <video
-        className={styles.film}
-        src="/process-film.mp4"
-        poster="/process-film-poster.jpg"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        aria-hidden="true"
-      />
+      <div className={styles.pin}>
+        <div className={styles.frame}>
+          <video
+            ref={videoRef}
+            className={styles.film}
+            src="/process-film.mp4"
+            poster="/process-film-poster.jpg"
+            muted
+            playsInline
+            preload="auto"
+            aria-hidden="true"
+          />
+        </div>
+      </div>
     </section>
   );
 }

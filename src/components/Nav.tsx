@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Arrow } from "./motion/Arrow";
+import { lockScroll } from "./motion/SmoothScroll";
 import styles from "./Nav.module.css";
 
 /** The six areas from the template's "What we do best" section. */
@@ -59,6 +60,8 @@ export function Nav() {
   const [light, setLight] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileCaps, setMobileCaps] = useState(false);
   const closeTimer = useRef(0);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -95,6 +98,28 @@ export function Nav() {
     };
   }, [open]);
 
+  // Phone menu: the page stays put while it is open; Escape, a link or
+  // widening past the phone layout closes it.
+  useEffect(() => {
+    if (!mobileOpen) return;
+    lockScroll(true);
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMobileOpen(false);
+    const wide = window.matchMedia("(min-width: 900px)");
+    const onWide = () => wide.matches && setMobileOpen(false);
+    window.addEventListener("keydown", onKey);
+    wide.addEventListener("change", onWide);
+    return () => {
+      lockScroll(false);
+      window.removeEventListener("keydown", onKey);
+      wide.removeEventListener("change", onWide);
+    };
+  }, [mobileOpen]);
+
+  const closeMobile = () => {
+    setMobileOpen(false);
+    setMobileCaps(false);
+  };
+
   // A short grace period lets the pointer cross the gap into the panel.
   const show = () => {
     window.clearTimeout(closeTimer.current);
@@ -106,7 +131,10 @@ export function Nav() {
   };
 
   return (
-    <header className={`${styles.nav} ${scrolled || open ? styles.scrolled : ""} ${light ? styles.light : ""}`}>
+    <header
+      className={`${styles.nav} ${scrolled || open || mobileOpen ? styles.scrolled : ""} ${light && !mobileOpen ? styles.light : ""}`}
+      data-mobile-open={mobileOpen || undefined}
+    >
       <div className={styles.inner}>
         {/* The logo SVG carries its own shutter-flash animation, so it stays an
             <img>. A dark-lettered copy fades in over light sections. */}
@@ -203,6 +231,81 @@ export function Nav() {
           Book a call
           <Arrow className={styles.ctaArrow} />
         </a>
+
+        {/* Phones: a hamburger in place of the links and the button. */}
+        <button
+          type="button"
+          className={styles.burger}
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-menu"
+          aria-label={mobileOpen ? "Close menu" : "Open menu"}
+          onClick={() => (mobileOpen ? closeMobile() : setMobileOpen(true))}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+      </div>
+
+      <div id="mobile-menu" className={styles.mobile} data-open={mobileOpen || undefined}>
+        <nav className={styles.mobileInner} aria-label="Main">
+          <ul className={styles.mobileList}>
+            <li style={{ ["--i" as string]: 0 }}>
+              <a href="#craft" onClick={closeMobile}>
+                Studio
+              </a>
+            </li>
+            <li style={{ ["--i" as string]: 1 }}>
+              <button
+                type="button"
+                className={styles.mobileCapsButton}
+                aria-expanded={mobileCaps}
+                aria-controls="mobile-capabilities"
+                onClick={() => setMobileCaps((o) => !o)}
+              >
+                Capabilities
+                <svg className={styles.mobileChevron} viewBox="0 0 12 12" aria-hidden="true">
+                  <path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+              <div id="mobile-capabilities" className={styles.mobileCaps} data-open={mobileCaps || undefined}>
+                <ul>
+                  {CAPABILITIES.map((item, i) => (
+                    <li key={item.title}>
+                      <a href="#capabilities" onClick={closeMobile} tabIndex={mobileCaps ? 0 : -1}>
+                        <span className={styles.mobileCapNum}>{String(i + 1).padStart(2, "0")}</span>
+                        <span>
+                          <span className={styles.mobileCapTitle}>{item.title}</span>
+                          <span className={styles.mobileCapLine}>{item.line}</span>
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </li>
+            {LINKS.map((link, i) => (
+              <li key={link.href} style={{ ["--i" as string]: i + 2 }}>
+                <a href={link.href} onClick={closeMobile}>
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <div className={styles.mobileFoot} style={{ ["--i" as string]: 6 }}>
+            <a className={`${styles.mobileCta} arrowHost`} href="#contact" onClick={closeMobile}>
+              Book a call
+              <Arrow className={styles.ctaArrow} />
+            </a>
+            <div className={styles.mobileContact}>
+              <a href="mailto:admin@botlane.io">admin@botlane.io</a>
+              <a href="https://wa.me/13072185715" target="_blank" rel="noopener">
+                WhatsApp ↗
+              </a>
+            </div>
+          </div>
+        </nav>
       </div>
     </header>
   );

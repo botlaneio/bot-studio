@@ -23,6 +23,35 @@
   backdrop-filter: blur(14px) saturate(140%);
 }
 
+/* Over the white film section the bar turns white with dark text. */
+.light {
+  color: #0b0c0e;
+  background: rgba(246, 249, 251, 0.82);
+  border-bottom-color: rgba(11, 12, 14, 0.08);
+}
+
+.nav {
+  transition:
+    background-color 0.35s ease,
+    border-color 0.35s ease,
+    color 0.35s ease,
+    backdrop-filter 0.35s ease;
+}
+
+.logo .logoDark {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.light .logo img:not(.logoDark) {
+  opacity: 0;
+}
+
+.light .logo .logoDark {
+  opacity: 1;
+}
+
 /* Lined up with the hero's 1280u stage, so the logo sits over the side ticks.
    Three columns: logo, links centred on the page, CTA at the right end. */
 .inner {
@@ -40,11 +69,13 @@
 }
 
 .logo {
+  position: relative;
   justify-self: start;
 }
 
 .logo img {
   display: block;
+  transition: opacity 0.35s ease;
   height: calc(24 * var(--u));
   width: auto;
 }

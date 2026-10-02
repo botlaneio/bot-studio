@@ -56,13 +56,26 @@ const LINKS = [
  *  keyboard focus, or on tap. */
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
+  const [light, setLight] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
   const closeTimer = useRef(0);
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const update = () => setScrolled(window.scrollY > 4);
+    // Light over sections marked data-nav-theme="light" (the white film
+    // section), judged at the bar's vertical middle.
+    const update = () => {
+      setScrolled(window.scrollY > 4);
+      const header = document.querySelector("header");
+      const mid = header ? header.getBoundingClientRect().height / 2 : 32;
+      setLight(
+        Array.from(document.querySelectorAll("[data-nav-theme='light']")).some((el) => {
+          const r = el.getBoundingClientRect();
+          return r.top <= mid && r.bottom > mid;
+        }),
+      );
+    };
     update();
     window.addEventListener("scroll", update, { passive: true });
     return () => window.removeEventListener("scroll", update);
@@ -93,12 +106,15 @@ export function Nav() {
   };
 
   return (
-    <header className={`${styles.nav} ${scrolled || open ? styles.scrolled : ""}`}>
+    <header className={`${styles.nav} ${scrolled || open ? styles.scrolled : ""} ${light ? styles.light : ""}`}>
       <div className={styles.inner}>
-        {/* The logo SVG carries its own shutter-flash animation, so it stays an <img>. */}
+        {/* The logo SVG carries its own shutter-flash animation, so it stays an
+            <img>. A dark-lettered copy fades in over light sections. */}
         <a className={styles.logo} href="#top" aria-label="Botlane Studios home">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/logo.svg" alt="Botlane Studios" width={897} height={100} />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className={styles.logoDark} src="/logo-dark.svg" alt="" width={897} height={100} />
         </a>
 
         <nav className={styles.links} aria-label="Main">

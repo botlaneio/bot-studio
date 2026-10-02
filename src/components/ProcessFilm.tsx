@@ -112,7 +112,7 @@ export function ProcessFilm() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="process" className={styles.section} aria-labelledby="process-title">
+    <section ref={sectionRef} id="process" className={styles.section} data-nav-theme="light" aria-labelledby="process-title">
       <h2 id="process-title" className={styles.srOnly}>
         How we build: {STEPS.join(", ")}
       </h2>

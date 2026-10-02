@@ -15,6 +15,7 @@ const SITE = [
   { href: "/capabilities", label: "Capabilities" },
   { href: "/about", label: "About us" },
   { href: "/pricing", label: "Pricing" },
+  { href: "/echoes", label: "Echoes" },
 ];
 
 const LEGAL = [

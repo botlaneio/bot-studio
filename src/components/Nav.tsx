@@ -11,6 +11,7 @@ import styles from "./Nav.module.css";
 const LINKS = [
   { href: "/about", label: "About Us" },
   { href: "/pricing", label: "Pricing" },
+  { href: "/echoes", label: "Echoes" },
   { href: "#contact", label: "Contact" },
 ];
 

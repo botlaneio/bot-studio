@@ -1,0 +1,21 @@
+/* Byline keeps the author's casing. Shared page labels are uppercased. */
+.byline {
+  margin: 0;
+  font: 500 calc(15 * var(--u)) / 1.4 var(--display);
+  letter-spacing: -0.01em;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.sectionBody {
+  margin-top: calc(18 * var(--u));
+}
+
+@media (max-width: 899px) {
+  .byline {
+    font-size: 15px;
+  }
+
+  .sectionBody {
+    margin-top: 14px;
+  }
+}

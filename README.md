@@ -39,7 +39,7 @@ The site runs as the `bot-studio` Cloudflare Worker, built with
 Worker settings in the Cloudflare dashboard (Settings → Builds):
 
 - Branch control: `main`
-- Build command: `npx opennextjs-cloudflare build`
+- Build command: `npm run cf:build`
 - Deploy command: `npx wrangler deploy`
 
 Locally:

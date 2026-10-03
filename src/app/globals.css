@@ -11,6 +11,8 @@
   --rule: rgba(255, 255, 255, 0.35);
   --display: var(--font-figtree), "Helvetica Neue", Arial, sans-serif;
   --mono: var(--font-fragment-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+  /* Button labels only. Body, headings and non-button links stay on Figtree or mono. */
+  --button: var(--font-poppins), "Helvetica Neue", Arial, sans-serif;
   /* The Figma artboard is 1280px wide. Desktop layouts size and place things
      as "artboard px × --u". --scale draws everything a little smaller than
      the artboard; the hero's 1280u stage then sits centred with a margin on
@@ -53,6 +55,13 @@ body {
   font-family: var(--display);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+}
+
+/* Text inside buttons. Does not set size, weight, color, padding, or radius.
+   A later font shorthand on a button class still wins, so those classes set
+   font-family themselves. */
+button {
+  font-family: var(--button);
 }
 
 a {

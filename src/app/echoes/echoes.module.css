@@ -427,6 +427,7 @@
   box-shadow: 0 14px 34px -14px rgba(0, 0, 0, 0.45);
   color: #000;
   font: 400 calc(14 * var(--u)) / 1 var(--mono);
+  font-family: var(--button);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   cursor: pointer;

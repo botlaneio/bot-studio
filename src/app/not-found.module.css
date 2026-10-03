@@ -53,6 +53,7 @@
   background: var(--accent);
   box-shadow: 0 14px 34px -14px rgba(0, 119, 230, 0.95);
   font: 400 calc(13 * var(--u)) / 1 var(--mono);
+  font-family: var(--button);
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }

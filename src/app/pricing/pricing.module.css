@@ -115,6 +115,7 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 10px;
   font: 400 calc(13 * var(--u)) / 1 var(--mono);
+  font-family: var(--button);
   letter-spacing: 0.05em;
   text-transform: uppercase;
   transition:

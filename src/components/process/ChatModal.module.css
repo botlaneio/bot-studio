@@ -200,6 +200,7 @@ a.row:focus-visible {
     0 3px 0 #128c4b,
     0 14px 28px -12px rgba(37, 211, 102, 0.7);
   font: 600 calc(15 * var(--u)) / 1 var(--display);
+  font-family: var(--button);
   letter-spacing: -0.01em;
   transition:
     transform 0.2s cubic-bezier(0.2, 0.7, 0.2, 1),

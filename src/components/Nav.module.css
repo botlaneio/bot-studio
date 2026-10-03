@@ -162,7 +162,7 @@
   position: absolute;
   top: 100%;
   left: 50%;
-  width: calc(760 * var(--u));
+  width: calc(820 * var(--u));
   padding-top: calc(22 * var(--u));
   transform: translateX(-50%);
   visibility: hidden;
@@ -212,12 +212,23 @@
 .item {
   position: relative;
   display: grid;
-  grid-template-columns: calc(30 * var(--u)) 1fr auto;
+  grid-template-columns: calc(28 * var(--u)) calc(80 * var(--u)) 1fr auto;
   align-items: center;
-  gap: calc(14 * var(--u));
-  padding: calc(12 * var(--u)) calc(14 * var(--u));
+  gap: calc(12 * var(--u));
+  padding: calc(10 * var(--u)) calc(14 * var(--u));
   border-radius: 10px;
   transition: background-color 0.25s ease;
+}
+
+.itemThumb {
+  display: block;
+  width: calc(80 * var(--u));
+  height: calc(80 * var(--u));
+  object-fit: cover;
+  object-position: center;
+  border-radius: 10px;
+  background: #061018;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06) inset;
 }
 
 .item[data-active] {
@@ -296,7 +307,7 @@
   overflow: hidden;
   min-height: calc(330 * var(--u));
   border-radius: 12px;
-  background: linear-gradient(160deg, #0a3f73 0%, #062a4d 45%, #04101d 100%);
+  background: #04101d;
   isolation: isolate;
 }
 
@@ -311,6 +322,16 @@
     repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px calc(24 * var(--u)));
 }
 
+.previewPhoto {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
 .slide {
   position: absolute;
   inset: 0;
@@ -322,6 +343,18 @@
   transition:
     opacity 0.3s ease,
     transform 0.45s var(--ease-out);
+}
+
+/* Dark wash so tag, number and copy stay readable over the photo. */
+.slide::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(180deg, rgba(4, 16, 29, 0.35) 0%, rgba(4, 16, 29, 0.15) 35%, rgba(4, 16, 29, 0.82) 100%),
+    linear-gradient(90deg, rgba(4, 16, 29, 0.25), transparent 55%);
+  pointer-events: none;
 }
 
 .slide[data-active] {
@@ -659,9 +692,20 @@
 
   .mobileCaps a {
     display: grid;
-    grid-template-columns: 22px 1fr;
-    gap: 8px;
+    grid-template-columns: 22px 56px 1fr;
+    align-items: center;
+    gap: 10px;
     padding: 8px 0;
+  }
+
+  .mobileCapThumb {
+    display: block;
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 8px;
+    background: #061018;
   }
 
   .mobileCaps li:last-child a {

@@ -176,6 +176,16 @@ export function Nav() {
                         onClick={() => setOpen(false)}
                       >
                         <span className={styles.num}>{String(i + 1).padStart(2, "0")}</span>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          className={styles.itemThumb}
+                          src={item.image}
+                          alt={item.title}
+                          width={80}
+                          height={80}
+                          loading="lazy"
+                          decoding="async"
+                        />
                         <span className={styles.itemText}>
                           <span className={styles.itemTitle}>{item.title}</span>
                           <span className={styles.itemLine}>{item.line}</span>
@@ -191,6 +201,16 @@ export function Nav() {
                   <div className={styles.previewGlow} />
                   {CAPABILITIES.map((item, i) => (
                     <div key={item.title} className={styles.slide} data-active={active === i || undefined}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        className={styles.previewPhoto}
+                        src={item.image}
+                        alt=""
+                        width={560}
+                        height={784}
+                        loading="lazy"
+                        decoding="async"
+                      />
                       <span className={styles.previewTag}>{`// ${item.tag}`}</span>
                       <span className={styles.bigNum}>{String(i + 1).padStart(2, "0")}</span>
                       <p className={styles.previewTitle}>{item.title}</p>
@@ -266,6 +286,16 @@ export function Nav() {
                     <li key={item.title}>
                       <Link href={capabilityPageHref(item.title)} onClick={closeMobile} tabIndex={mobileCaps ? 0 : -1}>
                         <span className={styles.mobileCapNum}>{String(i + 1).padStart(2, "0")}</span>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          className={styles.mobileCapThumb}
+                          src={item.image}
+                          alt={item.title}
+                          width={56}
+                          height={56}
+                          loading="lazy"
+                          decoding="async"
+                        />
                         <span>
                           <span className={styles.mobileCapTitle}>{item.title}</span>
                           <span className={styles.mobileCapLine}>{item.line}</span>

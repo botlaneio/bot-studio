@@ -1,8 +1,10 @@
 /** The studio's six areas, shared by the nav menu, the footer and the
- *  capabilities page. `slug` is each one's anchor on /capabilities. */
+ *  capabilities page. `slug` is each one's anchor on /capabilities;
+ *  `image` is the photo shown in the Capabilities mega menu. */
 export const CAPABILITIES = [
   {
     slug: "brand-identity",
+    image: "/capability-brand-identity.webp",
     tag: "Foundation",
     title: "Brand Identity",
     line: "Names, marks and visual systems",
@@ -11,6 +13,7 @@ export const CAPABILITIES = [
   },
   {
     slug: "strategy",
+    image: "/capability-strategy.webp",
     tag: "Growth",
     title: "Strategy",
     line: "Positioning and the roadmap to launch",
@@ -19,6 +22,7 @@ export const CAPABILITIES = [
   },
   {
     slug: "design",
+    image: "/capability-design.webp",
     tag: "Creative",
     title: "Design & Innovation",
     line: "Interfaces, motion and 3D",
@@ -27,6 +31,7 @@ export const CAPABILITIES = [
   },
   {
     slug: "ai-systems",
+    image: "/capability-ai-systems.webp",
     tag: "Smart AI",
     title: "AI Systems",
     line: "Assistants and automations built in",
@@ -35,6 +40,7 @@ export const CAPABILITIES = [
   },
   {
     slug: "seo",
+    image: "/capability-seo.webp",
     tag: "Discoverable",
     title: "SEO",
     line: "Found by the people you want",
@@ -43,6 +49,7 @@ export const CAPABILITIES = [
   },
   {
     slug: "development",
+    image: "/capability-development.webp",
     tag: "Build",
     title: "Development",
     line: "Fast, accessible, production sites",

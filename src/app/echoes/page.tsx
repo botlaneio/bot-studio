@@ -6,6 +6,7 @@ import { ECHOES, ECHOES_AUTHOR, ECHOES_AUTHOR_ROLE } from "./echoes";
 import styles from "./echoes.module.css";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/echoes" },
   title: "Echoes",
   description: "Articles, notes on creativity, strategy and making things work.",
 };

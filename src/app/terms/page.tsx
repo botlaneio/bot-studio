@@ -3,6 +3,7 @@ import { PageHero } from "@/components/page/PageHero";
 import page from "@/components/page/Page.module.css";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/terms" },
   title: "Terms of use",
   description: "The terms for using the Botlane Studios website.",
 };

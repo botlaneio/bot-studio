@@ -1,40 +1,57 @@
 "use client";
 
-import { useEffect, useId, useState, type FormEvent } from "react";
+import { useEffect, useId, useRef, useState, type FormEvent } from "react";
+import { studioReply } from "./studioReply";
 import styles from "./LaneChat.module.css";
 
 const GREETING =
-  "Tell me about one workflow your team repeats. I'll help map it to the closest botLane system and starting plan.";
+  "Planning a website or a redesign? I can explain our services and packages, or point you to the team.";
 
-const CHIPS = ["Find the right system", "Compare plans", "I'm an existing customer"] as const;
+const CHIPS = ["Explore services", "Compare plans", "Existing client support"] as const;
 
 type Line = { role: "assistant" | "user"; text: string };
 
 /**
  * Lane. Corner launcher on every page (mounted from the root layout).
- * The open window is local only: chips and send never call an API or send mail.
+ * Answers use published studio information locally; no AI provider is configured.
  */
 export function LaneChat() {
   const [open, setOpen] = useState(false);
   const [note, setNote] = useState("");
   const [lines, setLines] = useState<Line[]>([{ role: "assistant", text: GREETING }]);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const launcherRef = useRef<HTMLButtonElement>(null);
+  const threadRef = useRef<HTMLDivElement>(null);
   const panelId = useId();
   const fieldId = useId();
   const markId = useId().replace(/:/g, "");
 
   useEffect(() => {
     if (!open) return;
+    inputRef.current?.focus({ preventScroll: true });
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") {
+        setOpen(false);
+        launcherRef.current?.focus({ preventScroll: true });
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
+  useEffect(() => {
+    if (open && threadRef.current) threadRef.current.scrollTop = threadRef.current.scrollHeight;
+  }, [lines, open]);
+
+  const close = () => {
+    setOpen(false);
+    launcherRef.current?.focus({ preventScroll: true });
+  };
+
   const appendUser = (text: string) => {
     const trimmed = text.trim();
     if (!trimmed) return;
-    setLines((prev) => [...prev, { role: "user", text: trimmed }]);
+    setLines((prev) => [...prev, { role: "user", text: trimmed }, { role: "assistant", text: studioReply(trimmed) }]);
     setNote("");
   };
 
@@ -53,16 +70,16 @@ export function LaneChat() {
             </span>
             <div className={styles.titles}>
               <p className={styles.title}>Lane</p>
-              <p className={styles.subtitle}>Map a workflow to the right starting point.</p>
+              <p className={styles.subtitle}>Your guide to Botlane Studios.</p>
             </div>
-            <button type="button" className={styles.close} onClick={() => setOpen(false)} aria-label="Close">
+            <button type="button" className={styles.close} onClick={close} aria-label="Close">
               <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
                 <path d="M3 3l8 8M11 3 3 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
               </svg>
             </button>
           </header>
 
-          <div className={styles.thread} role="log" aria-live="polite" aria-relevant="additions">
+          <div ref={threadRef} className={styles.thread} role="log" aria-live="polite" aria-relevant="additions">
             {lines.map((line, index) => (
               <p
                 key={`${line.role}-${index}`}
@@ -78,7 +95,7 @@ export function LaneChat() {
               <button
                 key={label}
                 type="button"
-                className={`${styles.pill} ${label === "I'm an existing customer" ? styles.pillWide : ""}`}
+                className={`${styles.pill} ${label === "Existing client support" ? styles.pillWide : ""}`}
                 onClick={() => appendUser(label)}
               >
                 {label}
@@ -88,19 +105,21 @@ export function LaneChat() {
 
           <form className={styles.composer} onSubmit={onSubmit}>
             <label className={styles.visuallyHidden} htmlFor={fieldId}>
-              Describe a recurring workflow
+              Ask about your website project
             </label>
             <input
+              ref={inputRef}
               id={fieldId}
               className={styles.field}
               type="text"
               name="note"
               value={note}
               onChange={(e) => setNote(e.target.value)}
-              placeholder="Describe a recurring workflow..."
+              placeholder="Ask about your website project..."
               autoComplete="off"
+              maxLength={2000}
             />
-            <button type="submit" className={styles.send} aria-label="Send">
+            <button type="submit" className={styles.send} aria-label="Send" disabled={!note.trim()}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path
                   d="M4.2 11.7 19.6 4.2c.6-.3 1.2.4.9 1L13.2 20c-.3.7-1.3.6-1.5-.1l-1.6-5.6-5.6-1.6c-.7-.2-.8-1.2-.3-1.5Z"
@@ -115,17 +134,18 @@ export function LaneChat() {
             <a className={styles.action} href="/contact">
               Talk to the team →
             </a>
-            <a className={styles.action} href="#contact">
-              Book a call
+            <a className={styles.action} href="/pricing">
+              View packages
             </a>
           </div>
 
-          <p className={styles.fine}>AI assistant · Don&apos;t share passwords, payment details, or confidential records.</p>
+          <p className={styles.fine}>Studio guide · Answers use published information. Messages stay in this browser session.</p>
         </section>
       ) : null}
 
       <button
         type="button"
+        ref={launcherRef}
         className={styles.launcher}
         aria-expanded={open}
         aria-controls={panelId}

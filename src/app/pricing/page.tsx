@@ -1,46 +1,16 @@
 import type { CSSProperties } from "react";
 import type { Metadata } from "next";
+import { PLANS } from "@/components/plans";
 import { Arrow } from "@/components/motion/Arrow";
 import { PageHero } from "@/components/page/PageHero";
 import page from "@/components/page/Page.module.css";
 import styles from "./pricing.module.css";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/pricing" },
   title: "Pricing",
   description: "Three ways to work with Botlane Studios, each quoted to its scope before any work starts.",
 };
-
-/** Prices are quoted per project; set `price` on a plan to show a figure. */
-const PLANS: { name: string; pitch: string; price?: string; recommended?: boolean; includes: string[] }[] = [
-  {
-    name: "Launch",
-    pitch: "A focused site to get a new brand or product live.",
-    includes: ["Up to five pages", "Custom, responsive design", "Motion and interaction", "SEO and performance basics", "A CMS for quick updates"],
-  },
-  {
-    name: "Studio",
-    pitch: "Brand and website, designed and built together.",
-    recommended: true,
-    includes: [
-      "Brand identity or refresh",
-      "Strategy, site map and content plan",
-      "Custom design system",
-      "Multi-page site with motion and 3D",
-      "SEO, analytics and a CMS",
-    ],
-  },
-  {
-    name: "Partner",
-    pitch: "An ongoing studio team for a brand that keeps moving.",
-    includes: [
-      "Monthly design and development time",
-      "New pages, features and campaigns",
-      "AI assistants and automations",
-      "Performance and SEO reviews",
-      "Priority support",
-    ],
-  },
-];
 
 const FAQ = [
   {
@@ -99,7 +69,7 @@ export default function PricingPage() {
                   <li key={x}>{x}</li>
                 ))}
               </ul>
-              <a className={`${styles.planCta} arrowHost`} href="#contact">
+              <a className={`${styles.planCta} arrowHost`} href="/contact#inquiry">
                 Get a quote
                 <Arrow className={styles.planArrow} />
               </a>

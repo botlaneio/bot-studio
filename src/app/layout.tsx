@@ -47,12 +47,14 @@ export const metadata: Metadata = {
     ],
     apple: "/apple-touch-icon.png",
   },
+  twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION, images: ["/hero.jpg"] },
   openGraph: {
     type: "website",
     siteName: "Botlane Studios",
     title: TITLE,
     description: DESCRIPTION,
     url: SITE_URL,
+    images: [{ url: "/hero.jpg", alt: "Botlane Studios — cobalt floral portrait" }],
   },
 };
 

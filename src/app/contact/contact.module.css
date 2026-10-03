@@ -237,3 +237,6 @@
     max-width: none;
   }
 }
+
+/* Cross-page inquiry links land below the fixed navigation. */
+.panel { scroll-margin-top: 90px; }

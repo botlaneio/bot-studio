@@ -6,6 +6,7 @@ import { DOCS } from "./docs";
 import styles from "./knowledge.module.css";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/knowledge" },
   title: "Knowledge",
   description: "Documents about Botlane Studios, the design studio of BotLane LLC, drawn from what this site already says.",
 };

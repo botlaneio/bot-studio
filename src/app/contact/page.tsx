@@ -4,6 +4,7 @@ import { ContactForm } from "./ContactForm";
 import styles from "./contact.module.css";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/contact" },
   title: "Contact",
   description:
     "Talk to Botlane Studios in Sheridan, Wyoming. Email admin@botlane.io or call +1 307 218 5715.",
@@ -58,7 +59,7 @@ export default function ContactPage() {
           </div>
         </div>
 
-        <div className={styles.panel}>
+        <div id="inquiry" className={styles.panel}>
           <h2 className={styles.talk}>Let&apos;s talk!</h2>
           <p className={styles.hear}>We&apos;d love to hear from you and your team.</p>
           <ContactForm />

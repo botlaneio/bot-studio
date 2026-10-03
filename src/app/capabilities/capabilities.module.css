@@ -148,3 +148,12 @@
     grid-column: 2;
   }
 }
+
+.service { display: grid; grid-template-columns: minmax(0, 420px) minmax(0, 1fr); gap: 64px; align-items: start; }
+.serviceImage { width: 100%; height: auto; max-height: 560px; object-fit: cover; border-radius: 16px; }
+.serviceCopy { display: grid; gap: 28px; }
+.deliverables { margin: 0; padding-left: 22px; font-size: 18px; line-height: 1.8; }
+.deliverables li::marker { color: var(--accent); }
+.serviceCta { display: inline-flex; justify-self: start; padding: 16px 24px; border-radius: 12px; background: var(--accent); color: white; }
+.serviceBack { color: #83bfff; text-decoration: underline; text-underline-offset: 4px; }
+@media (max-width: 899px) { .service { grid-template-columns: 1fr; gap: 32px; } .serviceImage { max-height: 380px; } }

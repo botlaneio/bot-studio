@@ -8,6 +8,7 @@ import { SheridanClock } from "@/components/SheridanClock";
 import styles from "./about.module.css";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/about" },
   title: "About us",
   description:
     "Botlane Studios is the design studio of BotLane LLC: a small team in Sheridan, Wyoming, building websites for brands worldwide.",

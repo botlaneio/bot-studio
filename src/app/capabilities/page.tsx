@@ -5,6 +5,7 @@ import page from "@/components/page/Page.module.css";
 import styles from "./capabilities.module.css";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/capabilities" },
   title: "Capabilities",
   description:
     "Brand identity, strategy, design, AI systems, SEO and development: the six things Botlane Studios does, under one roof.",

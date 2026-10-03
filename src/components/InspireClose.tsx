@@ -57,8 +57,8 @@ export function InspireClose() {
             <p>We listen first, stay transparent, and deliver what we promise. Every project matters to us.</p>
             <footer>BotLane LLC</footer>
           </blockquote>
-          <a className={`${styles.chat} arrowHost`} href="#contact">
-            Book an intro call
+          <a className={`${styles.chat} arrowHost`} href="/contact#inquiry">
+            Request an intro call
             <Arrow className={styles.chatArrow} />
           </a>
         </div>

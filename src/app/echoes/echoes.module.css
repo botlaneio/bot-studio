@@ -153,3 +153,217 @@
     margin-top: 14px;
   }
 }
+
+/* Below the hero: the Whispers featured card, then a two-column grid,
+   then a short close that points at the site footer. Dark surfaces,
+   no template article copy. */
+
+.featured,
+.more,
+.close {
+  width: calc(1280 * var(--u));
+  max-width: 100%;
+  margin: 0 auto;
+  padding-inline: calc(20 * var(--u));
+}
+
+.featureCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 70vh;
+  margin-top: calc(20 * var(--u));
+  padding: calc(28 * var(--u));
+  overflow: hidden;
+  border-radius: 12px;
+  background: #101216;
+  color: #fff;
+}
+
+.featureImage {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-size: cover;
+  filter: brightness(0.45);
+}
+
+.cardImage {
+  background-position: center;
+  background-size: cover;
+  filter: brightness(0.55);
+}
+
+.featureTop,
+.featureBottom {
+  position: relative;
+  z-index: 1;
+}
+
+.featureTop {
+  display: flex;
+  gap: calc(18 * var(--u));
+  font: 400 calc(13 * var(--u)) / 1.4 var(--mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.featureTop p,
+.featureBottom p,
+.cardBody p {
+  margin: 0;
+}
+
+.featureBottom h2,
+.cardBody h2,
+.closeRow h2 {
+  margin: 0;
+  font: 500 calc(48 * var(--u)) / 1.05 var(--display);
+  letter-spacing: -0.04em;
+}
+
+.featureBottom {
+  max-width: calc(720 * var(--u));
+}
+
+.featureBottom h2 {
+  margin-bottom: calc(12 * var(--u));
+}
+
+.excerpt,
+.cardBody p {
+  margin-top: calc(10 * var(--u));
+  font: 400 calc(16 * var(--u)) / 1.5 var(--display);
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.more {
+  padding-top: calc(20 * var(--u));
+  padding-bottom: calc(20 * var(--u));
+}
+
+.moreGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: calc(20 * var(--u));
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(420 * var(--u));
+  overflow: hidden;
+  border-radius: 12px;
+  background: #101216;
+}
+
+.cardImage {
+  position: relative;
+  height: calc(220 * var(--u));
+  filter: brightness(0.55);
+}
+
+.cardBody {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: calc(10 * var(--u));
+  padding: calc(22 * var(--u));
+}
+
+.cardBody h2 {
+  font-size: calc(28 * var(--u));
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  gap: calc(12 * var(--u));
+  font: 400 calc(12 * var(--u)) / 1.4 var(--mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.close {
+  padding-top: calc(64 * var(--u));
+  padding-bottom: calc(72 * var(--u));
+}
+
+.closeRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: calc(40 * var(--u));
+  margin-top: calc(28 * var(--u));
+}
+
+.closeRow h2 {
+  max-width: calc(520 * var(--u));
+}
+
+.chat {
+  display: inline-flex;
+  align-items: center;
+  height: calc(46 * var(--u));
+  margin-top: calc(28 * var(--u));
+  padding: 0 calc(16 * var(--u));
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  font: 400 calc(14 * var(--u)) / 1 var(--mono);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 899px) {
+  .featured,
+  .more,
+  .close {
+    width: auto;
+    padding-inline: 20px;
+  }
+
+  .featureCard {
+    min-height: 78vh;
+    padding: 20px;
+  }
+
+  .featureTop {
+    flex-wrap: wrap;
+    font-size: 12px;
+  }
+
+  .featureBottom h2,
+  .closeRow h2 {
+    font-size: 32px;
+  }
+
+  .moreGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    min-height: 0;
+  }
+
+  .cardImage {
+    height: 200px;
+  }
+
+  .cardBody h2 {
+    font-size: 24px;
+  }
+
+  .closeRow {
+    flex-direction: column;
+  }
+
+  .chat {
+    height: 44px;
+    font-size: 13px;
+  }
+}

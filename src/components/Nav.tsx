@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { Arrow } from "./motion/Arrow";
 import { lockScroll } from "./motion/SmoothScroll";
 import { CAPABILITIES, capabilityHref } from "./capabilities";
+import { CapabilityIcon } from "./CapabilityIcon";
 import styles from "./Nav.module.css";
 
 const LINKS = [
@@ -166,16 +167,9 @@ export function Nav() {
                         onClick={() => setOpen(false)}
                       >
                         <span className={styles.num}>{String(i + 1).padStart(2, "0")}</span>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          className={styles.itemThumb}
-                          src={item.image}
-                          alt={item.title}
-                          width={42}
-                          height={42}
-                          loading="lazy"
-                          decoding="async"
-                        />
+                        <span className={styles.itemThumb}>
+                          <CapabilityIcon slug={item.slug} />
+                        </span>
                         <span className={styles.itemText}>
                           <span className={styles.itemTitle}>{item.title}</span>
                           <span className={styles.itemLine}>{item.line}</span>
@@ -276,16 +270,9 @@ export function Nav() {
                     <li key={item.title}>
                       <Link href={capabilityHref(item.slug)} onClick={closeMobile} tabIndex={mobileCaps ? 0 : -1}>
                         <span className={styles.mobileCapNum}>{String(i + 1).padStart(2, "0")}</span>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          className={styles.mobileCapThumb}
-                          src={item.image}
-                          alt={item.title}
-                          width={32}
-                          height={32}
-                          loading="lazy"
-                          decoding="async"
-                        />
+                        <span className={styles.mobileCapThumb}>
+                          <CapabilityIcon slug={item.slug} />
+                        </span>
                         <span>
                           <span className={styles.mobileCapTitle}>{item.title}</span>
                           <span className={styles.mobileCapLine}>{item.line}</span>

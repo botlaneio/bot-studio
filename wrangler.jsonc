@@ -20,5 +20,10 @@
   "images": {
     // Next.js image optimization through Cloudflare Images.
     "binding": "IMAGES"
+  },
+  "previews": {
+    "images": {
+      "binding": "IMAGES"
+    }
   }
 }

@@ -232,6 +232,8 @@
   background: var(--accent);
   color: #ffffff;
   box-shadow: 0 8px 24px -10px rgba(0, 119, 230, 0.8);
+  /* .btn uppercases labels; this one must read exactly "Explore". */
+  text-transform: none;
 }
 
 .btnLight {

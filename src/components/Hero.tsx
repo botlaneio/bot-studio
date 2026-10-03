@@ -74,8 +74,8 @@ export function Hero() {
         </div>
 
         <div className={styles.ctas}>
-          <a className={`${styles.btn} ${styles.btnPrimary} arrowHost`} href="#craft">
-            See our craft
+          <a className={`${styles.btn} ${styles.btnPrimary} arrowHost`} href="/capabilities">
+            Explore
             <Arrow className={styles.btnArrow} />
           </a>
           <a className={`${styles.btn} ${styles.btnLight} arrowHost`} href="#contact">

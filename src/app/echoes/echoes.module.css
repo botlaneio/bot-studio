@@ -1,40 +1,25 @@
-/* Echoes hero. Horizontal measure and the word size are the homepage
-   lockup (Hero.module.css .lockup / .stage), not a full-bleed word.
-   Desktop: stage is 1280u and centred; the lockup sits at left 132u,
-   padding-left 18u, width 901u, font 600 130u/1 Figtree, tracking -0.045em.
-   Phones: stage padding 28px 20px 40px, lockup padding 8px 12px,
-   font-size clamp(30px, 10.4vw, 86px).
-   Portrait tablets: stage padding 0 48px 56px, lockup padding 10px 16px,
-   font-size 116px. */
+/* Echoes hero, matched to the Whispers hero on
+   botlanestudios.framer.website/whispers, in this site's dark theme.
+   Whispers is a light page (#fafafa) with a gray word (#797d82), an orange
+   marker, and a #cfd0d4 hairline. Here the page stays black, the word is the
+   same gray lifted so it reads on black, and the marker uses the site blue
+   instead of the template orange. No photo. */
 
 .hero {
   padding-top: calc(72 * var(--u));
-  padding-bottom: calc(56 * var(--u));
+  padding-bottom: calc(28 * var(--u));
 }
 
 .stage {
   width: calc(1280 * var(--u));
   margin: 0 auto;
+  padding-inline: calc(40 * var(--u));
 }
 
-.measure {
-  box-sizing: border-box;
-  width: calc(901 * var(--u));
-  margin-left: calc(132 * var(--u));
-  padding-left: calc(18 * var(--u));
-}
-
-.word {
-  margin: 0;
-  font: 600 calc(130 * var(--u)) / 1 var(--display);
-  letter-spacing: -0.045em;
-  color: rgba(255, 255, 255, 0.55);
-}
-
+/* Marker 20x3 and a hairline, above the word, full width of the stage. */
 .rule {
   display: flex;
   align-items: center;
-  margin-top: calc(18 * var(--u));
 }
 
 .tick {
@@ -47,22 +32,66 @@
 .hairline {
   flex: 1;
   height: 1px;
-  background: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.word {
+  margin: calc(28 * var(--u)) 0 0;
+  font: 600 calc(318 * var(--u)) / 1.1 var(--display);
+  letter-spacing: -0.06em;
+  text-align: center;
+  color: #8b9096;
 }
 
 .row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   gap: calc(40 * var(--u));
-  align-items: start;
-  margin-top: calc(28 * var(--u));
+  margin-top: calc(36 * var(--u));
+  padding: calc(28 * var(--u)) calc(10 * var(--u)) 0;
 }
 
 .subtitle {
-  max-width: calc(420 * var(--u));
+  max-width: calc(430 * var(--u));
   margin: 0;
   font: 400 calc(19 * var(--u)) / 1.5 var(--display);
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.lines {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: calc(8 * var(--u));
+  width: calc(280 * var(--u));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font: 400 calc(15 * var(--u)) / 1.45 var(--display);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.lines li {
+  display: flex;
+  justify-content: flex-end;
+  gap: calc(8 * var(--u));
+  text-align: right;
+}
+
+.plus {
+  color: var(--accent);
+}
+
+/* The faint rule grid under the Whispers hero, drawn in white for the dark page. */
+.grid {
+  height: calc(60 * var(--u));
+  margin-top: calc(28 * var(--u));
+  opacity: 0.35;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.14) 1px, transparent 1px);
+  background-size: calc(16 * var(--u)) calc(16 * var(--u));
 }
 
 .byline {
@@ -76,7 +105,6 @@
   margin-top: calc(18 * var(--u));
 }
 
-/* Phones, and the shared stacked breakpoint the homepage hero uses. */
 @media (max-width: 899px), (max-width: 1366px) and (min-width: 900px) and (orientation: portrait) {
   .hero {
     padding-top: 0;
@@ -85,32 +113,18 @@
 
   .stage {
     width: auto;
-    padding: 28px 20px 40px;
-  }
-
-  .measure {
-    width: auto;
-    margin-left: 0;
-    padding: 8px 12px;
+    padding: 28px 20px 24px;
   }
 
   .word {
-    font-size: clamp(30px, 10.4vw, 86px);
-  }
-
-  .rule {
-    margin-top: 16px;
-  }
-
-  .tick {
-    width: 20px;
-    height: 3px;
+    font-size: clamp(64px, 18vw, 160px);
   }
 
   .row {
-    grid-template-columns: 1fr;
-    gap: 14px;
-    margin-top: 20px;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 24px;
+    padding: 20px 0 0;
   }
 
   .subtitle {
@@ -118,27 +132,24 @@
     font-size: 17px;
   }
 
-  .byline {
+  .lines {
+    align-items: flex-start;
+    width: auto;
     font-size: 15px;
+  }
+
+  .lines li {
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  .grid {
+    height: 40px;
+    margin-top: 20px;
+    background-size: 16px 16px;
   }
 
   .sectionBody {
     margin-top: 14px;
-  }
-}
-
-/* Portrait tablets: the homepage hero's own padding and lockup size. */
-@media (max-width: 1366px) and (min-width: 900px) and (orientation: portrait) {
-  .stage {
-    width: 100%;
-    padding: 0 48px 56px;
-  }
-
-  .measure {
-    padding: 10px 16px;
-  }
-
-  .word {
-    font-size: 116px;
   }
 }

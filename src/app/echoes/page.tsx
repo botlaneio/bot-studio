@@ -11,29 +11,40 @@ export const metadata: Metadata = {
 
 const delay = (s: number) => ({ "--reveal-delay": `${s}s` }) as CSSProperties;
 
+/** The three lines beside the subtitle on the Whispers hero. */
+const LINES = [
+  "Studio projects and case studies",
+  "Notes on design and process",
+  "Ideas, insights, and inspiration",
+];
+
 export default function EchoesPage() {
   return (
     <main className={page.page}>
       <header className={styles.hero}>
         <div className={styles.stage}>
-          <div className={styles.measure}>
-            <h1 className={styles.word} data-reveal="" style={{ ["--reveal-y" as string]: "60px" }}>
-              echoes
-            </h1>
-            <div className={styles.rule} data-reveal="" style={delay(0.08)} aria-hidden="true">
-              <span className={styles.tick} />
-              <span className={styles.hairline} />
-            </div>
-            <div className={styles.row}>
-              <p className={styles.subtitle} data-reveal="" style={delay(0.12)}>
-                Articles, notes on creativity, strategy and making things work.
-              </p>
-              <p className={styles.byline} data-reveal="" style={delay(0.16)}>
-                {ECHOES_AUTHOR}
-              </p>
-            </div>
+          <div className={styles.rule} data-reveal="" aria-hidden="true">
+            <span className={styles.tick} />
+            <span className={styles.hairline} />
+          </div>
+          <h1 className={styles.word} data-reveal="" style={{ ["--reveal-y" as string]: "100px" }}>
+            echoes
+          </h1>
+          <div className={styles.row}>
+            <p className={styles.subtitle} data-reveal="" style={delay(0.12)}>
+              Articles, notes on creativity, strategy and making things work.
+            </p>
+            <ul className={styles.lines}>
+              {LINES.map((line, i) => (
+                <li key={line} data-reveal="" style={delay(0.16 + i * 0.04)}>
+                  <span className={styles.plus} aria-hidden="true">+</span>
+                  {line}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
+        <div className={styles.grid} aria-hidden="true" />
       </header>
 
       {ECHOES_POSTS.map((post) => (

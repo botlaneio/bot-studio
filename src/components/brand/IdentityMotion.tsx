@@ -34,6 +34,10 @@ export function IdentityMark({ className = "" }: { className?: string }) {
   return <svg className={className} viewBox="0 0 240 240" fill="none" aria-hidden="true"><path className={styles.markLeft} d="M110 32C62 32 24 70 24 118s38 86 86 86V32Z" fill="currentColor" /><path className={styles.markRight} d="M130 36v172c48 0 86-38 86-86s-38-86-86-86Z" fill="currentColor" /></svg>;
 }
 
+export function BalancedIdentityMark() {
+  return <svg viewBox="0 0 240 240" fill="none" aria-hidden="true">{[0, 90, 180, 270].map((angle) => <g key={angle} transform={`rotate(${angle} 120 120)`}><path d="M38 38h70v26H64v44H38V38Z" fill="currentColor" /><path d="M84 84h24v24H84Z" fill="currentColor" opacity=".5" /></g>)}</svg>;
+}
+
 export function BrandPalette() {
   const [selected, setSelected] = useState(0);
   const colours = [{ name: "Cobalt", hex: "#0077E6", ink: "#fff" }, { name: "Chalk", hex: "#F5F5F5", ink: "#050608" }, { name: "Graphite", hex: "#171B22", ink: "#fff" }];

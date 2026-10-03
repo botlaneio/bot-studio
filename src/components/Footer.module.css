@@ -100,7 +100,7 @@
   gap: 8px;
   width: auto;
   justify-self: start;
-  height: calc(56 * var(--u));
+  height: calc(48 * var(--u));
   padding-inline: 14px;
   border: 0;
   border-radius: 10px;
@@ -387,7 +387,7 @@
   }
 
   .join {
-    height: 52px;
+    height: 44px;
     font-size: 12px;
   }
 

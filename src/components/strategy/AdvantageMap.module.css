@@ -12,7 +12,7 @@
 .photo { position: absolute; inset: 0; margin: 0; opacity: 0; transform: scale(1.025); transition: opacity 360ms var(--ease),transform 480ms var(--ease); pointer-events: none; }
 .photo img { object-fit: cover; }
 .current { opacity: 1; transform: scale(1); z-index: 1; }
-.preview { position: absolute; right: 0; bottom: 65px; width: 135px; aspect-ratio: 3/4; border: 5px solid #05090c; padding: 0; background: #d4d2c9; cursor: pointer; box-shadow: 0 12px 25px #0005; transform: rotate(4deg); transition: transform var(--change) var(--ease); }
+.preview { position: absolute; z-index: 2; right: 0; bottom: 65px; width: 135px; aspect-ratio: 3/4; border: 5px solid #05090c; padding: 0; background: #d4d2c9; cursor: pointer; box-shadow: 0 12px 25px #0005; transform: rotate(4deg); transition: transform var(--change) var(--ease); }
 .preview:hover { transform: rotate(0deg) translateY(-4px); }
 .preview img { object-fit: cover; }
 .preview span { position: absolute; inset: auto -5px -34px; color: #c6cbd0; font: .58rem/1.5 var(--mono); text-align: right; white-space: nowrap; }

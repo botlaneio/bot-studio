@@ -204,8 +204,9 @@
 
 .list {
   display: grid;
+  align-content: start;
   margin: 0;
-  padding: calc(4 * var(--u)) 0;
+  padding: 0;
   list-style: none;
 }
 
@@ -214,8 +215,8 @@
   display: grid;
   grid-template-columns: calc(28 * var(--u)) calc(42 * var(--u)) 1fr auto;
   align-items: center;
-  gap: calc(8 * var(--u));
-  padding: calc(6 * var(--u)) calc(12 * var(--u));
+  gap: calc(6 * var(--u));
+  padding: calc(2 * var(--u)) calc(10 * var(--u));
   border-radius: 10px;
   transition: background-color 0.25s ease;
 }
@@ -271,17 +272,17 @@
 
 .itemText {
   display: grid;
-  gap: calc(4 * var(--u));
+  gap: calc(2 * var(--u));
 }
 
 .itemTitle {
-  font: 500 calc(16 * var(--u)) / 1.2 var(--display);
+  font: 500 calc(16 * var(--u)) / 1.1 var(--display);
   letter-spacing: -0.01em;
   color: var(--ink);
 }
 
 .itemLine {
-  font: 400 calc(12.5 * var(--u)) / 1.35 var(--display);
+  font: 400 calc(12.5 * var(--u)) / 1.2 var(--display);
   color: var(--ink-dim);
 }
 

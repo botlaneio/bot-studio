@@ -14,7 +14,15 @@ export default function ContactPage() {
     <main>
       <section className={styles.split} aria-label="Contact">
         <div className={styles.visual}>
-          <div className={styles.photo} aria-hidden="true" />
+          <video
+            className={styles.photo}
+            src="/contact-side.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            aria-hidden="true"
+          />
           <div className={styles.scrim} aria-hidden="true" />
           <div className={styles.visualCopy}>
             <h1 className={styles.move}>

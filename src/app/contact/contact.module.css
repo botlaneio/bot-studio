@@ -1,5 +1,5 @@
 /* Contact, matched to the split on botlanestudios.framer.website/contact,
-   in this site's dark theme. Left is the studio portrait; right is the form.
+   in this site's dark theme. Left is the vertical studio film; right is the form.
    The video close below is the shared InspireClose, not a second copy. */
 
 .split {
@@ -21,7 +21,9 @@
 .photo {
   position: absolute;
   inset: 0;
-  background: url("/hero.jpg") center 30% / cover no-repeat;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   filter: brightness(0.7);
 }
 

@@ -36,23 +36,61 @@ function WhatsAppIcon({ className }: { className?: string }) {
   );
 }
 
-/** Static blue rosette: filled circles on a phyllotaxis spiral. */
+/**
+ * Blue rosette from the Whispers "Spiral" component (node r7pFEcGWY).
+ * Phyllotaxis of 200 dots. Each dot pulses radius and opacity over 3s,
+ * staggered by its index, via the same SMIL splines. Not a rotation.
+ * On the published page the box is 70px; color token is #0077E6.
+ */
 function Rosette({ className }: { className?: string }) {
-  const count = 128;
+  const count = 200;
   const golden = Math.PI * (3 - Math.sqrt(5));
+  const dotRadius = 5;
+  const duration = 3;
+  const minOpacity = 0.4;
+  const maxOpacity = 1;
+  const minScale = 0.3;
+  const maxScale = 1.4;
+  const reach = 200 - dotRadius;
   const dots = [];
   for (let i = 0; i < count; i++) {
-    const t = (i + 0.5) / count;
-    const radius = Math.sqrt(t) * 29.5;
-    const angle = i * golden;
-    const x = 35 + Math.cos(angle) * radius;
-    const y = 35 + Math.sin(angle) * radius;
-    const r = 1.62 - t * 0.62;
-    dots.push(<circle key={i} cx={x.toFixed(2)} cy={y.toFixed(2)} r={r.toFixed(2)} />);
+    const c = i + 0.5;
+    const l = c / count;
+    const radius = Math.sqrt(l) * reach;
+    const angle = c * golden;
+    const x = 200 + Math.cos(angle) * radius;
+    const y = 200 + Math.sin(angle) * radius;
+    const begin = `${(l * duration).toFixed(4)}s`;
+    const rValues = `${dotRadius * minScale};${dotRadius * maxScale};${dotRadius * minScale}`;
+    const oValues = `${minOpacity};${maxOpacity};${minOpacity}`;
+    dots.push(
+      <circle key={i} cx={x.toFixed(2)} cy={y.toFixed(2)} r={dotRadius} fill="#0077E6" opacity="0">
+        <animate
+          attributeName="r"
+          values={rValues}
+          dur={`${duration}s`}
+          begin={begin}
+          repeatCount="indefinite"
+          calcMode="spline"
+          keyTimes="0;0.5;1"
+          keySplines="0.4 0 0.6 1;0.4 0 0.6 1"
+        />
+        <animate
+          attributeName="opacity"
+          values={oValues}
+          dur={`${duration}s`}
+          begin={begin}
+          repeatCount="indefinite"
+          calcMode="spline"
+          keyTimes="0;0.5;1"
+          keySplines="0.4 0 0.6 1;0.4 0 0.6 1"
+        />
+      </circle>,
+    );
   }
   return (
-    <svg className={className} viewBox="0 0 70 70" aria-hidden="true">
-      <g fill="#0077E6">{dots}</g>
+    <svg className={className} viewBox="0 0 400 400" aria-hidden="true">
+      {dots}
     </svg>
   );
 }

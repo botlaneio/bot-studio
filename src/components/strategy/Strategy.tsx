@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { StrategyIllustration } from "./StrategyIllustration";
 import { AdvantageMap } from "./AdvantageMap";
 import Link from "next/link";
 import { Arrow } from "../motion/Arrow";
@@ -73,11 +74,11 @@ export function Strategy() {
         </section>
         <section className={common.fit} aria-labelledby="fit-title">
           <div className={common.sectionHead}><p className={common.eyebrow}>04 / When it helps</p><div><h2 id="fit-title">A foundation for what’s next.</h2><p className={common.body}>Start with strategy when the next step needs a clearer direction.</p></div></div>
-          <ul className={common.fitList}>{useCases.map(([title, copy]) => <li key={title}><h3>{title}</h3><p className={common.body}>{copy}</p></li>)}</ul>
+          <ul className={common.fitList}>{useCases.map(([title, copy]) => <li key={title}><StrategyIllustration kind={title} compact /><h3>{title}</h3><p className={common.body}>{copy}</p></li>)}</ul>
         </section>
         <section className={common.process} aria-labelledby="working-title">
           <div className={common.sectionHead}><p className={common.eyebrow}>05 / Working together</p><div><h2 id="working-title">Listen. Examine.<br />Decide. Align.</h2><p className={common.body}>A focused, collaborative process to turn open questions into agreed decisions.</p></div></div>
-          <ol className={common.processList}>{process.map(([title, copy], i) => <li key={title}><span className={common.eyebrow}>0{i + 1}</span><h3>{title}</h3><p className={common.body}>{copy}</p></li>)}</ol>
+          <ol className={common.processList}>{process.map(([title, copy], i) => <li key={title}><StrategyIllustration kind={title} /><span className={common.eyebrow}>0{i + 1}</span><h3>{title}</h3><p className={common.body}>{copy}</p></li>)}</ol>
           <p className={common.scope}>Scope, research methods, timeline and review rounds are agreed in your written proposal before we begin.</p>
         </section>
         <section className={common.faq} aria-labelledby="strategy-faq">

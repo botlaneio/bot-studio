@@ -83,3 +83,11 @@
 .deliverables li:first-child::before { top: 9px; }
 .deliverables li:last-child { border-bottom: 0; }
 @media(max-width:760px) { .workReveal { grid-template-columns: 1fr; gap: 26px; } .workExplanation { border-left: 0; padding-left: 0; } }
+
+.serviceIcon { display: block; width: 72px; height: 54px; margin: 0 0 22px; color: #a9aaa7; }
+.processArt { display: block; width: 100%; max-width: 160px; height: 120px; margin: 0 0 26px; color: #adaeaa; }
+.paperFill { fill: #e7e3d8; stroke: #777c7b; }
+.blueStroke { stroke: #64a8e9; }
+.blueFill { fill: #468fd0; stroke: #468fd0; }
+.checkStroke { stroke: #f2f0e9; }
+@media(max-width:760px) { .processArt { max-width: 130px; height: 98px; margin-bottom: 20px; } }

@@ -75,11 +75,11 @@ export function Hero() {
 
         <div className={styles.ctas}>
           <a className={`${styles.btn} ${styles.btnPrimary} arrowHost`} href="#craft">
-            <Scramble text="See our craft" delay={1150} duration={600} />
+            See our craft
             <Arrow className={styles.btnArrow} />
           </a>
           <a className={`${styles.btn} ${styles.btnLight} arrowHost`} href="#contact">
-            <Scramble text="Let's chat" delay={1350} duration={600} />
+            Let's chat
             <Arrow className={styles.btnArrow} />
           </a>
         </div>

@@ -1,7 +1,7 @@
 /* Hero: the Figma artboard is 1280 × 797. Everything sits on a 1280u-wide stage
    (--u is drawn at 90% of the window's artboard scale, globals.css), centred,
    so the content has a margin on each side while the photo stays full-bleed.
-   The stage is 23 units taller than the artboard. Under 900px the
+   The extra 23 units keep the showreel caption on the photo. Under 900px the
    stage re-flows into one column. */
 .hero {
   position: relative;
@@ -66,7 +66,8 @@
 .lockup,
 .message,
 .time,
-.ctas {
+.ctas,
+.reel {
   position: absolute;
 }
 
@@ -244,6 +245,65 @@
   color: var(--accent);
 }
 
+/* Showreel: plays the botLane intro and links to botlane.io. */
+.reel {
+  left: calc(874 * var(--u));
+  top: calc(530 * var(--u));
+  width: calc(386 * var(--u));
+  display: block;
+}
+
+.reelHead {
+  display: flex;
+  align-items: center;
+  gap: calc(12 * var(--u));
+  padding: 0 calc(8 * var(--u));
+  font: 400 calc(11 * var(--u)) / 1 var(--mono);
+  text-transform: uppercase;
+}
+
+.reelHead hr {
+  flex: 1;
+  height: 1px;
+  margin: 0;
+  border: 0;
+  background: var(--rule);
+}
+
+.reelVideo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 386 / 227;
+  margin-top: calc(12 * var(--u));
+  overflow: hidden;
+  border-radius: 8px;
+  background: #0a0a0b;
+}
+
+.reelVideo video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease-out);
+}
+
+.reel:hover .reelVideo video {
+  transform: scale(1.03);
+}
+
+.reelCap {
+  margin-top: calc(12 * var(--u));
+  font: 400 calc(11 * var(--u)) / 1 var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  transition: color 0.2s ease;
+}
+
+.reel:hover .reelCap {
+  color: var(--accent);
+}
+
 /* ---------- load sequence (timings from the template) ---------- */
 @media (prefers-reduced-motion: no-preference) {
   /* Photo: fades in, zooming down from 130% and settling up (1s). */
@@ -297,6 +357,10 @@
     --from-y: 70px;
   }
 
+  .reel {
+    animation: rise-fade 1s var(--ease-rise) 1.3s both;
+    --from-y: 30px;
+  }
 }
 
 @keyframes photo-in {
@@ -390,7 +454,8 @@
   .lockup,
   .message,
   .time,
-  .ctas {
+  .ctas,
+  .reel {
     position: relative;
     left: auto;
     top: auto;
@@ -449,6 +514,18 @@
     width: 15px;
     height: 15px;
   }
+
+  .reel {
+    order: 7;
+    width: 100%;
+    max-width: 440px;
+    min-width: 0;
+  }
+
+  .reelHead,
+  .reelCap {
+    font-size: 10px;
+  }
 }
 
 /* Portrait tablets: the hero fills the screen, the photo's face stays clear
@@ -464,19 +541,20 @@
     background-position: center 20%;
   }
 
-  /* Headline and lockup across the top; the lines and buttons stack below. */
+  /* Headline and lockup across the top; the lines and buttons on the left,
+     the showreel beside them on the right. */
   .stage {
     width: 100%;
     margin-top: auto;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr minmax(0, 400px);
     grid-template-areas:
-      "headline"
-      "lockup"
-      "message"
-      "tagline"
-      "time"
-      "ctas";
-    gap: 22px;
+      "headline headline"
+      "lockup lockup"
+      "message reel"
+      "tagline reel"
+      "time reel"
+      "ctas reel";
+    gap: 22px 48px;
     padding: 0 48px 56px;
   }
 
@@ -523,5 +601,16 @@
   .btnArrow {
     width: 17px;
     height: 17px;
+  }
+
+  .reel {
+    grid-area: reel;
+    align-self: end;
+    max-width: none;
+  }
+
+  .reelHead,
+  .reelCap {
+    font-size: 12px;
   }
 }

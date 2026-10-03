@@ -33,7 +33,7 @@
 }
 
 /* The control itself does not move. The site's button pop-in is turned off
-   here so only the logo, below, plays the quiet arrival. */
+   here. On load the mark turns once in 3D and a soft flash fires, then both stop. */
 .dock .launcher {
   position: relative;
   z-index: 2;
@@ -44,6 +44,7 @@
   line-height: 0;
   cursor: pointer;
   animation: none;
+  perspective: 160px;
 }
 
 .dock .launcher:hover,
@@ -57,33 +58,65 @@
   border-radius: 12px;
 }
 
-/* Quiet version of the site's pop-in: a small rise and scale, once, then still.
-   Not a loop, and not the logo file's own shutter. Square, because this is
-   only the blue mark, not the wordmark. */
+/* One 3D turn of the blue mark on load, then still. Not a loop, and not the
+   logo file's own shutter. Square, because this is only the blue mark. */
 .logo {
   display: block;
   height: 42px;
   width: 42px;
-  animation: lane-arrive 0.7s cubic-bezier(0.2, 0.75, 0.2, 1) both;
+  transform-origin: center center;
+  animation: lane-turn 0.95s cubic-bezier(0.22, 0.7, 0.24, 1) 1 both;
   filter: drop-shadow(0 8px 12px rgba(0, 36, 80, 0.35));
 }
 
-@keyframes lane-arrive {
+/* Soft white light as the mark comes back to face the camera. One brief
+   falloff, not a strobe: it never goes fully opaque and it does not repeat. */
+.dock .launcher::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: -10px;
+  border-radius: 22px;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at 50% 46%,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.42) 36%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  opacity: 0;
+  animation: lane-flash 0.46s cubic-bezier(0.16, 0.72, 0.28, 1) 0.62s 1 both;
+}
+
+@keyframes lane-turn {
   from {
-    opacity: 0;
-    translate: 0 6px;
-    scale: 0.98;
+    transform: rotateY(0deg);
   }
   to {
-    opacity: 1;
-    translate: 0 0;
-    scale: 1;
+    transform: rotateY(360deg);
+  }
+}
+
+@keyframes lane-flash {
+  0% {
+    opacity: 0;
+  }
+  18% {
+    opacity: 0.58;
+  }
+  100% {
+    opacity: 0;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .logo {
+  .logo,
+  .dock .launcher::after {
     animation: none;
+  }
+
+  .dock .launcher::after {
+    opacity: 0;
   }
 }
 

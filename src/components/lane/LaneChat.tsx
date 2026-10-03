@@ -84,7 +84,7 @@ export function LaneChat() {
   );
 }
 
-/** Blue plate from the left of public/logo.svg (viewBox 0 0 64 64, before the wordmark). Static: no shutter loop. */
+/** Blue plate from the left of public/logo.svg (viewBox 0 0 64 64, before the wordmark). The SVG does not loop; the one-shot spin and flash are CSS. */
 function LaneMark({ className }: { className?: string }) {
   return (
     <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="42" height="42" aria-hidden="true">

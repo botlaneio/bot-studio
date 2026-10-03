@@ -543,7 +543,9 @@
 }
 
 /* Portrait tablets: the hero fills the screen, the photo's face stays clear
-   at the top, and the stack sits along the bottom at a tablet scale. */
+   at the top, and one column sits along the bottom at a tablet scale.
+   Lockup, headline, copy, then the showreel. A side-by-side reel overlapped
+   the wordmark on an iPad in portrait. */
 @media (max-width: 1366px) and (min-width: 900px) and (orientation: portrait) {
   .hero {
     display: flex;
@@ -555,20 +557,20 @@
     background-position: center 20%;
   }
 
-  /* Headline and lockup across the top; the lines and buttons on the left,
-     the showreel beside them on the right. */
   .stage {
     width: 100%;
+    min-width: 0;
     margin-top: auto;
-    grid-template-columns: 1fr minmax(0, 400px);
+    grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
-      "headline headline"
-      "lockup lockup"
-      "message reel"
-      "tagline reel"
-      "time reel"
-      "ctas reel";
-    gap: 22px 48px;
+      "lockup"
+      "headline"
+      "message"
+      "tagline"
+      "time"
+      "ctas"
+      "reel";
+    gap: 22px;
     padding: 0 48px 56px;
   }
 
@@ -578,22 +580,32 @@
   .tagline { grid-area: tagline; }
   .time { grid-area: time; }
   .ctas { grid-area: ctas; }
+  .reel { grid-area: reel; }
 
   .headline,
-  .lockup {
-    width: fit-content;
+  .lockup,
+  .message,
+  .tagline,
+  .time,
+  .ctas,
+  .reel {
+    min-width: 0;
+    max-width: 100%;
   }
 
-  /* Balanced wrapping keeps the box at its widest; cap it to the two lines. */
+  /* Two lines, never wider than the column. */
   .headline {
-    max-width: 560px;
+    width: fit-content;
+    max-width: min(560px, 100%);
     padding: 14px 18px;
     font-size: 44px;
   }
 
+  /* One line, sized to the column so the wordmark cannot spill onto the copy. */
   .lockup {
+    width: fit-content;
     padding: 10px 16px;
-    font-size: 116px;
+    font-size: clamp(72px, 10.2vw, 104px);
   }
 
   .message,
@@ -618,9 +630,10 @@
   }
 
   .reel {
-    grid-area: reel;
-    align-self: end;
-    max-width: none;
+    align-self: start;
+    justify-self: start;
+    width: 100%;
+    max-width: min(520px, 100%);
   }
 
   .reelHead,

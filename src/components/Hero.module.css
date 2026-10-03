@@ -102,7 +102,9 @@
 }
 
 .headline {
-  left: calc(229 * var(--u));
+  /* Same left as the lockup. Both pad 18u, so the headline text
+     starts on the same edge as "Botlane". */
+  left: calc(132 * var(--u));
   top: calc(151 * var(--u));
   width: calc(592 * var(--u));
   margin: 0;

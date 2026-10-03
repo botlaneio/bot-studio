@@ -5,8 +5,18 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Arrow } from "./motion/Arrow";
 import { lockScroll } from "./motion/SmoothScroll";
-import { CAPABILITIES, capabilityHref } from "./capabilities";
+import { CAPABILITIES } from "./capabilities";
 import styles from "./Nav.module.css";
+
+/** Page for each dropdown capability. Slug is the label, lowercased, hyphenated. */
+function capabilityPageHref(title: string) {
+  const slug = title
+    .toLowerCase()
+    .replace(/&/g, " ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  return `/capabilities/${slug}`;
+}
 
 const LINKS = [
   { href: "/about", label: "About Us" },
@@ -158,7 +168,7 @@ export function Nav() {
                   {CAPABILITIES.map((item, i) => (
                     <li key={item.title} style={{ ["--i" as string]: i }}>
                       <Link
-                        href={capabilityHref(item.slug)}
+                        href={capabilityPageHref(item.title)}
                         className={`${styles.item} arrowHost`}
                         data-active={active === i || undefined}
                         onMouseEnter={() => setActive(i)}
@@ -254,7 +264,7 @@ export function Nav() {
                 <ul>
                   {CAPABILITIES.map((item, i) => (
                     <li key={item.title}>
-                      <Link href={capabilityHref(item.slug)} onClick={closeMobile} tabIndex={mobileCaps ? 0 : -1}>
+                      <Link href={capabilityPageHref(item.title)} onClick={closeMobile} tabIndex={mobileCaps ? 0 : -1}>
                         <span className={styles.mobileCapNum}>{String(i + 1).padStart(2, "0")}</span>
                         <span>
                           <span className={styles.mobileCapTitle}>{item.title}</span>

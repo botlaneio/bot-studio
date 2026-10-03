@@ -97,11 +97,11 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: calc(10 * var(--u));
+  gap: 8px;
   width: auto;
   justify-self: start;
   height: calc(56 * var(--u));
-  padding: 0;
+  padding-inline: 14px;
   border: 0;
   border-radius: 10px;
   background: #ffffff;

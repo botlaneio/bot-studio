@@ -98,11 +98,12 @@
   align-items: center;
   justify-content: center;
   gap: calc(10 * var(--u));
-  width: 100%;
+  width: auto;
+  justify-self: start;
   height: calc(56 * var(--u));
-  padding: 0 calc(22 * var(--u));
+  padding: 0;
   border: 0;
-  border-radius: 999px;
+  border-radius: 10px;
   background: #ffffff;
   color: #0a0a0a;
   font: 500 calc(13 * var(--u)) / 1 var(--mono);

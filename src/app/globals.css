@@ -139,6 +139,34 @@ a:focus-visible {
     visibility: hidden;
     animation: scramble-failsafe 0s linear 3s forwards;
   }
+
+  /* Buttons rise and settle. Hover scale uses the scale property so it
+     does not fight a button's own transform. */
+  .js .arrowHost,
+  .js button {
+    animation: btn-pop 0.55s var(--ease-out) backwards;
+    transition: scale 0.35s var(--ease-out);
+  }
+
+  .js .arrowHost:hover,
+  .js .arrowHost:focus-visible,
+  .js button:hover,
+  .js button:focus-visible {
+    scale: 1.03;
+  }
+}
+
+@keyframes btn-pop {
+  from {
+    opacity: 0;
+    translate: 0 8px;
+    scale: 0.96;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
 }
 
 @keyframes scramble-failsafe {

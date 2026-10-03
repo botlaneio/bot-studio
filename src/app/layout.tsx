@@ -5,6 +5,7 @@ import { Footer } from "@/components/Footer";
 import { RevealObserver } from "@/components/motion/RevealObserver";
 import { Nav } from "@/components/Nav";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
+import { LaneChat } from "@/components/lane/LaneChat";
 
 const figtree = Figtree({
   variable: "--font-figtree",
@@ -71,6 +72,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Nav />
         {children}
         <Footer />
+        <LaneChat />
       </body>
     </html>
   );

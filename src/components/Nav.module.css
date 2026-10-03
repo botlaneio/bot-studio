@@ -416,6 +416,7 @@
   color: #ffffff;
   box-shadow: 0 8px 24px -12px rgba(0, 119, 230, 0.9);
   font-family: var(--button);
+  text-transform: none;
   transition: transform 0.25s var(--ease-out);
 }
 
@@ -708,7 +709,7 @@
     font: 400 12px / 1 var(--mono);
     font-family: var(--button);
     letter-spacing: 0.04em;
-    text-transform: uppercase;
+    text-transform: none;
   }
 
   .mobileContact {

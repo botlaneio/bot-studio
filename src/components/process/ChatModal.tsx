@@ -8,7 +8,7 @@ import styles from "./ChatModal.module.css";
 const CLOSE_MS = 320;
 
 /** Opens a WhatsApp chat with the studio, with a first line ready to send. */
-const WHATSAPP = `https://wa.me/13072185715?text=${encodeURIComponent("Hi Botlane Studios, I'd like to talk about a project.")}`;
+const WHATSAPP = `https://wa.me/919979972714?text=${encodeURIComponent("Hi Botlane Studios, I'd like to talk about a project.")}`;
 
 /** The WhatsApp glyph (Simple Icons). */
 const WHATSAPP_PATH =

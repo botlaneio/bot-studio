@@ -23,7 +23,7 @@ const LEGAL = [
   { href: "/terms", label: "Terms" },
 ];
 
-const WHATSAPP = `https://wa.me/13072185715?text=${encodeURIComponent("Hi Botlane Studios, I'd like to talk about a project.")}`;
+const WHATSAPP = `https://wa.me/919979972714?text=${encodeURIComponent("Hi Botlane Studios, I'd like to talk about a project.")}`;
 
 const delay = (s: number) => ({ "--reveal-delay": `${s}s` }) as CSSProperties;
 

@@ -16,7 +16,7 @@ const NAV = [
 
 const TILES = ["/process/card-1.jpg", "/process/card-2.jpg", "/process/card-3.jpg"];
 
-const WHATSAPP = `https://wa.me/13072185715?text=${encodeURIComponent("Hi Botlane Studios, I'd like to talk about a project.")}`;
+const WHATSAPP = `https://wa.me/919979972714?text=${encodeURIComponent("Hi Botlane Studios, I'd like to talk about a project.")}`;
 
 const i = (n: number) => ({ "--i": n }) as CSSProperties;
 

@@ -1,15 +1,30 @@
 /* Lane sits in the corner only if something mounts it. Nothing does. */
 
 .dock {
+  --lane-edge: 16px;
+  --lane-mark: 42px;
+  --lane-gap: 12px;
+  /* Original 20px corner inset, plus about an inch (96px) up and left. */
+  --lane-right: min(
+    max(116px, calc(96px + env(safe-area-inset-right, 0px))),
+    calc(100vw - var(--lane-mark) - var(--lane-edge))
+  );
+  --lane-bottom: min(
+    max(116px, calc(96px + env(safe-area-inset-bottom, 0px))),
+    calc(100vh - var(--lane-mark) - var(--lane-edge))
+  );
+  --lane-bottom: min(
+    max(116px, calc(96px + env(safe-area-inset-bottom, 0px))),
+    calc(100dvh - var(--lane-mark) - var(--lane-edge))
+  );
   position: fixed;
   z-index: 45;
-  right: max(20px, env(safe-area-inset-right));
-  bottom: max(20px, env(safe-area-inset-bottom));
+  right: var(--lane-right);
+  bottom: var(--lane-bottom);
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 12px;
-  width: min(320px, calc(100vw - 32px));
+  width: max-content;
   pointer-events: none;
 }
 
@@ -20,8 +35,10 @@
 /* The control itself does not move. The site's button pop-in is turned off
    here so only the logo, below, plays the quiet arrival. */
 .dock .launcher {
+  position: relative;
+  z-index: 2;
   margin: 0;
-  padding: 6px 0;
+  padding: 0;
   border: 0;
   background: transparent;
   line-height: 0;
@@ -37,7 +54,7 @@
 .dock .launcher:focus-visible {
   outline: 2px solid var(--accent, #0077e6);
   outline-offset: 4px;
-  border-radius: 6px;
+  border-radius: 12px;
 }
 
 /* Quiet version of the site's pop-in: a small rise and scale, once, then still.
@@ -45,9 +62,10 @@
    only the blue mark, not the wordmark. */
 .logo {
   display: block;
-  height: 28px;
-  width: 28px;
+  height: 42px;
+  width: 42px;
   animation: lane-arrive 0.7s cubic-bezier(0.2, 0.75, 0.2, 1) both;
+  filter: drop-shadow(0 8px 12px rgba(0, 36, 80, 0.35));
 }
 
 @keyframes lane-arrive {
@@ -70,7 +88,34 @@
 }
 
 .panel {
-  width: 100%;
+  --lane-panel-w: calc(100vw * 2 / 3);
+  --lane-panel-h: calc(100vh * 2 / 3);
+  --lane-panel-h: calc(100dvh * 2 / 3);
+  position: fixed;
+  z-index: 1;
+  width: var(--lane-panel-w);
+  height: calc(100vh * 2 / 3);
+  height: var(--lane-panel-h);
+  right: max(
+    var(--lane-edge),
+    min(var(--lane-right), calc(100vw - var(--lane-panel-w) - var(--lane-edge)))
+  );
+  bottom: max(
+    var(--lane-edge),
+    min(
+      calc(var(--lane-bottom) + var(--lane-mark) + var(--lane-gap)),
+      calc(100vh - var(--lane-panel-h) - var(--lane-edge))
+    )
+  );
+  bottom: max(
+    var(--lane-edge),
+    min(
+      calc(var(--lane-bottom) + var(--lane-mark) + var(--lane-gap)),
+      calc(100dvh - var(--lane-panel-h) - var(--lane-edge))
+    )
+  );
+  box-sizing: border-box;
+  overflow: auto;
   padding: 16px 16px 14px;
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 10px;

@@ -30,9 +30,9 @@ export function LaneChat() {
   return (
     <div className={styles.dock}>
       {open ? (
-        <section className={styles.panel} id={panelId} aria-label="Lane">
+        <section className={styles.panel} id={panelId} aria-label="Agent Lane">
           <header className={styles.head}>
-            <p className={styles.name}>Lane</p>
+            <p className={styles.name}>Agent Lane</p>
             <button type="button" className={styles.close} onClick={() => setOpen(false)}>
               Close
             </button>
@@ -78,7 +78,7 @@ export function LaneChat() {
         onClick={() => setOpen((value) => !value)}
       >
         <LaneMark className={styles.logo} />
-        <span className={styles.visuallyHidden}>{open ? "Close Lane" : "Open Lane"}</span>
+        <span className={styles.visuallyHidden}>{open ? "Close Agent Lane" : "Open Agent Lane"}</span>
       </button>
     </div>
   );
@@ -87,7 +87,7 @@ export function LaneChat() {
 /** Blue plate from the left of public/logo.svg (viewBox 0 0 64 64, before the wordmark). Static: no shutter loop. */
 function LaneMark({ className }: { className?: string }) {
   return (
-    <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="28" height="28" aria-hidden="true">
+    <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="42" height="42" aria-hidden="true">
       <defs>
         <linearGradient id="lane-mark-plate" x1="32" y1="1" x2="32" y2="63" gradientUnits="userSpaceOnUse">
           <stop offset="0" stopColor="#3D9BFF" />
@@ -107,8 +107,15 @@ function LaneMark({ className }: { className?: string }) {
         <filter id="lane-mark-glow" x="-160%" y="-160%" width="420%" height="420%">
           <feGaussianBlur stdDeviation="3.1" />
         </filter>
+        <linearGradient id="lane-mark-depth" x1="32" y1="1" x2="32" y2="63" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#ffffff" stopOpacity="0.42" />
+          <stop offset="0.28" stopColor="#ffffff" stopOpacity="0" />
+          <stop offset="0.7" stopColor="#00356e" stopOpacity="0" />
+          <stop offset="1" stopColor="#002850" stopOpacity="0.42" />
+        </linearGradient>
       </defs>
       <rect x="1" y="1" width="62" height="62" rx="17" fill="url(#lane-mark-plate)" />
+      <rect x="1" y="1" width="62" height="62" rx="17" fill="url(#lane-mark-depth)" />
       <rect x="1.75" y="1.75" width="60.5" height="60.5" rx="16.3" fill="none" stroke="#fff" strokeOpacity="0.45" strokeWidth="1.5" />
       <rect x="1" y="1" width="62" height="62" rx="17" fill="none" stroke="#00468C" strokeOpacity="0.6" />
       <rect x="12" y="25" width="40" height="14" rx="7" fill="url(#lane-mark-slot)" />

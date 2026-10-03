@@ -1,15 +1,10 @@
 import Image from "next/image";
+import { AdvantageMap } from "./AdvantageMap";
 import Link from "next/link";
 import { Arrow } from "../motion/Arrow";
 import common from "../brand/IdentityAtelier.module.css";
 import styles from "./Strategy.module.css";
 
-const decisions = [
-  ["Audience", "Who are we here for?", "Understand people. See the opportunity."],
-  ["Position", "Why should they choose you?", "Define your difference. Make it credible."],
-  ["Story", "What do they need to know?", "Give your message structure and purpose."],
-  ["Launch", "What matters first?", "Agree the priorities. Plan the next move."],
-];
 const workstreams = [
   ["Audience & competition", "Understand who you need to reach, what they care about and the alternatives they already have.", "Audience priorities · Competitor review · Opportunity map"],
   ["Positioning & messaging", "Clarify your offer, support your difference and give your story a consistent voice.", "Positioning statement · Core messages · Content priorities"],
@@ -57,10 +52,7 @@ export function Strategy() {
         </section>
         <section className={styles.direction} aria-labelledby="direction-title">
           <div className={common.sectionHead}><p className={common.eyebrow}>01 / Find the advantage</p><div><h2 id="direction-title">Four decisions.<br />One direction.</h2><p className={common.body}>We connect your business goals, audience needs and offer before design begins, so every page has a clear job.</p></div></div>
-          <div className={styles.decisionMap}>
-            <svg className={styles.route} viewBox="0 0 1000 100" preserveAspectRatio="none" aria-hidden="true"><path d="M125 30 C230 30 270 75 375 75 S520 15 625 15 S770 65 875 65" /></svg>
-            <ol className={styles.decisionList}>{decisions.map(([title, question, copy], i) => <li key={title}><span className={styles.node} aria-hidden="true" /><span className={common.eyebrow}>0{i + 1} / {title}</span><h3>{question}</h3><p className={common.body}>{copy}</p></li>)}</ol>
-          </div>
+          <AdvantageMap />
         </section>
         <section className={styles.outcomes} aria-labelledby="outcomes-title">
           <div className={common.sectionHead}><p className={common.eyebrow}>02 / A working plan</p><div><h2 id="outcomes-title">Turn questions into<br />a working plan.</h2><p className={common.body}>A shared reference for your team: who the website serves, what it should say and what should ship first.</p></div></div>

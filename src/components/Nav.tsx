@@ -12,7 +12,7 @@ const LINKS = [
   { href: "/about", label: "About Us" },
   { href: "/pricing", label: "Pricing" },
   { href: "/echoes", label: "Echoes" },
-  { href: "#contact", label: "Contact" },
+  { href: "/contact", label: "Contact" },
 ];
 
 /** Fixed over the page: transparent on the hero photo at load, then a

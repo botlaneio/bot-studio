@@ -124,6 +124,30 @@
   height: calc(16 * var(--u));
 }
 
+.btnIcon {
+  width: calc(54 * var(--u));
+  padding: 0;
+  justify-content: center;
+}
+
+.btnIconSvg {
+  width: calc(22 * var(--u));
+  height: calc(22 * var(--u));
+}
+
+.iconLink {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(8 * var(--u));
+}
+
+.entryIcon {
+  width: 1.15em;
+  height: 1.15em;
+  flex: none;
+}
+
+
 /* ---------- Ticker ---------- */
 .ticker {
   overflow: hidden;
@@ -386,6 +410,15 @@
   .btnArrow {
     width: 14px;
     height: 14px;
+  }
+
+  .btnIcon {
+    width: 46px;
+  }
+
+  .btnIconSvg {
+    width: 20px;
+    height: 20px;
   }
 
   .tickerItem {

@@ -2,7 +2,6 @@ import type { CSSProperties } from "react";
 import { Arrow } from "./motion/Arrow";
 import { Scramble } from "./motion/Scramble";
 import { SheridanClock } from "./SheridanClock";
-import { ShowreelVideo } from "./ShowreelVideo";
 import styles from "./Hero.module.css";
 
 /** Side ticks, at their artboard y positions. */
@@ -20,7 +19,7 @@ const vars = (v: Record<string, string | number>) => v as CSSProperties;
 /** The hero, with the template's load sequence: the photo zooms down into
  *  place, the side ticks slide in, the lockup rises from behind a mask, the
  *  headline sharpens in word by word, the mono lines decode, and the buttons
- *  and showreel follow. All of it is CSS keyed to load, except the decoding
+ *  follow. All of it is CSS keyed to load, except the decoding
  *  text (Scramble). */
 export function Hero() {
   return (
@@ -83,18 +82,6 @@ export function Hero() {
             <Arrow className={styles.btnArrow} />
           </a>
         </div>
-
-        <a className={styles.reel} href="https://botlane.io" target="_blank" rel="noopener" aria-label="Meet botlane.io (opens in a new tab)">
-          <div className={styles.reelHead}>
-            <span>Showreel</span>
-            <hr />
-            <span>\\2026</span>
-          </div>
-          <div className={styles.reelVideo}>
-            <ShowreelVideo src="/botlane-intro.mp4" poster="/botlane-intro-poster.jpg" />
-          </div>
-          <div className={styles.reelCap}>Meet botlane.io ↗</div>
-        </a>
       </div>
     </section>
   );

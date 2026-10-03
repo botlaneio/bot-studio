@@ -1,0 +1,62 @@
+/* Document index. Same stage, type and accent as the other inner pages. */
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.item {
+  display: grid;
+  grid-template-columns: calc(56 * var(--u)) 1fr;
+  gap: calc(12 * var(--u));
+  align-items: baseline;
+  padding: calc(26 * var(--u)) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: inherit;
+  text-decoration: none;
+}
+
+.num {
+  font: 400 calc(12 * var(--u)) / 1 var(--mono);
+  letter-spacing: 0.06em;
+  color: var(--accent);
+}
+
+.itemTitle {
+  display: block;
+  font: 500 calc(28 * var(--u)) / 1.15 var(--display);
+  letter-spacing: -0.02em;
+}
+
+.item:hover .itemTitle {
+  color: var(--accent);
+}
+
+.summary {
+  display: block;
+  max-width: calc(640 * var(--u));
+  margin-top: calc(8 * var(--u));
+  font: 400 calc(16 * var(--u)) / 1.55 var(--display);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+@media (max-width: 899px) {
+  .item {
+    grid-template-columns: 36px 1fr;
+    gap: 10px;
+    padding: 20px 0;
+  }
+
+  .num {
+    font-size: 11px;
+  }
+
+  .itemTitle {
+    font-size: 22px;
+  }
+
+  .summary {
+    font-size: 15px;
+  }
+}

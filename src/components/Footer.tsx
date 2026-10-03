@@ -21,6 +21,7 @@ const SITE = [
 const LEGAL = [
   { href: "/privacy", label: "Privacy" },
   { href: "/terms", label: "Terms" },
+  { href: "/knowledge", label: "Knowledge" },
 ];
 
 const WHATSAPP = `https://wa.me/919979972714?text=${encodeURIComponent("Hi Botlane Studios, I'd like to talk about a project.")}`;

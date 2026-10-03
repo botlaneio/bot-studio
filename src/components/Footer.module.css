@@ -94,11 +94,13 @@
 }
 
 .join {
-  display: inline-flex;
+  display: flex;
+  margin-top: calc(28 * var(--u));
   align-items: center;
   justify-content: center;
   gap: 8px;
-  width: auto;
+  width: fit-content;
+  max-width: 100%;
   justify-self: start;
   height: calc(48 * var(--u));
   padding-inline: 14px;
@@ -387,6 +389,7 @@
   }
 
   .join {
+    margin-top: 24px;
     height: 44px;
     font-size: 12px;
   }

@@ -51,7 +51,7 @@ export function Strategy() {
           </figure>
         </section>
         <section className={styles.direction} aria-labelledby="direction-title">
-          <div className={common.sectionHead}><p className={common.eyebrow}>01 / Find the advantage</p><div><h2 id="direction-title">Four decisions.<br />One direction.</h2><p className={common.body}>We connect your business goals, audience needs and offer before design begins, so every page has a clear job.</p></div></div>
+          <div className={common.sectionHead}><p className={common.eyebrow}>01 / Find the advantage</p><div><h2 id="direction-title">A different<br />perspective.</h2><p className={common.body}>We connect your business goals, audience needs and offer before design begins, so every page has a clear job.</p></div></div>
           <AdvantageMap />
         </section>
         <section className={styles.outcomes} aria-labelledby="outcomes-title">

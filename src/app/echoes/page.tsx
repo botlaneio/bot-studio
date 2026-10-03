@@ -19,9 +19,9 @@ const LINES = [
 ];
 
 const CLOSE = [
-  "A question about the work",
-  "A project that needs a shape",
-  "A conversation, not a pitch",
+  "A small studio, making stories and tech",
+  "Websites with the care of a product",
+  "One project at a time",
 ];
 
 export default function EchoesPage() {
@@ -97,7 +97,7 @@ export default function EchoesPage() {
             <span className={styles.hairline} />
           </div>
           <div className={styles.closeRow}>
-            <h2 data-reveal="">Start with a note.</h2>
+            <h2 data-reveal="">Let&apos;s make the next story.</h2>
             <ul className={styles.lines}>
               {CLOSE.map((line) => (
                 <li key={line}>

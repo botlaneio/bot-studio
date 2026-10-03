@@ -181,7 +181,7 @@
 .link {
   font: 500 calc(15 * var(--u)) / 1.25 var(--display);
   letter-spacing: 0.08em;
-  text-transform: uppercase;
+  text-transform: none;
   color: rgba(255, 255, 255, 0.82);
   transition: color 0.2s ease;
 }

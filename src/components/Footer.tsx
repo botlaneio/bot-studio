@@ -175,7 +175,7 @@ export function Footer() {
                 inputMode="email"
               />
               <button type="submit" className={`${styles.join} arrowHost`}>
-                Join our newsletter
+                Newsletter
                 <Arrow className={styles.joinArrow} />
               </button>
             </form>

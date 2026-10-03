@@ -49,7 +49,7 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.32;
+  opacity: 0.16;
   background-image: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0.55px, transparent 0.7px);
   background-size: 7px 7px;
 }

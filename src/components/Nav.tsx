@@ -181,8 +181,8 @@ export function Nav() {
                           className={styles.itemThumb}
                           src={item.image}
                           alt={item.title}
-                          width={80}
-                          height={80}
+                          width={42}
+                          height={42}
                           loading="lazy"
                           decoding="async"
                         />
@@ -291,8 +291,8 @@ export function Nav() {
                           className={styles.mobileCapThumb}
                           src={item.image}
                           alt={item.title}
-                          width={56}
-                          height={56}
+                          width={32}
+                          height={32}
                           loading="lazy"
                           decoding="async"
                         />

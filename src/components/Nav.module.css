@@ -162,7 +162,7 @@
   position: absolute;
   top: 100%;
   left: 50%;
-  width: calc(820 * var(--u));
+  width: calc(720 * var(--u));
   padding-top: calc(22 * var(--u));
   transform: translateX(-50%);
   visibility: hidden;
@@ -179,7 +179,7 @@
 /* List on the left, a preview card on the right, a footer across both. */
 .sheet {
   display: grid;
-  grid-template-columns: 1fr calc(280 * var(--u));
+  grid-template-columns: 1fr calc(240 * var(--u));
   gap: calc(8 * var(--u));
   padding: calc(8 * var(--u));
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -212,21 +212,21 @@
 .item {
   position: relative;
   display: grid;
-  grid-template-columns: calc(28 * var(--u)) calc(80 * var(--u)) 1fr auto;
+  grid-template-columns: calc(28 * var(--u)) calc(42 * var(--u)) 1fr auto;
   align-items: center;
-  gap: calc(12 * var(--u));
-  padding: calc(10 * var(--u)) calc(14 * var(--u));
+  gap: calc(8 * var(--u));
+  padding: calc(6 * var(--u)) calc(12 * var(--u));
   border-radius: 10px;
   transition: background-color 0.25s ease;
 }
 
 .itemThumb {
   display: block;
-  width: calc(80 * var(--u));
-  height: calc(80 * var(--u));
+  width: calc(42 * var(--u));
+  height: calc(42 * var(--u));
   object-fit: cover;
   object-position: center;
-  border-radius: 10px;
+  border-radius: 8px;
   background: #061018;
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06) inset;
 }
@@ -305,7 +305,7 @@
 .preview {
   position: relative;
   overflow: hidden;
-  min-height: calc(330 * var(--u));
+  min-height: calc(260 * var(--u));
   border-radius: 12px;
   background: #04101d;
   isolation: isolate;
@@ -692,19 +692,19 @@
 
   .mobileCaps a {
     display: grid;
-    grid-template-columns: 22px 56px 1fr;
+    grid-template-columns: 22px 32px 1fr;
     align-items: center;
-    gap: 10px;
-    padding: 8px 0;
+    gap: 8px;
+    padding: 4px 0;
   }
 
   .mobileCapThumb {
     display: block;
-    width: 56px;
-    height: 56px;
+    width: 32px;
+    height: 32px;
     object-fit: cover;
     object-position: center;
-    border-radius: 8px;
+    border-radius: 6px;
     background: #061018;
   }
 

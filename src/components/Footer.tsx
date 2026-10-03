@@ -170,7 +170,8 @@ export function Footer() {
         <div className={styles.lowerGrid}>
           <div className={styles.pitch}>
             <p className={styles.tagline}>Ultra-premium websites that connect, scale, and perform.</p>
-            <p className={styles.wordmark}>Botlane Studios</p>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className={styles.wordmark} src="/logo.svg" alt="Botlane" width={897} height={100} />
             <p className={styles.blurb}>
               Ultra-premium websites designed and built for brands that demand craft, clarity, and performance.
             </p>

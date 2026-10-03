@@ -239,10 +239,14 @@
 }
 
 .wordmark {
+  display: block;
   margin: calc(22 * var(--u)) 0 0;
-  font: 700 calc(72 * var(--u)) / 0.92 var(--display);
-  letter-spacing: -0.045em;
-  color: #0077e6;
+  /* Same box as the previous wordmark: font-size 72u, aspect ratio of /logo.svg (897×100). */
+  height: calc(72 * var(--u));
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: left center;
 }
 
 .blurb {
@@ -434,7 +438,7 @@
 
   .wordmark {
     margin-top: 16px;
-    font-size: clamp(36px, 11vw, 56px);
+    height: clamp(36px, 11vw, 56px);
   }
 
   .blurb {

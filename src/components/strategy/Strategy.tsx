@@ -61,8 +61,15 @@ export function Strategy() {
           <p className={common.scope}>Illustrative document formats. Your deliverables and research depth are defined in the agreed scope.</p>
         </section>
         <section className={styles.work} aria-labelledby="work-title">
-          <div className={common.sectionHead}><p className={common.eyebrow}>03 / What we work through</p><div><h2 id="work-title">Direction, made practical.</h2><p className={common.body}>Four connected areas of work, scoped around the decisions your business needs to make.</p></div></div>
-          <ol className={styles.workList}>{workstreams.map(([title, copy, output], i) => <li key={title}><span className={common.number} aria-hidden="true">0{i + 1}</span><h3>{title}</h3><div><p className={common.body}>{copy}</p><p className={styles.outputLabel}>Possible outputs</p><p className={styles.output}>{output}</p></div></li>)}</ol>
+          <div className={common.sectionHead}><p className={common.eyebrow}>03 / What we work through</p><div><h2 id="work-title">The work behind<br />the direction.</h2><p className={common.body}>Four connected areas of work, scoped around the decisions your business needs to make.</p></div></div>
+          <div className={styles.workAccordion}>{workstreams.map(([title, copy, output], i) => <details key={title} className={styles.workItem} open={i === 0}>
+            <summary><span className={styles.workNumber}>0{i + 1}</span><div><h3>{title}</h3><p>{["Find the people. See the opportunity.", "Make your difference clear.", "Give every page a purpose.", "Agree what happens next."][i]}</p></div><span className={styles.workToggle} aria-hidden="true" /></summary>
+            <div className={styles.workReveal}>
+              <figure className={styles.workPhoto}><Image src={`/strategy/${["audience", "position", "story", "launch"][i]}.webp`} width={900} height={1350} sizes="(max-width: 760px) 70vw, 20vw" alt={["People interacting in a bright café.", "Minimal beauty bottle held against a pale backdrop.", "Fashion portrait at a Paris café.", "A light-filled clothing boutique."][i]} /></figure>
+              <div className={styles.workExplanation}><p className={common.body}>{copy}</p><p className={styles.outputLabel}>Possible deliverables</p><ul className={styles.deliverables}>{output.split(" · ").map(item => <li key={item}>{item}</li>)}</ul></div>
+            </div>
+          </details>)}</div>
+          <p className={common.scope}>Explore each area. The exact deliverables and research depth are agreed in your proposal.</p>
         </section>
         <section className={common.fit} aria-labelledby="fit-title">
           <div className={common.sectionHead}><p className={common.eyebrow}>04 / When it helps</p><div><h2 id="fit-title">A foundation for what’s next.</h2><p className={common.body}>Start with strategy when the next step needs a clearer direction.</p></div></div>

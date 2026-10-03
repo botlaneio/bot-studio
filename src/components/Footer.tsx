@@ -2,29 +2,26 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useRef, useState, type CSSProperties } from "react";
-import { CAPABILITIES, capabilityHref } from "./capabilities";
+import type { FormEvent, ReactNode } from "react";
 import { Arrow } from "./motion/Arrow";
-import { ChatModal } from "./process/ChatModal";
-import { SheridanClock } from "./SheridanClock";
 import styles from "./Footer.module.css";
 
-const SITE = [
+/** No /work route exists. Capabilities is the index the nav and the previous footer shared. */
+const NAVIGATE = [
+  { href: "/", label: "Home" },
+  { href: "/capabilities", label: "Work" },
   { href: "/", label: "Studio" },
-  { href: "/#process", label: "How we build" },
-  { href: "/capabilities", label: "Capabilities" },
-  { href: "/about", label: "About us" },
-  { href: "/pricing", label: "Pricing" },
   { href: "/echoes", label: "Echoes" },
+  { href: "#contact", label: "Contact" },
 ];
 
-const LEGAL = [
-  { href: "/privacy", label: "Privacy" },
+const LINKS = [
   { href: "/terms", label: "Terms" },
+  { href: "/privacy", label: "Privacy" },
   { href: "/knowledge", label: "Knowledge" },
 ];
 
-const WHATSAPP = `https://wa.me/919979972714?text=${encodeURIComponent("Hi Botlane Studios, I'd like to talk about a project.")}`;
+const WHATSAPP = "https://wa.me/919979972714";
 const WEBSITE = "https://botlane.io";
 
 /** WhatsApp glyph (Simple Icons). */
@@ -39,186 +36,185 @@ function WhatsAppIcon({ className }: { className?: string }) {
   );
 }
 
-function WebsiteIcon({ className }: { className?: string }) {
+/** Static blue rosette: filled circles on a phyllotaxis spiral. */
+function Rosette({ className }: { className?: string }) {
+  const count = 128;
+  const golden = Math.PI * (3 - Math.sqrt(5));
+  const dots = [];
+  for (let i = 0; i < count; i++) {
+    const t = (i + 0.5) / count;
+    const radius = Math.sqrt(t) * 29.5;
+    const angle = i * golden;
+    const x = 35 + Math.cos(angle) * radius;
+    const y = 35 + Math.sin(angle) * radius;
+    const r = 1.62 - t * 0.62;
+    dots.push(<circle key={i} cx={x.toFixed(2)} cy={y.toFixed(2)} r={r.toFixed(2)} />);
+  }
   return (
-    <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
-      <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="1.6" />
-      <path
-        d="M3 12h18M12 3c2.6 2.7 3.9 5.8 3.9 9s-1.3 6.3-3.9 9c-2.6-2.7-3.9-5.8-3.9-9S9.4 5.7 12 3z"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.6"
-      />
+    <svg className={className} viewBox="0 0 70 70" aria-hidden="true">
+      <g fill="#0077E6">{dots}</g>
     </svg>
   );
 }
 
-const delay = (s: number) => ({ "--reveal-delay": `${s}s` }) as CSSProperties;
+function FooterAnchor({ href, className, children }: { href: string; className?: string; children: ReactNode }) {
+  if (href.startsWith("/") && !href.startsWith("//")) {
+    return (
+      <Link className={className} href={href}>
+        {children}
+      </Link>
+    );
+  }
+  const external = href.startsWith("http");
+  return (
+    <a className={className} href={href} {...(external ? { target: "_blank", rel: "noopener" } : {})}>
+      {children}
+    </a>
+  );
+}
 
-/** The closing block, and the page's contact point (#contact): a call to
- *  action that opens the chat modal, a ticker of the six capabilities, the
- *  link columns, and the Botlane\Studios wordmark across the full width,
- *  lit by a blue light that follows the pointer (drifting by itself on
- *  touch screens). */
+/** Global close, adapted from the Whispers footer onto the dark site.
+ *  The newsletter form does not submit anywhere. #contact stays on this
+ *  landmark so the nav's contact links still land here. */
 export function Footer() {
-  const [chatFrom, setChatFrom] = useState<{ x: number; y: number } | null>(null);
-  const markRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
-
-  // The light follows the pointer across the wordmark.
-  const onMove = (e: React.PointerEvent) => {
-    const el = markRef.current;
-    if (!el || e.pointerType !== "mouse") return;
-    const r = el.getBoundingClientRect();
-    el.style.setProperty("--mx", `${((e.clientX - r.left) / r.width) * 100}%`);
-    el.style.setProperty("--my", `${((e.clientY - r.top) / r.height) * 100}%`);
-    el.setAttribute("data-pointer", "");
-  };
-  const onLeave = () => markRef.current?.removeAttribute("data-pointer");
-
 
   // The design preview (/preview) brings its own closing.
   if (pathname.startsWith("/preview")) return null;
 
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+
   return (
     <footer id="contact" className={styles.footer}>
-      {/* ---------- Call to action ---------- */}
-      <div className={styles.cta}>
-        <span className={styles.kicker} data-reveal="">
-          {"// 00.05° Let's talk"}
-        </span>
-        <h2 className={styles.headline} data-reveal="" style={{ ...delay(0.05), ["--reveal-y" as string]: "60px" }}>
-          Got something worth building<b>?</b>
-        </h2>
-        <div className={styles.ctaRow} data-reveal="" style={delay(0.15)}>
-          <p className={styles.ctaText}>Tell us where you&apos;re headed. We&apos;ll shape the site that gets you there.</p>
-          <div className={styles.ctaButtons}>
-            <button
-              type="button"
-              className={`${styles.btnPrimary} arrowHost`}
-              onClick={(e) => {
-                const r = e.currentTarget.getBoundingClientRect();
-                setChatFrom({ x: r.left + r.width / 2, y: r.top + r.height / 2 });
-              }}
-            >
-              Let&apos;s chat
-              <Arrow className={styles.btnArrow} />
-            </button>
-            <a className={`${styles.btnGhost} ${styles.btnIcon}`} href={WHATSAPP} target="_blank" rel="noopener" aria-label="WhatsApp">
-              <WhatsAppIcon className={styles.btnIconSvg} />
+      <div className={styles.top}>
+        <div className={styles.topGrid}>
+          <div className={styles.news}>
+            <div className={styles.headingRow}>
+              <h2 className={styles.heading}>
+                Keep you in
+                <br />
+                the loop.
+              </h2>
+              <Rosette className={styles.rosette} />
+            </div>
+            <p className={styles.subline}>Get the latest news, insights directly to your inbox.</p>
+            <form className={styles.form} onSubmit={onSubmit}>
+              <label className="sr-only" htmlFor="footer-email">
+                Email
+              </label>
+              <input
+                id="footer-email"
+                className={styles.email}
+                type="email"
+                name="email"
+                placeholder="Enter Your Email"
+                autoComplete="email"
+                inputMode="email"
+              />
+              <button type="submit" className={`${styles.join} arrowHost`}>
+                Join our newsletter
+                <Arrow className={styles.joinArrow} />
+              </button>
+            </form>
+          </div>
+
+          <div className={styles.cols}>
+            <div>
+              <p className={styles.colLabel}>Navigate</p>
+              <ul>
+                {NAVIGATE.map((item) => (
+                  <li key={item.label}>
+                    <FooterAnchor className={styles.link} href={item.href}>
+                      {item.label}
+                    </FooterAnchor>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <p className={styles.colLabel}>Links</p>
+              <ul>
+                {LINKS.map((item) => (
+                  <li key={item.href}>
+                    <Link className={styles.link} href={item.href}>
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.meta}>
+          <div className={styles.legalBlock}>
+            <p className={styles.legal}>
+              By submitting, you agree to our <Link href="/terms">Terms of Service</Link>.
+            </p>
+            <p className={styles.note}>
+              <span aria-hidden="true">*</span> No spam, just awesome updates.
+            </p>
+          </div>
+          <div className={styles.social}>
+            <p className={styles.socialLabel}>Follow us on socials</p>
+            <a className={styles.socialLink} href={WHATSAPP} target="_blank" rel="noopener" aria-label="WhatsApp">
+              <WhatsAppIcon className={styles.socialIcon} />
             </a>
           </div>
         </div>
       </div>
 
-      {/* ---------- Ticker ---------- */}
-      <div className={styles.ticker} aria-hidden="true">
-        <div className={styles.tickerTrack}>
-          {[0, 1].map((copy) => (
-            <span key={copy} className={styles.tickerSet}>
-              {CAPABILITIES.map((c) => (
-                <span key={c.title} className={styles.tickerItem}>
-                  {c.title}
-                  <span className={styles.tickerDot} />
-                </span>
-              ))}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {/* ---------- Columns ---------- */}
-      <div className={styles.columns}>
-        <div className={styles.col} data-reveal="">
-          <h3 className={styles.colTitle}>Site</h3>
-          <ul>
-            {SITE.map((l) => (
-              <li key={l.href}>
-                <Link className={styles.link} href={l.href}>
-                  {l.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className={styles.col} data-reveal="" style={delay(0.05)}>
-          <h3 className={styles.colTitle}>Capabilities</h3>
-          <ul>
-            {CAPABILITIES.map((c) => (
-              <li key={c.title}>
-                <Link className={styles.link} href={capabilityHref(c.slug)}>
-                  {c.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className={styles.col} data-reveal="" style={delay(0.1)}>
-          <h3 className={styles.colTitle}>Contact</h3>
-          <ul>
-            <li>
-              <a className={styles.link} href="mailto:admin@botlane.io">
-                admin@botlane.io
+      <div className={styles.lower}>
+        <div className={styles.lowerGrid}>
+          <div className={styles.pitch}>
+            <p className={styles.tagline}>Ultra-premium websites that connect, scale, and perform.</p>
+            <p className={styles.wordmark}>Botlane Studios</p>
+            <p className={styles.blurb}>
+              Ultra-premium websites designed and built for brands that demand craft, clarity, and performance.
+            </p>
+            <p className={styles.copy}>©2026 BotLane LLC. All rights reserved.</p>
+            <p className={styles.siteLine}>
+              <a href={WEBSITE} target="_blank" rel="noopener">
+                botlane.io
               </a>
-            </li>
-            <li>
-              <a className={styles.link} href="tel:+13072185715">
-                +1 307 218 5715
+            </p>
+          </div>
+
+          <div className={styles.contacts}>
+            <div className={styles.contactTop}>
+              <div>
+                <p className={styles.colLabel}>Offline</p>
+                <address className={styles.address}>
+                  Botlane Studios
+                  <br />
+                  30 N Gould St, Ste R
+                  <br />
+                  Sheridan, WY 82801
+                </address>
+              </div>
+              <div>
+                <p className={styles.colLabel}>Online</p>
+                <a className={styles.mail} href="mailto:admin@botlane.io">
+                  admin@botlane.io
+                </a>
+              </div>
+            </div>
+            <div className={styles.contactBottom}>
+              <div>
+                <p className={styles.colLabel}>Phone</p>
+                <a className={styles.phone} href="tel:+13072185715">
+                  +1 307 218 5715
+                </a>
+              </div>
+              <a className={`${styles.topLink} arrowHost`} href="#top" aria-label="Back to top">
+                <Arrow className={styles.topArrow} />
               </a>
-            </li>
-            <li>
-              <a className={`${styles.link} ${styles.iconLink}`} href={WHATSAPP} target="_blank" rel="noopener" aria-label="WhatsApp">
-                <WhatsAppIcon className={styles.entryIcon} />
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        <div className={styles.col} data-reveal="" style={delay(0.15)}>
-          <h3 className={styles.colTitle}>Studio</h3>
-          <address className={styles.address}>
-            BotLane LLC
-            <br />
-            30 N Gould St, Ste R
-            <br />
-            Sheridan, WY 82801
-          </address>
-          <p className={styles.time}>
-            Local time <SheridanClock className={styles.clock} />
-          </p>
+            </div>
+          </div>
         </div>
       </div>
-
-      {/* ---------- Wordmark ---------- */}
-      <div ref={markRef} className={styles.mark} onPointerMove={onMove} onPointerLeave={onLeave} aria-hidden="true">
-        <span className={styles.markText}>
-          Botlane<span className={styles.markSlash}>\</span>Studios
-        </span>
-      </div>
-
-      {/* ---------- Bottom bar ---------- */}
-      <div className={styles.bar}>
-        <span>© {new Date().getFullYear()} BotLane LLC. All rights reserved.</span>
-        <span className={styles.barLinks}>
-          {LEGAL.map((l) => (
-            <Link key={l.href} className={styles.link} href={l.href}>
-              {l.label}
-            </Link>
-          ))}
-          <a className={`${styles.link} ${styles.iconLink}`} href={WEBSITE} target="_blank" rel="noopener">
-            <WebsiteIcon className={styles.entryIcon} />
-            Part of botLane
-          </a>
-        </span>
-        <a className={`${styles.top} arrowHost`} href="#top">
-          Back to top
-          <Arrow className={styles.topArrow} />
-        </a>
-      </div>
-
-      {chatFrom && <ChatModal origin={chatFrom} onClose={() => setChatFrom(null)} />}
     </footer>
   );
 }

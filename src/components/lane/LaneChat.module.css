@@ -41,11 +41,12 @@
 }
 
 /* Quiet version of the site's pop-in: a small rise and scale, once, then still.
-   Not a loop, and not the logo file's own shutter. */
+   Not a loop, and not the logo file's own shutter. Square, because this is
+   only the blue mark, not the wordmark. */
 .logo {
   display: block;
   height: 28px;
-  width: auto;
+  width: 28px;
   animation: lane-arrive 0.7s cubic-bezier(0.2, 0.75, 0.2, 1) both;
 }
 

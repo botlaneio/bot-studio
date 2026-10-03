@@ -77,10 +77,44 @@ export function LaneChat() {
         aria-controls={panelId}
         onClick={() => setOpen((value) => !value)}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className={styles.logo} src="/logo.svg" alt="" width={897} height={100} />
+        <LaneMark className={styles.logo} />
         <span className={styles.visuallyHidden}>{open ? "Close Lane" : "Open Lane"}</span>
       </button>
     </div>
+  );
+}
+
+/** Blue plate from the left of public/logo.svg (viewBox 0 0 64 64, before the wordmark). Static: no shutter loop. */
+function LaneMark({ className }: { className?: string }) {
+  return (
+    <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="28" height="28" aria-hidden="true">
+      <defs>
+        <linearGradient id="lane-mark-plate" x1="32" y1="1" x2="32" y2="63" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#3D9BFF" />
+          <stop offset="0.55" stopColor="#0077E6" />
+          <stop offset="1" stopColor="#0058B0" />
+        </linearGradient>
+        <linearGradient id="lane-mark-slot" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#08090A" />
+          <stop offset="0.62" stopColor="#15181C" />
+          <stop offset="1" stopColor="#2A2F36" />
+        </linearGradient>
+        <radialGradient id="lane-mark-lens" cx="0.34" cy="0.3" r="0.72">
+          <stop offset="0" stopColor="#FFFFFF" />
+          <stop offset="0.5" stopColor="#F6F5F1" />
+          <stop offset="1" stopColor="#D9D8D2" />
+        </radialGradient>
+        <filter id="lane-mark-glow" x="-160%" y="-160%" width="420%" height="420%">
+          <feGaussianBlur stdDeviation="3.1" />
+        </filter>
+      </defs>
+      <rect x="1" y="1" width="62" height="62" rx="17" fill="url(#lane-mark-plate)" />
+      <rect x="1.75" y="1.75" width="60.5" height="60.5" rx="16.3" fill="none" stroke="#fff" strokeOpacity="0.45" strokeWidth="1.5" />
+      <rect x="1" y="1" width="62" height="62" rx="17" fill="none" stroke="#00468C" strokeOpacity="0.6" />
+      <rect x="12" y="25" width="40" height="14" rx="7" fill="url(#lane-mark-slot)" />
+      <path d="M19 38.4h26" stroke="#fff" strokeOpacity="0.16" strokeWidth="1.1" strokeLinecap="round" />
+      <circle cx="21" cy="32" r="5.4" fill="#fff" opacity="0.55" filter="url(#lane-mark-glow)" />
+      <circle cx="21" cy="32" r="5" fill="url(#lane-mark-lens)" />
+    </svg>
   );
 }

@@ -65,8 +65,8 @@ export function Strategy() {
           <div className={styles.workAccordion}>{workstreams.map(([title, copy, output], i) => <details key={title} className={styles.workItem} open={i === 0}>
             <summary><span className={styles.workNumber}>0{i + 1}</span><div><h3>{title}</h3><p>{["Find the people. See the opportunity.", "Make your difference clear.", "Give every page a purpose.", "Agree what happens next."][i]}</p></div><span className={styles.workToggle} aria-hidden="true" /></summary>
             <div className={styles.workReveal}>
-              <figure className={styles.workPhoto}><Image src={`/strategy/${["audience", "position", "story", "launch"][i]}.webp`} width={900} height={1350} sizes="(max-width: 760px) 70vw, 20vw" alt={["People interacting in a bright café.", "Minimal beauty bottle held against a pale backdrop.", "Fashion portrait at a Paris café.", "A light-filled clothing boutique."][i]} /></figure>
-              <div className={styles.workExplanation}><p className={common.body}>{copy}</p><p className={styles.outputLabel}>Possible deliverables</p><ul className={styles.deliverables}>{output.split(" · ").map(item => <li key={item}>{item}</li>)}</ul></div>
+              <div className={styles.workPurpose}><p className={styles.outputLabel}>The focus</p><p className={common.body}>{copy}</p></div>
+              <div className={styles.workExplanation}><p className={styles.outputLabel}>Possible deliverables</p><ul className={styles.deliverables}>{output.split(" · ").map(item => <li key={item}>{item}</li>)}</ul></div>
             </div>
           </details>)}</div>
           <p className={common.scope}>Explore each area. The exact deliverables and research depth are agreed in your proposal.</p>

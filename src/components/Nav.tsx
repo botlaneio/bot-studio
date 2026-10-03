@@ -5,18 +5,8 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Arrow } from "./motion/Arrow";
 import { lockScroll } from "./motion/SmoothScroll";
-import { CAPABILITIES } from "./capabilities";
+import { CAPABILITIES, capabilityHref } from "./capabilities";
 import styles from "./Nav.module.css";
-
-/** Page for each dropdown capability. Slug is the label, lowercased, hyphenated. */
-function capabilityPageHref(title: string) {
-  const slug = title
-    .toLowerCase()
-    .replace(/&/g, " ")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-  return `/capabilities/${slug}`;
-}
 
 const LINKS = [
   { href: "/about", label: "About Us" },
@@ -168,7 +158,7 @@ export function Nav() {
                   {CAPABILITIES.map((item, i) => (
                     <li key={item.title} style={{ ["--i" as string]: i }}>
                       <Link
-                        href={capabilityPageHref(item.title)}
+                        href={capabilityHref(item.slug)}
                         className={`${styles.item} arrowHost`}
                         data-active={active === i || undefined}
                         onMouseEnter={() => setActive(i)}
@@ -221,8 +211,8 @@ export function Nav() {
 
                 <div className={styles.foot}>
                   <span>Not sure where to start?</span>
-                  <a href="#contact" className={`${styles.footLink} arrowHost`} onClick={() => setOpen(false)}>
-                    Book a call
+                  <a href="/contact#inquiry" className={`${styles.footLink} arrowHost`} onClick={() => setOpen(false)}>
+                    Request a call
                     <Arrow className={styles.footArrow} />
                   </a>
                 </div>
@@ -237,8 +227,8 @@ export function Nav() {
           ))}
         </nav>
 
-        <a className={`${styles.cta} arrowHost`} href="#contact">
-          Book a call
+        <a className={`${styles.cta} arrowHost`} href="/contact#inquiry">
+          Request a call
           <Arrow className={styles.ctaArrow} />
         </a>
 
@@ -284,7 +274,7 @@ export function Nav() {
                 <ul>
                   {CAPABILITIES.map((item, i) => (
                     <li key={item.title}>
-                      <Link href={capabilityPageHref(item.title)} onClick={closeMobile} tabIndex={mobileCaps ? 0 : -1}>
+                      <Link href={capabilityHref(item.slug)} onClick={closeMobile} tabIndex={mobileCaps ? 0 : -1}>
                         <span className={styles.mobileCapNum}>{String(i + 1).padStart(2, "0")}</span>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
@@ -316,8 +306,8 @@ export function Nav() {
           </ul>
 
           <div className={styles.mobileFoot} style={{ ["--i" as string]: 6 }}>
-            <a className={`${styles.mobileCta} arrowHost`} href="#contact" onClick={closeMobile}>
-              Book a call
+            <a className={`${styles.mobileCta} arrowHost`} href="/contact#inquiry" onClick={closeMobile}>
+              Request a call
               <Arrow className={styles.ctaArrow} />
             </a>
             <div className={styles.mobileContact}>

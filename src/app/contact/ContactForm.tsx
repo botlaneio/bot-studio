@@ -40,11 +40,12 @@ export function ContactForm() {
         <textarea name="message" placeholder="Your message" rows={4} required />
       </label>
       <button type="submit" className={`${styles.submit} arrowHost`}>
-        Submit
+        Prepare email
         <Arrow className={styles.submitArrow} />
       </button>
+      <p className={styles.legal}>This opens a draft in your email app. Review it and send it there. If your email app does not open, write to <a href="mailto:admin@botlane.io">admin@botlane.io</a>.</p>
       <p className={styles.legal}>
-        By submitting, you agree to our <Link href="/terms">Terms of Service</Link>.
+        See our <Link href="/terms">Terms of Service</Link>.
       </p>
     </form>
   );

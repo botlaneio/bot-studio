@@ -52,7 +52,7 @@ export function Craft() {
               <div className={styles.image} style={{ backgroundImage: `url(${tile.image})` }} data-parallax="0.1" />
             </div>
 
-            <a className={styles.tileLink} href="#contact" data-cursor="Let's talk" aria-label={`${tile.title}: talk to us about it`} />
+            <a className={styles.tileLink} href="/contact#inquiry" data-cursor="Let's talk" aria-label={`${tile.title}: talk to us about it`} />
 
             <div className={styles.top} aria-hidden="true">
               <span className={styles.index} data-reveal="" style={delay(0.1)}>
@@ -89,7 +89,7 @@ export function Craft() {
       <div className={styles.more} data-reveal="">
         <span>\\2026</span>
         <hr />
-        <a href="#contact" className={`${styles.moreLink} arrowHost`}>
+        <a href="/contact#inquiry" className={`${styles.moreLink} arrowHost`}>
           <span className={styles.arrowBox}>
             <Arrow className={styles.arrowIcon} />
           </span>

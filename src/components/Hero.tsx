@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { CSSProperties } from "react";
 import { Arrow } from "./motion/Arrow";
 import { Scramble } from "./motion/Scramble";
@@ -74,14 +75,14 @@ export function Hero() {
         </div>
 
         <div className={styles.ctas}>
-          <a className={`${styles.btn} ${styles.btnPrimary} arrowHost`} href="/capabilities">
+          <Link className={`${styles.btn} ${styles.btnPrimary} arrowHost`} href="/capabilities">
             Explore
             <Arrow className={styles.btnArrow} />
-          </a>
-          <a className={`${styles.btn} ${styles.btnLight} arrowHost`} href="#contact">
-            Let's chat
+          </Link>
+          <Link className={`${styles.btn} ${styles.btnLight} arrowHost`} href="/contact#inquiry">
+            Let&apos;s chat
             <Arrow className={styles.btnArrow} />
-          </a>
+          </Link>
         </div>
 
         <a className={styles.reel} href="https://botlane.io" target="_blank" rel="noopener" aria-label="Meet botlane.io (opens in a new tab)">

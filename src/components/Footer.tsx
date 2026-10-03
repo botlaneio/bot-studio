@@ -2,17 +2,17 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { FormEvent, ReactNode } from "react";
+import type { ReactNode } from "react";
 import { Arrow } from "./motion/Arrow";
 import styles from "./Footer.module.css";
 
 /** No /work route exists. Capabilities is the index the nav and the previous footer shared. */
 const NAVIGATE = [
   { href: "/", label: "Home" },
-  { href: "/capabilities", label: "Work" },
-  { href: "/", label: "Studio" },
+  { href: "/capabilities", label: "Capabilities" },
+  { href: "/about", label: "About" },
   { href: "/echoes", label: "Echoes" },
-  { href: "#contact", label: "Contact" },
+  { href: "/contact#inquiry", label: "Contact" },
 ];
 
 const LINKS = [
@@ -22,9 +22,9 @@ const LINKS = [
 ];
 
 const WHATSAPP = "https://wa.me/919979972714";
-/** Placeholders until official profiles exist. */
-const INSTAGRAM = "https://instagram.com";
-const X = "https://x.com";
+/** Hide social links until official profile URLs are configured. */
+const INSTAGRAM = process.env.NEXT_PUBLIC_INSTAGRAM_URL;
+const X = process.env.NEXT_PUBLIC_X_URL;
 const WEBSITE = "https://botlane.io";
 
 /** Social glyphs (Simple Icons). Fills are brand colors, not the accent. */
@@ -134,18 +134,12 @@ function FooterAnchor({ href, className, children }: { href: string; className?:
   );
 }
 
-/** Global close, adapted from the Whispers footer onto the dark site.
- *  The newsletter form does not submit anywhere. #contact stays on this
- *  landmark so the nav's contact links still land here. */
+/** Global project inquiry and studio contact details. */
 export function Footer() {
   const pathname = usePathname();
 
   // The design preview (/preview) brings its own closing.
   if (pathname.startsWith("/preview")) return null;
-
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  };
 
   return (
     <footer id="contact" className={styles.footer}>
@@ -154,31 +148,17 @@ export function Footer() {
           <div className={styles.news}>
             <div className={styles.headingRow}>
               <h2 className={styles.heading}>
-                Keep you in
+                Have a project
                 <br />
-                the loop.
+                in mind.
               </h2>
               <Rosette className={styles.rosette} />
             </div>
-            <p className={styles.subline}>Get the latest news, insights directly to your inbox.</p>
-            <form className={styles.form} onSubmit={onSubmit}>
-              <label className="sr-only" htmlFor="footer-email">
-                Email
-              </label>
-              <input
-                id="footer-email"
-                className={styles.email}
-                type="email"
-                name="email"
-                placeholder="Enter Your Email"
-                autoComplete="email"
-                inputMode="email"
-              />
-              <button type="submit" className={`${styles.join} arrowHost`}>
-                Newsletter
-                <Arrow className={styles.joinArrow} />
-              </button>
-            </form>
+            <p className={styles.subline}>Tell us what you want to build. We’ll discuss the scope and the next step.</p>
+            <Link className={`${styles.join} arrowHost`} href="/contact#inquiry">
+              Discuss your project
+              <Arrow className={styles.joinArrow} />
+            </Link>
           </div>
 
           <div className={styles.cols}>
@@ -211,22 +191,17 @@ export function Footer() {
 
         <div className={styles.meta}>
           <div className={styles.legalBlock}>
-            <p className={styles.legal}>
-              By submitting, you agree to our <Link href="/terms">Terms of Service</Link>.
-            </p>
-            <p className={styles.note}>
-              <span aria-hidden="true">*</span> No spam, just awesome updates.
-            </p>
+            <p className={styles.note}>Scope and timeline agreed before work starts.</p>
           </div>
           <div className={styles.social}>
-            <p className={styles.socialLabel}>Follow us on socials</p>
+            <p className={styles.socialLabel}>Connect with us</p>
             <div className={styles.socialIcons}>
-              <a className={styles.socialLink} href={INSTAGRAM} target="_blank" rel="noopener" aria-label="Instagram">
+              {INSTAGRAM && <a className={styles.socialLink} href={INSTAGRAM} target="_blank" rel="noopener" aria-label="Instagram">
                 <InstagramIcon className={styles.socialIcon} />
-              </a>
-              <a className={styles.socialLink} href={X} target="_blank" rel="noopener" aria-label="X">
+              </a>}
+              {X && <a className={styles.socialLink} href={X} target="_blank" rel="noopener" aria-label="X">
                 <SocialIcon className={styles.socialIcon} d={X_PATH} fill="#ffffff" />
-              </a>
+              </a>}
               <a className={styles.socialLink} href={WHATSAPP} target="_blank" rel="noopener" aria-label="WhatsApp">
                 <SocialIcon className={styles.socialIcon} d={WHATSAPP_PATH} fill="#25D366" />
               </a>

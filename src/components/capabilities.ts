@@ -1,5 +1,5 @@
 /** The studio's six areas, shared by the nav menu, the footer and the
- *  capabilities page. `slug` is each one's anchor on /capabilities;
+ *  capabilities page. `slug` is each capability page and index anchor;
  *  `image` is the photo shown in the Capabilities mega menu. */
 export const CAPABILITIES = [
   {
@@ -21,7 +21,7 @@ export const CAPABILITIES = [
     includes: ["Positioning and messaging", "Audience and competitor review", "Site map and content plan", "Launch roadmap"],
   },
   {
-    slug: "design",
+    slug: "design-innovation",
     image: "/capability-design.webp",
     tag: "Creative",
     title: "Design & Innovation",
@@ -58,4 +58,4 @@ export const CAPABILITIES = [
   },
 ];
 
-export const capabilityHref = (slug: string) => `/capabilities#${slug}`;
+export const capabilityHref = (slug: string) => `/capabilities/${slug}`;

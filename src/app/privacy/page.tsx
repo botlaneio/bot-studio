@@ -3,6 +3,7 @@ import { PageHero } from "@/components/page/PageHero";
 import page from "@/components/page/Page.module.css";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/privacy" },
   title: "Privacy policy",
   description: "How Botlane Studios (BotLane LLC) handles personal information.",
 };

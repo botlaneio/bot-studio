@@ -391,7 +391,7 @@
 }
 
 .inspireWord {
-  color: var(--accent);
+  color: #000;
 }
 
 .inspireQuote {
@@ -425,7 +425,7 @@
   border-radius: 10px;
   background: #fff;
   box-shadow: 0 14px 34px -14px rgba(0, 0, 0, 0.45);
-  color: #0a0a0a;
+  color: #000;
   font: 400 calc(14 * var(--u)) / 1 var(--mono);
   letter-spacing: 0.04em;
   text-transform: uppercase;

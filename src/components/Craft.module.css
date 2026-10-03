@@ -127,6 +127,16 @@
   opacity: 0.9;
 }
 
+/* Stay hidden until this stack's scramble starts. The global [data-scramble]
+   failsafe would otherwise reveal the words 3s after load, before scroll.
+   Higher specificity than that rule, and only while the line is on hold. */
+@media (prefers-reduced-motion: no-preference) {
+  :global(.js) .toolkit [data-scramble="hold"] {
+    visibility: hidden;
+    animation: none;
+  }
+}
+
 .count {
   font: 400 calc(12 * var(--u)) / 1 var(--mono);
   letter-spacing: 0.04em;

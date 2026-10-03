@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import { Arrow } from "./motion/Arrow";
+import { Scramble } from "./motion/Scramble";
 import { TileEffects } from "./motion/TileEffects";
 import styles from "./Craft.module.css";
 
@@ -9,7 +10,9 @@ import styles from "./Craft.module.css";
  *
  *  Motion, as on the template: the photos drift against the scroll, the
  *  titles rise in as each tile arrives, and over a tile the pointer becomes a
- *  "Let's talk" disc; a tile clicks through to the contact section. */
+ *  "Let's talk" disc; a tile clicks through to the contact section.
+ *  Each toolkit decodes with the hero's mono scramble the first time that
+ *  stack scrolls into view. */
 const TILES = [
   {
     image: "/craft/tile-1.jpg",
@@ -68,10 +71,10 @@ export function Craft() {
             </div>
 
             <div className={styles.bottom}>
-              <ul className={styles.toolkit} aria-label="Toolkit">
-                {tile.toolkit.map((tool, t) => (
-                  <li key={tool} data-reveal="" style={{ ...delay(0.2 + t * 0.05), ["--reveal-y" as string]: "14px" }}>
-                    {tool}
+              <ul className={styles.toolkit} aria-label="Toolkit" data-scramble-scope="">
+                {tile.toolkit.map((tool) => (
+                  <li key={tool}>
+                    <Scramble text={tool} inView />
                   </li>
                 ))}
               </ul>

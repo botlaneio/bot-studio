@@ -22,7 +22,7 @@ const LINKS = [
 ];
 
 const WHATSAPP = "https://wa.me/919979972714";
-/** Hide social links until official profile URLs are configured. */
+/** Show brand icons; enable links when official profile URLs are configured. */
 const INSTAGRAM = process.env.NEXT_PUBLIC_INSTAGRAM_URL;
 const X = process.env.NEXT_PUBLIC_X_URL;
 const WEBSITE = "https://botlane.io";
@@ -196,12 +196,12 @@ export function Footer() {
           <div className={styles.social}>
             <p className={styles.socialLabel}>Connect with us</p>
             <div className={styles.socialIcons}>
-              {INSTAGRAM && <a className={styles.socialLink} href={INSTAGRAM} target="_blank" rel="noopener" aria-label="Instagram">
+              {INSTAGRAM ? <a className={styles.socialLink} href={INSTAGRAM} target="_blank" rel="noopener" aria-label="Instagram">
                 <InstagramIcon className={styles.socialIcon} />
-              </a>}
-              {X && <a className={styles.socialLink} href={X} target="_blank" rel="noopener" aria-label="X">
+              </a> : <span className={styles.socialLink} role="img" aria-label="Instagram"><InstagramIcon className={styles.socialIcon} /></span>}
+              {X ? <a className={styles.socialLink} href={X} target="_blank" rel="noopener" aria-label="X">
                 <SocialIcon className={styles.socialIcon} d={X_PATH} fill="#ffffff" />
-              </a>}
+              </a> : <span className={styles.socialLink} role="img" aria-label="X"><SocialIcon className={styles.socialIcon} d={X_PATH} fill="#ffffff" /></span>}
               <a className={styles.socialLink} href={WHATSAPP} target="_blank" rel="noopener" aria-label="WhatsApp">
                 <SocialIcon className={styles.socialIcon} d={WHATSAPP_PATH} fill="#25D366" />
               </a>

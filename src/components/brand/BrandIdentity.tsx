@@ -1,7 +1,8 @@
 import Link from "next/link";
 import styles from "./BrandIdentity.module.css";
 import film from "./BrandFilm.module.css";
-import { MotionStage, IdentityMark, BrandPalette } from "./IdentityMotion";
+import { MotionStage, IdentityMark, BalancedIdentityMark, BrandPalette } from "./IdentityMotion";
+import { Arrow } from "../motion/Arrow";
 
 const systems = [
   ["01", "A clear point of view", "Positioning & voice", "Define what you stand for, who you speak to, and the language that makes your brand unmistakable.", "Positioning · Naming · Messaging · Tone of voice"],
@@ -15,16 +16,17 @@ export function BrandIdentity() {
     <main className={styles.page}>
       <section className={film.hero} aria-labelledby="brand-title">
         <div className={film.heroTop}><Link className={styles.eyebrow} href="/capabilities">Capabilities / 01 — Brand Identity</Link><span className={styles.eyebrow}>A point of view, made visible</span></div>
-        <h1 id="brand-title">Identity.<br /><span>With intent.</span></h1>
-        <MotionStage className={film.heroStage} label="Animated identity study: two geometric halves form one signature">
-          <div className={film.heroGrid} aria-hidden="true" />
-          <div className={film.heroMark}><IdentityMark /></div>
-          <div className={film.orbit} aria-hidden="true" />
-          <span className={film.coordinate} aria-hidden="true">FORM / 001</span>
-          <span className={film.heroSignature} aria-hidden="true">B / L</span>
-        </MotionStage>
-        <div className={film.heroBottom}><p className={styles.body}>A name. A mark. A world around them.<br />We create identities that feel like only you.</p><Link className={styles.cta} href="/contact#inquiry">Shape your brand <span aria-hidden="true">↗</span></Link></div>
-        <a className={film.scrollLink} href="#identity-film">Explore the identity ↓</a>
+        <div className={film.heroLayout}>
+          <div className={film.heroCopy}><h1 id="brand-title">Identity.<br /><span>With intent.</span></h1><p className={styles.body}>A name. A mark. A world around them.<br />We create identities that feel like only you.</p><Link className={`${styles.cta} arrowHost`} href="/contact#inquiry">Shape your brand <Arrow className={film.buttonArrow} /></Link></div>
+          <MotionStage className={film.heroStage} label="Balanced geometric identity study">
+            <div className={film.heroGrid} aria-hidden="true" />
+            <div className={film.heroOutline} aria-hidden="true" />
+            <div className={film.heroMark}><BalancedIdentityMark /></div>
+            <span className={film.coordinate} aria-hidden="true">01 / Form & proportion</span>
+            <span className={film.heroSignature} aria-hidden="true">Identity study</span>
+          </MotionStage>
+        </div>
+        <div className={film.heroFoot}><span>Strategy / Identity / Expression</span><a href="#identity-film">Explore the identity ↓</a></div>
       </section>
 
       <section className={`${styles.section} ${styles.statement}`} aria-labelledby="statement-title">
@@ -67,7 +69,7 @@ export function BrandIdentity() {
 
       <section className={`${styles.section} ${styles.faq}`} aria-labelledby="faq-title"><p className={styles.eyebrow}>A few things to know</p><h2 id="faq-title">Before we begin.</h2>{[["Can you work with an existing identity?", "Yes. We can refine an existing identity or build a new one. We start by understanding what is working and what needs to change."], ["Do we need a new name or logo?", "Not necessarily. We recommend the scope after discovery; sometimes a clearer visual system is the right place to focus."], ["Can you carry the identity into our website?", "Yes. Brand identity can lead into website strategy, design and development. We agree that additional scope with you before starting."]].map(([q, a]) => <details key={q}><summary>{q}<span aria-hidden="true">+</span></summary><p className={styles.body}>{a}</p></details>)}</section>
 
-      <section className={styles.close} aria-labelledby="close-title"><p className={styles.eyebrow}>Your next chapter</p><h2 id="close-title">Make it<br />unmistakable.</h2><Link className={styles.cta} href="/contact#inquiry">Discuss your identity <span aria-hidden="true">↗</span></Link><Link className={styles.next} href="/capabilities/strategy">Next capability / Strategy →</Link></section>
+      <section className={film.close} aria-labelledby="close-title"><div><p className={styles.eyebrow}>Your next chapter</p><h2 id="close-title">Make it<br />unmistakable.</h2></div><div className={film.closeActions}><Link className={`${styles.cta} arrowHost`} href="/contact#inquiry">Discuss your identity <Arrow className={film.buttonArrow} /></Link><Link className={film.next} href="/capabilities/strategy">Next capability / Strategy →</Link></div></section>
     </main>
   );
 }

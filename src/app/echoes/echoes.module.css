@@ -423,9 +423,9 @@
   padding: 0 calc(22 * var(--u));
   border: 0;
   border-radius: 10px;
-  background: var(--accent);
-  box-shadow: 0 14px 34px -14px rgba(0, 119, 230, 0.95);
-  color: #fff;
+  background: #fff;
+  box-shadow: 0 14px 34px -14px rgba(0, 0, 0, 0.45);
+  color: #0a0a0a;
   font: 400 calc(14 * var(--u)) / 1 var(--mono);
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -437,7 +437,7 @@
 
 .chat:hover {
   transform: translateY(-2px);
-  box-shadow: 0 20px 40px -14px rgba(0, 119, 230, 1);
+  box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.55);
 }
 
 .chatArrow {

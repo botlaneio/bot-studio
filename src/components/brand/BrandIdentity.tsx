@@ -1,6 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import styles from "./BrandIdentity.module.css";
+import film from "./BrandFilm.module.css";
+import { MotionStage, IdentityMark, BrandPalette } from "./IdentityMotion";
 
 const systems = [
   ["01", "A clear point of view", "Positioning & voice", "Define what you stand for, who you speak to, and the language that makes your brand unmistakable.", "Positioning · Naming · Messaging · Tone of voice"],
@@ -12,19 +13,18 @@ const systems = [
 export function BrandIdentity() {
   return (
     <main className={styles.page}>
-      <section className={styles.hero} aria-labelledby="brand-title">
-        <div className={styles.heroCopy}>
-          <Link className={styles.eyebrow} href="/capabilities">Capabilities / 01 — Foundation</Link>
-          <h1 id="brand-title">Brand<br />Identity<span>.</span></h1>
-          <p className={styles.lead}>An identity that feels<br />like only you.</p>
-          <p className={styles.body}>We turn your point of view into a name, a mark and a visual world. Considered from the first impression to the finest detail.</p>
-          <Link className={styles.cta} href="/contact#inquiry">Shape your brand <span aria-hidden="true">↗</span></Link>
-        </div>
-        <figure className={styles.heroArt}>
-          <Image src="/capability-brand-identity.webp" alt="Cobalt stationery with embossed geometric marks, black cards and a brushed metal seal" fill sizes="(max-width: 760px) 100vw, 55vw" preload />
-          <figcaption>Identity study / Cobalt, paper & metal</figcaption>
-        </figure>
-        <div className={styles.heroFoot}><span>Strategy. Expression. Consistency.</span><a href="#brand-system">Explore the identity system ↓</a></div>
+      <section className={film.hero} aria-labelledby="brand-title">
+        <div className={film.heroTop}><Link className={styles.eyebrow} href="/capabilities">Capabilities / 01 — Brand Identity</Link><span className={styles.eyebrow}>A point of view, made visible</span></div>
+        <h1 id="brand-title">Identity.<br /><span>With intent.</span></h1>
+        <MotionStage className={film.heroStage} label="Animated identity study: two geometric halves form one signature">
+          <div className={film.heroGrid} aria-hidden="true" />
+          <div className={film.heroMark}><IdentityMark /></div>
+          <div className={film.orbit} aria-hidden="true" />
+          <span className={film.coordinate} aria-hidden="true">FORM / 001</span>
+          <span className={film.heroSignature} aria-hidden="true">B / L</span>
+        </MotionStage>
+        <div className={film.heroBottom}><p className={styles.body}>A name. A mark. A world around them.<br />We create identities that feel like only you.</p><Link className={styles.cta} href="/contact#inquiry">Shape your brand <span aria-hidden="true">↗</span></Link></div>
+        <a className={film.scrollLink} href="#identity-film">Explore the identity ↓</a>
       </section>
 
       <section className={`${styles.section} ${styles.statement}`} aria-labelledby="statement-title">
@@ -32,22 +32,35 @@ export function BrandIdentity() {
         <div data-reveal><h2 id="statement-title">Recognised in a second.<br />Remembered for longer.</h2><p className={styles.body}>The strongest brands have a thread running through everything. We find yours, then give it form: a distinctive identity that stays coherent across your website, your communications and the places your business shows up.</p></div>
       </section>
 
-      <section className={styles.materials} aria-labelledby="materials-title">
-        <div className={styles.materialHead}><p className={styles.eyebrow}>02 / The expression</p><h2 id="materials-title">Character, in the details.</h2><p className={styles.body}>A mark. A texture. A precise shade of blue.<br />Every choice belongs to the same story.</p></div>
-        <div className={styles.materialGrid}>
-          <figure className={styles.paper}><Image src="/capability-brand-identity.webp" alt="Detail of the embossed mark on textured cobalt paper" fill sizes="(max-width: 760px) 100vw, 60vw" /><figcaption><span>01 — Tactile</span><span>Paper & impression</span></figcaption></figure>
-          <figure className={styles.metal}><Image src="/capability-brand-identity.webp" alt="Detail of the geometric mark engraved in a brushed metal seal" fill sizes="(max-width: 760px) 100vw, 40vw" /><figcaption><span>02 — Precise</span><span>Form & finish</span></figcaption></figure>
-        </div>
-        <p className={styles.artNote}>Studio concept artwork — a material study, not a client case study.</p>
+      <section id="identity-film" className={film.film} aria-labelledby="form-title">
+        <MotionStage pin label="Scroll sequence revealing the construction of an identity mark">
+          <div className={film.sticky}>
+            <div className={film.filmCopy}><p className={styles.eyebrow}>02 / From idea to signature</p><h2 id="form-title">Nothing arbitrary.<br />Everything connected.</h2><p className={styles.body}>Proportion, rhythm and negative space. We shape the details until the identity holds together, at any scale.</p><a className={film.skip} href="#identity-language">Continue to the visual language ↓</a></div>
+            <div className={film.blueprint} aria-hidden="true">
+              <div className={film.constructionGrid} />
+              <svg className={film.guides} viewBox="0 0 400 400" fill="none"><circle cx="200" cy="200" r="145" /><circle cx="200" cy="200" r="100" /><path d="M0 200h400M200 0v400M55 55l290 290M345 55 55 345" /><rect x="55" y="55" width="290" height="290" /></svg>
+              <div className={film.builtMark}><IdentityMark /></div>
+              <span className={film.measureTop}>Proportion / 1:1</span><span className={film.measureBottom}>One coherent signature</span>
+            </div>
+          </div>
+        </MotionStage>
       </section>
 
+      <section id="identity-language" className={`${styles.section} ${film.language}`} aria-labelledby="language-title">
+        <div className={styles.sectionHead}><p className={styles.eyebrow}>03 / A visual language</p><h2 id="language-title">More than a mark.<br />A way of showing up.</h2></div>
+        <div className={film.languageGrid}><BrandPalette /><MotionStage className={film.typeStudy} label="Typographic study moving from expressive display type to structured information"><span className={styles.eyebrow}>Typography / Hierarchy in harmony</span><div className={film.typeLarge} aria-hidden="true">Aa</div><div className={film.typeLines}><span>Distinct by design.</span><p>A voice with character.<br />A system with clarity.</p><small>ABCDEFGHIJKLMNOPQRSTUVWXYZ<br />abcdefghijklmnopqrstuvwxyz / 0123456789</small></div></MotionStage></div>
+        <p className={styles.body}>We define how your colours, type, imagery and voice work together, so your team can create new work without starting from scratch.</p>
+      </section>
+
+      <section className={film.touchpoints} aria-labelledby="touchpoint-title"><div className={film.touchpointHead}><p className={styles.eyebrow}>04 / Identity in context</p><h2 id="touchpoint-title">One thread.<br />Across every surface.</h2><p className={styles.body}>Built to travel from a first impression to a lasting relationship.</p></div><MotionStage className={film.applicationStage} label="Animated examples of an identity applied to a website, a presentation and stationery"><div className={film.applications} aria-hidden="true"><div className={film.webApplication}><div className={film.browserBar}><i /><i /><i /><span>Digital / 01</span></div><div className={film.webContent}><IdentityMark /><span>Make your<br />presence felt.</span><small>Discover the difference ↗</small></div></div><div className={film.presentation}><span>Perspective / 02</span><IdentityMark /><strong>A clearer<br />point of view.</strong><small>Brand presentation</small></div><div className={film.stationery}><IdentityMark /><span>Considered.<br />Consistent.</span><small>Print / 03</small></div></div></MotionStage><p className={film.conceptNote}>Interactive studio studies — illustrative identity applications.</p></section>
+
       <section id="brand-system" className={styles.section} aria-labelledby="system-title">
-        <div className={styles.sectionHead}><p className={styles.eyebrow}>03 / The identity system</p><h2 id="system-title">One brand.<br />Every touchpoint.</h2></div>
+        <div className={styles.sectionHead}><p className={styles.eyebrow}>05 / Your identity system</p><h2 id="system-title">One brand.<br />Every touchpoint.</h2></div>
         <div className={styles.systems}>{systems.map(([number, title, label, copy, includes]) => <article className={styles.system} key={number} data-reveal><span className={styles.number}>{number}</span><div><p className={styles.eyebrow}>{label}</p><h3>{title}</h3></div><div><p className={styles.body}>{copy}</p><p className={styles.includes}>{includes}</p></div></article>)}</div>
       </section>
 
       <section className={`${styles.section} ${styles.process}`} aria-labelledby="process-title">
-        <p className={styles.eyebrow}>04 / Working together</p><h2 id="process-title">From first conversation<br />to a complete identity.</h2>
+        <p className={styles.eyebrow}>06 / Working together</p><h2 id="process-title">From first conversation<br />to a complete identity.</h2>
         <ol>{[["Discover", "We listen, question and align on your audience, ambition and positioning."], ["Define", "We agree a creative direction, with a clear rationale behind the choices."], ["Refine", "We develop the identity, test it in context and work through agreed feedback."], ["Deliver", "You receive the agreed assets and guidelines, ready for your team to put to work."]].map(([title, copy], i) => <li key={title}><span className={styles.number}>0{i + 1}</span><h3>{title}</h3><p className={styles.body}>{copy}</p></li>)}</ol>
         <p className={styles.scope}>Deliverables, timeline and revision rounds are agreed in your written proposal before work begins.</p>
       </section>

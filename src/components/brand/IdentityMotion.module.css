@@ -1,0 +1,15 @@
+.stage { --progress: .5; position: relative; }
+.pinned { height: 155svh; }
+.markLeft, .markRight { transform-box: fill-box; transform-origin: center; }
+.palette { min-width: 0; }
+.palettePreview { min-height: 420px; padding: 36px; display: flex; flex-direction: column; align-items: flex-start; transition: background-color .32s var(--ease-out), color .32s var(--ease-out); }
+.palettePreview svg { width: 100px; height: 100px; margin-bottom: 44px; }
+.palettePreview > span { font: 500 clamp(28px, 3vw, 44px)/1.05 var(--display); letter-spacing: -.04em; }
+.palettePreview small { margin-top: auto; padding-top: 40px; font: 11px/1.5 var(--mono); letter-spacing: .05em; }
+.swatches { display: flex; gap: 8px; padding: 16px 0; flex-wrap: wrap; }
+.swatches button { display: flex; gap: 8px; align-items: center; min-height: 44px; padding: 10px 12px; border: 1px solid #353941; background: transparent; color: #c2c7cf; border-radius: 4px; cursor: pointer; font-size: 12px; }
+.swatches button[aria-pressed=true] { border-color: #65b6ff; color: white; }
+.swatches button:focus-visible { outline: 2px solid #65b6ff; outline-offset: 4px; }
+.swatches button > span { width: 12px; height: 12px; border: 1px solid #737983; border-radius: 50%; }
+@media (max-width: 760px) { .pinned { height: auto; } .palettePreview { min-height: 340px; padding: 28px; } }
+@media (prefers-reduced-motion: reduce) { .pinned { height: auto; } }

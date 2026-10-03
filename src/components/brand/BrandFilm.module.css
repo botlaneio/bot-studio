@@ -1,0 +1,62 @@
+.hero { position: relative; isolation: isolate; max-width: 1600px; margin: auto; padding: 54px max(24px, 6vw) 36px; min-height: 850px; }
+.heroTop { display: flex; justify-content: space-between; gap: 24px; }
+.hero h1 { position: relative; z-index: 2; font: 500 clamp(74px, 10vw, 156px)/.9 var(--display); letter-spacing: -.06em; margin: 76px 0 0; pointer-events: none; }
+.hero h1 > span { color: #a8b0bb; }
+.heroStage { position: absolute; z-index: 1; width: 55%; right: 2%; top: 80px; height: 600px; overflow: hidden; perspective: 1000px; }
+.heroGrid { position: absolute; inset: 10%; background: linear-gradient(#ffffff07 1px, transparent 1px), linear-gradient(90deg, #ffffff07 1px, transparent 1px); background-size: 64px 64px; mask-image: radial-gradient(ellipse, black, transparent 70%); }
+.heroMark { position: absolute; width: 58%; left: 24%; top: 15%; color: var(--accent); transform: rotate(-18deg) rotateY(-24deg) translateY(calc((.5 - var(--progress)) * 80px)); filter: drop-shadow(14px 24px 0 #002d59); }
+.heroMark svg { width: 100%; overflow: visible; }
+.heroMark svg path:first-child { transform: translateX(calc((.6 - var(--progress)) * -45px)); }
+.heroMark svg path:last-child { transform: translateX(calc((.6 - var(--progress)) * 45px)); }
+.orbit { position: absolute; border: 1px solid #ffffff24; width: 65%; aspect-ratio: 1; left: 19%; top: 9%; border-radius: 50%; transform: rotateX(62deg) rotate(-30deg); }
+.coordinate { position: absolute; left: 10%; bottom: 12%; font: 11px/1.4 var(--mono); letter-spacing: .08em; color: #a8b0bb; }
+.heroSignature { position: absolute; right: 7%; top: 16%; font: 11px/1.5 var(--mono); color: #a8b0bb; }
+.heroBottom { position: relative; z-index: 2; display: flex; justify-content: space-between; align-items: end; gap: 32px; margin-top: 180px; }
+.heroBottom a { margin-top: 0; }
+.scrollLink { display: block; width: fit-content; margin-top: 50px; color: #a8b0bb; font: 11px/1.5 var(--mono); letter-spacing: .04em; }
+.film { border-block: 1px solid #26292f; }
+.sticky { position: sticky; top: var(--nav-h); min-height: calc(100svh - var(--nav-h)); max-width: 1440px; margin: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 6vw; align-items: center; padding: 64px max(24px, 6vw); }
+.filmCopy h2, .touchpointHead h2 { font: 500 clamp(34px, 4.3vw, 64px)/1.06 var(--display); letter-spacing: -.04em; margin: 28px 0; text-wrap: balance; }
+.skip { display: inline-block; font: 11px/1.5 var(--mono); color: #a8b0bb; margin-top: 32px; }
+.blueprint { position: relative; aspect-ratio: 1; min-width: 0; background: #080b10; border: 1px solid #272e38; }
+.constructionGrid { position: absolute; inset: 0; background: linear-gradient(#ffffff08 1px, transparent 1px), linear-gradient(90deg, #ffffff08 1px, transparent 1px); background-size: 10% 10%; opacity: calc(1 - var(--progress) * .7); }
+.guides { position: absolute; inset: 10%; width: 80%; stroke: #65b6ff; stroke-width: .65; opacity: calc(1 - var(--progress) * .9); transform: rotate(calc(var(--progress) * 45deg)); }
+.builtMark { position: absolute; inset: 24%; color: var(--accent); transform: scale(calc(.8 + var(--progress) * .3)); }
+.builtMark svg { width: 100%; overflow: visible; }
+.builtMark svg path:first-child { transform: translateX(calc((1 - var(--progress)) * -70px)) rotate(calc((1 - var(--progress)) * -25deg)); }
+.builtMark svg path:last-child { transform: translateX(calc((1 - var(--progress)) * 70px)) rotate(calc((1 - var(--progress)) * 25deg)); }
+.measureTop, .measureBottom { position: absolute; left: 24px; font: 11px/1.4 var(--mono); letter-spacing: .04em; color: #a8b0bb; }
+.measureTop { top: 24px; } .measureBottom { bottom: 24px; }
+.languageGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px; }
+.typeStudy { background: #0c0e12; border: 1px solid #292d35; padding: 32px; overflow: hidden; }
+.typeLarge { font: 500 clamp(120px, 15vw, 220px)/1 var(--display); letter-spacing: -.07em; margin: 10px 0 20px; transform: translateX(calc((.5 - var(--progress)) * 60px)); }
+.typeLines { border-top: 1px solid #333941; padding-top: 20px; }
+.typeLines > span { font-size: 26px; letter-spacing: -.03em; }
+.typeLines p { font-size: 16px; line-height: 1.5; color: #b9bec7; }
+.typeLines small { font: 11px/1.6 var(--mono); letter-spacing: .025em; color: #a8b0bb; overflow-wrap: anywhere; }
+.touchpoints { padding: 80px max(24px, 6vw) 64px; max-width: 1600px; margin: auto; background: #080a0e; overflow: hidden; }
+.touchpointHead { max-width: 1440px; margin: auto; }
+.applicationStage { padding: 55px 0 20px; perspective: 1400px; }
+.applications { display: grid; grid-template-columns: 1.6fr 1fr .8fr; gap: 24px; align-items: center; transform: rotateX(calc((.5 - var(--progress)) * 10deg)); }
+.webApplication { border: 1px solid #343941; background: #050608; box-shadow: 0 30px 50px #0005; transform: translateY(calc((.5 - var(--progress)) * 50px)); }
+.browserBar { display: flex; gap: 5px; align-items: center; border-bottom: 1px solid #292d35; padding: 14px; }
+.browserBar i { width: 4px; height: 4px; border-radius: 50%; background: #686f7c; }
+.browserBar span { font: 10px/1 var(--mono); color: #a8b0bb; margin-left: auto; }
+.webContent { padding: 28px; display: flex; flex-direction: column; gap: 32px; }
+.webContent svg { width: 42px; color: var(--accent); }
+.webContent > span { font: 500 clamp(28px, 3.3vw, 48px)/1 var(--display); letter-spacing: -.04em; }
+.webContent small { font: 11px/1.4 var(--mono); color: #a8b0bb; }
+.presentation { display: flex; flex-direction: column; gap: 32px; padding: 28px; background: var(--accent); color: white; min-height: 375px; transform: translateY(calc((.5 - var(--progress)) * -65px)); }
+.presentation > span, .presentation small, .stationery small { font: 11px/1.4 var(--mono); letter-spacing: .04em; }
+.presentation svg { width: 75px; }
+.presentation strong { font: 500 clamp(24px, 2.5vw, 38px)/1.1 var(--display); letter-spacing: -.04em; }
+.presentation small { margin-top: auto; }
+.stationery { background: #f0f0ef; color: #07090c; padding: 26px; display: flex; flex-direction: column; gap: 32px; min-height: 280px; transform: rotate(calc((.5 - var(--progress)) * 10deg)); }
+.stationery svg { width: 50px; }
+.stationery > span { font: 500 24px/1.1 var(--display); letter-spacing: -.035em; }
+.stationery small { margin-top: auto; }
+.conceptNote { font: 11px/1.5 var(--mono); color: #a8b0bb; margin-top: 24px; }
+@media (min-width: 761px) and (prefers-reduced-motion: no-preference) { .hero h1 { animation: typeEnter .9s var(--ease-out) both; } @keyframes typeEnter { from { opacity: 0; translate: 0 28px; } to { opacity: 1; translate: 0 0; } } }
+@media (max-width: 1000px) { .heroStage { width: 60%; right: 0; top: 150px; height: 500px; } .applications { gap: 16px; } .webContent, .presentation, .stationery { padding: 20px; } .sticky { gap: 32px; } }
+@media (max-width: 760px) { .hero { padding-top: 32px; min-height: 0; } .heroTop > span { display: none; } .hero h1 { font-size: clamp(60px, 15vw, 110px); margin-top: 44px; } .heroStage { position: relative; top: auto; right: auto; width: 100%; height: 340px; margin-top: 12px; } .heroMark { width: 55%; left: 26%; top: 12%; } .heroBottom { margin-top: 12px; display: grid; gap: 24px; } .heroBottom a { justify-self: start; } .scrollLink { margin-top: 32px; } .sticky { position: relative; top: auto; min-height: 0; grid-template-columns: 1fr; padding-block: 64px; gap: 40px; } .blueprint { max-width: 500px; width: 100%; margin: auto; } .languageGrid { grid-template-columns: 1fr; } .typeLarge { font-size: 150px; } .applications { grid-template-columns: 1fr; max-width: 500px; margin: auto; gap: 24px; } .presentation { min-height: 300px; } .webContent > span { font-size: 42px; } .presentation strong { font-size: 36px; } .stationery { min-height: 240px; } .applicationStage { padding-top: 36px; } }
+@media (prefers-reduced-motion: reduce) { .heroMark, .heroMark svg path, .guides, .builtMark, .builtMark svg path, .typeLarge, .applications, .webApplication, .presentation, .stationery { transform: none; } .sticky { position: relative; top: auto; min-height: 0; } .guides { opacity: .2; } }

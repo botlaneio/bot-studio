@@ -1,75 +1,69 @@
+import Image from "next/image";
 import Link from "next/link";
-import styles from "./BrandIdentity.module.css";
-import film from "./BrandFilm.module.css";
-import { MotionStage, IdentityMark, BalancedIdentityMark, BrandPalette } from "./IdentityMotion";
 import { Arrow } from "../motion/Arrow";
+import styles from "./IdentityAtelier.module.css";
 
-const systems = [
-  ["01", "A clear point of view", "Positioning & voice", "Define what you stand for, who you speak to, and the language that makes your brand unmistakable.", "Positioning · Naming · Messaging · Tone of voice"],
-  ["02", "A signature worth keeping", "Marks & identity", "A considered logo family, built to hold its character from the smallest screen to the largest sign.", "Primary mark · Secondary marks · Usage rules"],
-  ["03", "Every detail, in dialogue", "Visual language", "Colour, typography and art direction that work together, giving every touchpoint a shared sensibility.", "Colour system · Type hierarchy · Image direction"],
-  ["04", "Built to leave the studio", "Guidelines & rollout", "An identity your team can use with confidence, with practical guidance and agreed launch applications.", "Brand guidelines · Asset library · Launch applications"],
+const deliverables = [
+  ["Naming & verbal identity", "Distinctive names and messaging that capture what you stand for and how you speak to the world."],
+  ["Logo & mark system", "A considered family of marks that holds its character, from the smallest screen to the largest sign."],
+  ["Colour, type & art direction", "A cohesive visual language, from colour and typography to imagery and composition."],
+  ["Brand guidelines", "Clear, practical guidance and organised assets your team can use with confidence."],
+];
+const process = [
+  ["Discover", "We learn about your business, audience and ambitions."],
+  ["Define", "We agree the positioning, voice and creative direction."],
+  ["Design", "We craft your identity and refine it across real applications."],
+  ["Deliver", "We bring everything together in useful assets and practical guidelines."],
 ];
 
 export function BrandIdentity() {
   return (
     <main className={styles.page}>
-      <section className={film.hero} aria-labelledby="brand-title">
-        <div className={film.heroTop}><Link className={styles.eyebrow} href="/capabilities">Capabilities / 01 — Brand Identity</Link><span className={styles.eyebrow}>A point of view, made visible</span></div>
-        <div className={film.heroLayout}>
-          <div className={film.heroCopy}><h1 id="brand-title">Identity.<br /><span>With intent.</span></h1><p className={styles.body}>A name. A mark. A world around them.<br />We create identities that feel like only you.</p><Link className={`${styles.cta} arrowHost`} href="/contact#inquiry">Shape your brand <Arrow className={film.buttonArrow} /></Link></div>
-          <MotionStage className={film.heroStage} label="Balanced geometric identity study">
-            <div className={film.heroGrid} aria-hidden="true" />
-            <div className={film.heroOutline} aria-hidden="true" />
-            <div className={film.heroMark}><BalancedIdentityMark /></div>
-            <span className={film.coordinate} aria-hidden="true">01 / Form & proportion</span>
-            <span className={film.heroSignature} aria-hidden="true">Identity study</span>
-          </MotionStage>
-        </div>
-        <div className={film.heroFoot}><span>Strategy / Identity / Expression</span><a href="#identity-film">Explore the identity ↓</a></div>
-      </section>
-
-      <section className={`${styles.section} ${styles.statement}`} aria-labelledby="statement-title">
-        <p className={styles.eyebrow}>01 / The point of view</p>
-        <div data-reveal><h2 id="statement-title">Recognised in a second.<br />Remembered for longer.</h2><p className={styles.body}>The strongest brands have a thread running through everything. We find yours, then give it form: a distinctive identity that stays coherent across your website, your communications and the places your business shows up.</p></div>
-      </section>
-
-      <section id="identity-film" className={film.film} aria-labelledby="form-title">
-        <MotionStage pin label="Scroll sequence revealing the construction of an identity mark">
-          <div className={film.sticky}>
-            <div className={film.filmCopy}><p className={styles.eyebrow}>02 / From idea to signature</p><h2 id="form-title">Nothing arbitrary.<br />Everything connected.</h2><p className={styles.body}>Proportion, rhythm and negative space. We shape the details until the identity holds together, at any scale.</p><a className={film.skip} href="#identity-language">Continue to the visual language ↓</a></div>
-            <div className={film.blueprint} aria-hidden="true">
-              <div className={film.constructionGrid} />
-              <svg className={film.guides} viewBox="0 0 400 400" fill="none"><circle cx="200" cy="200" r="145" /><circle cx="200" cy="200" r="100" /><path d="M0 200h400M200 0v400M55 55l290 290M345 55 55 345" /><rect x="55" y="55" width="290" height="290" /></svg>
-              <div className={film.builtMark}><IdentityMark /></div>
-              <span className={film.measureTop}>Proportion / 1:1</span><span className={film.measureBottom}>One coherent signature</span>
-            </div>
+      <div className={styles.container}>
+        <section className={styles.hero} aria-labelledby="brand-title">
+          <div className={styles.heroCopy}>
+            <Link className={styles.eyebrow} href="/capabilities">{"// 01 — Branding & Identity"}</Link>
+            <h1 id="brand-title">Be<br />unmistakably<br />you.</h1>
+            <p className={styles.lead}>A name, a mark and a visual language that make every touchpoint feel like you.</p>
+            <Link className={`${styles.cta} arrowHost`} href="/contact#inquiry">Discuss your brand <Arrow className={styles.arrow} /></Link>
           </div>
-        </MotionStage>
-      </section>
-
-      <section id="identity-language" className={`${styles.section} ${film.language}`} aria-labelledby="language-title">
-        <div className={styles.sectionHead}><p className={styles.eyebrow}>03 / A visual language</p><h2 id="language-title">More than a mark.<br />A way of showing up.</h2></div>
-        <div className={film.languageGrid}><BrandPalette /><MotionStage className={film.typeStudy} label="Typographic study moving from expressive display type to structured information"><span className={styles.eyebrow}>Typography / Hierarchy in harmony</span><div className={film.typeLarge} aria-hidden="true">Aa</div><div className={film.typeLines}><span>Distinct by design.</span><p>A voice with character.<br />A system with clarity.</p><small>ABCDEFGHIJKLMNOPQRSTUVWXYZ<br />abcdefghijklmnopqrstuvwxyz / 0123456789</small></div></MotionStage></div>
-        <p className={styles.body}>We define how your colours, type, imagery and voice work together, so your team can create new work without starting from scratch.</p>
-      </section>
-
-      <section className={film.touchpoints} aria-labelledby="touchpoint-title"><div className={film.touchpointHead}><p className={styles.eyebrow}>04 / Identity in context</p><h2 id="touchpoint-title">One thread.<br />Across every surface.</h2><p className={styles.body}>Built to travel from a first impression to a lasting relationship.</p></div><MotionStage className={film.applicationStage} label="Animated examples of an identity applied to a website, a presentation and stationery"><div className={film.applications} aria-hidden="true"><div className={film.webApplication}><div className={film.browserBar}><i /><i /><i /><span>Digital / 01</span></div><div className={film.webContent}><IdentityMark /><span>Make your<br />presence felt.</span><small>Discover the difference ↗</small></div></div><div className={film.presentation}><span>Perspective / 02</span><IdentityMark /><strong>A clearer<br />point of view.</strong><small>Brand presentation</small></div><div className={film.stationery}><IdentityMark /><span>Considered.<br />Consistent.</span><small>Print / 03</small></div></div></MotionStage><p className={film.conceptNote}>Interactive studio studies — illustrative identity applications.</p></section>
-
-      <section id="brand-system" className={styles.section} aria-labelledby="system-title">
-        <div className={styles.sectionHead}><p className={styles.eyebrow}>05 / Your identity system</p><h2 id="system-title">One brand.<br />Every touchpoint.</h2></div>
-        <div className={styles.systems}>{systems.map(([number, title, label, copy, includes]) => <article className={styles.system} key={number} data-reveal><span className={styles.number}>{number}</span><div><p className={styles.eyebrow}>{label}</p><h3>{title}</h3></div><div><p className={styles.body}>{copy}</p><p className={styles.includes}>{includes}</p></div></article>)}</div>
-      </section>
-
-      <section className={`${styles.section} ${styles.process}`} aria-labelledby="process-title">
-        <p className={styles.eyebrow}>06 / Working together</p><h2 id="process-title">From first conversation<br />to a complete identity.</h2>
-        <ol>{[["Discover", "We listen, question and align on your audience, ambition and positioning."], ["Define", "We agree a creative direction, with a clear rationale behind the choices."], ["Refine", "We develop the identity, test it in context and work through agreed feedback."], ["Deliver", "You receive the agreed assets and guidelines, ready for your team to put to work."]].map(([title, copy], i) => <li key={title}><span className={styles.number}>0{i + 1}</span><h3>{title}</h3><p className={styles.body}>{copy}</p></li>)}</ol>
-        <p className={styles.scope}>Deliverables, timeline and revision rounds are agreed in your written proposal before work begins.</p>
-      </section>
-
-      <section className={`${styles.section} ${styles.faq}`} aria-labelledby="faq-title"><p className={styles.eyebrow}>A few things to know</p><h2 id="faq-title">Before we begin.</h2>{[["Can you work with an existing identity?", "Yes. We can refine an existing identity or build a new one. We start by understanding what is working and what needs to change."], ["Do we need a new name or logo?", "Not necessarily. We recommend the scope after discovery; sometimes a clearer visual system is the right place to focus."], ["Can you carry the identity into our website?", "Yes. Brand identity can lead into website strategy, design and development. We agree that additional scope with you before starting."]].map(([q, a]) => <details key={q}><summary>{q}<span aria-hidden="true">+</span></summary><p className={styles.body}>{a}</p></details>)}</section>
-
-      <section className={film.close} aria-labelledby="close-title"><div><p className={styles.eyebrow}>Your next chapter</p><h2 id="close-title">Make it<br />unmistakable.</h2></div><div className={film.closeActions}><Link className={`${styles.cta} arrowHost`} href="/contact#inquiry">Discuss your identity <Arrow className={film.buttonArrow} /></Link><Link className={film.next} href="/capabilities/strategy">Next capability / Strategy →</Link></div></section>
+          <figure className={styles.heroArt}>
+            <Image src="/brand-identity/forme-hero.webp" width={1536} height={1024} alt="FORME identity on a bone shopping bag, black knitwear and an oxblood embossed tag." sizes="(max-width: 760px) 100vw, 62vw" loading="eager" fetchPriority="high" />
+            <figcaption>FORME / Fashion identity</figcaption>
+          </figure>
+        </section>
+        <section className={styles.foundation} aria-labelledby="foundation-title">
+          <div className={styles.sectionHead}>
+            <p className={styles.eyebrow}>01 / The foundation</p>
+            <div><h2 id="foundation-title">One identity. Every expression.</h2><p className={styles.body}>From the first impression to the everyday details, we build a system your team can use.</p></div>
+          </div>
+          <div className={styles.collection}>
+            <div className={styles.collectionLabel}><h3>01 / FORME</h3><p>Fashion identity</p></div>
+            <figure><Image src="/brand-identity/forme-collection.webp" width={1584} height={992} alt="FORME's bone, black and oxblood identity across a campaign poster, packaging, garment tag and mobile storefront." sizes="(max-width: 760px) 100vw, (max-width: 1440px) 75vw, 1080px" /></figure>
+          </div>
+          <div className={styles.collection}>
+            <div className={styles.collectionLabel}><h3>02 / NORTHLINE</h3><p>Business consultancy identity</p></div>
+            <figure><Image src="/brand-identity/northline-collection.webp" width={1584} height={992} alt="NORTHLINE's navy, silver and white identity across office signage, proposals, business cards and a service website." sizes="(max-width: 760px) 100vw, (max-width: 1440px) 75vw, 1080px" /></figure>
+          </div>
+        </section>
+        <section className={styles.deliverables} aria-labelledby="deliverables-title">
+          <div className={styles.threeColumnHead}><p className={styles.eyebrow}>02 / Deliverables</p><h2 id="deliverables-title">What we shape.</h2><p className={styles.body}>A complete identity system, built for clarity, consistency and character.</p></div>
+          <ol className={styles.deliverableList}>{deliverables.map(([title, copy], index) => (
+            <li key={title}><span className={styles.number} aria-hidden="true">0{index + 1}</span><h3>{title}</h3><p className={styles.body}>{copy}</p></li>
+          ))}</ol>
+        </section>
+        <section className={styles.process} aria-labelledby="process-title">
+          <div className={styles.threeColumnHead}><p className={styles.eyebrow}>03 / Our process</p><h2 id="process-title">From discovery to distinction.</h2><p className={styles.body}>A focused, collaborative process to create an identity that lasts.</p></div>
+          <ol className={styles.processList}>{process.map(([title, copy], index) => (
+            <li key={title}><span className={styles.eyebrow} aria-hidden="true">0{index + 1}</span><h3>{title}</h3><p className={styles.body}>{copy}</p></li>
+          ))}</ol>
+          <p className={styles.scope}>Scope, timeline and revision rounds are agreed before work begins.</p>
+        </section>
+        <section className={styles.close} aria-labelledby="brand-close-title">
+          <div><p className={styles.eyebrow}>04 / Let’s create</p><h2 id="brand-close-title">Make your mark.</h2></div>
+          <Link className={`${styles.cta} arrowHost`} href="/contact#inquiry">Discuss your brand <Arrow className={styles.arrow} /></Link>
+        </section>
+      </div>
     </main>
   );
 }

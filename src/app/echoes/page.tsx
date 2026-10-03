@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import type { Metadata } from "next";
+import { Arrow } from "@/components/motion/Arrow";
 import page from "@/components/page/Page.module.css";
 import { ECHOES, ECHOES_AUTHOR, ECHOES_AUTHOR_ROLE } from "./echoes";
 import styles from "./echoes.module.css";
@@ -18,10 +19,11 @@ const LINES = [
   "Ideas, insights, and inspiration",
 ];
 
-const CLOSE = [
-  "A small studio, making stories and tech",
+/** Plus-lines in the inspire close. No template stats or years. */
+const INSPIRE_LINES = [
   "Websites with the care of a product",
   "One project at a time",
+  "Craft, clarity, and performance",
 ];
 
 export default function EchoesPage() {
@@ -90,26 +92,56 @@ export default function EchoesPage() {
         </div>
       </section>
 
-      <section className={styles.close} aria-label="Start a conversation">
-        <div className={styles.stage}>
-          <div className={styles.rule} aria-hidden="true">
-            <span className={styles.tick} />
-            <span className={styles.hairline} />
-          </div>
-          <div className={styles.closeRow}>
-            <h2 data-reveal="">Let&apos;s make the next story.</h2>
-            <ul className={styles.lines}>
-              {CLOSE.map((line) => (
+      <section className={styles.inspire} aria-label="Start a conversation">
+        <video
+          className={styles.inspireVideo}
+          src="/inspire-wave.mp4"
+          poster="/inspire-wave-poster.jpg"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-hidden="true"
+        />
+        <div className={styles.inspireScrim} aria-hidden="true" />
+        <div className={styles.inspireInner}>
+          <div className={styles.inspireLeft}>
+            <p className={styles.inspireLabel}>
+              <span className={styles.tick} aria-hidden="true" />
+              Studio
+            </p>
+            <p className={styles.inspireTagline}>A small studio, making stories and tech.</p>
+            <ul className={styles.inspireLines}>
+              {INSPIRE_LINES.map((line) => (
                 <li key={line}>
                   <span className={styles.plus} aria-hidden="true">+</span>
                   {line}
                 </li>
               ))}
             </ul>
+            <p className={styles.inspirePlace}>
+              <span className={styles.tick} aria-hidden="true" />
+              Sheridan, Wyoming
+            </p>
           </div>
-          <a className={styles.chat} href="#contact">
-            Let&apos;s chat
-          </a>
+          <div className={styles.inspireRight}>
+            <h2 className={styles.inspireHeading}>
+              <span className={styles.inspireLine}>Let us</span>
+              <span className={styles.inspireLine}>
+                <span className={styles.inspireWord}>inspire</span>
+              </span>
+              <span className={styles.inspireLine}>your next project</span>
+            </h2>
+            <blockquote className={styles.inspireQuote}>
+              <p>We listen first, stay transparent, and deliver what we promise. Every project matters to us.</p>
+              <footer>BotLane LLC</footer>
+            </blockquote>
+            <a className={`${styles.chat} arrowHost`} href="#contact">
+              Book an intro call
+              <Arrow className={styles.chatArrow} />
+            </a>
+          </div>
         </div>
       </section>
     </main>

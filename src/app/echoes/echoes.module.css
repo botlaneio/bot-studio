@@ -154,13 +154,12 @@
   }
 }
 
-/* Below the hero: the Whispers featured card, then a two-column grid,
-   then a short close that points at the site footer. Dark surfaces,
+/* Below the hero: the Whispers featured card, then a two-column grid.
+   The inspire close is full-bleed, after these. Dark surfaces,
    no template article copy. */
 
 .featured,
-.more,
-.close {
+.more {
   width: calc(1280 * var(--u));
   max-width: 100%;
   margin: 0 auto;
@@ -217,8 +216,7 @@
 }
 
 .featureBottom h2,
-.cardBody h2,
-.closeRow h2 {
+.cardBody h2 {
   margin: 0;
   font: 500 calc(48 * var(--u)) / 1.05 var(--display);
   letter-spacing: -0.04em;
@@ -288,41 +286,168 @@
   color: rgba(255, 255, 255, 0.55);
 }
 
-.close {
-  padding-top: calc(64 * var(--u));
-  padding-bottom: calc(72 * var(--u));
-}
-
-.closeRow {
+/* Full-bleed inspire close. The orange wave stays visible through a light scrim.
+   Accent is the studio blue, on the word, the pluses, and the ticks. */
+.inspire {
+  position: relative;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: calc(40 * var(--u));
-  margin-top: calc(28 * var(--u));
+  align-items: center;
+  width: 100%;
+  min-height: 78vh;
+  margin: 0;
+  overflow: hidden;
+  color: #fff;
+  background: #000;
 }
 
-.closeRow h2 {
-  max-width: calc(520 * var(--u));
+.inspireVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.inspireScrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.46) 0%, rgba(0, 0, 0, 0.18) 46%, rgba(0, 0, 0, 0.4) 100%);
+}
+
+.inspireInner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+  gap: calc(64 * var(--u));
+  align-items: center;
+  width: calc(1280 * var(--u));
+  max-width: 100%;
+  margin: 0 auto;
+  padding: calc(96 * var(--u)) calc(48 * var(--u));
+}
+
+.inspireLabel,
+.inspirePlace {
+  display: flex;
+  align-items: center;
+  gap: calc(10 * var(--u));
+  margin: 0;
+}
+
+.inspireLabel {
+  font: 400 calc(12 * var(--u)) / 1 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.inspireTagline {
+  max-width: calc(380 * var(--u));
+  margin: calc(18 * var(--u)) 0 0;
+  font: 500 calc(26 * var(--u)) / 1.25 var(--display);
+  letter-spacing: -0.03em;
+  color: #fff;
+}
+
+.inspireLines {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: calc(10 * var(--u));
+  width: auto;
+  margin: calc(28 * var(--u)) 0 0;
+  padding: 0;
+  list-style: none;
+  font: 400 calc(16 * var(--u)) / 1.45 var(--display);
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.inspireLines li {
+  display: flex;
+  justify-content: flex-start;
+  gap: calc(10 * var(--u));
+  text-align: left;
+}
+
+.inspirePlace {
+  margin-top: calc(32 * var(--u));
+  font: 400 calc(15 * var(--u)) / 1.4 var(--display);
+  letter-spacing: -0.01em;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.inspireHeading {
+  margin: 0;
+  font: 500 calc(68 * var(--u)) / 0.94 var(--display);
+  letter-spacing: -0.045em;
+  color: #fff;
+}
+
+.inspireLine {
+  display: block;
+}
+
+.inspireWord {
+  color: var(--accent);
+}
+
+.inspireQuote {
+  max-width: calc(460 * var(--u));
+  margin: calc(28 * var(--u)) 0 0;
+  padding: 0;
+  border: 0;
+}
+
+.inspireQuote p {
+  margin: 0;
+  font: italic 400 calc(18 * var(--u)) / 1.5 var(--display);
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.inspireQuote footer {
+  margin-top: calc(16 * var(--u));
+  font: 500 calc(15 * var(--u)) / 1.4 var(--display);
+  font-style: normal;
+  color: #fff;
 }
 
 .chat {
   display: inline-flex;
   align-items: center;
-  height: calc(46 * var(--u));
-  margin-top: calc(28 * var(--u));
-  padding: 0 calc(16 * var(--u));
-  border-radius: 8px;
+  gap: calc(10 * var(--u));
+  height: calc(54 * var(--u));
+  margin-top: calc(32 * var(--u));
+  padding: 0 calc(22 * var(--u));
+  border: 0;
+  border-radius: 10px;
   background: var(--accent);
+  box-shadow: 0 14px 34px -14px rgba(0, 119, 230, 0.95);
   color: #fff;
   font: 400 calc(14 * var(--u)) / 1 var(--mono);
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    transform 0.25s var(--ease-out),
+    box-shadow 0.25s ease;
+}
+
+.chat:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px -14px rgba(0, 119, 230, 1);
+}
+
+.chatArrow {
+  width: calc(16 * var(--u));
+  height: calc(16 * var(--u));
 }
 
 @media (max-width: 899px) {
   .featured,
-  .more,
-  .close {
+  .more {
     width: auto;
     padding-inline: 20px;
   }
@@ -337,8 +462,7 @@
     font-size: 12px;
   }
 
-  .featureBottom h2,
-  .closeRow h2 {
+  .featureBottom h2 {
     font-size: 32px;
   }
 
@@ -358,12 +482,43 @@
     font-size: 24px;
   }
 
-  .closeRow {
-    flex-direction: column;
+}
+
+@media (max-width: 899px), (max-width: 1366px) and (min-width: 900px) and (orientation: portrait) {
+  .inspire {
+    min-height: 0;
+  }
+
+  .inspireInner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    width: auto;
+    padding: 72px 20px 64px;
+  }
+
+  .inspireTagline {
+    max-width: none;
+    font-size: 22px;
+  }
+
+  .inspireLines {
+    font-size: 16px;
+  }
+
+  .inspireHeading {
+    font-size: clamp(44px, 12vw, 72px);
+  }
+
+  .inspireQuote {
+    max-width: none;
+  }
+
+  .inspireQuote p {
+    font-size: 17px;
   }
 
   .chat {
-    height: 44px;
+    height: 48px;
     font-size: 13px;
   }
 }

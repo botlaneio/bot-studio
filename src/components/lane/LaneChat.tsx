@@ -5,9 +5,9 @@ import { studioReply } from "./studioReply";
 import styles from "./LaneChat.module.css";
 
 const GREETING =
-  "Planning a website or a web app? I can explain our services and packages, or point you to the team.";
+  "Planning a website or a web app? I can walk you through Websites and Web Apps, or point you to the team.";
 
-const CHIPS = ["Explore services", "Compare plans", "Existing client support"] as const;
+const CHIPS = ["Websites", "Web apps", "SEO and AI"] as const;
 
 type Line = { role: "assistant" | "user"; text: string };
 
@@ -28,7 +28,6 @@ export function LaneChat() {
 
   useEffect(() => {
     if (!open) return;
-    inputRef.current?.focus({ preventScroll: true });
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setOpen(false);
@@ -95,7 +94,7 @@ export function LaneChat() {
               <button
                 key={label}
                 type="button"
-                className={`${styles.pill} ${label === "Existing client support" ? styles.pillWide : ""}`}
+                className={styles.pill}
                 onClick={() => appendUser(label)}
               >
                 {label}
@@ -135,7 +134,7 @@ export function LaneChat() {
               Talk to the team →
             </a>
             <a className={styles.action} href="/pricing">
-              View packages
+              View pricing
             </a>
           </div>
 

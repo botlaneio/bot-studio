@@ -1,5 +1,4 @@
 import { CAPABILITIES, NAV_CAPABILITIES } from "../capabilities";
-import { PLANS, ADD_ONS } from "../plans";
 
 /** Local guidance from published content. Never invent prices or claim a handoff. */
 export function studioReply(message: string): string {
@@ -8,7 +7,10 @@ export function studioReply(message: string): string {
     return "For an existing project, contact admin@botlane.io with your project name and what you need. You can also use ‘Talk to the team’ below. This guide cannot access project records or create support tickets.";
   }
   if (/price|pricing|cost|budget|plan|package|quote|compare/.test(text)) {
-    return PLANS.map((plan) => `${plan.name}: ${plan.pitch}`).join("\n\n") + "\n\nStarting ranges are on the pricing page. Every project is still quoted to its agreed scope. Strategy, design and development are included. Optional add-ons: " + ADD_ONS.map((item) => item.name).join(" and ") + ". SEO and AI are extra. AI is priced by the workflow, not a surcharge. Contact the team for a written proposal.";
+    return "Websites: from $8,000. Strategy, design, and development are included.\n\nWeb Apps: from $20,000, plus discovery. Strategy, design, and development are included.\n\nSEO and AI are optional add-ons, quoted separately. Every project is still quoted to its agreed scope. The ranges are on the pricing page.";
+  }
+  if (/\bai\b|\bseo\b|discoverability/.test(text)) {
+    return "AI Integrations and SEO are optional add-ons, quoted separately, not part of the core website or web app price.";
   }
   if (/service|capabilit|offer|explore/.test(text)) {
     return NAV_CAPABILITIES.map((item) => `${item.title}: ${item.line}.`).join("\n\n") + "\n\nStrategy, design and development are included in the core project. SEO/discoverability and AI integrations are optional add-ons, scoped separately.";

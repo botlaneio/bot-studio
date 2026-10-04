@@ -27,7 +27,7 @@ const DISCIPLINES = [
     title: "AI Integrations",
     line: "Optional assistants and automations",
     detail: "Optional assistants, search and automations integrated into your website or app. We agree the use case, data access and scope separately from the core build.",
-    includes: ["Assistants that know your content", "Smart site search", "Workflow automations", "Lead capture and routing"],
+    includes: ["Assistants that know your content", "Smart site search", "Automations inside the site or app", "Lead capture and routing"],
   },
   {
     slug: "seo",

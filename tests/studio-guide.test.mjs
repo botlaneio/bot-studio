@@ -26,12 +26,18 @@ function load(file) {
 }
 const { studioReply } = load('src/components/lane/studioReply.ts');
 
-test('compares the published packages without repeating price figures', () => {
-  assert.match(studioReply('Compare plans'), /Websites:[\s\S]*Web Apps:/);
-  assert.match(studioReply('What will my website cost?'), /pricing page/);
-  assert.match(studioReply('What will my website cost?'), /quoted to its agreed scope/);
-  assert.doesNotMatch(studioReply('What will my website cost?'), /\$/);
-  assert.doesNotMatch(studioReply('Compare plans'), /\$/);
+test('compares the published offers with current price ranges', () => {
+  const compareReply = studioReply('Compare plans');
+  const costReply = studioReply('What will my website cost?');
+  assert.match(compareReply, /Websites:[\s\S]*Web Apps:/);
+  assert.doesNotMatch(compareReply, /workflow/i);
+  assert.doesNotMatch(compareReply, /packages/i);
+  assert.match(costReply, /\$8,000/);
+  assert.match(costReply, /\$20,000/);
+  assert.match(costReply, /pricing page/);
+  assert.match(costReply, /quoted to its agreed scope/);
+  assert.doesNotMatch(costReply, /workflow/i);
+  assert.doesNotMatch(costReply, /packages/i);
 });
 test('hands existing customers to the team without claiming access to their records', () => {
   assert.match(studioReply('I am an existing client'), /cannot access project records/);
@@ -51,5 +57,7 @@ test('does not invent an answer to unsupported commercial advice', () => {
   assert.match(studioReply('Can you guarantee my revenue?'), /published studio information/);
 });
 test('potential client questions still receive package information', () => {
-  assert.match(studioReply('As a new client, which package should I choose?'), /Websites:/);
+  const reply = studioReply('As a new client, which package should I choose?');
+  assert.match(reply, /Websites:/);
+  assert.doesNotMatch(reply, /packages/i);
 });

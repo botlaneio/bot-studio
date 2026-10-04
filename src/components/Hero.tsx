@@ -14,7 +14,7 @@ const TICKS = [
   { label: "// 00.04°", y: 597 },
 ];
 
-const WORDS = "Digital experiences that connect, scale and perform".split(" ");
+const WORDS = "Websites and web apps that connect, scale and perform".split(" ");
 
 const vars = (v: Record<string, string | number>) => v as CSSProperties;
 
@@ -64,7 +64,7 @@ export function Hero() {
             <Scramble text="Small studio, worldwide tech." delay={700} />
           </p>
           <p>
-            <Scramble text="We create stories people remember." delay={850} />
+            <Scramble text="Strategy, design and development, together." delay={850} />
           </p>
         </div>
 

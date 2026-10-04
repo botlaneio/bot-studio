@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Arrow } from "./motion/Arrow";
 import { lockScroll } from "./motion/SmoothScroll";
-import { CAPABILITIES, capabilityHref } from "./capabilities";
+import { NAV_CAPABILITIES, capabilityHref } from "./capabilities";
 import { CapabilityIcon } from "./CapabilityIcon";
 import styles from "./Nav.module.css";
 
@@ -147,7 +147,7 @@ export function Nav() {
               aria-controls="capabilities-menu"
               onClick={() => setOpen((o) => !o)}
             >
-              Capabilities
+              Offers
               <svg className={styles.chevron} viewBox="0 0 12 12" aria-hidden="true">
                 <path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
@@ -156,7 +156,7 @@ export function Nav() {
             <div id="capabilities-menu" className={styles.panel}>
               <div className={styles.sheet}>
                 <ul className={styles.list}>
-                  {CAPABILITIES.map((item, i) => (
+                  {NAV_CAPABILITIES.map((item, i) => (
                     <li key={item.title} style={{ ["--i" as string]: i }}>
                       <Link
                         href={capabilityHref(item.slug)}
@@ -168,7 +168,7 @@ export function Nav() {
                       >
                         <span className={styles.num}>{String(i + 1).padStart(2, "0")}</span>
                         <span className={styles.itemThumb}>
-                          <CapabilityIcon slug={item.slug} />
+                          <CapabilityIcon slug={item.slug === "websites" ? "design-innovation" : item.slug === "web-apps" ? "development" : item.slug} />
                         </span>
                         <span className={styles.itemText}>
                           <span className={styles.itemTitle}>{item.title}</span>
@@ -183,7 +183,7 @@ export function Nav() {
                 {/* Follows the hovered item. Decorative: the list carries the content. */}
                 <div className={styles.preview} aria-hidden="true">
                   <div className={styles.previewGlow} />
-                  {CAPABILITIES.map((item, i) => (
+                  {NAV_CAPABILITIES.map((item, i) => (
                     <div key={item.title} className={styles.slide} data-active={active === i || undefined}>
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
@@ -259,19 +259,19 @@ export function Nav() {
                 aria-controls="mobile-capabilities"
                 onClick={() => setMobileCaps((o) => !o)}
               >
-                Capabilities
+                Offers
                 <svg className={styles.mobileChevron} viewBox="0 0 12 12" aria-hidden="true">
                   <path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </button>
               <div id="mobile-capabilities" className={styles.mobileCaps} data-open={mobileCaps || undefined}>
                 <ul>
-                  {CAPABILITIES.map((item, i) => (
+                  {NAV_CAPABILITIES.map((item, i) => (
                     <li key={item.title}>
                       <Link href={capabilityHref(item.slug)} onClick={closeMobile} tabIndex={mobileCaps ? 0 : -1}>
                         <span className={styles.mobileCapNum}>{String(i + 1).padStart(2, "0")}</span>
                         <span className={styles.mobileCapThumb}>
-                          <CapabilityIcon slug={item.slug} />
+                          <CapabilityIcon slug={item.slug === "websites" ? "design-innovation" : item.slug === "web-apps" ? "development" : item.slug} />
                         </span>
                         <span>
                           <span className={styles.mobileCapTitle}>{item.title}</span>

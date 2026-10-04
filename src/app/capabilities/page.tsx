@@ -1,14 +1,15 @@
+import Link from "next/link";
 import type { Metadata } from "next";
-import { CAPABILITIES } from "@/components/capabilities";
+import { OFFER_DETAILS, capabilityHref } from "@/components/capabilities";
 import { PageHero } from "@/components/page/PageHero";
 import page from "@/components/page/Page.module.css";
 import styles from "./capabilities.module.css";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/capabilities" },
-  title: "Capabilities",
+  title: "Websites & Web Apps",
   description:
-    "Brand identity, strategy, design, AI systems, SEO and development: the six things Botlane Studios does, under one roof.",
+    "Websites and web apps with strategy, design and development included. SEO and AI integrations are optional add-ons.",
 };
 
 export default function CapabilitiesPage() {
@@ -16,21 +17,21 @@ export default function CapabilitiesPage() {
     <main className={page.page}>
       <PageHero
         kicker="// 00.03° Capabilities"
-        title="Six disciplines, one studio"
+        title="Websites & Web Apps"
         mark="."
-        lede="From the first sketch of a name to the last line of production code, it all happens under one roof, so nothing gets lost between hand-offs."
+        lede="Two core offers, with strategy, design and development included in your agreed project scope. Add SEO or AI integrations where they serve your project."
       />
 
       <section className={page.section} aria-label="Capabilities">
         <ol className={styles.list}>
-          {CAPABILITIES.map((c, i) => (
+          {OFFER_DETAILS.map((c, i) => (
             <li key={c.slug} id={c.slug} className={styles.row} data-reveal="">
               <div className={styles.meta}>
                 <span className={styles.num}>{String(i + 1).padStart(2, "0")}</span>
                 <span className={styles.tag}>{c.tag}</span>
               </div>
               <div className={styles.main}>
-                <h2 className={styles.title}>{c.title}</h2>
+                <h2 className={styles.title}><Link href={capabilityHref(c.slug)}>{c.title}</Link></h2>
                 <p className={styles.detail}>{c.detail}</p>
               </div>
               <div className={styles.includes}>

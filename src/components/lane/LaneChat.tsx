@@ -5,7 +5,7 @@ import { studioReply } from "./studioReply";
 import styles from "./LaneChat.module.css";
 
 const GREETING =
-  "Planning a website or a redesign? I can explain our services and packages, or point you to the team.";
+  "Planning a website or a web app? I can explain our services and packages, or point you to the team.";
 
 const CHIPS = ["Explore services", "Compare plans", "Existing client support"] as const;
 
@@ -105,7 +105,7 @@ export function LaneChat() {
 
           <form className={styles.composer} onSubmit={onSubmit}>
             <label className={styles.visuallyHidden} htmlFor={fieldId}>
-              Ask about your website project
+              Ask about your project
             </label>
             <input
               ref={inputRef}
@@ -115,7 +115,7 @@ export function LaneChat() {
               name="note"
               value={note}
               onChange={(e) => setNote(e.target.value)}
-              placeholder="Ask about your website project..."
+              placeholder="Ask about your project..."
               autoComplete="off"
               maxLength={2000}
             />

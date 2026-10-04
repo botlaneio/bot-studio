@@ -27,7 +27,7 @@ function load(file) {
 const { studioReply } = load('src/components/lane/studioReply.ts');
 
 test('compares the published packages without inventing a price', () => {
-  assert.match(studioReply('Compare plans'), /Launch:[\s\S]*Studio:[\s\S]*Partner:/);
+  assert.match(studioReply('Compare plans'), /Websites:[\s\S]*Web Apps:/);
   assert.match(studioReply('What will my website cost?'), /no published fixed price/);
 });
 test('hands existing customers to the team without claiming access to their records', () => {
@@ -43,5 +43,5 @@ test('does not invent an answer to unsupported commercial advice', () => {
   assert.match(studioReply('Can you guarantee my revenue?'), /published studio information/);
 });
 test('potential client questions still receive package information', () => {
-  assert.match(studioReply('As a new client, which package should I choose?'), /Launch:/);
+  assert.match(studioReply('As a new client, which package should I choose?'), /Websites:/);
 });

@@ -6,6 +6,7 @@ import { RevealObserver } from "@/components/motion/RevealObserver";
 import { Nav } from "@/components/Nav";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { LaneChat } from "@/components/lane/LaneChat";
+import { SITE_URL } from "@/lib/site";
 
 const figtree = Figtree({
   variable: "--font-figtree",
@@ -29,7 +30,6 @@ const poppins = Poppins({
   display: "swap",
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://botlane.tech";
 
 const TITLE = "Botlane Studios — Websites and web apps";
 const DESCRIPTION =

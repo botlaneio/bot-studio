@@ -157,7 +157,7 @@ export function LaneChat() {
   );
 }
 
-/** Blue plate from the left of public/logo.svg (viewBox 0 0 64 64, before the wordmark). The SVG does not loop; the one-shot spin and flash are CSS on the launcher only. */
+/** Blue plate from the left of public/logo.svg (viewBox 0 0 64 64, before the wordmark). The button mark holds a resting 3D tilt. Idle float and the hover lift are CSS on the launcher only. */
 function LaneMark({ className, idPrefix, size = 42 }: { className?: string; idPrefix: string; size?: number }) {
   const pid = (name: string) => `${idPrefix}-${name}`;
   return (
@@ -181,6 +181,10 @@ function LaneMark({ className, idPrefix, size = 42 }: { className?: string; idPr
         <filter id={pid("glow")} x="-160%" y="-160%" width="420%" height="420%">
           <feGaussianBlur stdDeviation="3.1" />
         </filter>
+        <filter id={pid("grain")} x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="2" result="n" />
+          <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.22 0" />
+        </filter>
         <linearGradient id={pid("depth")} x1="32" y1="1" x2="32" y2="63" gradientUnits="userSpaceOnUse">
           <stop offset="0" stopColor="#ffffff" stopOpacity="0.42" />
           <stop offset="0.28" stopColor="#ffffff" stopOpacity="0" />
@@ -188,8 +192,10 @@ function LaneMark({ className, idPrefix, size = 42 }: { className?: string; idPr
           <stop offset="1" stopColor="#002850" stopOpacity="0.42" />
         </linearGradient>
       </defs>
+      <rect x="4" y="6" width="58" height="58" rx="16" fill="#00356a" />
       <rect x="1" y="1" width="62" height="62" rx="17" fill={`url(#${pid("plate")})`} />
       <rect x="1" y="1" width="62" height="62" rx="17" fill={`url(#${pid("depth")})`} />
+      <rect x="1" y="1" width="62" height="62" rx="17" filter={`url(#${pid("grain")})`} />
       <rect x="1.75" y="1.75" width="60.5" height="60.5" rx="16.3" fill="none" stroke="#fff" strokeOpacity="0.45" strokeWidth="1.5" />
       <rect x="1" y="1" width="62" height="62" rx="17" fill="none" stroke="#00468C" strokeOpacity="0.6" />
       <rect x="12" y="25" width="40" height="14" rx="7" fill={`url(#${pid("slot")})`} />

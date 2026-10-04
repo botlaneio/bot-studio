@@ -21,8 +21,8 @@
   pointer-events: auto;
 }
 
-/* The control itself does not move. The site's button pop-in is turned off
-   here. On load the mark turns once in 3D and a soft flash fires, then both stop. */
+/* The site's button pop-in is turned off here. The mark itself
+   holds a slight 3D tilt and a slow idle float. */
 .dock .launcher {
   position: relative;
   z-index: 2;
@@ -47,78 +47,80 @@
   border-radius: 12px;
 }
 
-/* One 3D turn of the blue mark on load, then still. Not a loop, and not the
-   logo file's own shutter. Square, because this is only the blue mark. */
+/* Button mark only. A resting tilt, a slow float, and a lift on hover.
+   The open card is untouched. */
 .logo {
   display: block;
   height: 42px;
   width: 42px;
   transform-origin: center center;
-  animation: lane-turn 0.95s cubic-bezier(0.22, 0.7, 0.24, 1) 1 both;
-  filter: drop-shadow(0 10px 14px rgba(0, 36, 80, 0.38)) drop-shadow(0 2px 2px rgba(0, 0, 0, 0.28));
+  transform-style: preserve-3d;
+  animation: lane-idle 5.6s ease-in-out infinite;
+  transition: transform 0.35s cubic-bezier(0.22, 0.7, 0.24, 1), filter 0.35s ease;
+  filter: drop-shadow(0 12px 10px rgba(0, 28, 70, 0.42)) drop-shadow(0 2px 2px rgba(0, 0, 0, 0.35));
 }
 
-/* A soft specular streak stays on the blue plate while the mark makes one turn. */
+.dock .launcher:hover .logo,
+.dock .launcher:focus-visible .logo {
+  animation: none;
+  transform: rotateX(18deg) rotateY(-26deg) translateY(-3px) scale(1.06);
+  filter: drop-shadow(0 18px 14px rgba(0, 28, 70, 0.5)) drop-shadow(0 3px 2px rgba(0, 0, 0, 0.4));
+}
+
+/* Specular streak on the button plate. It drifts; it does not cover the card. */
 .dock .launcher::before {
   content: "";
   position: absolute;
   z-index: 1;
-  inset: 3px;
-  border-radius: 14px;
+  inset: 4px 6px auto 4px;
+  height: 16px;
+  border-radius: 12px;
   pointer-events: none;
-  background: radial-gradient(ellipse at 30% 18%, rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0) 58%);
-  opacity: 0.72;
+  background: linear-gradient(100deg, transparent 10%, rgba(255, 255, 255, 0.55) 45%, transparent 70%);
+  opacity: 0.55;
   mix-blend-mode: screen;
+  animation: lane-sheen 5.6s ease-in-out infinite;
 }
 
-/* Soft white light as the mark comes back to face the camera. One brief
-   falloff, not a strobe: it never goes fully opaque and it does not repeat. */
 .dock .launcher::after {
-  content: "";
-  position: absolute;
-  z-index: 1;
-  inset: -10px;
-  border-radius: 22px;
-  pointer-events: none;
-  background: radial-gradient(
-    circle at 50% 46%,
-    rgba(255, 255, 255, 0.9) 0%,
-    rgba(255, 255, 255, 0.42) 36%,
-    rgba(255, 255, 255, 0) 70%
-  );
-  opacity: 0;
-  animation: lane-flash 0.46s cubic-bezier(0.16, 0.72, 0.28, 1) 0.62s 1 both;
+  content: none;
 }
 
-@keyframes lane-turn {
-  from {
-    transform: rotateY(0deg);
-  }
-  to {
-    transform: rotateY(360deg);
-  }
-}
-
-@keyframes lane-flash {
-  0% {
-    opacity: 0;
-  }
-  18% {
-    opacity: 0.58;
-  }
+@keyframes lane-idle {
+  0%,
   100% {
-    opacity: 0;
+    transform: rotateX(12deg) rotateY(-16deg) translateY(0);
+  }
+  50% {
+    transform: rotateX(7deg) rotateY(-8deg) translateY(-2px);
+  }
+}
+
+@keyframes lane-sheen {
+  0%,
+  100% {
+    transform: translateX(-4px);
+    opacity: 0.28;
+  }
+  50% {
+    transform: translateX(6px);
+    opacity: 0.7;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .logo,
-  .dock .launcher::after {
+  .dock .launcher::before {
     animation: none;
   }
 
-  .dock .launcher::after {
-    opacity: 0;
+  .logo {
+    transform: rotateX(12deg) rotateY(-16deg);
+  }
+
+  .dock .launcher::before {
+    opacity: 0.4;
+    transform: none;
   }
 }
 

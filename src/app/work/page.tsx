@@ -94,7 +94,7 @@ export default function WorkPage() {
               botlane.io<b>.</b>
             </h2>
             <p className={`${page.body} ${styles.headBody}`} data-reveal="" style={delay(0.05)}>
-              The product site for BotLane LLC’s managed AI service, designed and built by us end to end. It’s live, so you can judge it for yourself.
+              The product site for BotLane LLC’s managed AI service. We shaped the positioning, designed the interface and built it end to end. It’s live, so you can judge it for yourself.
             </p>
           </div>
         </div>
@@ -121,7 +121,7 @@ export default function WorkPage() {
           <dl className={styles.facts} data-reveal="" style={delay(0.15)}>
             <div>
               <dt>Role</dt>
-              <dd>Interface design and development</dd>
+              <dd>Positioning, interface design, development</dd>
             </div>
             <div>
               <dt>Highlights</dt>

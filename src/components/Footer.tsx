@@ -10,6 +10,7 @@ import styles from "./Footer.module.css";
 const NAVIGATE = [
   { href: "/", label: "Home" },
   { href: "/capabilities", label: "Offers" },
+  { href: "/work", label: "Work" },
   { href: "/about", label: "About" },
   { href: "/echoes", label: "Echoes" },
   { href: "/contact#inquiry", label: "Contact" },

@@ -69,7 +69,7 @@ export function ClayPreview() {
                 <i />
                 <i />
               </span>
-              <span className={styles.address}>botlane.tech</span>
+              <span className={styles.address}>botlane.studio</span>
             </div>
 
             <nav className={`${styles.nav} ${styles.slab}`} style={i(0)} aria-label="Preview">

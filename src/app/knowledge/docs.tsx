@@ -96,7 +96,7 @@ function CompanyOverview() {
         <a href="tel:+13072185715">+1 307 218 5715</a>
       </p>
       <p>
-        Studio site: <a href="https://botlane.tech">botlane.tech</a>
+        Studio site: <a href="https://botlane.studio">botlane.studio</a>
         <br />
         Part of <a href="https://botlane.io">botlane.io</a>
       </p>

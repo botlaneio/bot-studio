@@ -7,6 +7,7 @@ import { PageHero } from "@/components/page/PageHero";
 import page from "@/components/page/Page.module.css";
 import styles from "../capabilities.module.css";
 import { Strategy } from "@/components/strategy/Strategy";
+import { Websites } from "@/components/websites/Websites";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -34,6 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function CapabilityPage({ params }: Props) {
   const capability = await getCapability(params);
+  if (capability.slug === "websites") return <Websites />;
   if (capability.slug === "strategy") return <Strategy />;
   return (
     <main className={page.page}>

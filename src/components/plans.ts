@@ -4,7 +4,7 @@ export const PLANS: { name: string; slug: string; pitch: string; price?: string;
     name: "Websites",
     slug: "websites",
     pitch: "A marketing website that explains your business and helps the right people take the next step.",
-    includes: ["Strategy, audience and site structure", "Custom responsive design", "Development and launch", "Content management where needed", "Performance, accessibility and search basics"],
+    includes: ["Strategy, audience and site structure", "Custom responsive design", "Development and launch", "Content management where needed", "Performance, accessibility and search basics", "Naming, mark, and visual system when the project needs them"],
   },
   {
     name: "Web Apps",

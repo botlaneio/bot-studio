@@ -9,13 +9,49 @@ import styles from "./pricing.module.css";
 export const metadata: Metadata = {
   alternates: { canonical: "/pricing" },
   title: "Pricing",
-  description: "Websites and web apps with strategy, design and development included. Optional add-ons are quoted separately.",
+  description: "Websites from $8,000. Web Apps from $20,000, plus discovery. Every project is still a tailored quote.",
 };
+
+/** Dollar amounts live only on this page. plans.ts stays shared without prices. */
+const PUBLIC_PRICE: Record<string, { amount: string; note: string }> = {
+  websites: { amount: "from $8,000", note: "starting price" },
+  "web-apps": { amount: "from $20,000", note: "plus discovery" },
+};
+
+const BANDS = [
+  {
+    name: "Websites",
+    rows: [
+      { name: "Focused", price: "$8,000–$12,000", detail: "Up to 5 unique layouts, existing brand, client-supplied copy." },
+      { name: "Signature", price: "$15,000–$25,000", detail: "Up to 10 layouts, CMS, scoped custom motion." },
+      { name: "Complex", price: "$25,000+", detail: "After discovery." },
+    ],
+  },
+  {
+    name: "Web apps",
+    rows: [
+      { name: "Paid discovery", price: "$2,000–$4,000", detail: "Paid discovery before the build is quoted." },
+      { name: "Focused MVP", price: "$20,000–$40,000", detail: "One workflow, up to 2 roles, 1 integration." },
+      { name: "Larger product", price: "$40,000+", detail: "Quoted in phases, not a fixed total." },
+    ],
+  },
+];
+
+const INCLUDED = [
+  "Strategy",
+  "UX/UI",
+  "Development",
+  "Responsive layouts",
+  "QA",
+  "SEO foundations",
+  "Handover",
+  "30-day defect correction",
+];
 
 const FAQ = [
   {
     q: "How do you price a project?",
-    a: "Every project is quoted to its scope. After a short call we send a fixed quote, with what's included and a timeline, before any work starts.",
+    a: "The ranges on this page are starting points. Every project is still quoted to its agreed scope. After a short call we send a written quote, with what's included and a timeline, before any work starts.",
   },
   {
     q: "How long does a project take?",
@@ -48,33 +84,87 @@ export default function PricingPage() {
         kicker="// 00.05° Pricing"
         title="Clear scope, honest pricing"
         mark="."
-        lede="Websites and Web Apps are our core offers. Strategy, design and development are included. Optional add-ons are scoped separately."
+        lede="Websites from $8,000. Web Apps from $20,000, plus discovery. These are starting ranges. Every project is still a tailored quote."
       />
 
       <section className={page.section} aria-label="Plans">
         <div className={styles.plans}>
-          {PLANS.map((p, i) => (
-            <article key={p.name} className={styles.plan} data-recommended={p.recommended || undefined} data-reveal="" style={delay(i * 0.08)}>
-              <div className={styles.planHead}>
-                <h2 className={styles.planName}>{p.name}</h2>
-                {p.recommended && <span className={styles.badge}>Core project</span>}
-              </div>
-              <p className={styles.pitch}>{p.pitch}</p>
-              <p className={styles.price}>
-                {p.price ?? "Tailored quote"}
-                <span>{p.price ? "starting price" : "priced to your scope"}</span>
-              </p>
-              <ul className={styles.includes}>
-                {p.includes.map((x) => (
-                  <li key={x}>{x}</li>
+          {PLANS.map((p, i) => {
+            const shown = PUBLIC_PRICE[p.slug];
+            return (
+              <article key={p.name} className={styles.plan} data-recommended={p.recommended || undefined} data-reveal="" style={delay(i * 0.08)}>
+                <div className={styles.planHead}>
+                  <h2 className={styles.planName}>{p.name}</h2>
+                  {p.recommended && <span className={styles.badge}>Core project</span>}
+                </div>
+                <p className={styles.pitch}>{p.pitch}</p>
+                <p className={styles.price}>
+                  {shown?.amount ?? "Tailored quote"}
+                  <span>{shown?.note ?? "extra, scoped to your project"}</span>
+                </p>
+                <ul className={styles.includes}>
+                  {p.includes.map((x) => (
+                    <li key={x}>{x}</li>
+                  ))}
+                </ul>
+                <a className={`${styles.planCta} arrowHost`} href="/contact#inquiry">
+                  Get a quote
+                  <Arrow className={styles.planArrow} />
+                </a>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className={page.section} aria-label="Scope bands">
+        <div className={page.sectionHead}>
+          <span className={page.label} data-reveal="">
+            Scope
+          </span>
+          <h2 className={page.h2} data-reveal="">
+            Bands, not a fixed total<b>.</b>
+          </h2>
+        </div>
+        <p className={styles.scopeNote} data-reveal="">
+          Choose a band as a starting point. The written quote follows the agreed scope.
+        </p>
+        <div className={styles.bands}>
+          {BANDS.map((group) => (
+            <div key={group.name} className={styles.band} data-reveal="">
+              <h3 className={styles.bandName}>{group.name}</h3>
+              <ul>
+                {group.rows.map((row) => (
+                  <li key={row.name}>
+                    <span className={styles.bandRow}>
+                      <span>{row.name}</span>
+                      <span className={styles.bandPrice}>{row.price}</span>
+                    </span>
+                    <span className={styles.bandDetail}>{row.detail}</span>
+                  </li>
                 ))}
               </ul>
-              <a className={`${styles.planCta} arrowHost`} href="/contact#inquiry">
-                Get a quote
-                <Arrow className={styles.planArrow} />
-              </a>
-            </article>
+            </div>
           ))}
+        </div>
+
+        <div className={styles.includedBlock} data-reveal="">
+          <h3 className={styles.bandName}>Included in websites and web apps</h3>
+          <ul className={styles.included}>
+            {INCLUDED.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
+
+        <div className={styles.optional} data-reveal="">
+          <h3 className={styles.bandName}>Optional, extra</h3>
+          <p>
+            <strong>Brand identity, $5,000–$10,000.</strong> Naming, mark, and visual system when the project needs them. This is an optional line, not its own page.
+          </p>
+          <p>
+            SEO and AI stay optional add-ons, extra to the core build. AI is priced by the workflow, not a surcharge. Neither has a published fixed amount.
+          </p>
         </div>
       </section>
 

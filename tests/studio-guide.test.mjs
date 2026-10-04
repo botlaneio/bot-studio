@@ -26,9 +26,12 @@ function load(file) {
 }
 const { studioReply } = load('src/components/lane/studioReply.ts');
 
-test('compares the published packages without inventing a price', () => {
+test('compares the published packages without repeating price figures', () => {
   assert.match(studioReply('Compare plans'), /Websites:[\s\S]*Web Apps:/);
-  assert.match(studioReply('What will my website cost?'), /no published fixed price/);
+  assert.match(studioReply('What will my website cost?'), /pricing page/);
+  assert.match(studioReply('What will my website cost?'), /quoted to its agreed scope/);
+  assert.doesNotMatch(studioReply('What will my website cost?'), /\$/);
+  assert.doesNotMatch(studioReply('Compare plans'), /\$/);
 });
 test('hands existing customers to the team without claiming access to their records', () => {
   assert.match(studioReply('I am an existing client'), /cannot access project records/);
@@ -36,8 +39,13 @@ test('hands existing customers to the team without claiming access to their reco
 test('does not claim a booking or inquiry was sent', () => {
   assert.match(studioReply('Book a call'), /Nothing has been booked or sent/);
 });
-test('answers a logo question with the appropriate studio capability', () => {
-  assert.match(studioReply('Can you design a logo?'), /Brand Identity/);
+test('answers a logo question as part of the websites offer', () => {
+  const reply = studioReply('Can you design a logo?');
+  assert.match(reply, /Websites offer/);
+  assert.match(reply, /Naming, mark, and visual system/);
+  assert.match(reply, /not its own page/);
+  assert.doesNotMatch(reply, /\/capabilities\/brand-identity/);
+  assert.doesNotMatch(reply, /\$/);
 });
 test('does not invent an answer to unsupported commercial advice', () => {
   assert.match(studioReply('Can you guarantee my revenue?'), /published studio information/);

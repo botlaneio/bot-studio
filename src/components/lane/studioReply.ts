@@ -8,16 +8,18 @@ export function studioReply(message: string): string {
     return "For an existing project, contact admin@botlane.io with your project name and what you need. You can also use ‘Talk to the team’ below. This guide cannot access project records or create support tickets.";
   }
   if (/price|pricing|cost|budget|plan|package|quote|compare/.test(text)) {
-    return PLANS.map((plan) => `${plan.name}: ${plan.pitch}`).join("\n\n") + "\n\nEvery project is quoted to its scope; there is no published fixed price. Strategy, design and development are included. Optional add-ons: " + ADD_ONS.map((item) => item.name).join(" and ") + ". Contact the team for a written proposal.";
+    return PLANS.map((plan) => `${plan.name}: ${plan.pitch}`).join("\n\n") + "\n\nStarting ranges are on the pricing page. Every project is still quoted to its agreed scope. Strategy, design and development are included. Optional add-ons: " + ADD_ONS.map((item) => item.name).join(" and ") + ". SEO and AI are extra. AI is priced by the workflow, not a surcharge. Contact the team for a written proposal.";
   }
   if (/service|capabilit|offer|explore/.test(text)) {
     return NAV_CAPABILITIES.map((item) => `${item.title}: ${item.line}.`).join("\n\n") + "\n\nStrategy, design and development are included in the core project. SEO/discoverability and AI integrations are optional add-ons, scoped separately.";
+  }
+  if (/\blogo\b|naming|brand identity|\bidentity\b|visual system/.test(text)) {
+    return "Naming, mark, and visual system are part of the Websites offer when the project needs them. Brand identity is not its own page. The pricing page lists it as an optional line. The final scope is agreed in your proposal.";
   }
   const capability = CAPABILITIES.find((item) => {
     const terms: Record<string, RegExp> = {
       websites: /website|marketing site|landing page/,
       "web-apps": /web app|portal|dashboard|business tool/,
-      "brand-identity": /brand|logo|naming|identity/,
       strategy: /strateg|position|audience|roadmap/,
       "design-innovation": /design|3d|motion|webgl|interface/,
       "ai-systems": /\bai\b|assistant|automat|search/,

@@ -8,6 +8,11 @@ const SECURITY_HEADERS = [
 ];
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      { source: "/capabilities/brand-identity", destination: "/capabilities/websites", permanent: true },
+    ];
+  },
   async headers() {
     return [{ source: "/(.*)", headers: SECURITY_HEADERS }];
   },

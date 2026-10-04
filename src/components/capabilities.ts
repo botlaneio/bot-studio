@@ -1,16 +1,7 @@
 import { PLANS } from "./plans";
 
-/** Retain existing discipline URLs while leading with two core project offers. */
+/** Included disciplines and optional add-ons. Brand identity is a line on Websites, not its own page. */
 const DISCIPLINES = [
-  {
-    slug: "brand-identity",
-    image: "/capability-brand-identity.webp",
-    tag: "Foundation",
-    title: "Brand Identity",
-    line: "Names, marks and visual systems",
-    detail: "A name, a mark and the system around them, so every page, post and pitch looks like the same company.",
-    includes: ["Naming and verbal identity", "Logo and mark system", "Colour, type and art direction", "Brand guidelines your team can use"],
-  },
   {
     slug: "strategy",
     image: "/capability-strategy.webp",

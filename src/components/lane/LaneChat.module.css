@@ -2,7 +2,7 @@
 
 .dock {
   --lane-edge: 20px;
-  --lane-mark: 56px;
+  --lane-mark: 48px;
   --lane-gap: 12px;
   --lane-right: calc(var(--lane-edge) + env(safe-area-inset-right, 0px));
   --lane-bottom: calc(var(--lane-edge) + env(safe-area-inset-bottom, 0px));
@@ -21,9 +21,8 @@
   pointer-events: auto;
 }
 
-/* The site's button pop-in is turned off here. Depth is painted as real
-   top and left faces in screen space, so an ancestor cannot flatten it into
-   a tilted picture. */
+/* The site's button pop-in is turned off here. The mark stays a flat plate.
+   Depth is only a soft shadow and a small lift, not an extruded block. */
 .dock .launcher {
   position: relative;
   z-index: 2;
@@ -44,7 +43,7 @@
 
 .dock .launcher:focus-visible {
   outline: 2px solid var(--accent, #0077e6);
-  outline-offset: 8px;
+  outline-offset: 6px;
   border-radius: 16px;
 }
 
@@ -53,181 +52,42 @@
   content: none;
 }
 
-/* Layout box is the front plate. The faces stick out up and left, toward the page. */
-.cube {
-  position: relative;
+.logo {
   display: block;
-  width: 56px;
-  height: 56px;
-  transform-origin: 100% 100%;
-  animation: lane-idle 2.4s ease-in-out infinite;
-  transition: transform 0.28s cubic-bezier(0.22, 0.7, 0.24, 1);
+  width: 48px;
+  height: 48px;
+  transform-origin: center center;
+  animation: lane-idle 3.4s ease-in-out infinite;
+  transition:
+    transform 0.35s cubic-bezier(0.22, 0.7, 0.24, 1),
+    filter 0.35s ease;
+  filter:
+    drop-shadow(0 1px 0 rgba(255, 255, 255, 0.28))
+    drop-shadow(0 10px 16px rgba(0, 20, 40, 0.42));
 }
 
-.dock .launcher:hover .cube,
-.dock .launcher:focus-visible .cube {
+.dock .launcher:hover .logo,
+.dock .launcher:focus-visible .logo {
   animation: none;
-  transform: translateY(-14px) rotate(-16deg);
-}
-
-.face,
-.edgeTop,
-.edgeLeft,
-.ground {
-  position: absolute;
-}
-
-.ground {
-  z-index: 0;
-  left: 6px;
-  right: -2px;
-  bottom: -14px;
-  height: 12px;
-  border-radius: 50%;
-  background: rgba(0, 16, 36, 0.45);
-  filter: blur(5px);
-  animation: lane-shadow 2.4s ease-in-out infinite;
-  pointer-events: none;
-}
-
-.edgeTop,
-.edgeLeft {
-  z-index: 0;
-  transition: top 0.28s ease, left 0.28s ease, width 0.28s ease, height 0.28s ease;
-}
-
-/* 45 degrees, 20px thick, so the outer corners meet. */
-.edgeTop {
-  left: 0;
-  top: -20px;
-  width: 56px;
-  height: 20px;
-  transform: skewX(-45deg);
-  transform-origin: bottom left;
-  border-radius: 5px 5px 0 0;
-  background:
-    repeating-linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.16) 0 1px,
-      transparent 1px 4px
-    ),
-    linear-gradient(180deg, #7ec4ff 0%, #0b6ec8 55%, #054e96 100%);
-}
-
-.edgeLeft {
-  left: -20px;
-  top: 0;
-  width: 20px;
-  height: 56px;
-  transform: skewY(45deg);
-  transform-origin: top right;
-  border-radius: 5px 0 0 5px;
-  background:
-    repeating-linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0.18) 0 1px,
-      transparent 1px 4px
-    ),
-    linear-gradient(90deg, #001428 0%, #00356a 70%, #0058a8 100%);
-}
-
-.dock .launcher:hover .edgeTop,
-.dock .launcher:focus-visible .edgeTop {
-  top: -30px;
-  height: 30px;
-}
-
-.dock .launcher:hover .edgeLeft,
-.dock .launcher:focus-visible .edgeLeft {
-  left: -30px;
-  width: 30px;
-}
-
-.dock .launcher:hover .ground,
-.dock .launcher:focus-visible .ground {
-  animation: none;
-  transform: scaleX(0.72);
-  opacity: 0.45;
-}
-
-.face {
-  z-index: 1;
-  inset: 0;
-  overflow: hidden;
-  border-radius: 16px;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.45),
-    0 8px 16px rgba(0, 20, 40, 0.28);
-}
-
-.faceMark {
-  display: block;
-  width: 56px;
-  height: 56px;
-}
-
-.sheen {
-  position: absolute;
-  z-index: 1;
-  top: 6px;
-  left: -12px;
-  width: 22px;
-  height: 44px;
-  border-radius: 12px;
-  pointer-events: none;
-  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.85), transparent);
-  mix-blend-mode: screen;
-  animation: lane-sheen 2.4s ease-in-out infinite;
+  transform: translateY(-7px) scale(1.04);
+  filter:
+    drop-shadow(0 1px 0 rgba(255, 255, 255, 0.4))
+    drop-shadow(0 18px 24px rgba(0, 20, 40, 0.32));
 }
 
 @keyframes lane-idle {
   0%,
   100% {
-    transform: translateY(0) rotate(-3deg);
+    transform: translateY(0);
   }
   50% {
-    transform: translateY(-14px) rotate(-14deg);
-  }
-}
-
-@keyframes lane-shadow {
-  0%,
-  100% {
-    transform: scaleX(1);
-    opacity: 0.9;
-  }
-  50% {
-    transform: scaleX(0.72) translateY(6px);
-    opacity: 0.4;
-  }
-}
-
-@keyframes lane-sheen {
-  0%,
-  100% {
-    transform: translateX(0);
-    opacity: 0.25;
-  }
-  50% {
-    transform: translateX(48px);
-    opacity: 0.95;
+    transform: translateY(-4px);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cube,
-  .sheen,
-  .ground {
+  .logo {
     animation: none;
-  }
-
-  .cube {
-    transform: rotate(-8deg);
-  }
-
-  .sheen {
-    opacity: 0.45;
-    transform: translateX(18px);
   }
 }
 

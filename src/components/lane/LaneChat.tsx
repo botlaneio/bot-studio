@@ -150,22 +150,14 @@ export function LaneChat() {
         aria-controls={panelId}
         onClick={() => setOpen((value) => !value)}
       >
-        <span className={styles.cube}>
-          <span className={styles.ground} aria-hidden="true" />
-          <span className={styles.edgeTop} aria-hidden="true" />
-          <span className={styles.edgeLeft} aria-hidden="true" />
-          <span className={styles.face}>
-            <LaneMark className={styles.faceMark} idPrefix={`${markId}-btn`} size={56} />
-            <span className={styles.sheen} aria-hidden="true" />
-          </span>
-        </span>
+        <LaneMark className={styles.logo} idPrefix={`${markId}-btn`} size={48} />
         <span className={styles.visuallyHidden}>{open ? "Close Lane" : "Open Lane"}</span>
       </button>
     </div>
   );
 }
 
-/** Blue plate from the left of public/logo.svg (viewBox 0 0 64 64, before the wordmark). The corner button is a CSS block with a top and left face. The open card uses the flat plate. */
+/** Blue plate from the left of public/logo.svg (viewBox 0 0 64 64, before the wordmark). The corner button and the open card both use this flat plate. */
 function LaneMark({ className, idPrefix, size = 42 }: { className?: string; idPrefix: string; size?: number }) {
   const pid = (name: string) => `${idPrefix}-${name}`;
   return (

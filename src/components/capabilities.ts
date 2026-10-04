@@ -1,6 +1,6 @@
 import { PLANS } from "./plans";
 
-/** Included disciplines and optional add-ons. Brand identity is a line on Websites, not its own page. */
+/** Included disciplines and optional add-ons. Brand identity is an optional add-on, not its own page. */
 const DISCIPLINES = [
   {
     slug: "strategy",

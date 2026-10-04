@@ -2,7 +2,7 @@
 
 .dock {
   --lane-edge: 20px;
-  --lane-mark: 42px;
+  --lane-mark: 56px;
   --lane-gap: 12px;
   --lane-right: calc(var(--lane-edge) + env(safe-area-inset-right, 0px));
   --lane-bottom: calc(var(--lane-edge) + env(safe-area-inset-bottom, 0px));
@@ -21,9 +21,9 @@
   pointer-events: auto;
 }
 
-/* The site's button pop-in is turned off here. Perspective lives on the
-   button so the block's top and left faces stay real 3D, not a tilted picture.
-   No filter on this element: a filter flattens preserve-3d. */
+/* The site's button pop-in is turned off here. Depth is painted as real
+   top and left faces in screen space, so an ancestor cannot flatten it into
+   a tilted picture. */
 .dock .launcher {
   position: relative;
   z-index: 2;
@@ -35,8 +35,6 @@
   cursor: pointer;
   animation: none;
   overflow: visible;
-  perspective: 280px;
-  perspective-origin: 80% 90%;
 }
 
 .dock .launcher:hover,
@@ -46,8 +44,8 @@
 
 .dock .launcher:focus-visible {
   outline: 2px solid var(--accent, #0077e6);
-  outline-offset: 6px;
-  border-radius: 14px;
+  outline-offset: 8px;
+  border-radius: 16px;
 }
 
 .dock .launcher::before,
@@ -55,103 +53,152 @@
   content: none;
 }
 
-/* Depth shows toward the page (up and left), not off the corner. */
+/* Layout box is the front plate. The faces stick out up and left, toward the page. */
 .cube {
   position: relative;
   display: block;
-  width: 42px;
-  height: 42px;
-  transform-style: preserve-3d;
-  transform-origin: center center;
-  animation: lane-idle 5.6s ease-in-out infinite;
-  transition: transform 0.35s cubic-bezier(0.22, 0.7, 0.24, 1);
+  width: 56px;
+  height: 56px;
+  transform-origin: 100% 100%;
+  animation: lane-idle 2.4s ease-in-out infinite;
+  transition: transform 0.28s cubic-bezier(0.22, 0.7, 0.24, 1);
 }
 
 .dock .launcher:hover .cube,
 .dock .launcher:focus-visible .cube {
   animation: none;
-  transform: rotateX(-28deg) rotateY(36deg) translateY(-3px);
+  transform: translateY(-14px) rotate(-16deg);
 }
 
 .face,
 .edgeTop,
-.edgeLeft {
+.edgeLeft,
+.ground {
   position: absolute;
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
 }
 
-.face {
-  inset: 0;
-  overflow: hidden;
-  border-radius: 12px;
-  transform: translateZ(9px);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
-}
-
-.faceMark {
-  display: block;
-  width: 42px;
-  height: 42px;
+.ground {
+  z-index: 0;
+  left: 6px;
+  right: -2px;
+  bottom: -14px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(0, 16, 36, 0.45);
+  filter: blur(5px);
+  animation: lane-shadow 2.4s ease-in-out infinite;
+  pointer-events: none;
 }
 
 .edgeTop,
 .edgeLeft {
+  z-index: 0;
+  transition: top 0.28s ease, left 0.28s ease, width 0.28s ease, height 0.28s ease;
+}
+
+/* 45 degrees, 20px thick, so the outer corners meet. */
+.edgeTop {
+  left: 0;
+  top: -20px;
+  width: 56px;
+  height: 20px;
+  transform: skewX(-45deg);
+  transform-origin: bottom left;
+  border-radius: 5px 5px 0 0;
   background:
     repeating-linear-gradient(
       90deg,
-      rgba(255, 255, 255, 0.05) 0 1px,
-      transparent 1px 3px
+      rgba(255, 255, 255, 0.16) 0 1px,
+      transparent 1px 4px
     ),
-    linear-gradient(180deg, #0b6ec8 0%, #00356a 100%);
-}
-
-.edgeTop {
-  left: 0;
-  top: 12px;
-  width: 42px;
-  height: 18px;
-  transform: rotateX(90deg) translateZ(21px);
-  border-radius: 4px 4px 0 0;
+    linear-gradient(180deg, #7ec4ff 0%, #0b6ec8 55%, #054e96 100%);
 }
 
 .edgeLeft {
-  left: 12px;
+  left: -20px;
   top: 0;
-  width: 18px;
-  height: 42px;
-  transform: rotateY(-90deg) translateZ(21px);
+  width: 20px;
+  height: 56px;
+  transform: skewY(45deg);
+  transform-origin: top right;
+  border-radius: 5px 0 0 5px;
   background:
     repeating-linear-gradient(
       180deg,
-      rgba(255, 255, 255, 0.05) 0 1px,
-      transparent 1px 3px
+      rgba(0, 0, 0, 0.18) 0 1px,
+      transparent 1px 4px
     ),
-    linear-gradient(90deg, #002848 0%, #0058a8 100%);
-  border-radius: 4px 0 0 4px;
+    linear-gradient(90deg, #001428 0%, #00356a 70%, #0058a8 100%);
+}
+
+.dock .launcher:hover .edgeTop,
+.dock .launcher:focus-visible .edgeTop {
+  top: -30px;
+  height: 30px;
+}
+
+.dock .launcher:hover .edgeLeft,
+.dock .launcher:focus-visible .edgeLeft {
+  left: -30px;
+  width: 30px;
+}
+
+.dock .launcher:hover .ground,
+.dock .launcher:focus-visible .ground {
+  animation: none;
+  transform: scaleX(0.72);
+  opacity: 0.45;
+}
+
+.face {
+  z-index: 1;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    0 8px 16px rgba(0, 20, 40, 0.28);
+}
+
+.faceMark {
+  display: block;
+  width: 56px;
+  height: 56px;
 }
 
 .sheen {
   position: absolute;
   z-index: 1;
-  top: 3px;
-  left: 4px;
-  width: 18px;
-  height: 10px;
-  border-radius: 8px;
+  top: 6px;
+  left: -12px;
+  width: 22px;
+  height: 44px;
+  border-radius: 12px;
   pointer-events: none;
-  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.85), transparent);
   mix-blend-mode: screen;
-  animation: lane-sheen 5.6s ease-in-out infinite;
+  animation: lane-sheen 2.4s ease-in-out infinite;
 }
 
 @keyframes lane-idle {
   0%,
   100% {
-    transform: rotateX(-18deg) rotateY(26deg) translateY(0);
+    transform: translateY(0) rotate(-3deg);
   }
   50% {
-    transform: rotateX(-12deg) rotateY(18deg) translateY(-2px);
+    transform: translateY(-14px) rotate(-14deg);
+  }
+}
+
+@keyframes lane-shadow {
+  0%,
+  100% {
+    transform: scaleX(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scaleX(0.72) translateY(6px);
+    opacity: 0.4;
   }
 }
 
@@ -159,27 +206,28 @@
   0%,
   100% {
     transform: translateX(0);
-    opacity: 0.35;
+    opacity: 0.25;
   }
   50% {
-    transform: translateX(14px);
-    opacity: 0.85;
+    transform: translateX(48px);
+    opacity: 0.95;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .cube,
-  .sheen {
+  .sheen,
+  .ground {
     animation: none;
   }
 
   .cube {
-    transform: rotateX(-18deg) rotateY(26deg);
+    transform: rotate(-8deg);
   }
 
   .sheen {
     opacity: 0.45;
-    transform: none;
+    transform: translateX(18px);
   }
 }
 

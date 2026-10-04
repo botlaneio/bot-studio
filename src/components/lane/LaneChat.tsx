@@ -151,10 +151,11 @@ export function LaneChat() {
         onClick={() => setOpen((value) => !value)}
       >
         <span className={styles.cube}>
+          <span className={styles.ground} aria-hidden="true" />
           <span className={styles.edgeTop} aria-hidden="true" />
           <span className={styles.edgeLeft} aria-hidden="true" />
           <span className={styles.face}>
-            <LaneMark className={styles.faceMark} idPrefix={`${markId}-btn`} />
+            <LaneMark className={styles.faceMark} idPrefix={`${markId}-btn`} size={56} />
             <span className={styles.sheen} aria-hidden="true" />
           </span>
         </span>

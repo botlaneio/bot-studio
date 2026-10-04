@@ -150,14 +150,21 @@ export function LaneChat() {
         aria-controls={panelId}
         onClick={() => setOpen((value) => !value)}
       >
-        <LaneMark className={styles.logo} idPrefix={`${markId}-btn`} />
+        <span className={styles.cube}>
+          <span className={styles.edgeTop} aria-hidden="true" />
+          <span className={styles.edgeLeft} aria-hidden="true" />
+          <span className={styles.face}>
+            <LaneMark className={styles.faceMark} idPrefix={`${markId}-btn`} />
+            <span className={styles.sheen} aria-hidden="true" />
+          </span>
+        </span>
         <span className={styles.visuallyHidden}>{open ? "Close Lane" : "Open Lane"}</span>
       </button>
     </div>
   );
 }
 
-/** Blue plate from the left of public/logo.svg (viewBox 0 0 64 64, before the wordmark). The button mark holds a resting 3D tilt. Idle float and the hover lift are CSS on the launcher only. */
+/** Blue plate from the left of public/logo.svg (viewBox 0 0 64 64, before the wordmark). The corner button is a CSS block with a top and left face. The open card uses the flat plate. */
 function LaneMark({ className, idPrefix, size = 42 }: { className?: string; idPrefix: string; size?: number }) {
   const pid = (name: string) => `${idPrefix}-${name}`;
   return (
@@ -192,7 +199,6 @@ function LaneMark({ className, idPrefix, size = 42 }: { className?: string; idPr
           <stop offset="1" stopColor="#002850" stopOpacity="0.42" />
         </linearGradient>
       </defs>
-      <rect x="4" y="6" width="58" height="58" rx="16" fill="#00356a" />
       <rect x="1" y="1" width="62" height="62" rx="17" fill={`url(#${pid("plate")})`} />
       <rect x="1" y="1" width="62" height="62" rx="17" fill={`url(#${pid("depth")})`} />
       <rect x="1" y="1" width="62" height="62" rx="17" filter={`url(#${pid("grain")})`} />

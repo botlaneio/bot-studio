@@ -21,8 +21,9 @@
   pointer-events: auto;
 }
 
-/* The site's button pop-in is turned off here. The mark itself
-   holds a slight 3D tilt and a slow idle float. */
+/* The site's button pop-in is turned off here. Perspective lives on the
+   button so the block's top and left faces stay real 3D, not a tilted picture.
+   No filter on this element: a filter flattens preserve-3d. */
 .dock .launcher {
   position: relative;
   z-index: 2;
@@ -33,7 +34,9 @@
   line-height: 0;
   cursor: pointer;
   animation: none;
-  perspective: 160px;
+  overflow: visible;
+  perspective: 280px;
+  perspective-origin: 80% 90%;
 }
 
 .dock .launcher:hover,
@@ -43,86 +46,143 @@
 
 .dock .launcher:focus-visible {
   outline: 2px solid var(--accent, #0077e6);
-  outline-offset: 4px;
-  border-radius: 12px;
+  outline-offset: 6px;
+  border-radius: 14px;
 }
 
-/* Button mark only. A resting tilt, a slow float, and a lift on hover.
-   The open card is untouched. */
-.logo {
-  display: block;
-  height: 42px;
-  width: 42px;
-  transform-origin: center center;
-  transform-style: preserve-3d;
-  animation: lane-idle 5.6s ease-in-out infinite;
-  transition: transform 0.35s cubic-bezier(0.22, 0.7, 0.24, 1), filter 0.35s ease;
-  filter: drop-shadow(0 12px 10px rgba(0, 28, 70, 0.42)) drop-shadow(0 2px 2px rgba(0, 0, 0, 0.35));
-}
-
-.dock .launcher:hover .logo,
-.dock .launcher:focus-visible .logo {
-  animation: none;
-  transform: rotateX(18deg) rotateY(-26deg) translateY(-3px) scale(1.06);
-  filter: drop-shadow(0 18px 14px rgba(0, 28, 70, 0.5)) drop-shadow(0 3px 2px rgba(0, 0, 0, 0.4));
-}
-
-/* Specular streak on the button plate. It drifts; it does not cover the card. */
-.dock .launcher::before {
-  content: "";
-  position: absolute;
-  z-index: 1;
-  inset: 4px 6px auto 4px;
-  height: 16px;
-  border-radius: 12px;
-  pointer-events: none;
-  background: linear-gradient(100deg, transparent 10%, rgba(255, 255, 255, 0.55) 45%, transparent 70%);
-  opacity: 0.55;
-  mix-blend-mode: screen;
-  animation: lane-sheen 5.6s ease-in-out infinite;
-}
-
+.dock .launcher::before,
 .dock .launcher::after {
   content: none;
+}
+
+/* Depth shows toward the page (up and left), not off the corner. */
+.cube {
+  position: relative;
+  display: block;
+  width: 42px;
+  height: 42px;
+  transform-style: preserve-3d;
+  transform-origin: center center;
+  animation: lane-idle 5.6s ease-in-out infinite;
+  transition: transform 0.35s cubic-bezier(0.22, 0.7, 0.24, 1);
+}
+
+.dock .launcher:hover .cube,
+.dock .launcher:focus-visible .cube {
+  animation: none;
+  transform: rotateX(-28deg) rotateY(36deg) translateY(-3px);
+}
+
+.face,
+.edgeTop,
+.edgeLeft {
+  position: absolute;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.face {
+  inset: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  transform: translateZ(9px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.faceMark {
+  display: block;
+  width: 42px;
+  height: 42px;
+}
+
+.edgeTop,
+.edgeLeft {
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.05) 0 1px,
+      transparent 1px 3px
+    ),
+    linear-gradient(180deg, #0b6ec8 0%, #00356a 100%);
+}
+
+.edgeTop {
+  left: 0;
+  top: 12px;
+  width: 42px;
+  height: 18px;
+  transform: rotateX(90deg) translateZ(21px);
+  border-radius: 4px 4px 0 0;
+}
+
+.edgeLeft {
+  left: 12px;
+  top: 0;
+  width: 18px;
+  height: 42px;
+  transform: rotateY(-90deg) translateZ(21px);
+  background:
+    repeating-linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.05) 0 1px,
+      transparent 1px 3px
+    ),
+    linear-gradient(90deg, #002848 0%, #0058a8 100%);
+  border-radius: 4px 0 0 4px;
+}
+
+.sheen {
+  position: absolute;
+  z-index: 1;
+  top: 3px;
+  left: 4px;
+  width: 18px;
+  height: 10px;
+  border-radius: 8px;
+  pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+  mix-blend-mode: screen;
+  animation: lane-sheen 5.6s ease-in-out infinite;
 }
 
 @keyframes lane-idle {
   0%,
   100% {
-    transform: rotateX(12deg) rotateY(-16deg) translateY(0);
+    transform: rotateX(-18deg) rotateY(26deg) translateY(0);
   }
   50% {
-    transform: rotateX(7deg) rotateY(-8deg) translateY(-2px);
+    transform: rotateX(-12deg) rotateY(18deg) translateY(-2px);
   }
 }
 
 @keyframes lane-sheen {
   0%,
   100% {
-    transform: translateX(-4px);
-    opacity: 0.28;
+    transform: translateX(0);
+    opacity: 0.35;
   }
   50% {
-    transform: translateX(6px);
-    opacity: 0.7;
+    transform: translateX(14px);
+    opacity: 0.85;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .logo,
-  .dock .launcher::before {
+  .cube,
+  .sheen {
     animation: none;
   }
 
-  .logo {
-    transform: rotateX(12deg) rotateY(-16deg);
+  .cube {
+    transform: rotateX(-18deg) rotateY(26deg);
   }
 
-  .dock .launcher::before {
-    opacity: 0.4;
+  .sheen {
+    opacity: 0.45;
     transform: none;
   }
 }
+
 
 .panel {
   position: absolute;

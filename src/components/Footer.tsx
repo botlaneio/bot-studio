@@ -9,7 +9,7 @@ import styles from "./Footer.module.css";
 /** No /work route exists. Capabilities is the index the nav and the previous footer shared. */
 const NAVIGATE = [
   { href: "/", label: "Home" },
-  { href: "/capabilities", label: "Capabilities" },
+  { href: "/capabilities", label: "Offers" },
   { href: "/about", label: "About" },
   { href: "/echoes", label: "Echoes" },
   { href: "/contact#inquiry", label: "Contact" },
@@ -213,11 +213,11 @@ export function Footer() {
       <div className={styles.lower}>
         <div className={styles.lowerGrid}>
           <div className={styles.pitch}>
-            <p className={styles.tagline}>Ultra-premium websites that connect, scale, and perform.</p>
+            <p className={styles.tagline}>Websites and web apps that connect, scale, and perform.</p>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img className={styles.wordmark} src="/logo.svg" alt="Botlane" width={897} height={100} />
             <p className={styles.blurb}>
-              Ultra-premium websites designed and built for brands that demand craft, clarity, and performance.
+              Websites and web apps designed and built for brands that demand craft, clarity, and performance.
             </p>
             <p className={styles.copy}>©2026 BotLane LLC. All rights reserved.</p>
             <p className={styles.siteLine}>

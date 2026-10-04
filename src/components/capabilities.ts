@@ -1,7 +1,7 @@
-/** The studio's six areas, shared by the nav menu, the footer and the
- *  capabilities page. `slug` is each capability page and index anchor;
- *  `image` is the photo shown in the Capabilities mega menu. */
-export const CAPABILITIES = [
+import { PLANS } from "./plans";
+
+/** Retain existing discipline URLs while leading with two core project offers. */
+const DISCIPLINES = [
   {
     slug: "brand-identity",
     image: "/capability-brand-identity.webp",
@@ -14,7 +14,7 @@ export const CAPABILITIES = [
   {
     slug: "strategy",
     image: "/capability-strategy.webp",
-    tag: "Growth",
+    tag: "Included discipline",
     title: "Strategy",
     line: "Positioning and the roadmap to launch",
     detail: "Who it's for, what makes it different and what ships first, agreed before a pixel is drawn.",
@@ -23,7 +23,7 @@ export const CAPABILITIES = [
   {
     slug: "design-innovation",
     image: "/capability-design.webp",
-    tag: "Creative",
+    tag: "Included discipline",
     title: "Design & Innovation",
     line: "Interfaces, motion and 3D",
     detail: "Interfaces with a point of view: considered type, motion that explains, and 3D where it earns its place.",
@@ -32,25 +32,25 @@ export const CAPABILITIES = [
   {
     slug: "ai-systems",
     image: "/capability-ai-systems.webp",
-    tag: "Smart AI",
-    title: "AI Systems",
-    line: "Assistants and automations built in",
-    detail: "Assistants, search and automations wired into the site, so it answers questions and does the busywork.",
+    tag: "Optional add-on",
+    title: "AI Integrations",
+    line: "Optional assistants and automations",
+    detail: "Optional assistants, search and automations integrated into your website or app. We agree the use case, data access and scope separately from the core build.",
     includes: ["Assistants that know your content", "Smart site search", "Workflow automations", "Lead capture and routing"],
   },
   {
     slug: "seo",
     image: "/capability-seo.webp",
-    tag: "Discoverable",
-    title: "SEO",
+    tag: "Optional add-on",
+    title: "SEO & Discoverability",
     line: "Found by the people you want",
-    detail: "Clean structure, fast pages and content shaped for search, so the right people find you first.",
-    includes: ["Technical SEO foundations", "Page speed and Core Web Vitals", "Structured data", "Content guidance"],
+    detail: "An optional programme for search visibility and content, beyond the performance and technical search basics included in the core build. Scope and pricing are agreed separately.",
+    includes: ["Search and visibility review", "Content and keyword planning", "Structured data where relevant", "Ongoing optimisation as scoped"],
   },
   {
     slug: "development",
     image: "/capability-development.webp",
-    tag: "Build",
+    tag: "Included discipline",
     title: "Development",
     line: "Fast, accessible, production sites",
     detail: "Production code on a modern stack, fast on every device, accessible, and easy for your team to run.",
@@ -59,3 +59,18 @@ export const CAPABILITIES = [
 ];
 
 export const capabilityHref = (slug: string) => `/capabilities/${slug}`;
+
+export const OFFERS = PLANS.slice(0, 2).map((plan, i) => ({
+  slug: plan.slug,
+  image: i === 0 ? "/capability-design.webp" : "/capability-development.webp",
+  tag: "Core offer",
+  title: plan.name,
+  line: i === 0 ? "Marketing sites for brands and businesses" : "Interactive products and business tools",
+  detail: plan.pitch,
+  includes: plan.includes,
+}));
+export const OPTIONAL_CAPABILITIES = DISCIPLINES.filter((item) => item.slug === "seo" || item.slug === "ai-systems");
+export const NAV_CAPABILITIES = [...OFFERS, ...OPTIONAL_CAPABILITIES];
+export const CAPABILITIES = [...OFFERS, ...DISCIPLINES];
+
+export const OFFER_DETAILS = [...OFFERS, ...DISCIPLINES.filter((item) => ["strategy", "design-innovation", "development"].includes(item.slug)), ...OPTIONAL_CAPABILITIES];

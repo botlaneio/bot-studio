@@ -31,9 +31,9 @@ const poppins = Poppins({
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://botlane.tech";
 
-const TITLE = "Botlane Studios — Ultra-premium websites";
+const TITLE = "Botlane Studios — Websites and web apps";
 const DESCRIPTION =
-  "Botlane Studios designs and builds ultra-premium websites for brands that care about craft, clarity and performance. A BotLane LLC studio.";
+  "Botlane Studios designs and builds websites and web apps for brands that care about craft, clarity and performance. A BotLane LLC studio.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

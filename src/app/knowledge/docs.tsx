@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CAPABILITIES, capabilityHref } from "@/components/capabilities";
+import { NAV_CAPABILITIES, capabilityHref } from "@/components/capabilities";
 
 export type Doc = {
   slug: string;
@@ -14,19 +14,19 @@ export const DOCS: Doc[] = [
     slug: "company-overview",
     title: "Company overview",
     description: "Botlane Studios is the design studio of BotLane LLC, in Sheridan, Wyoming.",
-    summary: "The design studio of BotLane LLC. Ultra-premium websites, from Sheridan, Wyoming.",
+    summary: "The design studio of BotLane LLC. Websites and web apps, from Sheridan, Wyoming.",
   },
   {
     slug: "mission-and-vision",
     title: "Mission and vision",
-    description: "Botlane Studios designs and builds ultra-premium websites, with craft, clarity, and performance.",
-    summary: "Design and build ultra-premium websites, with craft, clarity, and performance.",
+    description: "Botlane Studios designs and builds websites and web apps, with craft, clarity, and performance.",
+    summary: "Design and build websites and web apps, with craft, clarity, and performance.",
   },
   {
     slug: "services",
     title: "Services",
-    description: "The six capabilities Botlane Studios already lists on this site.",
-    summary: "The six capabilities already published on this site, in their existing names.",
+    description: "Our two core offers, included disciplines and optional add-ons.",
+    summary: "Websites and Web Apps, with strategy, design and development included.",
   },
   {
     slug: "team",
@@ -82,7 +82,7 @@ export function DocBody({ slug }: { slug: string }) {
 function CompanyOverview() {
   return (
     <>
-      <p>Botlane Studios is the design studio of BotLane LLC. It designs and builds ultra-premium websites.</p>
+      <p>Botlane Studios is the design studio of BotLane LLC. It designs and builds websites and web apps.</p>
       <p>
         BotLane LLC
         <br />
@@ -105,17 +105,17 @@ function CompanyOverview() {
 }
 
 function Mission() {
-  return <p>Botlane Studios designs and builds ultra-premium websites, with craft, clarity, and performance.</p>;
+  return <p>Botlane Studios designs and builds websites and web apps, with craft, clarity, and performance.</p>;
 }
 
 function Services() {
   return (
     <>
       <p>
-        These are the capabilities already published on the <Link href="/capabilities">capabilities page</Link>, in their existing names.
+        Our core offers are <Link href="/capabilities">Websites and Web Apps</Link>. Strategy, design and development are included in the agreed project scope. SEO/discoverability and AI integrations are optional add-ons, quoted separately.
       </p>
       <ul>
-        {CAPABILITIES.map((c) => (
+        {NAV_CAPABILITIES.map((c) => (
           <li key={c.slug}>
             <Link href={capabilityHref(c.slug)}>{c.title}</Link>. {c.line}.
           </li>

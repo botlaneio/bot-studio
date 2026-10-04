@@ -9,7 +9,7 @@ import styles from "./pricing.module.css";
 export const metadata: Metadata = {
   alternates: { canonical: "/pricing" },
   title: "Pricing",
-  description: "Three ways to work with Botlane Studios, each quoted to its scope before any work starts.",
+  description: "Websites and web apps with strategy, design and development included. Optional add-ons are quoted separately.",
 };
 
 const FAQ = [
@@ -18,8 +18,8 @@ const FAQ = [
     a: "Every project is quoted to its scope. After a short call we send a fixed quote, with what's included and a timeline, before any work starts.",
   },
   {
-    q: "How long does a website take?",
-    a: "It depends on the scope: a focused launch site moves faster than a brand and multi-page build. Your quote includes a timeline we commit to.",
+    q: "How long does a project take?",
+    a: "It depends on the scope. For web apps, paid discovery can define the build before we quote it. Your written proposal includes the agreed timeline.",
   },
   {
     q: "Do you work with clients outside the US?",
@@ -31,11 +31,11 @@ const FAQ = [
   },
   {
     q: "Can you look after the site after launch?",
-    a: "Yes. The Partner plan covers ongoing design, development and care, or we can agree support as and when you need it.",
+    a: "Yes. Ongoing design, development and care can be scoped and quoted separately after launch.",
   },
   {
     q: "What do you need from me to start?",
-    a: "A short brief: what you do, who it's for and what you'd like the site to achieve. We'll shape the rest together on the first call.",
+    a: "A short brief: what you do, who it's for and what you'd like the website or app to achieve. We'll shape the rest together on the first call.",
   },
 ];
 
@@ -48,7 +48,7 @@ export default function PricingPage() {
         kicker="// 00.05° Pricing"
         title="Clear scope, honest pricing"
         mark="."
-        lede="Three ways to work with us. Every project is quoted to its scope, in writing, before any work starts."
+        lede="Websites and Web Apps are our core offers. Strategy, design and development are included. Optional add-ons are scoped separately."
       />
 
       <section className={page.section} aria-label="Plans">
@@ -57,7 +57,7 @@ export default function PricingPage() {
             <article key={p.name} className={styles.plan} data-recommended={p.recommended || undefined} data-reveal="" style={delay(i * 0.08)}>
               <div className={styles.planHead}>
                 <h2 className={styles.planName}>{p.name}</h2>
-                {p.recommended && <span className={styles.badge}>Recommended</span>}
+                {p.recommended && <span className={styles.badge}>Core project</span>}
               </div>
               <p className={styles.pitch}>{p.pitch}</p>
               <p className={styles.price}>

@@ -10,6 +10,7 @@ import { CapabilityIcon } from "./CapabilityIcon";
 import styles from "./Nav.module.css";
 
 const LINKS = [
+  { href: "/work", label: "Work" },
   { href: "/about", label: "About Us" },
   { href: "/pricing", label: "Pricing" },
   { href: "/echoes", label: "Echoes" },

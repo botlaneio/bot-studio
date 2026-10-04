@@ -11,6 +11,30 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       { source: "/capabilities/brand-identity", destination: "/capabilities/websites", permanent: true },
+      {
+        source: "/",
+        has: [{ type: "host", value: "botlane.tech" }],
+        destination: "https://botlane.studio",
+        permanent: true,
+      },
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "botlane.tech" }],
+        destination: "https://botlane.studio/:path*",
+        permanent: true,
+      },
+      {
+        source: "/",
+        has: [{ type: "host", value: "www.botlane.tech" }],
+        destination: "https://botlane.studio",
+        permanent: true,
+      },
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.botlane.tech" }],
+        destination: "https://botlane.studio/:path*",
+        permanent: true,
+      },
     ];
   },
   async headers() {

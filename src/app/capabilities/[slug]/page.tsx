@@ -8,6 +8,7 @@ import page from "@/components/page/Page.module.css";
 import styles from "../capabilities.module.css";
 import { BrandIdentity } from "@/components/brand/BrandIdentity";
 import { Strategy } from "@/components/strategy/Strategy";
+import { Websites } from "@/components/websites/Websites";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -35,6 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function CapabilityPage({ params }: Props) {
   const capability = await getCapability(params);
+  if (capability.slug === "websites") return <Websites />;
   if (capability.slug === "brand-identity") return <BrandIdentity />;
   if (capability.slug === "strategy") return <Strategy />;
   return (

@@ -23,7 +23,7 @@ const BANDS = [
     name: "Websites",
     rows: [
       { name: "Focused", price: "$8,000–$12,000", detail: "Up to 5 unique layouts, existing brand, client-supplied copy." },
-      { name: "Signature", price: "$15,000–$25,000", detail: "Up to 10 layouts, CMS, scoped custom motion." },
+      { name: "Signature", price: "$12,000–$25,000", detail: "Up to 10 layouts, CMS, scoped custom motion." },
       { name: "Complex", price: "$25,000+", detail: "After discovery." },
     ],
   },
@@ -45,7 +45,6 @@ const INCLUDED = [
   "QA",
   "SEO foundations",
   "Handover",
-  "30-day defect correction",
 ];
 
 const FAQ = [
@@ -160,7 +159,7 @@ export default function PricingPage() {
         <div className={styles.optional} data-reveal="">
           <h3 className={styles.bandName}>Optional, extra</h3>
           <p>
-            <strong>Brand identity, $5,000–$10,000.</strong> Naming, mark, and visual system when the project needs them. This is an optional line, not its own page.
+            <strong>Brand identity, $5,000–$10,000.</strong> Naming, mark, and visual system, added to a Websites or Web Apps project when you need one. Quoted separately from the core build.
           </p>
           <p>
             SEO and AI stay optional add-ons, extra to the core build. AI is priced by the workflow, not a surcharge. Neither has a published fixed amount.

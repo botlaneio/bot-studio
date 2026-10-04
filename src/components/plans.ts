@@ -4,7 +4,7 @@ export const PLANS: { name: string; slug: string; pitch: string; price?: string;
     name: "Websites",
     slug: "websites",
     pitch: "A marketing website that explains your business and helps the right people take the next step.",
-    includes: ["Strategy, audience and site structure", "Custom responsive design", "Development and launch", "Content management where needed", "Performance, accessibility and search basics", "Naming, mark, and visual system when the project needs them"],
+    includes: ["Strategy, audience and site structure", "Custom responsive design", "Development and launch", "Content management where needed", "Performance, accessibility and search basics"],
   },
   {
     name: "Web Apps",
@@ -17,7 +17,7 @@ export const PLANS: { name: string; slug: string; pitch: string; price?: string;
     name: "Optional Add-ons",
     slug: "add-ons",
     pitch: "Extend your website or app with the support it needs, scoped separately from your core project.",
-    includes: ["SEO & discoverability beyond build basics", "AI assistants, search and automations", "Use cases and deliverables agreed first", "Ongoing care quoted separately", "Third-party costs identified in your proposal"],
+    includes: ["Brand identity: naming, mark and visual system", "SEO & discoverability beyond build basics", "AI assistants, search and automations", "Use cases and deliverables agreed first", "Ongoing care quoted separately", "Third-party costs identified in your proposal"],
   },
 ];
 

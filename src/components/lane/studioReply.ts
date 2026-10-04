@@ -16,7 +16,7 @@ export function studioReply(message: string): string {
     return NAV_CAPABILITIES.map((item) => `${item.title}: ${item.line}.`).join("\n\n") + "\n\nStrategy, design and development are included in the core project. SEO/discoverability and AI integrations are optional add-ons, scoped separately.";
   }
   if (/\blogo\b|naming|brand identity|\bidentity\b|visual system/.test(text)) {
-    return "Naming, mark, and visual system are part of the Websites offer when the project needs them. Brand identity is not its own page. The pricing page lists it as an optional line. The final scope is agreed in your proposal.";
+    return "Brand identity (naming, mark, and visual system) is an optional add-on to a Websites or Web Apps project, from $5,000 to $10,000, quoted separately from the core build. It is not its own page; the range is on the pricing page. The final scope is agreed in your proposal.";
   }
   const capability = CAPABILITIES.find((item) => {
     const terms: Record<string, RegExp> = {

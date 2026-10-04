@@ -112,7 +112,7 @@ function Services() {
   return (
     <>
       <p>
-        Our core offers are <Link href="/capabilities">Websites and Web Apps</Link>. Strategy, design and development are included in the agreed project scope. Naming, mark, and visual system are part of the Websites offer when the project needs them, not a separate page. SEO/discoverability and AI integrations are optional add-ons, quoted separately.
+        Our core offers are <Link href="/capabilities">Websites and Web Apps</Link>. Strategy, design and development are included in the agreed project scope. Brand identity (naming, mark, and visual system), SEO/discoverability and AI integrations are optional add-ons, quoted separately.
       </p>
       <ul>
         {NAV_CAPABILITIES.map((c) => (

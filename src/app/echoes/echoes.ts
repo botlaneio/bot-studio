@@ -55,7 +55,7 @@ export const ECHOES: Echo[] = [
     title: "Notes before the build",
     excerpt: "Write the constraints down before the interface starts agreeing with everyone.",
     note: "Note 06",
-    image: "/echoes/before-the-build.jpg",
+    image: "/echoes/before-the-build-v2.jpg",
   },
   {
     id: "after-launch",

@@ -14,7 +14,7 @@ export default function TermsPage() {
       <PageHero kicker="// Legal" title="Terms of use" mark="." />
       <section className={page.section}>
         <div className={page.prose}>
-          <p className={page.updated}>Last updated 2 October 2026</p>
+          <p className={page.updated}>Last updated 5 October 2026</p>
 
           <p>
             These terms govern your use of this website, operated by BotLane LLC (&ldquo;Botlane Studios&rdquo;, &ldquo;we&rdquo;,
@@ -61,7 +61,7 @@ export default function TermsPage() {
           <h2>Changes and contact</h2>
           <p>
             We may update these terms from time to time; the date at the top shows the latest version. Questions:{" "}
-            <a href="mailto:admin@botlane.io">admin@botlane.io</a>.
+            <a href="mailto:project@botlane.studio">project@botlane.studio</a>.
           </p>
         </div>
       </section>

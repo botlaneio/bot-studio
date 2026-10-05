@@ -299,7 +299,7 @@ export function Nav() {
               <Arrow className={styles.ctaArrow} />
             </a>
             <div className={styles.mobileContact}>
-              <a href="mailto:admin@botlane.io">admin@botlane.io</a>
+              <a href="mailto:project@botlane.studio">project@botlane.studio</a>
               <a href="https://wa.me/919979972714" target="_blank" rel="noopener">
                 WhatsApp ↗
               </a>

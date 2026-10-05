@@ -91,7 +91,7 @@ function CompanyOverview() {
         Sheridan, WY 82801
       </p>
       <p>
-        <a href="mailto:admin@botlane.io">admin@botlane.io</a>
+        <a href="mailto:project@botlane.studio">project@botlane.studio</a>
         <br />
         <a href="tel:+13072185715">+1 307 218 5715</a>
       </p>
@@ -130,7 +130,7 @@ function Team() {
     <>
       <p>Botlane Studios is a small studio of BotLane LLC.</p>
       <p>
-        <a href="mailto:admin@botlane.io">admin@botlane.io</a>
+        <a href="mailto:project@botlane.studio">project@botlane.studio</a>
         <br />
         <a href="tel:+13072185715">+1 307 218 5715</a>
       </p>
@@ -169,12 +169,12 @@ function Policies() {
 
       <h2>Privacy policy</h2>
       <p>
-        Full page: <Link href="/privacy">Privacy policy</Link>. Last updated 2 October 2026.
+        Full page: <Link href="/privacy">Privacy policy</Link>. Last updated 5 October 2026.
       </p>
       <p>
         It explains how BotLane LLC (&ldquo;Botlane Studios&rdquo;) handles personal information when you visit this website or get in
         touch. The company address is 30 N Gould St, Ste R, Sheridan, WY 82801. Contact is{" "}
-        <a href="mailto:admin@botlane.io">admin@botlane.io</a> or +1 307 218 5715.
+        <a href="mailto:project@botlane.studio">project@botlane.studio</a> or +1 307 218 5715.
       </p>
       <ul>
         <li>
@@ -200,14 +200,14 @@ function Policies() {
         </li>
         <li>
           You can ask to access, correct or delete the personal information held about you, or to stop being contacted, by emailing{" "}
-          <a href="mailto:admin@botlane.io">admin@botlane.io</a>. Further rights under local law will be honoured.
+          <a href="mailto:project@botlane.studio">project@botlane.studio</a>. Further rights under local law will be honoured.
         </li>
         <li>Links to other sites, such as botlane.io and WhatsApp, follow those sites&apos; own privacy policies.</li>
       </ul>
 
       <h2>Terms of use</h2>
       <p>
-        Full page: <Link href="/terms">Terms of use</Link>. Last updated 2 October 2026.
+        Full page: <Link href="/terms">Terms of use</Link>. Last updated 5 October 2026.
       </p>
       <p>
         These terms govern use of this website, operated by BotLane LLC at the same Sheridan address. By using the site you agree to them.
@@ -233,7 +233,7 @@ function Policies() {
         </li>
         <li>The terms are governed by the laws of the State of Wyoming, United States.</li>
         <li>
-          Questions: <a href="mailto:admin@botlane.io">admin@botlane.io</a>. If the terms change, the date at the top of that page is
+          Questions: <a href="mailto:project@botlane.studio">project@botlane.studio</a>. If the terms change, the date at the top of that page is
           updated.
         </li>
       </ul>

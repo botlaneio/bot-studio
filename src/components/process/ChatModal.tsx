@@ -105,9 +105,9 @@ export function ChatModal({
 
             <ul className={styles.rows}>
               <li>
-                <a className={`${styles.row} arrowHost`} href="mailto:admin@botlane.io?subject=Project%20enquiry">
+                <a className={`${styles.row} arrowHost`} href="mailto:project@botlane.studio?subject=Project%20enquiry">
                   <span className={styles.rowTag}>Email</span>
-                  <span className={styles.rowValue}>admin@botlane.io</span>
+                  <span className={styles.rowValue}>project@botlane.studio</span>
                   <Arrow className={styles.rowArrow} />
                 </a>
               </li>

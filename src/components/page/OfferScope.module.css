@@ -1,0 +1,178 @@
+/* Numbered deliverable rows. The number sits in the section head's left
+   column (300u), so the rows line up with the heading above. */
+
+.intro {
+  margin-top: calc(18 * var(--u));
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-bottom: 1px solid var(--rule);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: calc(300 * var(--u)) minmax(0, 1fr) minmax(0, 1fr);
+  gap: calc(40 * var(--u));
+  align-items: baseline;
+  padding-block: calc(26 * var(--u));
+  border-top: 1px solid var(--rule);
+  transition: background-color 0.2s var(--ease-out);
+}
+
+.num {
+  font: 400 calc(12 * var(--u)) / 1 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.stage {
+  color: var(--ink-dim);
+}
+
+.title {
+  margin: 0;
+  font: 500 calc(24 * var(--u)) / 1.25 var(--display);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.detail {
+  max-width: 44ch;
+  margin: 0;
+  font: 400 calc(16 * var(--u)) / 1.6 var(--display);
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.close {
+  display: grid;
+  grid-template-columns: calc(300 * var(--u)) 1fr auto;
+  gap: calc(40 * var(--u));
+  align-items: center;
+  padding-top: calc(34 * var(--u));
+}
+
+.note {
+  grid-column: 2;
+  max-width: 46ch;
+  margin: 0;
+  font: 400 calc(15 * var(--u)) / 1.6 var(--display);
+  color: var(--ink-dim);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: calc(28 * var(--u));
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(22 * var(--u));
+  padding: calc(15 * var(--u)) calc(22 * var(--u));
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  font: 500 calc(14 * var(--u)) / 1.4 var(--button);
+  white-space: nowrap;
+  transition: background-color 0.2s var(--ease-out);
+}
+
+.cta:hover {
+  background: #086cc7;
+}
+
+.arrow {
+  width: calc(16 * var(--u));
+  height: calc(16 * var(--u));
+}
+
+.back {
+  color: var(--ink-dim);
+  font: 400 calc(12 * var(--u)) / 1 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: color 0.2s var(--ease-out);
+}
+
+.back:hover {
+  color: var(--ink);
+}
+
+.cta:focus-visible,
+.back:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* Tablet: the note keeps its width; the actions drop beneath it. */
+@media (min-width: 900px) and (max-width: 1100px) {
+  .close {
+    grid-template-columns: calc(300 * var(--u)) 1fr;
+    row-gap: 22px;
+  }
+
+  .actions {
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 899px) {
+  .intro {
+    margin-top: 12px;
+  }
+
+  .row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding-block: 20px;
+  }
+
+  .num {
+    font-size: 11px;
+  }
+
+  .title {
+    font-size: 19px;
+  }
+
+  .detail {
+    font-size: 15px;
+  }
+
+  .close {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    padding-top: 26px;
+  }
+
+  .note {
+    grid-column: auto;
+    font-size: 14px;
+  }
+
+  .actions {
+    flex-wrap: wrap;
+    gap: 22px;
+  }
+
+  .cta {
+    gap: 18px;
+    padding: 14px 20px;
+    font-size: 14px;
+  }
+
+  .arrow {
+    width: 16px;
+    height: 16px;
+  }
+
+  .back {
+    font-size: 11px;
+  }
+}

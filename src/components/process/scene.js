@@ -547,7 +547,11 @@ export function mountProcessScene({ track: wrapEl, mount, flash, images, onCta }
     // fit it to the width.
     let fit = 1
     const pan = new THREE.Vector2()
+    // Set whenever something outside the scroll position changes the picture
+    // (size, pointer), so the next visible frame redraws.
+    let dirty = true
     const resize = () => {
+        dirty = true
         const w = mount.clientWidth || 1
         const h = mount.clientHeight || 1
         renderer.setSize(w, h, false)
@@ -591,14 +595,34 @@ export function mountProcessScene({ track: wrapEl, mount, flash, images, onCta }
     const onPointer = (e) => {
         mx = (e.clientX / window.innerWidth) * 2 - 1
         my = (e.clientY / window.innerHeight) * 2 - 1
+        dirty = true
     }
     window.addEventListener("pointermove", onPointer, { passive: true })
 
+    // The idle float starts at the visitor's first scroll, pointer move, touch
+    // or key press. Until then the scene holds still, so a page that is only
+    // loaded (and not yet looked at) does no continuous rendering.
+    let engaged = false
+    const ENGAGE_EVENTS = ["pointermove", "wheel", "touchstart", "keydown", "scroll"]
+    const engage = () => {
+        engaged = true
+        dirty = true
+        for (const type of ENGAGE_EVENTS) window.removeEventListener(type, engage, true)
+    }
+    for (const type of ENGAGE_EVENTS) window.addEventListener(type, engage, { passive: true, capture: true })
+
     let visible = true
-    const io = new IntersectionObserver(([e]) => (visible = e.isIntersecting), { rootMargin: "200px" })
+    // Draw only while the scene is on screen (not merely near it).
+    const io = new IntersectionObserver(([e]) => {
+        visible = e.isIntersecting
+        if (visible) dirty = true
+    })
     io.observe(wrapEl)
 
     // ---------- frame ----------
+    // Past this progress nothing idles: every piece has landed (b = 1), the
+    // icon has settled and the confetti has cleared.
+    const FLOAT_UNTIL = Math.max(0.85, 0.75 + pieces.length * 0.01)
     let flashStart = -1
     let lastP = current
     let last = performance.now()
@@ -644,8 +668,20 @@ export function mountProcessScene({ track: wrapEl, mount, flash, images, onCta }
         last = now
         if (!visible) return
         readScroll()
+        const settling = Math.abs(target - current) > 1e-4
         current = tau > 0 ? current + (target - current) * (1 - Math.exp(-dt / tau)) : target
         const p = current
+
+        // Skip identical frames. The scene only changes when the scroll
+        // position is still easing, something floats (before the page locks
+        // together, unless reduced motion), the shutter flashes, the pointer
+        // parallax is still settling, or the size or pointer changed.
+        const floating = !reduce && engaged && p < FLOAT_UNTIL
+        const parallax =
+            Math.abs((reduce ? 0 : mx * 0.06) - root.rotation.y) > 1e-4 ||
+            Math.abs((reduce ? 0 : my * 0.04) - root.rotation.x) > 1e-4
+        if (!dirty && !settling && !floating && !parallax && flashStart < 0) return
+        dirty = false
         const t = now / 1000
         const idle = reduce ? 0 : 1
 
@@ -751,6 +787,7 @@ export function mountProcessScene({ track: wrapEl, mount, flash, images, onCta }
         window.removeEventListener("scroll", readScroll)
         window.removeEventListener("resize", readScroll)
         window.removeEventListener("pointermove", onPointer)
+        for (const type of ENGAGE_EVENTS) window.removeEventListener(type, engage, true)
         disposables.forEach((d) => d.dispose?.())
         envTex.dispose()
         pmrem.dispose()

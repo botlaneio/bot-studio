@@ -750,7 +750,7 @@
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(5, 8, 16, 0.55) 0%, rgba(5, 8, 16, 0.15) 32%, rgba(7, 9, 12, 0.72) 70%, #0b0e13 100%),
+    linear-gradient(180deg, rgba(5, 8, 16, 0.55) 0%, rgba(5, 8, 16, 0.12) 34%, rgba(5, 8, 16, 0.62) 72%, rgba(5, 8, 16, 0.86) 100%),
     radial-gradient(120% 90% at 0% 0%, rgba(0, 119, 230, 0.42), transparent 60%);
 }
 
@@ -1236,6 +1236,162 @@
   clip: rect(0 0 0 0);
   white-space: nowrap;
   border: 0;
+}
+
+/* ───────────── Paper theme ─────────────
+   The open panel is off-white below the photo band: dark type, white
+   message cards, hairline rules. Cobalt stays for the visitor's own
+   messages, the send button and focus. Declared after the base styles so
+   these colours win; layout and motion are unchanged. */
+
+.panel {
+  --paper: #f5f3ee;
+  --paper-deep: #ebe8e1;
+  --ink-strong: #111317;
+  --ink-soft: rgba(17, 19, 23, 0.64);
+  --ink-faint: rgba(17, 19, 23, 0.42);
+  --hair: rgba(17, 19, 23, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+  background:
+    radial-gradient(80% 40% at 100% 100%, rgba(0, 119, 230, 0.07), transparent 60%),
+    linear-gradient(180deg, #f7f5f1 0%, var(--paper) 55%, var(--paper-deep) 100%);
+  color: var(--ink-strong);
+  color-scheme: light;
+  box-shadow:
+    0 1px 0 #dcd8cf,
+    0 2px 0 #cfcac0,
+    0 3px 0 #c2bdb2,
+    0 18px 40px rgba(0, 0, 0, 0.35),
+    0 40px 90px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.panel::before {
+  opacity: 0.1;
+  mix-blend-mode: multiply;
+}
+
+.sheen {
+  background: radial-gradient(380px circle at calc(var(--px) * 100%) calc(var(--py) * 100%), rgba(0, 119, 230, 0.06), transparent 55%);
+}
+
+.sheen::after {
+  background: radial-gradient(240px circle at calc(var(--px) * 100%) calc(var(--py) * 100%), rgba(0, 119, 230, 0.55), transparent 60%);
+  opacity: 0.4;
+}
+
+/* The photo band sits on the paper like a printed cover. */
+.head {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.12);
+}
+
+.dock .panel button:focus-visible,
+.dock .panel a:focus-visible {
+  outline-color: var(--lane-accent);
+}
+
+.thread {
+  scrollbar-color: rgba(17, 19, 23, 0.2) transparent;
+}
+
+.assistant {
+  border-color: var(--hair);
+  background: #ffffff;
+  box-shadow:
+    0 1px 0 rgba(17, 19, 23, 0.04),
+    0 6px 16px rgba(17, 19, 23, 0.06);
+  color: var(--ink-strong);
+}
+
+.user {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    0 8px 18px rgba(0, 90, 190, 0.22);
+}
+
+.typing span {
+  background: rgba(17, 19, 23, 0.55);
+}
+
+.dock .pill {
+  border-color: var(--hair);
+  background: #ffffff;
+  box-shadow:
+    0 1px 0 rgba(17, 19, 23, 0.06),
+    0 2px 6px rgba(17, 19, 23, 0.04);
+  color: var(--ink-strong);
+}
+
+.dock .pill:hover:not(:disabled) {
+  border-color: rgba(0, 119, 230, 0.55);
+  background: #f2f7fd;
+  box-shadow:
+    0 2px 0 rgba(0, 90, 190, 0.18),
+    0 10px 20px rgba(0, 90, 190, 0.12);
+  color: #0a4f99;
+}
+
+.dock .pill:active:not(:disabled) {
+  box-shadow: 0 1px 0 rgba(17, 19, 23, 0.06);
+}
+
+.composer {
+  border-color: var(--hair);
+  background: #ffffff;
+  box-shadow:
+    inset 0 1px 2px rgba(17, 19, 23, 0.06),
+    0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.composer:focus-within {
+  border-color: rgba(0, 119, 230, 0.7);
+  box-shadow:
+    inset 0 1px 2px rgba(17, 19, 23, 0.06),
+    0 0 0 4px rgba(0, 119, 230, 0.14);
+}
+
+.field {
+  color: var(--ink-strong);
+}
+
+.field::placeholder {
+  color: var(--ink-faint);
+}
+
+.dock .send {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 2px 0 #00468c,
+    0 6px 14px rgba(0, 90, 190, 0.3);
+}
+
+.dock .send:disabled {
+  opacity: 0.3;
+  box-shadow: none;
+}
+
+.actions {
+  border-top-color: var(--hair);
+}
+
+.primary {
+  color: var(--ink-strong);
+}
+
+.primary:hover {
+  color: var(--lane-accent);
+}
+
+.secondary {
+  color: var(--ink-soft);
+}
+
+.secondary:hover {
+  color: var(--ink-strong);
+}
+
+.fine {
+  color: var(--ink-faint);
 }
 
 /* Short screens: wider and shorter. */

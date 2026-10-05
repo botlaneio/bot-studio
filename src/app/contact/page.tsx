@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { InspireClose } from "@/components/InspireClose";
+import { LazyVideo } from "@/components/LazyVideo";
 import { ContactForm } from "./ContactForm";
 import styles from "./contact.module.css";
 
@@ -15,15 +16,7 @@ export default function ContactPage() {
     <main>
       <section className={styles.split} aria-label="Contact">
         <div className={styles.visual}>
-          <video
-            className={styles.photo}
-            src="/contact-side.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
-            aria-hidden="true"
-          />
+          <LazyVideo className={styles.photo} src="/contact-side.mp4" poster="/contact-side-poster.jpg" />
           <div className={styles.scrim} aria-hidden="true" />
           <div className={styles.visualCopy}>
             <h1 className={styles.move}>

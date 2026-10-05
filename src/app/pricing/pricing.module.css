@@ -55,6 +55,13 @@
   text-transform: uppercase;
 }
 
+/* Badges on cards without the blue head: outlined, not filled. */
+.plan:not([data-recommended]) .badge {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28);
+  color: rgba(255, 255, 255, 0.78);
+}
+
 .pitch {
   min-height: 3em;
   margin: 0;

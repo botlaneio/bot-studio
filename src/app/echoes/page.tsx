@@ -8,14 +8,14 @@ import styles from "./echoes.module.css";
 export const metadata: Metadata = {
   alternates: { canonical: "/echoes" },
   title: "Echoes",
-  description: "Articles, notes on creativity, strategy and making things work.",
+  description: "Short notes on creativity, strategy and making things work.",
 };
 
 const delay = (s: number) => ({ "--reveal-delay": `${s}s` }) as CSSProperties;
 
 /** The three lines beside the subtitle on the Whispers hero. */
 const LINES = [
-  "Studio projects and case studies",
+  "Notes from building the studio",
   "Notes on design and process",
   "Ideas, insights, and inspiration",
 ];
@@ -37,7 +37,7 @@ export default function EchoesPage() {
           </h1>
           <div className={styles.row}>
             <p className={styles.subtitle} data-reveal="" style={delay(0.12)}>
-              Articles, notes on creativity, strategy and making things work.
+              Short notes on creativity, strategy and making things work.
             </p>
             <ul className={styles.lines}>
               {LINES.map((line, i) => (

@@ -1,10 +1,13 @@
 # Botlane Studios
 
-The website for Botlane Studios, a BotLane LLC studio. Rebuilt in code from the
-studio's Figma design (1280px artboard), accent `#0077E6`.
+The website for Botlane Studios, a BotLane LLC studio, live at
+[botlane.studio](https://botlane.studio). Rebuilt in code from the studio's Figma
+design (1280px artboard), accent `#0077E6`.
 
-Built with Next.js 16, React 19, TypeScript and Tailwind CSS 4, the same stack as
-botlane.io. Fonts are Figtree and Fragment Mono, loaded through `next/font`.
+Built with Next.js 16 (App Router), React 19 and TypeScript. Styling is CSS Modules
+with shared tokens in `globals.css`; Tailwind CSS 4 is also installed. Fonts are
+Figtree (headings and body), Fragment Mono (labels) and Poppins (buttons), loaded
+through `next/font`. The homepage 3D scene uses three.js; smooth scrolling uses Lenis.
 
 ## Run it
 
@@ -13,6 +16,7 @@ npm install
 npm run dev      # http://localhost:3000
 npm run build    # production build
 npm run lint
+npm test         # unit tests (contact form, Lane chat guide, prices)
 ```
 
 ## Where things are
@@ -20,8 +24,14 @@ npm run lint
 - `src/app/layout.tsx` — fonts, site title, description and icons
 - `src/app/globals.css` — brand tokens (`--accent`, `--mono`, `--display`, `--u`)
 - `src/components/Nav.tsx` — top navigation with the animated logo
-- `src/components/Hero.tsx` — the hero section
-- `public/` — hero photo, botLane intro video and poster, logo, favicons
+- `src/components/Hero.tsx` — the hero section and studio reel
+- `src/lib/site.ts` — the site origin used for canonical URLs, sitemap and social cards
+- `src/lib/pricing.ts` — **every published price**; the pricing page and the Lane chat guide read from here
+- `src/lib/inquiry.ts`, `src/app/api/inquiry/route.ts` — contact-form validation and delivery
+- `src/components/lane/` — the Lane chat guide (answers from published content only)
+- `src/app/work/` — the Work page (honest proof: in-house work, labelled studies, samples)
+- `src/components/LazyVideo.tsx` — background videos that load only near the screen
+- `public/` — photography, videos and posters, logo, favicons
 
 ### The `--u` unit
 

@@ -3,39 +3,20 @@ import type { Metadata } from "next";
 import { PLANS } from "@/components/plans";
 import { Arrow } from "@/components/motion/Arrow";
 import { PageHero } from "@/components/page/PageHero";
+import { BANDS, PRICE, PRICE_SUMMARY } from "@/lib/pricing";
 import page from "@/components/page/Page.module.css";
 import styles from "./pricing.module.css";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/pricing" },
   title: "Pricing",
-  description: "Websites from $8,000. Web Apps from $20,000, plus discovery. Every project is still a tailored quote.",
+  description: `${PRICE_SUMMARY} Every project is still a tailored quote.`,
 };
 
-/** Dollar amounts live only on this page. plans.ts stays shared without prices. */
 const PUBLIC_PRICE: Record<string, { amount: string; note: string }> = {
-  websites: { amount: "from $8,000", note: "starting price" },
-  "web-apps": { amount: "from $20,000", note: "plus discovery" },
+  websites: { amount: `from ${PRICE.websitesFrom}`, note: "starting price" },
+  "web-apps": { amount: `from ${PRICE.webAppsFrom}`, note: "plus discovery" },
 };
-
-const BANDS = [
-  {
-    name: "Websites",
-    rows: [
-      { name: "Focused", price: "$8,000–$12,000", detail: "Up to 5 unique layouts, existing brand, client-supplied copy." },
-      { name: "Signature", price: "$12,000–$25,000", detail: "Up to 10 layouts, CMS, scoped custom motion." },
-      { name: "Complex", price: "$25,000+", detail: "After discovery." },
-    ],
-  },
-  {
-    name: "Web apps",
-    rows: [
-      { name: "Paid discovery", price: "$2,000–$4,000", detail: "Paid discovery before the build is quoted." },
-      { name: "Focused MVP", price: "$20,000–$40,000", detail: "One workflow, up to 2 roles, 1 integration." },
-      { name: "Larger product", price: "$40,000+", detail: "Quoted in phases, not a fixed total." },
-    ],
-  },
-];
 
 const INCLUDED = [
   "Strategy",
@@ -83,7 +64,7 @@ export default function PricingPage() {
         kicker="// 00.05° Pricing"
         title="Clear scope, honest pricing"
         mark="."
-        lede="Websites from $8,000. Web Apps from $20,000, plus discovery. These are starting ranges. Every project is still a tailored quote."
+        lede={`${PRICE_SUMMARY} These are starting ranges. Every project is still a tailored quote.`}
       />
 
       <section className={page.section} aria-label="Plans">
@@ -94,7 +75,7 @@ export default function PricingPage() {
               <article key={p.name} className={styles.plan} data-recommended={p.recommended || undefined} data-reveal="" style={delay(i * 0.08)}>
                 <div className={styles.planHead}>
                   <h2 className={styles.planName}>{p.name}</h2>
-                  {p.recommended && <span className={styles.badge}>Core project</span>}
+                  <span className={styles.badge}>{p.slug === "add-ons" ? "Optional" : "Core project"}</span>
                 </div>
                 <p className={styles.pitch}>{p.pitch}</p>
                 <p className={styles.price}>
@@ -159,7 +140,7 @@ export default function PricingPage() {
         <div className={styles.optional} data-reveal="">
           <h3 className={styles.bandName}>Optional, extra</h3>
           <p>
-            <strong>Brand identity, $5,000–$10,000.</strong> Naming, mark, and visual system, added to a Websites or Web Apps project when you need one. Quoted separately from the core build.
+            <strong>Brand identity, {PRICE.brandIdentity}.</strong> Naming, mark, and visual system, added to a Websites or Web Apps project when you need one. Quoted separately from the core build.
           </p>
           <p>
             SEO and AI stay optional add-ons, extra to the core build. AI is priced by the workflow, not a surcharge. Neither has a published fixed amount.

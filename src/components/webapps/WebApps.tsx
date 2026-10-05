@@ -4,12 +4,21 @@ import { BANDS } from "@/lib/pricing";
 import { PLANS } from "../plans";
 import { PageHero } from "../page/PageHero";
 import { EditorialFilm, type FilmScene } from "../page/EditorialFilm";
+import { OfferScope, type ScopeItem } from "../page/OfferScope";
 import page from "../page/Page.module.css";
-import service from "../../app/capabilities/capabilities.module.css";
 import styles from "./WebApps.module.css";
 
 const plan = PLANS.find((p) => p.slug === "web-apps")!;
 const phases = BANDS.find((b) => b.name === "Web apps")!.rows;
+
+/* Titles match the Web Apps plan's includes (plans.ts). */
+const scope: ScopeItem[] = [
+  { stage: "Discover", title: "Strategy, discovery and prioritised scope", detail: "Your users, the workflow and what the first version must do, agreed before the build." },
+  { stage: "Design", title: "User flows and interface design", detail: "Every path through the product, designed so people learn it quickly." },
+  { stage: "Build", title: "Development and launch", detail: "Built in stages you can try along the way, then released." },
+  { stage: "Connect", title: "Data, accounts and integrations as scoped", detail: "Sign-in, roles, your data and the tools you already use, as agreed." },
+  { stage: "Hand over", title: "Testing and handover", detail: "Tested before release and handed over so your team can run it." },
+];
 
 /* Stand-in studio photography: swap the `image` paths for new shots and
    nothing else needs to change. Portrait photos use `focus` to choose the
@@ -112,28 +121,7 @@ export function WebApps() {
         </p>
       </section>
 
-      <section className={page.section} aria-labelledby="webapp-deliverables">
-        <div className={page.sectionHead}>
-          <span className={page.label}>From discovery to launch</span>
-          <div className={service.serviceCopy}>
-            <h2 id="webapp-deliverables" className={page.h2}>
-              What you get<b>.</b>
-            </h2>
-            <ul className={service.deliverables}>
-              {plan.includes.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-            <p className={page.body}>We agree the deliverables, scope and timeline in your written proposal before work starts.</p>
-            <Link className={service.serviceCta} href="/contact#inquiry">
-              Discuss your web app →
-            </Link>
-            <Link className={service.serviceBack} href="/capabilities">
-              Explore all offers
-            </Link>
-          </div>
-        </div>
-      </section>
+      <OfferScope label="From discovery to launch" items={scope} cta="Discuss your web app" />
     </main>
   );
 }

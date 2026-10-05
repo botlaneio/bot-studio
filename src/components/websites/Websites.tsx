@@ -1,11 +1,20 @@
-import Link from "next/link";
 import { PLANS } from "../plans";
 import { PageHero } from "../page/PageHero";
+import { OfferScope, type ScopeItem } from "../page/OfferScope";
 import page from "../page/Page.module.css";
-import service from "../../app/capabilities/capabilities.module.css";
 import { WebsiteIntro } from "./WebsiteIntro";
 
 const plan = PLANS.find((p) => p.slug === "websites")!;
+
+/* Titles match the Websites plan's includes (plans.ts); each gets a line on
+   what it means for the client. */
+const scope: ScopeItem[] = [
+  { stage: "Plan", title: "Strategy, audience and site structure", detail: "Who the site is for, what it needs to say and which pages do the work." },
+  { stage: "Design", title: "Custom responsive design", detail: "Designed for your brand and your visitors, on every screen size." },
+  { stage: "Build", title: "Development and launch", detail: "Built on a modern stack, tested, and taken live." },
+  { stage: "Edit", title: "Content management where needed", detail: "Update the pages that change often without calling a developer." },
+  { stage: "Perform", title: "Performance, accessibility and search basics", detail: "Fast pages, accessible markup and the technical search essentials." },
+];
 
 /** The Websites offer: the editorial intro, then what's included. */
 export function Websites() {
@@ -17,28 +26,7 @@ export function Websites() {
         <WebsiteIntro />
       </section>
 
-      <section className={page.section} aria-labelledby="website-deliverables">
-        <div className={page.sectionHead}>
-          <span className={page.label}>From brief to launch</span>
-          <div className={service.serviceCopy}>
-            <h2 id="website-deliverables" className={page.h2}>
-              What you get<b>.</b>
-            </h2>
-            <ul className={service.deliverables}>
-              {plan.includes.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-            <p className={page.body}>We agree the deliverables, scope and timeline in your written proposal before work starts.</p>
-            <Link className={service.serviceCta} href="/contact#inquiry">
-              Discuss your website →
-            </Link>
-            <Link className={service.serviceBack} href="/capabilities">
-              Explore all offers
-            </Link>
-          </div>
-        </div>
-      </section>
+      <OfferScope label="From brief to launch" items={scope} cta="Discuss your website" />
     </main>
   );
 }

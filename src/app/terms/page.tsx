@@ -41,7 +41,7 @@ export default function TermsPage() {
           </p>
 
           <h2>Links to other sites</h2>
-          <p>We link to websites we don&apos;t control, such as WhatsApp. We are not responsible for their content or practices.</p>
+          <p>We link to websites we don&apos;t control, such as botlane.io. We are not responsible for their content or practices.</p>
 
           <h2>No warranty</h2>
           <p>

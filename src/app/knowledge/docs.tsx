@@ -93,7 +93,7 @@ function CompanyOverview() {
       <p>
         <a href="mailto:project@botlane.studio">project@botlane.studio</a>
         <br />
-        <a href="tel:+13072185715">+1 307 218 5715</a>
+        <a href="tel:+13072185175">+1 307 218 5175</a>
       </p>
       <p>
         Studio site: <a href="https://botlane.studio">botlane.studio</a>
@@ -132,7 +132,7 @@ function Team() {
       <p>
         <a href="mailto:project@botlane.studio">project@botlane.studio</a>
         <br />
-        <a href="tel:+13072185715">+1 307 218 5715</a>
+        <a href="tel:+13072185175">+1 307 218 5175</a>
       </p>
       <p>
         BotLane LLC
@@ -174,11 +174,11 @@ function Policies() {
       <p>
         It explains how BotLane LLC (&ldquo;Botlane Studios&rdquo;) handles personal information when you visit this website or get in
         touch. The company address is 30 N Gould St, Ste R, Sheridan, WY 82801. Contact is{" "}
-        <a href="mailto:project@botlane.studio">project@botlane.studio</a> or +1 307 218 5715.
+        <a href="mailto:project@botlane.studio">project@botlane.studio</a> or +1 307 218 5175.
       </p>
       <ul>
         <li>
-          When you contact the studio by email, phone or WhatsApp: your name, contact details and anything you choose to tell them about
+          When you contact the studio by email, phone or text message: your name, contact details and anything you choose to tell them about
           your project.
         </li>
         <li>
@@ -192,7 +192,7 @@ function Policies() {
         </li>
         <li>
           It is shared only with the service providers needed to run the studio, such as Cloudflare and email and messaging services
-          (including WhatsApp, when you contact the studio there), or if the law requires it.
+          (including Quo, the studio&apos;s phone and text message provider, when you call or text), or if the law requires it.
         </li>
         <li>
           Enquiry and project correspondence is kept for as long as needed to work with you and to meet legal obligations, and then
@@ -202,7 +202,7 @@ function Policies() {
           You can ask to access, correct or delete the personal information held about you, or to stop being contacted, by emailing{" "}
           <a href="mailto:project@botlane.studio">project@botlane.studio</a>. Further rights under local law will be honoured.
         </li>
-        <li>Links to other sites, such as botlane.io and WhatsApp, follow those sites&apos; own privacy policies.</li>
+        <li>Links to other sites, such as botlane.io, follow those sites&apos; own privacy policies.</li>
       </ul>
 
       <h2>Terms of use</h2>
@@ -226,7 +226,7 @@ function Policies() {
           Information on the site, including descriptions of services and plans, is general and is not an offer. Any project is governed by
           a separate written proposal or agreement, which takes precedence.
         </li>
-        <li>The site links to websites the studio doesn&apos;t control, such as WhatsApp, and is not responsible for them.</li>
+        <li>The site links to websites the studio doesn&apos;t control, such as botlane.io, and is not responsible for them.</li>
         <li>The site is provided &ldquo;as is&rdquo;, without warranties, to the extent the law allows.</li>
         <li>
           To the extent the law allows, BotLane LLC is not liable for indirect or consequential loss arising from use of this website.

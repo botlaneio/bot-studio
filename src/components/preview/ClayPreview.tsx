@@ -16,7 +16,7 @@ const NAV = [
 
 const TILES = ["/process/card-1.jpg", "/process/card-2.jpg", "/process/card-3.jpg"];
 
-const WHATSAPP = `https://wa.me/919979972714?text=${encodeURIComponent("Hi Botlane Studios, I'd like to talk about a project.")}`;
+const TEXT_US = `sms:+13072185175?&body=${encodeURIComponent("Hi Botlane Studios, I'd like to talk about a project.")}`;
 
 const i = (n: number) => ({ "--i": n }) as CSSProperties;
 
@@ -172,8 +172,8 @@ export function ClayPreview() {
               Let&apos;s chat
               <Arrow className={styles.pillArrow} />
             </button>
-            <a className={styles.pillGhost} href={WHATSAPP} target="_blank" rel="noopener">
-              WhatsApp
+            <a className={styles.pillGhost} href={TEXT_US}>
+              Text us
             </a>
           </div>
         </div>

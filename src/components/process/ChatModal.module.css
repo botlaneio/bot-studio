@@ -179,13 +179,13 @@ a.row:focus-visible {
   color: var(--accent);
 }
 
-/* WhatsApp, in WhatsApp's own green, as a raised key like the CTA. */
+/* Text us, in the studio blue, as a raised key like the CTA. */
 .foot {
   padding: calc(4 * var(--u)) calc(24 * var(--u)) calc(22 * var(--u));
 }
 
 /* Sized to its label, not the card. */
-.whatsapp {
+.text {
   display: inline-flex;
   align-items: center;
   gap: calc(8 * var(--u));
@@ -193,12 +193,12 @@ a.row:focus-visible {
   min-height: 42px;
   padding: 0 calc(16 * var(--u));
   border-radius: 10px;
-  background: linear-gradient(#2fe072, #25d366 55%, #1fbe5b);
+  background: linear-gradient(#2a8dff, #0077e6 55%, #006ad0);
   color: #ffffff;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.35),
-    0 3px 0 #128c4b,
-    0 14px 28px -12px rgba(37, 211, 102, 0.7);
+    0 3px 0 #004f9e,
+    0 14px 28px -12px rgba(0, 119, 230, 0.7);
   font: 600 calc(15 * var(--u)) / 1 var(--display);
   font-family: var(--button);
   letter-spacing: -0.01em;
@@ -207,23 +207,23 @@ a.row:focus-visible {
     box-shadow 0.2s ease;
 }
 
-.whatsapp:hover {
+.text:hover {
   transform: translateY(-2px);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.35),
-    0 5px 0 #128c4b,
-    0 20px 34px -12px rgba(37, 211, 102, 0.8);
+    0 5px 0 #004f9e,
+    0 20px 34px -12px rgba(0, 119, 230, 0.8);
 }
 
-.whatsapp:active {
+.text:active {
   transform: translateY(2px);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.25),
-    0 1px 0 #128c4b,
-    0 8px 16px -8px rgba(37, 211, 102, 0.6);
+    0 1px 0 #004f9e,
+    0 8px 16px -8px rgba(0, 119, 230, 0.6);
 }
 
-.whatsapp:focus-visible {
+.text:focus-visible {
   outline: 2px solid #ffffff;
   outline-offset: 3px;
 }
@@ -282,7 +282,7 @@ a.row:focus-visible {
     font-size: 15px;
   }
 
-  .whatsapp {
+  .text {
     font-size: 14px;
   }
 

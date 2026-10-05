@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/contact" },
   title: "Contact",
   description:
-    "Talk to Botlane Studios in Sheridan, Wyoming. Email project@botlane.studio or call +1 307 218 5715.",
+    "Talk to Botlane Studios in Sheridan, Wyoming. Email project@botlane.studio or call +1 307 218 5175.",
 };
 
 export default function ContactPage() {
@@ -51,8 +51,8 @@ export default function ContactPage() {
               </div>
               <div>
                 <p className={styles.detailLabel}>Phone</p>
-                <a className={styles.detailLink} href="tel:+13072185715">
-                  +1 307 218 5715
+                <a className={styles.detailLink} href="tel:+13072185175">
+                  +1 307 218 5175
                 </a>
               </div>
             </div>

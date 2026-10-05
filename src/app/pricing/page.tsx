@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 import { PLANS } from "@/components/plans";
 import { Arrow } from "@/components/motion/Arrow";
 import { PageHero } from "@/components/page/PageHero";
@@ -7,11 +8,11 @@ import { BANDS, PRICE, PRICE_SUMMARY } from "@/lib/pricing";
 import page from "@/components/page/Page.module.css";
 import styles from "./pricing.module.css";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/pricing" },
+export const metadata: Metadata = pageMetadata({
+  path: "/pricing",
   title: "Pricing",
   description: `${PRICE_SUMMARY} Every project is still a tailored quote.`,
-};
+});
 
 const PUBLIC_PRICE: Record<string, { amount: string; note: string }> = {
   websites: { amount: `from ${PRICE.websitesFrom}`, note: "starting price" },
@@ -39,7 +40,7 @@ const FAQ = [
   },
   {
     q: "Do you work with clients outside the US?",
-    a: "Yes. We're based in Sheridan, Wyoming and work with brands worldwide, remotely and across time zones.",
+    a: "Yes. We're a remote studio focused on US businesses, and we can work with clients elsewhere when the project fits.",
   },
   {
     q: "Who owns the website when it's done?",

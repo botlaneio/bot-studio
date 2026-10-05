@@ -232,9 +232,9 @@ export function Footer() {
           <div className={styles.contacts}>
             <div className={styles.contactTop}>
               <div>
-                <p className={styles.colLabel}>Offline</p>
+                <p className={styles.colLabel}>Registered address</p>
                 <address className={styles.address}>
-                  Botlane Studios
+                  BotLane LLC
                   <br />
                   30 N Gould St, Ste R
                   <br />

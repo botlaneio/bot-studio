@@ -1,16 +1,16 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 import { OFFER_DETAILS, capabilityHref } from "@/components/capabilities";
 import { PageHero } from "@/components/page/PageHero";
 import page from "@/components/page/Page.module.css";
 import styles from "./capabilities.module.css";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/capabilities" },
+export const metadata: Metadata = pageMetadata({
+  path: "/capabilities",
   title: "Websites & Web Apps",
-  description:
-    "Websites and web apps with strategy, design and development included. SEO and AI integrations are optional add-ons.",
-};
+  description: "Websites and web apps with strategy, design and development included. SEO and AI integrations are optional add-ons.",
+});
 
 export default function CapabilitiesPage() {
   return (

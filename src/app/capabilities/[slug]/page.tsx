@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CAPABILITIES } from "@/components/capabilities";
+import { pageMetadata } from "@/lib/metadata";
 import { PageHero } from "@/components/page/PageHero";
 import page from "@/components/page/Page.module.css";
 import styles from "../capabilities.module.css";
@@ -27,11 +28,7 @@ async function getCapability(params: Props["params"]) {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const capability = await getCapability(params);
-  return {
-    title: capability.title,
-    description: capability.detail,
-    alternates: { canonical: `/capabilities/${capability.slug}` },
-  };
+  return pageMetadata({ path: `/capabilities/${capability.slug}`, title: capability.title, description: capability.detail });
 }
 
 export default async function CapabilityPage({ params }: Props) {

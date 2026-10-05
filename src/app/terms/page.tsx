@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 import { PageHero } from "@/components/page/PageHero";
 import page from "@/components/page/Page.module.css";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/terms" },
+export const metadata: Metadata = pageMetadata({
+  path: "/terms",
   title: "Terms of use",
   description: "The terms for using the Botlane Studios website.",
-};
+});
 
 export default function TermsPage() {
   return (

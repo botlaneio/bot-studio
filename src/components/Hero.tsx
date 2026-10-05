@@ -2,7 +2,6 @@ import Link from "next/link";
 import type { CSSProperties } from "react";
 import { Arrow } from "./motion/Arrow";
 import { Scramble } from "./motion/Scramble";
-import { SheridanClock } from "./SheridanClock";
 import { ShowreelVideo } from "./ShowreelVideo";
 import styles from "./Hero.module.css";
 
@@ -49,7 +48,7 @@ export function Hero() {
         </h1>
 
         <p className={styles.tagline}>
-          <Scramble text="Quietly crafting for brands worldwide" delay={1000} duration={1000} />
+          <Scramble text="Quietly crafting for American businesses" delay={1000} duration={1000} />
         </p>
 
         {/* The brand lockup is display type, not a heading: the headline above is
@@ -63,7 +62,7 @@ export function Hero() {
 
         <div className={styles.message}>
           <p>
-            <Scramble text="Small studio, worldwide tech." delay={700} />
+            <Scramble text="Small studio, modern tech." delay={700} />
           </p>
           <p>
             <Scramble text="Strategy, design and development, together." delay={850} />
@@ -71,9 +70,9 @@ export function Hero() {
         </div>
 
         <div className={styles.time}>
-          Our time <SheridanClock className={styles.clock} />
+          Remote studio
           <br />
-          Sheridan, WY
+          US-focused
         </div>
 
         <div className={styles.ctas}>

@@ -7,34 +7,31 @@ const SECURITY_HEADERS = [
   { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), browsing-topics=()" },
 ];
 
+const CANONICAL = "https://botlane.studio";
+const OLD_HOSTS = ["botlane.tech", "www.botlane.tech"];
+
+/** Retired paths and where they now live. */
+const MOVED: Record<string, string> = {
+  "/capabilities/brand-identity": "/capabilities/websites",
+};
+
 const nextConfig: NextConfig = {
   async redirects() {
+    // Old botlane.tech URLs reach their botlane.studio page in one hop: retired
+    // paths go straight to their replacement, everything else keeps its path.
+    const oldHosts = OLD_HOSTS.map((value) => [{ type: "host" as const, value }]);
     return [
-      { source: "/capabilities/brand-identity", destination: "/capabilities/websites", permanent: true },
-      {
-        source: "/",
-        has: [{ type: "host", value: "botlane.tech" }],
-        destination: "https://botlane.studio",
-        permanent: true,
-      },
-      {
-        source: "/:path*",
-        has: [{ type: "host", value: "botlane.tech" }],
-        destination: "https://botlane.studio/:path*",
-        permanent: true,
-      },
-      {
-        source: "/",
-        has: [{ type: "host", value: "www.botlane.tech" }],
-        destination: "https://botlane.studio",
-        permanent: true,
-      },
-      {
-        source: "/:path*",
-        has: [{ type: "host", value: "www.botlane.tech" }],
-        destination: "https://botlane.studio/:path*",
-        permanent: true,
-      },
+      ...oldHosts.flatMap((has) => [
+        ...Object.entries(MOVED).map(([source, destination]) => ({
+          source,
+          has,
+          destination: `${CANONICAL}${destination}`,
+          permanent: true,
+        })),
+        { source: "/", has, destination: CANONICAL, permanent: true },
+        { source: "/:path*", has, destination: `${CANONICAL}/:path*`, permanent: true },
+      ]),
+      ...Object.entries(MOVED).map(([source, destination]) => ({ source, destination, permanent: true })),
     ];
   },
   async headers() {

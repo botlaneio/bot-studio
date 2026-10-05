@@ -13,8 +13,8 @@ export const DOCS: Doc[] = [
   {
     slug: "company-overview",
     title: "Company overview",
-    description: "Botlane Studios is the design studio of BotLane LLC, in Sheridan, Wyoming.",
-    summary: "The design studio of BotLane LLC. Websites and web apps, from Sheridan, Wyoming.",
+    description: "Botlane Studios is the design studio of BotLane LLC, a US company registered in Wyoming.",
+    summary: "The design studio of BotLane LLC. Websites and web apps for US businesses.",
   },
   {
     slug: "mission-and-vision",
@@ -84,6 +84,8 @@ function CompanyOverview() {
     <>
       <p>Botlane Studios is the design studio of BotLane LLC. It designs and builds websites and web apps.</p>
       <p>
+        Registered address:
+        <br />
         BotLane LLC
         <br />
         30 N Gould St, Ste R
@@ -135,6 +137,8 @@ function Team() {
         <a href="tel:+13072185175">+1 307 218 5175</a>
       </p>
       <p>
+        Registered address:
+        <br />
         BotLane LLC
         <br />
         30 N Gould St, Ste R

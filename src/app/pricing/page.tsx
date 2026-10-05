@@ -35,6 +35,10 @@ const FAQ = [
     a: "The ranges on this page are starting points. Every project is still quoted to its agreed scope. After a short call we send a written quote, with what's included and a timeline, before any work starts.",
   },
   {
+    q: "Why these prices, when AI can build a website?",
+    a: "AI can now produce a page in minutes, and for some needs that's enough. What you're paying for is everything around the page: deciding who your site or app is for and what it must say, design that doesn't look like everyone else's, speed, accessibility and search done properly, and a team accountable for the result. Once the project is paid in full, the design and code are yours.",
+  },
+  {
     q: "How long does a project take?",
     a: "It depends on the scope. For web apps, paid discovery can define the build before we quote it. Your written proposal includes the agreed timeline.",
   },

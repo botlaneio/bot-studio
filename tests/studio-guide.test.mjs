@@ -72,3 +72,14 @@ test('Lane quotes the same prices as the pricing page', () => {
   assert.ok(cost.includes(PRICE.websitesFrom) && cost.includes(PRICE.webAppsFrom));
   assert.ok(studioReply('Can you design a logo?').includes(PRICE.brandIdentity));
 });
+
+test('answers the "why pay when AI exists" objection honestly', () => {
+  for (const q of ['Why these prices when AI can build a website?', 'Why not just use ChatGPT to make it?', 'Is it worth it, AI is cheaper']) {
+    const reply = studioReply(q);
+    assert.match(reply, /AI can now produce a page in minutes/);
+    assert.match(reply, /accountable/);
+    assert.match(reply, /design and code are yours/);
+  }
+  // Asking for AI as a feature still gets the add-on answer.
+  assert.match(studioReply('Can AI be part of our app?'), /optional add-ons/);
+});

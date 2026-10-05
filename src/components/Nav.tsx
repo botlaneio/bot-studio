@@ -300,8 +300,8 @@ export function Nav() {
             </a>
             <div className={styles.mobileContact}>
               <a href="mailto:project@botlane.studio">project@botlane.studio</a>
-              <a href="https://wa.me/919979972714" target="_blank" rel="noopener">
-                WhatsApp ↗
+              <a href="sms:+13072185175">
+                Text us
               </a>
             </div>
           </div>

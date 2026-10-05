@@ -24,13 +24,13 @@ export default function PrivacyPage() {
           <h2>Who we are</h2>
           <p>
             BotLane LLC, 30 N Gould St, Ste R, Sheridan, WY 82801, United States. You can reach us at{" "}
-            <a href="mailto:project@botlane.studio">project@botlane.studio</a> or +1 307 218 5715.
+            <a href="mailto:project@botlane.studio">project@botlane.studio</a> or +1 307 218 5175.
           </p>
 
           <h2>What we collect</h2>
           <ul>
             <li>
-              <strong>When you contact us</strong> by email, phone or WhatsApp: your name, contact details and anything you choose to tell
+              <strong>When you contact us</strong> by email, phone or text message: your name, contact details and anything you choose to tell
               us about your project.
             </li>
             <li>
@@ -51,7 +51,7 @@ export default function PrivacyPage() {
           <h2>Who we share it with</h2>
           <p>
             Only the service providers we need to run the studio, such as our hosting provider (Cloudflare) and our email and messaging
-            services (including WhatsApp, when you contact us there). They process data on our behalf or under their own privacy terms.
+            services (including Quo, our phone and text message provider, when you call or text us). They process data on our behalf or under their own privacy terms.
             We may also disclose information if the law requires it.
           </p>
 
@@ -70,7 +70,7 @@ export default function PrivacyPage() {
 
           <h2>Links to other sites</h2>
           <p>
-            This site links to other websites, such as botlane.io and WhatsApp. Their own privacy policies apply when you visit them.
+            This site links to other websites, such as botlane.io. Their own privacy policies apply when you visit them.
           </p>
 
           <h2>Changes</h2>

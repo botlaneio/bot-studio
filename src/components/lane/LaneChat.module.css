@@ -557,15 +557,14 @@
   display: flex;
   flex-direction: column;
   width: min(352px, calc(100vw - 40px));
-  max-height: min(560px, calc(100dvh - var(--lane-bottom) - var(--lane-mark) - var(--lane-gap) - 72px));
+  max-height: min(660px, calc(100dvh - var(--lane-bottom) - var(--lane-mark) - var(--lane-gap) - 72px));
   padding: 16px 16px 12px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 22px;
   background:
-    radial-gradient(130% 70% at 0% 0%, rgba(61, 155, 255, 0.18), transparent 55%),
-    radial-gradient(90% 60% at 100% 100%, rgba(0, 119, 230, 0.1), transparent 60%),
-    linear-gradient(180deg, #161b22 0%, #0e1217 48%, #07090c 100%);
+    radial-gradient(90% 50% at 100% 100%, rgba(0, 119, 230, 0.1), transparent 60%),
+    linear-gradient(180deg, #0b0e13 0%, #090b0f 50%, #06070a 100%);
   color: #ffffff;
   isolation: isolate;
   transform-origin: 100% 100%;
@@ -710,41 +709,97 @@
   outline-offset: 2px;
 }
 
-/* Header */
+/* Header: a cinematic photo band. The photo drifts in as the panel opens,
+   shifts slightly against the pointer for depth, and fades into the panel. */
 
 .head {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 150px;
+  margin: -16px -16px 0;
+  padding: 14px 14px 16px 16px;
+  overflow: hidden;
+  border-radius: 21px 21px 0 0;
+  isolation: isolate;
+}
+
+.photo {
+  position: absolute;
+  z-index: -1;
+  inset: -12px;
+}
+
+.photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 45%;
+  filter: saturate(0.82) contrast(1.05);
+  transform: translate3d(calc((0.5 - var(--px)) * 12px), calc((0.5 - var(--py)) * 8px), 0) scale(1.04);
+  transition: transform 0.9s var(--lane-spring);
+  animation: lane-photo 1.6s var(--lane-spring) backwards;
+}
+
+/* Grade: cobalt from the top-left, then a long fade into the panel body so
+   the white type always sits on dark. */
+.photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(5, 8, 16, 0.55) 0%, rgba(5, 8, 16, 0.15) 32%, rgba(7, 9, 12, 0.72) 70%, #0b0e13 100%),
+    radial-gradient(120% 90% at 0% 0%, rgba(0, 119, 230, 0.42), transparent 60%);
+}
+
+@keyframes lane-photo {
+  from {
+    opacity: 0;
+    transform: scale(1.18);
+  }
+}
+
+.headTop,
+.headBottom {
+  display: flex;
   align-items: center;
+}
+
+.headTop {
+  justify-content: space-between;
+}
+
+.headBottom {
   gap: 12px;
-  padding-bottom: 14px;
-  margin-bottom: 4px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  margin-top: 18px;
 }
 
 .markWell {
   position: relative;
   display: grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.02));
+  flex: none;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 13px;
+  background: rgba(8, 11, 16, 0.72);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.14),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.06),
-    0 6px 14px rgba(0, 0, 0, 0.35);
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    0 8px 18px rgba(0, 0, 0, 0.45);
 }
 
 /* Status light: the guide is available. */
 .markWell::after {
   content: "";
   position: absolute;
-  right: -2px;
-  bottom: -2px;
-  width: 9px;
-  height: 9px;
-  border: 2px solid #11151b;
+  right: -3px;
+  bottom: -3px;
+  width: 10px;
+  height: 10px;
+  border: 2px solid #0b0e13;
   border-radius: 50%;
   background: var(--lane-bright);
   box-shadow: 0 0 0 0 rgba(61, 155, 255, 0.6);
@@ -773,26 +828,43 @@
 }
 
 .kicker,
-.title {
+.title,
+.subtitle {
   margin: 0;
 }
 
 .kicker {
+  padding: 5px 9px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(5, 8, 16, 0.55);
   font-family: var(--mono);
   font-size: 10.5px;
-  line-height: 1.2;
+  line-height: 1;
   letter-spacing: 0.04em;
-  color: var(--lane-bright);
+  color: rgba(255, 255, 255, 0.86);
 }
 
 .title {
-  margin-top: 3px;
   font-family: var(--display);
-  font-size: 17px;
+  font-size: 26px;
   font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  line-height: 1;
+  letter-spacing: -0.03em;
   color: #ffffff;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.5);
+}
+
+.dot {
+  color: var(--lane-bright);
+}
+
+.subtitle {
+  margin-top: 5px;
+  font-family: var(--display);
+  font-size: 12.5px;
+  line-height: 1.3;
+  color: rgba(255, 255, 255, 0.72);
 }
 
 .dock .close {
@@ -802,10 +874,10 @@
   height: 32px;
   margin: 0;
   padding: 0;
-  border: 1px solid transparent;
-  border-radius: 10px;
-  background: transparent;
-  color: rgba(255, 255, 255, 0.66);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 50%;
+  background: rgba(5, 8, 16, 0.6);
+  color: rgba(255, 255, 255, 0.85);
   cursor: pointer;
   transition:
     background 0.2s ease,
@@ -815,8 +887,8 @@
 }
 
 .dock .close:hover {
-  border-color: rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(5, 8, 16, 0.85);
   color: #ffffff;
   rotate: 90deg;
 }
@@ -1182,6 +1254,10 @@
     max-height: 34dvh;
   }
 
+  .head {
+    min-height: 112px;
+  }
+
   .fine {
     display: none;
   }
@@ -1227,6 +1303,11 @@
 
   .float {
     transform: rotateX(10deg) rotateY(-16deg);
+  }
+
+  .photo img {
+    animation: none;
+    transform: scale(1.04);
   }
 
   .object,

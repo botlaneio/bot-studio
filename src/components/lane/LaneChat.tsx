@@ -219,18 +219,30 @@ export function LaneChat() {
             <span className={styles.sheen} aria-hidden="true" />
 
             <header className={styles.head}>
-              <span className={styles.markWell} aria-hidden="true">
-                <LaneMark className={styles.mark} idPrefix={`${markId}-head`} size={26} />
-              </span>
-              <div className={styles.titles}>
-                <p className={styles.kicker}>{"// Studio guide"}</p>
-                <p className={styles.title}>Lane</p>
+              <div className={styles.photo} aria-hidden="true">
+                {/* The team at work; reused from the Strategy page, cropped small (16 KB). Loads only when Lane opens. */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/lane/header.webp" alt="" width={704} height={300} decoding="async" />
               </div>
-              <button type="button" className={styles.close} onClick={() => close()} aria-label="Close Lane">
-                <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
-                  <path d="M3 3l8 8M11 3 3 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                </svg>
-              </button>
+              <div className={styles.headTop}>
+                <p className={styles.kicker}>{"// Studio guide"}</p>
+                <button type="button" className={styles.close} onClick={() => close()} aria-label="Close Lane">
+                  <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+                    <path d="M3 3l8 8M11 3 3 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                  </svg>
+                </button>
+              </div>
+              <div className={styles.headBottom}>
+                <span className={styles.markWell} aria-hidden="true">
+                  <LaneMark className={styles.mark} idPrefix={`${markId}-head`} size={26} />
+                </span>
+                <div className={styles.titles}>
+                  <p className={styles.title}>
+                    Lane<span className={styles.dot}>.</span>
+                  </p>
+                  <p className={styles.subtitle}>Websites and web apps, answered.</p>
+                </div>
+              </div>
             </header>
 
             <div

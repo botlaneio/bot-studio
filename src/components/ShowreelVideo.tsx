@@ -2,15 +2,20 @@
 
 import { useEffect, useRef, useState } from "react";
 
-/** Plays the showreel once on load, then covers it with the poster.
- *  It does not loop and does not replay on hover. */
-export function ShowreelVideo({ src, poster }: { src: string; poster: string }) {
+/** Plays the studio reel once on load, then covers it with the poster (the
+ *  reel's end card). It does not loop or replay on hover. Visitors who ask
+ *  for reduced motion get the poster only. `first` is the opening frame,
+ *  shown while the video loads. */
+export function ShowreelVideo({ src, first, poster }: { src: string; first: string; poster: string }) {
   const ref = useRef<HTMLVideoElement>(null);
   const [ended, setEnded] = useState(false);
 
   useEffect(() => {
     const video = ref.current;
     if (!video) return;
+
+    // Reduced motion: never start; CSS keeps the poster on top.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const onEnded = () => setEnded(true);
     video.addEventListener("ended", onEnded);
@@ -22,8 +27,8 @@ export function ShowreelVideo({ src, poster }: { src: string; poster: string }) 
 
   return (
     <>
-      <video ref={ref} src={src} poster={poster} autoPlay muted playsInline preload="auto" />
-      {ended ? <img src={poster} alt="" /> : null}
+      <video ref={ref} src={src} poster={first} muted playsInline preload="auto" aria-hidden="true" />
+      <img src={poster} alt="" data-show={ended || undefined} />
     </>
   );
 }

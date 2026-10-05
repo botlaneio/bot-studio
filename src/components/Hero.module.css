@@ -300,6 +300,18 @@
   height: 100%;
   object-fit: cover;
   pointer-events: none;
+  opacity: 0;
+}
+
+/* The poster covers the reel once it ends, and always for reduced motion. */
+.reelVideo img[data-show] {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reelVideo img {
+    opacity: 1;
+  }
 }
 
 .reel:hover .reelVideo video {

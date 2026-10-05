@@ -1,145 +1,254 @@
 "use client";
 
-import { useEffect, useId, useRef, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useId, useRef, useState, type CSSProperties, type FormEvent, type PointerEvent } from "react";
 import { studioReply } from "./studioReply";
 import styles from "./LaneChat.module.css";
 
 const GREETING =
   "Planning a website or a web app? I can walk you through Websites and Web Apps, or point you to the team.";
 
-const CHIPS = ["Websites", "Web apps", "SEO and AI"] as const;
+const CHIPS = ["Websites", "Web apps", "Pricing", "Timeline"] as const;
 
-type Line = { role: "assistant" | "user"; text: string };
+/** How long the closing fold-away plays before the panel unmounts. Matches .panel[data-state="closing"]. */
+const CLOSE_MS = 260;
+
+type Line = { id: number; role: "assistant" | "user"; text: string };
+
+const prefersReducedMotion = () =>
+  typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/** A short pause before Lane answers, a little longer for longer answers. None with reduced motion. */
+const thinkingTime = (reply: string) => (prefersReducedMotion() ? 0 : Math.min(1150, 520 + reply.length * 1.6));
 
 /**
  * Lane. Corner launcher on every page (mounted from the root layout).
- * Answers use published studio information locally; no AI provider is configured.
+ *
+ * The launcher is a small extruded blue plate built in CSS 3D (no WebGL, so
+ * no extra script on every page). It drifts gently, leans toward the pointer
+ * while the pointer is over it, and flips over to its dark back (a close
+ * mark) when the panel is open. The panel unfolds out of it in 3D, tilts a
+ * little with the pointer and catches a highlight. Replies arrive after a
+ * short typing beat and settle in word by word.
+ *
+ * Pointer work only runs while the pointer is over Lane; idle motion is CSS on
+ * the compositor; reduced motion drops tilt, drift, typing delay and the
+ * word reveal.
+ *
+ * Answers use published studio information locally (studioReply); no AI
+ * provider is configured.
  */
 export function LaneChat() {
   const [open, setOpen] = useState(false);
+  const [closing, setClosing] = useState(false);
+  const [typing, setTyping] = useState(false);
   const [note, setNote] = useState("");
-  const [lines, setLines] = useState<Line[]>([{ role: "assistant", text: GREETING }]);
+  const [lines, setLines] = useState<Line[]>([{ id: 0, role: "assistant", text: GREETING }]);
+  const nextId = useRef(1);
+  const timers = useRef<number[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const launcherRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLElement>(null);
   const threadRef = useRef<HTMLDivElement>(null);
+  const frame = useRef(0);
   const panelId = useId();
   const fieldId = useId();
   const markId = useId().replace(/:/g, "");
 
+  const later = (fn: () => void, ms: number) => {
+    timers.current.push(window.setTimeout(fn, ms));
+  };
+
+  useEffect(
+    () => () => {
+      timers.current.forEach((t) => window.clearTimeout(t));
+      cancelAnimationFrame(frame.current);
+    },
+    [],
+  );
+
+  const shown = open || closing;
+
+  const close = useCallback((returnFocus = true) => {
+    setOpen(false);
+    setClosing(true);
+    window.setTimeout(() => setClosing(false), prefersReducedMotion() ? 0 : CLOSE_MS);
+    if (returnFocus) launcherRef.current?.focus({ preventScroll: true });
+  }, []);
+
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setOpen(false);
-        launcherRef.current?.focus({ preventScroll: true });
-      }
+      if (e.key === "Escape") close();
     };
     window.addEventListener("keydown", onKey);
+    // Bring the cursor to the field on desktop; on touch screens this would throw the keyboard up.
+    if (window.matchMedia("(pointer: fine)").matches) inputRef.current?.focus({ preventScroll: true });
     return () => window.removeEventListener("keydown", onKey);
-  }, [open]);
+  }, [open, close]);
 
+  // Keep the newest exchange in view. A long answer is shown from the top of
+  // the question that prompted it, so the reader starts at the beginning.
   useEffect(() => {
-    if (open && threadRef.current) threadRef.current.scrollTop = threadRef.current.scrollHeight;
-  }, [lines, open]);
+    const thread = threadRef.current;
+    if (!shown || !thread) return;
+    const behavior = prefersReducedMotion() ? "auto" : "smooth";
+    const asked = thread.querySelectorAll<HTMLElement>("[data-role='user']");
+    const question = asked[asked.length - 1];
+    const answered = !typing && lines[lines.length - 1]?.role === "assistant" && question;
+    const top = answered ? Math.min(question.offsetTop - 14, thread.scrollHeight) : thread.scrollHeight;
+    thread.scrollTo({ top, behavior });
+  }, [lines, typing, shown]);
 
-  const close = () => {
-    setOpen(false);
-    launcherRef.current?.focus({ preventScroll: true });
-  };
-
-  const appendUser = (text: string) => {
-    const trimmed = text.trim();
-    if (!trimmed) return;
-    setLines((prev) => [...prev, { role: "user", text: trimmed }, { role: "assistant", text: studioReply(trimmed) }]);
+  const ask = (text: string) => {
+    const question = text.trim();
+    if (!question || typing) return;
+    const reply = studioReply(question);
+    setLines((prev) => [...prev, { id: nextId.current++, role: "user", text: question }]);
     setNote("");
+    setTyping(true);
+    later(() => {
+      setTyping(false);
+      setLines((prev) => [...prev, { id: nextId.current++, role: "assistant", text: reply }]);
+    }, thinkingTime(reply));
   };
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    appendUser(note);
+    ask(note);
+  };
+
+  /** Writes pointer position as CSS variables, at most once a frame. */
+  const track = (el: HTMLElement | null, e: PointerEvent<HTMLElement>, names: [string, string]) => {
+    if (!el || e.pointerType !== "mouse") return;
+    const { clientX, clientY } = e;
+    cancelAnimationFrame(frame.current);
+    frame.current = requestAnimationFrame(() => {
+      const r = el.getBoundingClientRect();
+      const x = Math.max(0, Math.min(1, (clientX - r.left) / r.width));
+      const y = Math.max(0, Math.min(1, (clientY - r.top) / r.height));
+      el.style.setProperty(names[0], x.toFixed(3));
+      el.style.setProperty(names[1], y.toFixed(3));
+    });
+  };
+  const release = (el: HTMLElement | null, names: [string, string]) => {
+    cancelAnimationFrame(frame.current);
+    el?.style.setProperty(names[0], "0.5");
+    el?.style.setProperty(names[1], "0.5");
   };
 
   return (
-    <div className={styles.dock}>
-      {open ? (
-        <section className={styles.panel} id={panelId} aria-label="Lane">
-          <header className={styles.head}>
-            <span className={styles.markWell}>
-              <LaneMark className={styles.mark} idPrefix={`${markId}-head`} size={24} />
-            </span>
-            <div className={styles.titles}>
-              <p className={styles.title}>Lane</p>
-              <p className={styles.subtitle}>Your guide to Botlane Studios.</p>
-            </div>
-            <button type="button" className={styles.close} onClick={close} aria-label="Close">
-              <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
-                <path d="M3 3l8 8M11 3 3 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
-            </button>
-          </header>
+    <div className={styles.dock} data-open={open || undefined}>
+      {shown ? (
+        <div className={styles.stage}>
+          <section
+            ref={panelRef}
+            className={styles.panel}
+            id={panelId}
+            aria-label="Lane, studio guide"
+            data-state={closing ? "closing" : "open"}
+            data-typing={typing || undefined}
+            onPointerMove={(e) => track(panelRef.current, e, ["--px", "--py"])}
+            onPointerLeave={() => release(panelRef.current, ["--px", "--py"])}
+          >
+            <span className={styles.sheen} aria-hidden="true" />
 
-          <div ref={threadRef} className={styles.thread} role="log" aria-live="polite" aria-relevant="additions">
-            {lines.map((line, index) => (
-              <p
-                key={`${line.role}-${index}`}
-                className={`${styles.bubble} ${line.role === "user" ? styles.user : styles.assistant}`}
-              >
-                {line.text}
-              </p>
-            ))}
-          </div>
-
-          <div className={styles.pills}>
-            {CHIPS.map((label) => (
-              <button
-                key={label}
-                type="button"
-                className={styles.pill}
-                onClick={() => appendUser(label)}
-              >
-                {label}
+            <header className={styles.head}>
+              <span className={styles.markWell} aria-hidden="true">
+                <LaneMark className={styles.mark} idPrefix={`${markId}-head`} size={26} />
+              </span>
+              <div className={styles.titles}>
+                <p className={styles.kicker}>{"// Studio guide"}</p>
+                <p className={styles.title}>Lane</p>
+              </div>
+              <button type="button" className={styles.close} onClick={() => close()} aria-label="Close Lane">
+                <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+                  <path d="M3 3l8 8M11 3 3 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
               </button>
-            ))}
-          </div>
+            </header>
 
-          <form className={styles.composer} onSubmit={onSubmit}>
-            <label className={styles.visuallyHidden} htmlFor={fieldId}>
-              Ask about your project
-            </label>
-            <input
-              ref={inputRef}
-              id={fieldId}
-              className={styles.field}
-              type="text"
-              name="note"
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
-              placeholder="Ask about your project..."
-              autoComplete="off"
-              maxLength={2000}
-            />
-            <button type="submit" className={styles.send} aria-label="Send" disabled={!note.trim()}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path
-                  d="M4.2 11.7 19.6 4.2c.6-.3 1.2.4.9 1L13.2 20c-.3.7-1.3.6-1.5-.1l-1.6-5.6-5.6-1.6c-.7-.2-.8-1.2-.3-1.5Z"
-                  fill="currentColor"
-                />
-                <path d="M10.2 14.2 19.6 4.2" stroke="#fff" strokeOpacity="0.55" strokeWidth="1.4" />
-              </svg>
-            </button>
-          </form>
+            <div
+              ref={threadRef}
+              className={styles.thread}
+              role="log"
+              aria-live="polite"
+              aria-relevant="additions"
+              data-lenis-prevent
+            >
+              {lines.map((line) =>
+                line.role === "assistant" ? (
+                  <p key={line.id} className={`${styles.bubble} ${styles.assistant}`}>
+                    <Reveal text={line.text} />
+                  </p>
+                ) : (
+                  <p key={line.id} className={`${styles.bubble} ${styles.user}`} data-role="user">
+                    {line.text}
+                  </p>
+                ),
+              )}
+              {typing ? (
+                <p className={`${styles.bubble} ${styles.assistant} ${styles.typing}`} aria-label="Lane is typing">
+                  <span />
+                  <span />
+                  <span />
+                </p>
+              ) : null}
+            </div>
 
-          <div className={styles.actions}>
-            <a className={styles.action} href="/contact">
-              Talk to the team →
-            </a>
-            <a className={styles.action} href="/pricing">
-              View pricing
-            </a>
-          </div>
+            <div className={styles.pills} aria-label="Suggested questions" role="group">
+              {CHIPS.map((label, index) => (
+                <button
+                  key={label}
+                  type="button"
+                  className={styles.pill}
+                  style={{ "--i": index } as CSSProperties}
+                  onClick={() => ask(label)}
+                  disabled={typing}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
 
-          <p className={styles.fine}>Studio guide · Answers use published information. Messages stay in this browser session.</p>
-        </section>
+            <form className={styles.composer} onSubmit={onSubmit}>
+              <label className={styles.visuallyHidden} htmlFor={fieldId}>
+                Ask about your project
+              </label>
+              <input
+                ref={inputRef}
+                id={fieldId}
+                className={styles.field}
+                type="text"
+                name="note"
+                value={note}
+                onChange={(e) => setNote(e.target.value)}
+                placeholder="Ask about your project…"
+                autoComplete="off"
+                enterKeyHint="send"
+                maxLength={2000}
+              />
+              <button type="submit" className={styles.send} aria-label="Send" disabled={!note.trim() || typing}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 19V5M5.5 11.5 12 5l6.5 6.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+            </form>
+
+            <div className={styles.actions}>
+              <a className={styles.primary} href="/contact">
+                Talk to the team
+                <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+                  <path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </a>
+              <a className={styles.secondary} href="/pricing">
+                View pricing
+              </a>
+            </div>
+
+            <p className={styles.fine}>Answers use published studio information. Messages stay in this browser session.</p>
+          </section>
+        </div>
       ) : null}
 
       <button
@@ -147,17 +256,56 @@ export function LaneChat() {
         ref={launcherRef}
         className={styles.launcher}
         aria-expanded={open}
-        aria-controls={panelId}
-        onClick={() => setOpen((value) => !value)}
+        aria-controls={shown ? panelId : undefined}
+        onClick={() => (open ? close() : setOpen(true))}
+        onPointerMove={(e) => track(launcherRef.current, e, ["--lx", "--ly"])}
+        onPointerLeave={() => release(launcherRef.current, ["--lx", "--ly"])}
       >
-        <LaneMark className={styles.logo} idPrefix={`${markId}-btn`} size={48} />
-        <span className={styles.visuallyHidden}>{open ? "Close Lane" : "Open Lane"}</span>
+        <span className={styles.hint} aria-hidden="true">
+          Ask Lane
+        </span>
+        <span className={styles.shadow} aria-hidden="true" />
+        <span className={styles.float} aria-hidden="true">
+          <span className={styles.object}>
+            <span className={`${styles.face} ${styles.front}`}>
+              <LaneMark className={styles.logo} idPrefix={`${markId}-btn`} size={48} />
+            </span>
+            {Array.from({ length: 6 }, (_, i) => (
+              <span key={i} className={styles.slice} style={{ "--z": i + 1 } as CSSProperties} />
+            ))}
+            <span className={`${styles.face} ${styles.back}`}>
+              <svg width="18" height="18" viewBox="0 0 14 14">
+                <path d="M3 3l8 8M11 3 3 11" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+              </svg>
+            </span>
+          </span>
+        </span>
+        <span className={styles.visuallyHidden}>{open ? "Close Lane" : "Open Lane, studio guide"}</span>
       </button>
     </div>
   );
 }
 
-/** Blue plate from the left of public/logo.svg (viewBox 0 0 64 64, before the wordmark). The corner button and the open card both use this flat plate. */
+/** Splits a reply into words that settle in one after another. Line breaks are kept (white-space: pre-line). */
+function Reveal({ text }: { text: string }) {
+  let word = 0;
+  return (
+    <>
+      {text.split(/(\s+)/).map((part, index) =>
+        /^\s+$/.test(part) || part === "" ? (
+          part
+        ) : (
+          <span key={index} className={styles.word} style={{ "--w": Math.min(word++, 90) } as CSSProperties}>
+            {part}
+          </span>
+        ),
+      )}
+    </>
+  );
+}
+
+/** Blue plate from the left of public/logo.svg (viewBox 0 0 64 64, before the wordmark).
+ *  The lens group glances along the slot and blinks (see .lens in the CSS). */
 function LaneMark({ className, idPrefix, size = 42 }: { className?: string; idPrefix: string; size?: number }) {
   const pid = (name: string) => `${idPrefix}-${name}`;
   return (
@@ -191,6 +339,9 @@ function LaneMark({ className, idPrefix, size = 42 }: { className?: string; idPr
           <stop offset="0.7" stopColor="#00356e" stopOpacity="0" />
           <stop offset="1" stopColor="#002850" stopOpacity="0.42" />
         </linearGradient>
+        <clipPath id={pid("slotClip")}>
+          <rect x="12" y="25" width="40" height="14" rx="7" />
+        </clipPath>
       </defs>
       <rect x="1" y="1" width="62" height="62" rx="17" fill={`url(#${pid("plate")})`} />
       <rect x="1" y="1" width="62" height="62" rx="17" fill={`url(#${pid("depth")})`} />
@@ -199,8 +350,12 @@ function LaneMark({ className, idPrefix, size = 42 }: { className?: string; idPr
       <rect x="1" y="1" width="62" height="62" rx="17" fill="none" stroke="#00468C" strokeOpacity="0.6" />
       <rect x="12" y="25" width="40" height="14" rx="7" fill={`url(#${pid("slot")})`} />
       <path d="M19 38.4h26" stroke="#fff" strokeOpacity="0.16" strokeWidth="1.1" strokeLinecap="round" />
-      <circle cx="21" cy="32" r="5.4" fill="#fff" opacity="0.55" filter={`url(#${pid("glow")})`} />
-      <circle cx="21" cy="32" r="5" fill={`url(#${pid("lens")})`} />
+      <g clipPath={`url(#${pid("slotClip")})`}>
+        <g className="lane-lens">
+          <circle cx="21" cy="32" r="5.4" fill="#fff" opacity="0.55" filter={`url(#${pid("glow")})`} />
+          <circle cx="21" cy="32" r="5" fill={`url(#${pid("lens")})`} />
+        </g>
+      </g>
     </svg>
   );
 }

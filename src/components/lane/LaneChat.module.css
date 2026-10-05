@@ -1,11 +1,20 @@
-/* Corner launcher. The open window is a compact card above the mark, not a page-sized panel. */
+/* Lane: the corner guide.
+   The launcher is an extruded plate built in CSS 3D; the panel unfolds out of
+   it. Everything here is transforms, opacity and short-lived filters, so idle
+   motion runs on the compositor and the main thread stays quiet. Type follows
+   the site: Figtree for text, Fragment Mono for labels, Poppins for buttons.
+   Colour roles: black surfaces, white type, cobalt (--accent) accents only. */
 
 .dock {
   --lane-edge: 20px;
-  --lane-mark: 48px;
-  --lane-gap: 12px;
+  --lane-mark: 52px;
+  --lane-gap: 14px;
   --lane-right: calc(var(--lane-edge) + env(safe-area-inset-right, 0px));
   --lane-bottom: calc(var(--lane-edge) + env(safe-area-inset-bottom, 0px));
+  --lane-accent: var(--accent, #0077e6);
+  --lane-bright: #3d9bff;
+  --lane-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --lane-swing: cubic-bezier(0.34, 1.36, 0.5, 1);
   position: fixed;
   z-index: 45;
   right: var(--lane-right);
@@ -15,25 +24,35 @@
   align-items: flex-end;
   width: max-content;
   pointer-events: none;
+  font-family: var(--display);
 }
 
 .dock > * {
   pointer-events: auto;
 }
 
-/* The site's button pop-in is turned off here. The mark stays a flat plate.
-   Depth is only a soft shadow and a small lift, not an extruded block. */
+/* ───────────── Launcher ───────────── */
+
+/* The page's button pop-in and hover scale are switched off here; the plate
+   has its own motion. */
 .dock .launcher {
+  --lx: 0.5;
+  --ly: 0.5;
   position: relative;
   z-index: 2;
+  display: grid;
+  place-items: center;
+  width: var(--lane-mark);
+  height: var(--lane-mark);
   margin: 0;
   padding: 0;
   border: 0;
   background: transparent;
   line-height: 0;
   cursor: pointer;
-  animation: none;
-  overflow: visible;
+  animation: lane-arrive 0.9s var(--lane-spring) 0.6s backwards;
+  perspective: 360px;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .dock .launcher:hover,
@@ -42,122 +61,437 @@
 }
 
 .dock .launcher:focus-visible {
-  outline: 2px solid var(--accent, #0077e6);
-  outline-offset: 6px;
-  border-radius: 16px;
+  outline: none;
 }
 
-.dock .launcher::before,
-.dock .launcher::after {
-  content: none;
+.dock .launcher:focus-visible .object {
+  outline: 2px solid var(--lane-bright);
+  outline-offset: 6px;
+  border-radius: 15px;
+}
+
+@keyframes lane-arrive {
+  from {
+    opacity: 0;
+    translate: 0 18px;
+    scale: 0.6;
+  }
+}
+
+/* Soft contact shadow on the page. It shrinks as the plate rises. */
+.shadow {
+  position: absolute;
+  left: 50%;
+  bottom: -6px;
+  width: 40px;
+  height: 10px;
+  margin-left: -20px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(0, 30, 70, 0.75), rgba(0, 20, 50, 0.25) 60%, transparent);
+  filter: blur(3px);
+  animation: lane-shadow 6s ease-in-out infinite;
+  transition:
+    transform 0.5s var(--lane-spring),
+    opacity 0.5s ease;
+  pointer-events: none;
+}
+
+/* Idle drift: a slow sway that keeps the plate's edge in view. */
+.float {
+  display: block;
+  width: 48px;
+  height: 48px;
+  transform-style: preserve-3d;
+  animation: lane-drift 6s ease-in-out infinite;
+}
+
+/* The plate itself. Pointer tilt and the open flip live here. */
+.object {
+  position: relative;
+  display: block;
+  width: 48px;
+  height: 48px;
+  transform-style: preserve-3d;
+  transform: rotateX(calc((0.5 - var(--ly)) * 38deg)) rotateY(calc((var(--lx) - 0.5) * 44deg));
+  transition: transform 0.7s var(--lane-swing);
+}
+
+.dock .launcher:hover .float,
+.dock .launcher:focus-visible .float {
+  animation-play-state: paused;
+}
+
+.dock .launcher:hover .object,
+.dock .launcher:focus-visible .object {
+  transform: translateZ(10px) rotateX(calc((0.5 - var(--ly)) * 38deg)) rotateY(calc((var(--lx) - 0.5) * 44deg));
+  transition-duration: 0.35s;
+}
+
+.dock .launcher:hover .shadow {
+  transform: scale(0.82);
+  opacity: 0.7;
+}
+
+.dock .launcher:active .object {
+  transform: translateZ(-2px) rotateX(calc((0.5 - var(--ly)) * 20deg)) rotateY(calc((var(--lx) - 0.5) * 24deg));
+  transition-duration: 0.12s;
+}
+
+/* Open: the plate turns over to its dark back, which carries the close mark. */
+.dock[data-open] .float {
+  animation: none;
+}
+
+.dock[data-open] .object,
+.dock[data-open] .launcher:hover .object,
+.dock[data-open] .launcher:focus-visible .object {
+  transform: rotateY(180deg) rotateX(calc((var(--ly) - 0.5) * 24deg));
+  transition-duration: 0.75s;
+}
+
+.dock[data-open] .shadow {
+  animation: none;
+}
+
+.face {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.front {
+  transform: translateZ(3.5px);
+  overflow: hidden;
+}
+
+/* A moving specular highlight across the front face. */
+.front::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    115deg,
+    transparent calc(var(--lx) * 60% - 10%),
+    rgba(255, 255, 255, 0.34) calc(var(--lx) * 60% + 8%),
+    transparent calc(var(--lx) * 60% + 26%)
+  );
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+  animation: lane-glint 6s ease-in-out infinite;
+}
+
+.back {
+  transform: translateZ(-3.5px) rotateY(180deg);
+  background:
+    radial-gradient(120% 90% at 30% 15%, rgba(61, 155, 255, 0.35), transparent 60%),
+    linear-gradient(180deg, #1a212b, #0b0e13);
+  box-shadow:
+    inset 0 0 0 1px rgba(61, 155, 255, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+/* The plate's thickness: six cobalt slices stacked between front and back. */
+.slice {
+  position: absolute;
+  inset: 0;
+  border-radius: 13px;
+  background: linear-gradient(180deg, #1f86ea 0%, #0061c2 55%, #003f82 100%);
+  transform: translateZ(calc(3.5px - var(--z) * 1px));
+}
+
+.slice:nth-of-type(2n) {
+  background: linear-gradient(180deg, #1a7ddc 0%, #0058b0 55%, #00376f 100%);
 }
 
 .logo {
   display: block;
   width: 48px;
   height: 48px;
-  transform-origin: center center;
-  animation: lane-idle 3.4s ease-in-out infinite;
+}
+
+/* "Ask Lane" label that slides out on hover. */
+.hint {
+  position: absolute;
+  top: 50%;
+  right: calc(100% + 10px);
+  padding: 7px 11px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(10, 13, 17, 0.88);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
+  color: rgba(255, 255, 255, 0.86);
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  translate: 8px -50%;
   transition:
-    transform 0.35s cubic-bezier(0.22, 0.7, 0.24, 1),
-    filter 0.35s ease;
-  filter:
-    drop-shadow(0 1px 0 rgba(255, 255, 255, 0.28))
-    drop-shadow(0 10px 16px rgba(0, 20, 40, 0.42));
+    opacity 0.3s ease,
+    translate 0.45s var(--lane-spring);
+  pointer-events: none;
 }
 
-.dock .launcher:hover .logo,
-.dock .launcher:focus-visible .logo {
+.dock .launcher:hover .hint,
+.dock .launcher:focus-visible .hint {
+  opacity: 1;
+  translate: 0 -50%;
+}
+
+.dock[data-open] .launcher .hint {
+  opacity: 0;
+  translate: 8px -50%;
+}
+
+/* The lens in the mark: it glances along the slot now and then and blinks.
+   When Lane is open it settles at the centre, watching; while Lane is typing
+   it shuttles back and forth. (Class lives on an SVG group, so :global.) */
+.dock :global(.lane-lens) {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: lane-glance 7.5s ease-in-out 2s infinite;
+  transition: translate 0.6s var(--lane-spring);
+}
+
+.dock[data-open] .launcher :global(.lane-lens) {
   animation: none;
-  transform: translateY(-7px) scale(1.04);
-  filter:
-    drop-shadow(0 1px 0 rgba(255, 255, 255, 0.4))
-    drop-shadow(0 18px 24px rgba(0, 20, 40, 0.32));
 }
 
-@keyframes lane-idle {
+.panel :global(.lane-lens) {
+  animation: none;
+  translate: 11px 0;
+}
+
+.panel[data-typing] :global(.lane-lens) {
+  animation: lane-think 0.9s ease-in-out infinite alternate;
+}
+
+@keyframes lane-drift {
   0%,
   100% {
-    transform: translateY(0);
+    transform: translateY(0) rotateX(12deg) rotateY(-18deg);
   }
   50% {
-    transform: translateY(-4px);
+    transform: translateY(-5px) rotateX(6deg) rotateY(18deg);
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .logo {
-    animation: none;
+@keyframes lane-shadow {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.84);
+    opacity: 0.72;
   }
 }
 
+@keyframes lane-glint {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
 
-.panel {
+@keyframes lane-glance {
+  0%,
+  48% {
+    transform: translateX(0) scaleY(1);
+  }
+  51% {
+    transform: translateX(0) scaleY(0.1);
+  }
+  54% {
+    transform: translateX(0) scaleY(1);
+  }
+  66%,
+  84% {
+    transform: translateX(22px) scaleY(1);
+  }
+  95%,
+  100% {
+    transform: translateX(0) scaleY(1);
+  }
+}
+
+@keyframes lane-think {
+  from {
+    transform: translateX(-11px);
+  }
+  to {
+    transform: translateX(11px);
+  }
+}
+
+/* ───────────── Panel ───────────── */
+
+.stage {
   position: absolute;
   z-index: 1;
-  box-sizing: border-box;
-  width: min(320px, calc(100vw - 72px));
   right: 0;
   bottom: calc(var(--lane-mark) + var(--lane-gap));
-  max-height: min(480px, calc(100dvh - var(--lane-bottom) - var(--lane-mark) - var(--lane-gap) - 72px));
-  transform-origin: bottom right;
-  animation: lane-open 0.45s cubic-bezier(0.22, 0.7, 0.24, 1) 1 both;
-  overflow: auto;
-  display: flex;
-  flex-direction: column;
-  padding: 14px 14px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 20px;
-  background:
-    radial-gradient(130% 85% at 0% 0%, rgba(61, 155, 255, 0.2), transparent 52%),
-    linear-gradient(180deg, #1b2129 0%, #12161c 46%, #0a0d11 100%);
-  color: #ffffff;
-  isolation: isolate;
-  font-family: var(--font-poppins), "Helvetica Neue", Arial, sans-serif;
-  box-shadow:
-    0 26px 64px rgba(0, 0, 0, 0.58),
-    0 8px 22px rgba(0, 34, 74, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.42);
-  color-scheme: dark;
+  perspective: 1400px;
+  perspective-origin: 100% 100%;
 }
 
+.panel {
+  --px: 0.5;
+  --py: 0.5;
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: min(352px, calc(100vw - 40px));
+  max-height: min(560px, calc(100dvh - var(--lane-bottom) - var(--lane-mark) - var(--lane-gap) - 72px));
+  padding: 16px 16px 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 22px;
+  background:
+    radial-gradient(130% 70% at 0% 0%, rgba(61, 155, 255, 0.18), transparent 55%),
+    radial-gradient(90% 60% at 100% 100%, rgba(0, 119, 230, 0.1), transparent 60%),
+    linear-gradient(180deg, #161b22 0%, #0e1217 48%, #07090c 100%);
+  color: #ffffff;
+  isolation: isolate;
+  transform-origin: 100% 100%;
+  transform: rotateX(calc((0.5 - var(--py)) * 4deg)) rotateY(calc((var(--px) - 0.5) * 5deg));
+  transition: transform 0.6s var(--lane-spring);
+  /* Shadows: a slab edge (the panel's thickness), a cobalt bounce and a deep drop. */
+  box-shadow:
+    0 1px 0 #0b0e12,
+    0 2px 0 #090b0f,
+    0 3px 0 #07090c,
+    0 4px 0 rgba(0, 70, 140, 0.35),
+    0 18px 40px rgba(0, 40, 90, 0.28),
+    0 40px 90px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.5);
+  color-scheme: dark;
+  animation: lane-unfold 0.62s var(--lane-spring) backwards;
+}
+
+.panel[data-state="closing"] {
+  animation: lane-fold 0.26s cubic-bezier(0.5, 0, 0.75, 0) forwards;
+  pointer-events: none;
+}
+
+/* Film grain, as on the rest of the site's dark surfaces. */
 .panel::before {
   content: "";
   position: absolute;
-  z-index: 0;
+  z-index: -1;
   inset: 0;
   border-radius: inherit;
   pointer-events: none;
-  opacity: 0.16;
+  opacity: 0.14;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.32'/%3E%3C/svg%3E");
   mix-blend-mode: soft-light;
 }
 
-.panel > * {
-  position: relative;
-  z-index: 1;
+/* Light that follows the pointer, plus a rim highlight on the nearest edge. */
+.sheen {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    380px circle at calc(var(--px) * 100%) calc(var(--py) * 100%),
+    rgba(61, 155, 255, 0.11),
+    transparent 55%
+  );
 }
 
-@keyframes lane-open {
+.sheen::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  padding: 1px;
+  border-radius: inherit;
+  background: radial-gradient(
+    240px circle at calc(var(--px) * 100%) calc(var(--py) * 100%),
+    rgba(120, 190, 255, 0.7),
+    transparent 60%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  opacity: 0.55;
+}
+
+@keyframes lane-unfold {
   from {
     opacity: 0;
-    transform: translateY(10px) scale(0.96);
+    transform: translate3d(0, 30px, -140px) rotateX(24deg) rotateY(-16deg) scale(0.88);
+    filter: blur(6px);
   }
+  60% {
+    filter: blur(0);
+  }
+}
+
+@keyframes lane-fold {
   to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
+    opacity: 0;
+    transform: translate3d(0, 18px, -90px) rotateX(18deg) rotateY(-12deg) scale(0.93);
   }
 }
 
-@media (max-height: 500px) {
-  .panel {
-    width: min(420px, calc(100vw - 88px));
-    max-height: calc(100dvh - var(--lane-bottom) - var(--lane-mark) - 16px);
+/* The panel's sections settle in one after another as it opens. */
+.head,
+.thread,
+.pills,
+.composer,
+.actions,
+.fine {
+  animation: lane-rise 0.6s var(--lane-spring) backwards;
+}
+
+.head {
+  animation-delay: 0.08s;
+}
+.thread {
+  animation-delay: 0.14s;
+}
+.pills {
+  animation-delay: 0.2s;
+}
+.composer {
+  animation-delay: 0.26s;
+}
+.actions {
+  animation-delay: 0.3s;
+}
+.fine {
+  animation-delay: 0.34s;
+}
+
+@keyframes lane-rise {
+  from {
+    opacity: 0;
+    translate: 0 10px;
   }
 }
 
-/* Page buttons pop and scale on hover. This window opts out so the card stays still. */
+/* The page's button pop and hover scale are off inside the panel; each
+   control has its own feedback below. */
 .dock .panel button {
   animation: none;
   scale: 1;
@@ -168,164 +502,330 @@
   scale: 1;
 }
 
+.dock .panel button:focus-visible,
+.dock .panel a:focus-visible {
+  outline: 2px solid var(--lane-bright);
+  outline-offset: 2px;
+}
+
+/* Header */
+
 .head {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 12px;
+  gap: 12px;
+  padding-bottom: 14px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .markWell {
+  position: relative;
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: #f4f5f7;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.65);
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.02));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 6px 14px rgba(0, 0, 0, 0.35);
+}
+
+/* Status light: the guide is available. */
+.markWell::after {
+  content: "";
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  width: 9px;
+  height: 9px;
+  border: 2px solid #11151b;
+  border-radius: 50%;
+  background: var(--lane-bright);
+  box-shadow: 0 0 0 0 rgba(61, 155, 255, 0.6);
+  animation: lane-pulse 2.6s ease-out infinite;
+}
+
+@keyframes lane-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(61, 155, 255, 0.55);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 7px rgba(61, 155, 255, 0);
+  }
 }
 
 .mark {
   display: block;
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
+  filter: drop-shadow(0 3px 5px rgba(0, 40, 90, 0.5));
 }
 
 .titles {
   min-width: 0;
 }
 
-.title,
-.subtitle {
+.kicker,
+.title {
   margin: 0;
+}
+
+.kicker {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+  color: var(--lane-bright);
 }
 
 .title {
-  font-size: 15px;
+  margin-top: 3px;
+  font-family: var(--display);
+  font-size: 17px;
   font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
   color: #ffffff;
 }
 
-.subtitle {
-  margin-top: 2px;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 1.35;
-  color: rgba(255, 255, 255, 0.55);
-}
-
-.close {
+.dock .close {
   display: grid;
   place-items: center;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   margin: 0;
   padding: 0;
-  border: 0;
-  border-radius: 8px;
+  border: 1px solid transparent;
+  border-radius: 10px;
   background: transparent;
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(255, 255, 255, 0.66);
   cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    rotate 0.4s var(--lane-spring);
 }
 
-.close:hover {
-  background: rgba(255, 255, 255, 0.08);
+.dock .close:hover {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.06);
   color: #ffffff;
+  rotate: 90deg;
 }
+
+/* Thread */
 
 .thread {
+  position: relative;
   display: flex;
+  flex: 1 1 auto;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
+  min-height: 0;
+  max-height: min(320px, 42dvh);
+  margin: 0 -6px;
+  padding: 14px 6px 6px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+  /* Fades messages out as they scroll under the header. */
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 14px);
+  mask-image: linear-gradient(180deg, transparent 0, #000 14px);
 }
 
 .bubble {
+  flex-shrink: 0;
   margin: 0;
-  max-width: 92%;
-  padding: 11px 13px;
-  font-size: 13.5px;
+  max-width: 88%;
+  padding: 11px 14px;
+  font-family: var(--display);
+  font-size: 14px;
   font-weight: 400;
-  line-height: 1.45;
+  line-height: 1.5;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  animation: lane-bubble 0.5s var(--lane-spring) backwards;
 }
 
 .assistant {
   align-self: flex-start;
+  transform-origin: 0 100%;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px 16px 16px 6px;
-  background: rgba(255, 255, 255, 0.07);
-  color: rgba(255, 255, 255, 0.92);
+  border-radius: 18px 18px 18px 6px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.04));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 8px 18px rgba(0, 0, 0, 0.22);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .user {
   align-self: flex-end;
-  border-radius: 16px 16px 6px 16px;
-  background: #0077e6;
+  transform-origin: 100% 100%;
+  border-radius: 18px 18px 6px 18px;
+  background: linear-gradient(180deg, #1a88f0 0%, var(--lane-accent) 55%, #0064c4 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -1px 0 rgba(0, 40, 90, 0.4),
+    0 10px 22px rgba(0, 90, 190, 0.32);
   color: #ffffff;
 }
 
-.pills {
+@keyframes lane-bubble {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.94);
+  }
+}
+
+/* Each word of a reply settles in, a beat after the one before. */
+.word {
+  display: inline-block;
+  animation: lane-word 0.55s var(--lane-spring) backwards;
+  animation-delay: calc(var(--w) * 24ms + 60ms);
+}
+
+@keyframes lane-word {
+  from {
+    opacity: 0;
+    filter: blur(5px);
+    translate: 0 0.35em;
+  }
+}
+
+.typing {
   display: flex;
-  flex-wrap: wrap;
+  gap: 5px;
+  align-items: center;
+  padding: 14px 16px;
+}
+
+.typing span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.75);
+  animation: lane-dot 1.1s ease-in-out infinite;
+}
+
+.typing span:nth-child(2) {
+  animation-delay: 0.14s;
+}
+
+.typing span:nth-child(3) {
+  animation-delay: 0.28s;
+}
+
+@keyframes lane-dot {
+  0%,
+  60%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-4px);
+  }
+}
+
+/* Suggestions */
+
+.pills {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
   margin-top: 12px;
 }
 
-.pill {
-  flex: 1 1 calc(50% - 8px);
+.dock .pill {
   margin: 0;
-  padding: 9px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  border-radius: 999px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.035)),
-    rgba(255, 255, 255, 0.035);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), inset 0 -1px 0 rgba(0, 0, 0, 0.18);
-  color: #ffffff;
-  font-family: inherit;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 1px 0 rgba(0, 0, 0, 0.6),
+    0 2px 0 rgba(0, 0, 0, 0.35);
+  color: rgba(255, 255, 255, 0.92);
+  font-family: var(--button);
   font-size: 12.5px;
   font-weight: 500;
-  line-height: 1.25;
+  line-height: 1.2;
   text-align: center;
   cursor: pointer;
-  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+  transition:
+    transform 0.25s var(--lane-spring),
+    box-shadow 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease;
 }
 
-.pill:hover {
-  transform: translateY(-1px);
-  border-color: rgba(255, 255, 255, 0.42);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.06)),
-    rgba(255, 255, 255, 0.06);
+.dock .pill:hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: rgba(61, 155, 255, 0.6);
+  background: linear-gradient(180deg, rgba(61, 155, 255, 0.18), rgba(61, 155, 255, 0.05));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    0 2px 0 rgba(0, 40, 90, 0.8),
+    0 10px 20px rgba(0, 80, 170, 0.28);
 }
+
+.dock .pill:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition-duration: 0.08s;
+}
+
+.dock .pill:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* Composer */
 
 .composer {
   display: flex;
   align-items: center;
   gap: 8px;
   margin-top: 12px;
-  padding: 4px 4px 4px 14px;
+  padding: 5px 5px 5px 16px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 999px;
-  background: rgba(0, 0, 0, 0.35);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
+  box-shadow:
+    inset 0 2px 6px rgba(0, 0, 0, 0.5),
+    0 1px 0 rgba(255, 255, 255, 0.06);
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .composer:focus-within {
-  border-color: rgba(61, 155, 255, 0.75);
+  border-color: rgba(61, 155, 255, 0.7);
+  box-shadow:
+    inset 0 2px 6px rgba(0, 0, 0, 0.5),
+    0 0 0 4px rgba(0, 119, 230, 0.18);
 }
 
 .field {
   flex: 1;
   min-width: 0;
   margin: 0;
-  padding: 8px 0;
+  padding: 9px 0;
   border: 0;
   background: transparent;
   color: #ffffff;
-  font-family: inherit;
-  font-size: 13.5px;
+  font-family: var(--display);
+  font-size: 14px;
   font-weight: 400;
   line-height: 1.3;
   outline: none;
@@ -334,27 +834,67 @@
 }
 
 .field::placeholder {
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.38);
 }
 
-.send {
+/* Phones zoom into fields under 16px; keep the field at 16px there. */
+@media (pointer: coarse) {
+  .field {
+    font-size: 16px;
+  }
+}
+
+.dock .send {
   display: grid;
   place-items: center;
   flex: none;
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   margin: 0;
   padding: 0;
   border: 0;
   border-radius: 50%;
-  background: #0077e6;
+  background: linear-gradient(180deg, #2a93f5 0%, var(--lane-accent) 60%, #0060bd 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 2px 0 #003f82,
+    0 8px 16px rgba(0, 90, 190, 0.4);
   color: #ffffff;
   cursor: pointer;
+  transition:
+    transform 0.25s var(--lane-spring),
+    box-shadow 0.25s ease,
+    opacity 0.25s ease;
 }
 
-.send:hover {
-  background: #1a88f0;
+.dock .send svg {
+  transition: translate 0.3s var(--lane-spring);
 }
+
+.dock .send:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.dock .send:hover:not(:disabled) svg {
+  translate: 0 -2px;
+}
+
+.dock .send:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 0 #003f82,
+    0 3px 8px rgba(0, 90, 190, 0.35);
+  transition-duration: 0.08s;
+}
+
+.dock .send:disabled {
+  opacity: 0.35;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  cursor: default;
+}
+
+/* Actions */
 
 .actions {
   display: flex;
@@ -362,28 +902,54 @@
   justify-content: space-between;
   gap: 12px;
   margin-top: 12px;
-  padding-top: 10px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-.action {
+.primary,
+.secondary {
+  font-family: var(--button);
   font-size: 13px;
   font-weight: 500;
   line-height: 1.3;
-  color: rgba(255, 255, 255, 0.9);
+  transition: color 0.2s ease;
 }
 
-.action:hover {
-  color: #3d9bff;
+.primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #ffffff;
+}
+
+.primary svg {
+  transition: translate 0.35s var(--lane-spring);
+}
+
+.primary:hover {
+  color: var(--lane-bright);
+}
+
+.primary:hover svg {
+  translate: 3px 0;
+}
+
+.secondary {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.secondary:hover {
+  color: #ffffff;
 }
 
 .fine {
-  margin: 10px 0 2px;
-  font-size: 10px;
-  font-weight: 400;
-  line-height: 1.4;
+  margin: 10px 0 0;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  line-height: 1.45;
+  letter-spacing: 0.01em;
   text-align: center;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.36);
 }
 
 .visuallyHidden {
@@ -398,6 +964,115 @@
   border: 0;
 }
 
-.thread { max-height: min(320px, 40dvh); overflow-y: auto; overscroll-behavior: contain; }
-.bubble { white-space: pre-line; overflow-wrap: anywhere; flex-shrink: 0; }
-.send:disabled { opacity: 0.45; cursor: default; }
+/* Short screens: wider and shorter. */
+@media (max-height: 560px) {
+  .panel {
+    width: min(440px, calc(100vw - 96px));
+    max-height: calc(100dvh - var(--lane-bottom) - 16px);
+  }
+
+  .stage {
+    right: calc(var(--lane-mark) + var(--lane-gap));
+    bottom: 0;
+  }
+
+  .thread {
+    max-height: 34dvh;
+  }
+
+  .fine {
+    display: none;
+  }
+}
+
+/* Phones: the panel spans the screen width, less the side gutters. */
+@media (max-width: 480px) {
+  .dock {
+    --lane-edge: 16px;
+  }
+
+  .panel {
+    width: calc(100vw - 32px);
+  }
+}
+
+/* Touch: no hover hint. */
+@media (hover: none) {
+  .hint {
+    display: none;
+  }
+}
+
+/* Reduced motion: the plate rests at a fixed three-quarter angle, the panel
+   and messages fade without movement, replies appear whole. */
+@media (prefers-reduced-motion: reduce) {
+  .float,
+  .shadow,
+  .front::after,
+  .dock :global(.lane-lens),
+  .panel[data-typing] :global(.lane-lens),
+  .markWell::after,
+  .word,
+  .head,
+  .thread,
+  .pills,
+  .composer,
+  .actions,
+  .fine,
+  .dock .launcher {
+    animation: none;
+  }
+
+  .float {
+    transform: rotateX(10deg) rotateY(-16deg);
+  }
+
+  .object,
+  .dock .launcher:hover .object,
+  .dock .launcher:focus-visible .object,
+  .dock .launcher:active .object {
+    transform: none;
+    transition-duration: 0.2s;
+  }
+
+  .dock[data-open] .object,
+  .dock[data-open] .launcher:hover .object {
+    transform: rotateY(180deg);
+    transition-duration: 0.01s;
+  }
+
+  .panel,
+  .dock .pill:hover:not(:disabled),
+  .dock .send:hover:not(:disabled) {
+    transform: none;
+  }
+
+  .panel {
+    animation: lane-fade 0.2s ease backwards;
+  }
+
+  .panel[data-state="closing"] {
+    animation: lane-fade-out 0.01s linear forwards;
+  }
+
+  .bubble {
+    animation: lane-fade 0.2s ease backwards;
+  }
+
+  .typing span {
+    animation: none;
+    opacity: 0.6;
+  }
+}
+
+@keyframes lane-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes lane-fade-out {
+  to {
+    opacity: 0;
+  }
+}

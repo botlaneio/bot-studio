@@ -51,7 +51,7 @@ export function laneReply(message: string): { text: string; intent: Intent } {
   if (/\bai\b|chatgpt|artificial intelligence/.test(text) && /why|instead|cheaper|expensive|worth|pay|just use|myself|build it|make it/.test(text)) {
     return {
       intent: "ai-objection",
-      text: "Fair question. AI can now produce a page in minutes, and for some needs that's enough.\n\nWhat a Botlane project pays for is everything around the page: deciding who your site or app is for and what it must say, design that doesn't look like everyone else's, speed, accessibility and search done properly, and a team accountable for the result.\n\nOnce the project is paid in full, the design and code are yours. The ranges are on the pricing page, or use ‘Talk to the team’ below to compare options for your project.",
+      text: "Fair question. AI can now produce a page in minutes, and for some needs that's enough.\n\nWhat a Botlane project pays for is everything around the page: deciding who your site or app is for and what it must say, design that doesn't look like everyone else's, speed, accessibility and search done properly, and a team accountable for the result.\n\nOnce the project is paid in full, the design and code are yours. The ranges are in the ‘Price guide’ below, or use ‘Contact the team’ to compare options for your project.",
     };
   }
   if (short && /^(hi|hey|hello|hiya|howdy|good (morning|afternoon|evening))\b/.test(text)) {
@@ -66,13 +66,13 @@ export function laneReply(message: string): { text: string; intent: Intent } {
   if (/who are you|what are you|are you (a |an )?(bot|robot|ai|human|real|person)|is this (a )?(bot|ai|human)/.test(text)) {
     return {
       intent: "who",
-      text: "I'm Lane, Botlane Studios' site guide. I answer from the studio's published information. I'm not an AI model and not a person, so for anything specific to your project, use ‘Talk to the team’.",
+      text: "I'm Lane, Botlane Studios' site guide. I answer from the studio's published information. I'm not an AI model and not a person, so for anything specific to your project, use ‘Contact the team’ below.",
     };
   }
   if (/existing (client|customer|project|account)|already (a |working with )?(client|customer|you)|i am (a |an )?(current |existing )?client|support (request|ticket)|\bbilling\b|\binvoice\b/.test(text)) {
     return {
       intent: "existing",
-      text: `For an existing project, contact ${STUDIO_EMAIL} with your project name and what you need. You can also use ‘Talk to the team’ below. This guide cannot access project records or create support tickets.`,
+      text: `For an existing project, contact ${STUDIO_EMAIL} with your project name and what you need. You can also use ‘Contact the team’ below. This guide cannot access project records or create support tickets.`,
     };
   }
   if (/redesign|rebuild|re-?do|refresh|revamp|existing (site|website)|current (site|website)|old (site|website)|my (site|website) (is|looks)/.test(text)) {
@@ -84,7 +84,7 @@ export function laneReply(message: string): { text: string; intent: Intent } {
   if (/e-?mail|phone|number|text you|call you|reach (you|the team)|contact details/.test(text)) {
     return {
       intent: "contact",
-      text: `Email ${STUDIO_EMAIL}, or call or text ${STUDIO_PHONE}. You can also send a project inquiry with ‘Talk to the team’ below.`,
+      text: `Email ${STUDIO_EMAIL}, or call or text ${STUDIO_PHONE}. Or use ‘Contact the team’ below for every way to reach the studio, including the full inquiry form.`,
     };
   }
   if (/portfolio|examples?|case stud|your (work|projects)|see (your |some )?work|previous (work|projects)|past (work|projects)|worked with|your clients|client list|references/.test(text)) {
@@ -102,7 +102,7 @@ export function laneReply(message: string): { text: string; intent: Intent } {
   if (/start(ing)? (a |my |our )?(new )?project|get started|hire (you|the studio)|work with you|kick ?off|ready to (start|begin)|let'?s (start|begin|build)/.test(text)) {
     return {
       intent: "start",
-      text: "Good to hear. ‘Start a project’ asks four quick questions and sends the team your brief by email, or use ‘Talk to the team’ for the full contact form. You'll get a written quote before anything starts.",
+      text: "Good to hear. ‘Start a project’ below asks four quick questions and sends the team your brief by email; the contact page has the full inquiry form. You'll get a written quote before anything starts.",
     };
   }
   if (/e-?commerce|shopify|woocommerce|online (store|shop)|sell online|selling online|\bstore\b/.test(text)) {
@@ -175,11 +175,11 @@ export function laneReply(message: string): { text: string; intent: Intent } {
     };
   }
   if (/call|book|contact|human|team|talk to/.test(text)) {
-    return { intent: "call", text: "Use ‘Talk to the team’ below to send a project inquiry or request an intro call. Nothing has been booked or sent by this chat." };
+    return { intent: "call", text: "Use ‘Start a project’ below to send the team a short brief, or ‘Contact the team’ to email, call or text them. Nothing has been booked or sent from this chat." };
   }
   return {
     intent: "fallback",
-    text: "I can compare Websites and Web Apps, explain optional add-ons, share price ranges, or point you to existing client support. For advice specific to your project, use ‘Talk to the team’ below. This guide uses published studio information and cannot send an inquiry for you.",
+    text: "I can compare Websites and Web Apps, explain optional add-ons, share price ranges, or point you to existing client support. For advice specific to your project, ‘Start a project’ below sends the team a short brief. Lane answers from published studio information.",
   };
 }
 
@@ -230,8 +230,9 @@ export function nextSteps(intent: Intent): LaneAction[] {
     case "capability:web-apps":
       return [A.webApps, A.prices, A.start];
     case "addons":
-    case "ai-objection":
       return [A.ai, A.prices];
+    case "ai-objection":
+      return [A.prices, A.contact];
     case "care":
     case "services":
     case "capability":

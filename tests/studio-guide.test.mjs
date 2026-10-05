@@ -120,3 +120,22 @@ test('every intent offers next steps with a working link', () => {
     for (const s of steps) assert.match(s.href, /^(\/|mailto:)/, q);
   }
 });
+
+test('every button an answer names is one of the buttons shown under it', () => {
+  const { laneReply, nextSteps } = load('src/components/lane/studioReply.ts');
+  const questions = [
+    'hi', 'thanks', 'who are you', 'I am an existing client', 'redesign our site', 'what is your email',
+    'show me your portfolio', 'where are you based', 'I want to start a project', 'do you build shopify stores',
+    'maintenance after launch', "what's included", 'how does it work', 'how much does it cost', 'do you do seo',
+    'what services do you offer', 'can you design a logo', 'websites', 'web app', 'how long does it take',
+    'can I talk to a human', 'Why not just use AI?', 'asdfghjkl',
+  ];
+  for (const q of questions) {
+    const { text, intent } = laneReply(q);
+    // The panel shows the first two follow-ups under an answer.
+    const shown = nextSteps(intent).slice(0, 2).map((a) => a.label);
+    for (const [, name] of text.matchAll(/‘([^’]+)’/g)) {
+      assert.ok(shown.includes(name), `"${q}" names ‘${name}’, but shows only: ${shown.join(', ')}`);
+    }
+  }
+});

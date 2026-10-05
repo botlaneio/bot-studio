@@ -39,25 +39,27 @@ export function Hero() {
           </div>
         ))}
 
-        <h2 className={`${styles.headline} ${styles.scrim}`}>
+        <h1 className={`${styles.headline} ${styles.scrim}`}>
           {WORDS.map((word, i) => (
             <span key={i} className={styles.word} style={vars({ "--i": i })}>
               {word}
               {i < WORDS.length - 1 ? " " : <b>.</b>}
             </span>
           ))}
-        </h2>
+        </h1>
 
         <p className={styles.tagline}>
           <Scramble text="Quietly crafting for brands worldwide" delay={1000} duration={1000} />
         </p>
 
-        <h1 className={`${styles.lockup} ${styles.scrim}`}>
+        {/* The brand lockup is display type, not a heading: the headline above is
+            the page's one h1, so headings run in order for search and screen readers. */}
+        <p className={`${styles.lockup} ${styles.scrim}`}>
           <span className={styles.rise}>
             <span className={styles.accent}>Botlane</span>
             <span>\Studios</span>
           </span>
-        </h1>
+        </p>
 
         <div className={styles.message}>
           <p>

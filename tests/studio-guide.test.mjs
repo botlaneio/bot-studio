@@ -49,7 +49,7 @@ test('answers a logo question as an optional brand identity add-on', () => {
   const reply = studioReply('Can you design a logo?');
   assert.match(reply, /optional add-on/);
   assert.match(reply, /naming, mark, and visual system/);
-  assert.match(reply, /\$5,000 to \$10,000/);
+  assert.match(reply, /\$5,000–\$10,000/);
   assert.match(reply, /quoted separately/);
   assert.match(reply, /not its own page/);
   assert.doesNotMatch(reply, /\/capabilities\/brand-identity/);
@@ -61,4 +61,14 @@ test('potential client questions still receive package information', () => {
   const reply = studioReply('As a new client, which package should I choose?');
   assert.match(reply, /Websites:/);
   assert.doesNotMatch(reply, /packages/i);
+});
+
+test('Lane quotes the same prices as the pricing page', () => {
+  const { PRICE } = load('src/lib/pricing.ts');
+  const page = fs.readFileSync(path.resolve(testRoot, '..', 'src/app/pricing/page.tsx'), 'utf8');
+  // The pricing page writes no dollar amounts of its own; both read src/lib/pricing.ts.
+  assert.doesNotMatch(page, /\$\d/);
+  const cost = studioReply('What will it cost?');
+  assert.ok(cost.includes(PRICE.websitesFrom) && cost.includes(PRICE.webAppsFrom));
+  assert.ok(studioReply('Can you design a logo?').includes(PRICE.brandIdentity));
 });

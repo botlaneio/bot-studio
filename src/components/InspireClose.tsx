@@ -1,3 +1,4 @@
+import { LazyVideo } from "@/components/LazyVideo";
 import { Arrow } from "@/components/motion/Arrow";
 import styles from "@/app/echoes/echoes.module.css";
 
@@ -13,17 +14,7 @@ const INSPIRE_LINES = [
 export function InspireClose() {
   return (
     <section className={styles.inspire} aria-label="Start a conversation">
-      <video
-        className={styles.inspireVideo}
-        src="/inspire-wave.mp4"
-        poster="/inspire-wave-poster.jpg"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        aria-hidden="true"
-      />
+      <LazyVideo className={styles.inspireVideo} src="/inspire-wave.mp4" poster="/inspire-wave-poster.jpg" />
       <div className={styles.inspireScrim} aria-hidden="true" />
       <div className={styles.inspireInner}>
         <div className={styles.inspireLeft}>

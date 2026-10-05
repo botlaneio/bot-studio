@@ -83,3 +83,40 @@ test('answers the "why pay when AI exists" objection honestly', () => {
   // Asking for AI as a feature still gets the add-on answer.
   assert.match(studioReply('Can AI be part of our app?'), /optional add-ons/);
 });
+
+test('routes common visitor questions to a real answer, not the fallback', () => {
+  const { laneReply } = load('src/components/lane/studioReply.ts');
+  const cases = {
+    'hi': 'greeting',
+    'Can I see your work?': 'work',
+    "What's your email?": 'contact',
+    'I want to start a project': 'start',
+    'Do you do Shopify?': 'ecommerce',
+    'Do you offer maintenance?': 'care',
+    'Can you redesign my existing website?': 'redesign',
+    "What's included?": 'included',
+    'How does the process work?': 'process',
+    'Who are you?': 'who',
+  };
+  for (const [q, intent] of Object.entries(cases)) assert.equal(laneReply(q).intent, intent, q);
+});
+
+test('a redesign is not mistaken for existing-client support', () => {
+  const reply = studioReply('Can you redesign my existing website?');
+  assert.doesNotMatch(reply, /cannot access project records/);
+  assert.match(reply, /\$8,000/);
+});
+
+test('Lane never says it is AI, and the work answer claims no client work', () => {
+  assert.match(studioReply('Are you an AI?'), /not an AI model/);
+  assert.match(studioReply('Can I see your portfolio?'), /no client case studies/);
+});
+
+test('every intent offers next steps with a working link', () => {
+  const { laneReply, nextSteps } = load('src/components/lane/studioReply.ts');
+  for (const q of ['hi', 'pricing', 'Websites', 'Web apps', 'email', 'portfolio', 'thanks', 'blah blah']) {
+    const steps = nextSteps(laneReply(q).intent);
+    assert.ok(steps.length > 0, q);
+    for (const s of steps) assert.match(s.href, /^(\/|mailto:)/, q);
+  }
+});

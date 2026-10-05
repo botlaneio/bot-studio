@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useId, useRef, useState, type CSSProperties, type FormEvent, type PointerEvent } from "react";
-import { studioReply } from "./studioReply";
+import { laneReply, nextSteps, type LaneAction, type LaneView } from "./studioReply";
+import { LaneBrief, LaneContact, LanePrices, LaneWork, VIEW_META } from "./LaneViews";
 import styles from "./LaneChat.module.css";
 
 const GREETING =
@@ -37,7 +38,12 @@ const markStartersSeen = () => {
 /** How long the closing fold-away plays before the panel unmounts. Matches .panel[data-state="closing"]. */
 const CLOSE_MS = 260;
 
-type Line = { id: number; role: "assistant" | "user"; text: string };
+type Line = { id: number; role: "assistant" | "user"; text: string; actions?: LaneAction[] };
+
+const VIEWS: LaneView[] = ["ask", "brief", "prices", "work", "contact"];
+
+/** The large two-pane window is for tablets and desktops with room for it. */
+const WIDE_QUERY = "(min-width: 768px) and (min-height: 600px)";
 
 const prefersReducedMotion = () =>
   typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -67,7 +73,10 @@ export function LaneChat() {
   const [closing, setClosing] = useState(false);
   const [typing, setTyping] = useState(false);
   const [note, setNote] = useState("");
-  const [lines, setLines] = useState<Line[]>([{ id: 0, role: "assistant", text: GREETING }]);
+  const [lines, setLines] = useState<Line[]>([{ id: 0, role: "assistant", text: GREETING, actions: nextSteps("greeting") }]);
+  const [wide, setWide] = useState(false);
+  const [view, setView] = useState<LaneView>("ask");
+  const mainHeadRef = useRef<HTMLHeadingElement>(null);
   const [starter, setStarter] = useState<number | null>(null);
   const [starterLeaving, setStarterLeaving] = useState(false);
   const startersOff = useRef(false);
@@ -95,6 +104,20 @@ export function LaneChat() {
   );
 
   const shown = open || closing;
+
+  useEffect(() => {
+    const mq = window.matchMedia(WIDE_QUERY);
+    const sync = () => setWide(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  /** Switches the large window's view and moves focus to its heading. */
+  const show = (next: LaneView) => {
+    setView(next);
+    window.requestAnimationFrame(() => mainHeadRef.current?.focus({ preventScroll: true }));
+  };
 
   /** Hides the thought bubbles for the rest of the session. */
   const stopStarters = useCallback(() => {
@@ -143,7 +166,7 @@ export function LaneChat() {
     };
     window.addEventListener("keydown", onKey);
     // Bring the cursor to the field on desktop; on touch screens this would throw the keyboard up.
-    if (window.matchMedia("(pointer: fine)").matches) inputRef.current?.focus({ preventScroll: true });
+    if (window.matchMedia("(pointer: fine)").matches) window.requestAnimationFrame(() => inputRef.current?.focus({ preventScroll: true }));
     return () => window.removeEventListener("keydown", onKey);
   }, [open, close]);
 
@@ -160,22 +183,24 @@ export function LaneChat() {
     thread.scrollTo({ top, behavior });
   }, [lines, typing, shown]);
 
-  const openLane = () => {
+  const openLane = (startView?: LaneView) => {
     stopStarters();
+    if (startView) setView(startView);
     setOpen(true);
   };
 
   const ask = (text: string) => {
     const question = text.trim();
     if (!question || typing) return;
-    const reply = studioReply(question);
+    const reply = laneReply(question);
+    setView("ask");
     setLines((prev) => [...prev, { id: nextId.current++, role: "user", text: question }]);
     setNote("");
     setTyping(true);
     later(() => {
       setTyping(false);
-      setLines((prev) => [...prev, { id: nextId.current++, role: "assistant", text: reply }]);
-    }, thinkingTime(reply));
+      setLines((prev) => [...prev, { id: nextId.current++, role: "assistant", text: reply.text, actions: nextSteps(reply.intent) }]);
+    }, thinkingTime(reply.text));
   };
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -202,129 +227,189 @@ export function LaneChat() {
     el?.style.setProperty(names[1], "0.5");
   };
 
+  const lastAssistantId = lines.reduce((last, l) => (l.role === "assistant" ? l.id : last), -1);
+
+  /** An answer's follow-up: a view in the large window, otherwise a link. */
+  const actionEl = (a: LaneAction) =>
+    a.view && wide ? (
+      <button key={a.label} type="button" className={styles.nextStep} onClick={() => show(a.view!)}>
+        {a.label}
+      </button>
+    ) : (
+      <a key={a.label} className={styles.nextStep} href={a.href}>
+        {a.label}
+      </a>
+    );
+
+  const closeButton = (
+    <button type="button" className={styles.close} onClick={() => close()} aria-label="Close Lane">
+      <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+        <path d="M3 3l8 8M11 3 3 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      </svg>
+    </button>
+  );
+
+  const header = (withClose: boolean) => (
+    <header className={styles.head}>
+      <div className={styles.photo} aria-hidden="true">
+        {/* The team at work; reused from the Strategy page, cropped small (16 KB). Loads only when Lane opens. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/lane/header.webp" alt="" width={704} height={300} decoding="async" />
+      </div>
+      <div className={styles.headTop}>
+        <p className={styles.kicker}>{"// Studio guide"}</p>
+        {withClose ? closeButton : null}
+      </div>
+      <div className={styles.headBottom}>
+        <span className={styles.markWell} aria-hidden="true">
+          <LaneMark className={styles.mark} idPrefix={`${markId}-head`} size={26} />
+        </span>
+        <div className={styles.titles}>
+          <p className={styles.title}>
+            Lane<span className={styles.dot}>.</span>
+          </p>
+          <p className={styles.subtitle}>Websites and web apps, answered.</p>
+        </div>
+      </div>
+    </header>
+  );
+
+  const chat = (
+    <>
+      <div ref={threadRef} className={styles.thread} role="log" aria-live="polite" aria-relevant="additions" data-lenis-prevent>
+        {lines.map((line) =>
+          line.role === "assistant" ? (
+            <div key={line.id} className={styles.answer}>
+              <p className={`${styles.bubble} ${styles.assistant}`}>
+                <Reveal text={line.text} />
+              </p>
+              {line.id === lastAssistantId && !typing && line.actions?.length ? (
+                <div className={styles.nextSteps} aria-label="Next steps" role="group">
+                  {line.actions.map(actionEl)}
+                </div>
+              ) : null}
+            </div>
+          ) : (
+            <p key={line.id} className={`${styles.bubble} ${styles.user}`} data-role="user">
+              {line.text}
+            </p>
+          ),
+        )}
+        {typing ? (
+          <p className={`${styles.bubble} ${styles.assistant} ${styles.typing}`} aria-label="Lane is typing">
+            <span />
+            <span />
+            <span />
+          </p>
+        ) : null}
+      </div>
+
+      <div className={styles.pills} aria-label="Suggested questions" role="group">
+        {CHIPS.map((label, index) => (
+          <button key={label} type="button" className={styles.pill} style={{ "--i": index } as CSSProperties} onClick={() => ask(label)} disabled={typing}>
+            {label}
+          </button>
+        ))}
+      </div>
+
+      <form className={styles.composer} onSubmit={onSubmit}>
+        <label className={styles.visuallyHidden} htmlFor={fieldId}>
+          Ask about your project
+        </label>
+        <input
+          ref={inputRef}
+          id={fieldId}
+          className={styles.field}
+          type="text"
+          name="note"
+          value={note}
+          onChange={(e) => setNote(e.target.value)}
+          placeholder="Ask about your project…"
+          autoComplete="off"
+          enterKeyHint="send"
+          maxLength={2000}
+        />
+        <button type="submit" className={styles.send} aria-label="Send" disabled={!note.trim() || typing}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 19V5M5.5 11.5 12 5l6.5 6.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+      </form>
+    </>
+  );
+
   return (
     <div className={styles.dock} data-open={open || undefined}>
       {shown ? (
-        <div className={styles.stage}>
+        <div className={styles.stage} data-size={wide ? "wide" : "compact"}>
           <section
             ref={panelRef}
             className={styles.panel}
             id={panelId}
             aria-label="Lane, studio guide"
             data-state={closing ? "closing" : "open"}
+            data-size={wide ? "wide" : "compact"}
             data-typing={typing || undefined}
             onPointerMove={(e) => track(panelRef.current, e, ["--px", "--py"])}
             onPointerLeave={() => release(panelRef.current, ["--px", "--py"])}
           >
             <span className={styles.sheen} aria-hidden="true" />
 
-            <header className={styles.head}>
-              <div className={styles.photo} aria-hidden="true">
-                {/* The team at work; reused from the Strategy page, cropped small (16 KB). Loads only when Lane opens. */}
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/lane/header.webp" alt="" width={704} height={300} decoding="async" />
-              </div>
-              <div className={styles.headTop}>
-                <p className={styles.kicker}>{"// Studio guide"}</p>
-                <button type="button" className={styles.close} onClick={() => close()} aria-label="Close Lane">
-                  <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
-                    <path d="M3 3l8 8M11 3 3 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                  </svg>
-                </button>
-              </div>
-              <div className={styles.headBottom}>
-                <span className={styles.markWell} aria-hidden="true">
-                  <LaneMark className={styles.mark} idPrefix={`${markId}-head`} size={26} />
-                </span>
-                <div className={styles.titles}>
-                  <p className={styles.title}>
-                    Lane<span className={styles.dot}>.</span>
-                  </p>
-                  <p className={styles.subtitle}>Websites and web apps, answered.</p>
+            {wide ? (
+              <>
+                <aside className={styles.rail}>
+                  {header(false)}
+                  <nav className={styles.railNav} aria-label="Lane">
+                    {VIEWS.map((v) => (
+                      <button key={v} type="button" className={styles.railItem} aria-current={view === v ? "page" : undefined} onClick={() => show(v)}>
+                        <span className={styles.railIcon} aria-hidden="true">
+                          <ViewIcon view={v} />
+                        </span>
+                        <span className={styles.railText}>
+                          <b>{VIEW_META[v].title}</b>
+                          <span>{VIEW_META[v].line}</span>
+                        </span>
+                      </button>
+                    ))}
+                  </nav>
+                  <p className={styles.railFine}>Answers use published studio information. ‘Start a project’ emails your brief to the studio.</p>
+                </aside>
+                <div className={styles.main}>
+                  <div className={styles.mainHead}>
+                    <div>
+                      <h2 ref={mainHeadRef} tabIndex={-1} className={styles.mainTitle}>
+                        {VIEW_META[view].title}
+                        <span className={styles.dot}>.</span>
+                      </h2>
+                      <p className={styles.mainLine}>{VIEW_META[view].line}</p>
+                    </div>
+                    {closeButton}
+                  </div>
+                  {view === "ask" && chat}
+                  {view === "brief" && <LaneBrief />}
+                  {view === "prices" && <LanePrices onStart={() => show("brief")} />}
+                  {view === "work" && <LaneWork />}
+                  {view === "contact" && <LaneContact onStart={() => show("brief")} />}
                 </div>
-              </div>
-            </header>
-
-            <div
-              ref={threadRef}
-              className={styles.thread}
-              role="log"
-              aria-live="polite"
-              aria-relevant="additions"
-              data-lenis-prevent
-            >
-              {lines.map((line) =>
-                line.role === "assistant" ? (
-                  <p key={line.id} className={`${styles.bubble} ${styles.assistant}`}>
-                    <Reveal text={line.text} />
-                  </p>
-                ) : (
-                  <p key={line.id} className={`${styles.bubble} ${styles.user}`} data-role="user">
-                    {line.text}
-                  </p>
-                ),
-              )}
-              {typing ? (
-                <p className={`${styles.bubble} ${styles.assistant} ${styles.typing}`} aria-label="Lane is typing">
-                  <span />
-                  <span />
-                  <span />
-                </p>
-              ) : null}
-            </div>
-
-            <div className={styles.pills} aria-label="Suggested questions" role="group">
-              {CHIPS.map((label, index) => (
-                <button
-                  key={label}
-                  type="button"
-                  className={styles.pill}
-                  style={{ "--i": index } as CSSProperties}
-                  onClick={() => ask(label)}
-                  disabled={typing}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
-
-            <form className={styles.composer} onSubmit={onSubmit}>
-              <label className={styles.visuallyHidden} htmlFor={fieldId}>
-                Ask about your project
-              </label>
-              <input
-                ref={inputRef}
-                id={fieldId}
-                className={styles.field}
-                type="text"
-                name="note"
-                value={note}
-                onChange={(e) => setNote(e.target.value)}
-                placeholder="Ask about your project…"
-                autoComplete="off"
-                enterKeyHint="send"
-                maxLength={2000}
-              />
-              <button type="submit" className={styles.send} aria-label="Send" disabled={!note.trim() || typing}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M12 19V5M5.5 11.5 12 5l6.5 6.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </button>
-            </form>
-
-            <div className={styles.actions}>
-              <a className={styles.primary} href="/contact">
-                Talk to the team
-                <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
-                  <path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </a>
-              <a className={styles.secondary} href="/pricing">
-                View pricing
-              </a>
-            </div>
-
-            <p className={styles.fine}>Answers use published studio information. Messages stay in this browser session.</p>
+              </>
+            ) : (
+              <>
+                {header(true)}
+                {chat}
+                <div className={styles.actions}>
+                  <a className={styles.primary} href="/contact">
+                    Talk to the team
+                    <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+                      <path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </a>
+                  <a className={styles.secondary} href="/pricing">
+                    View pricing
+                  </a>
+                </div>
+                <p className={styles.fine}>Answers use published studio information. Messages stay in this browser session.</p>
+              </>
+            )}
           </section>
         </div>
       ) : null}
@@ -337,7 +422,7 @@ export function LaneChat() {
             className={styles.thoughtBubble}
             onClick={() => {
               const question = STARTERS[starter];
-              openLane();
+              openLane("ask");
               ask(question);
             }}
           >
@@ -459,6 +544,40 @@ function LaneMark({ className, idPrefix, size = 42 }: { className?: string; idPr
           <circle cx="21" cy="32" r="5" fill={`url(#${pid("lens")})`} />
         </g>
       </g>
+    </svg>
+  );
+}
+
+/** Small line icons for the large window's menu. */
+function ViewIcon({ view }: { view: LaneView }) {
+  const p = { fill: "none", stroke: "currentColor", strokeWidth: 1.6, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24">
+      {view === "ask" && <path {...p} d="M4 5h16v11H9l-5 4V5z" />}
+      {view === "brief" && (
+        <>
+          <path {...p} d="M6 3h9l4 4v14H6z" />
+          <path {...p} d="M9 12h7M9 16h5M14 3v5h5" />
+        </>
+      )}
+      {view === "prices" && (
+        <>
+          <path {...p} d="M3 12l9-9h8v8l-9 9z" />
+          <circle {...p} cx="16" cy="8" r="1.4" />
+        </>
+      )}
+      {view === "work" && (
+        <>
+          <rect {...p} x="3" y="4" width="18" height="14" rx="2" />
+          <path {...p} d="M3 14l5-4 4 3 3-2 6 4" />
+        </>
+      )}
+      {view === "contact" && (
+        <>
+          <rect {...p} x="3" y="5" width="18" height="14" rx="2" />
+          <path {...p} d="M3 7l9 6 9-6" />
+        </>
+      )}
     </svg>
   );
 }

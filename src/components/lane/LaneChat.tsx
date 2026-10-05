@@ -35,6 +35,9 @@ const markStartersSeen = () => {
   }
 };
 
+/** After this long on a page the launcher's idle sway pauses until it is hovered or focused. */
+const IDLE_REST_MS = 15000;
+
 /** How long the closing fold-away plays before the panel unmounts. Matches .panel[data-state="closing"]. */
 const CLOSE_MS = 260;
 
@@ -75,6 +78,7 @@ export function LaneChat() {
   const [note, setNote] = useState("");
   const [lines, setLines] = useState<Line[]>([{ id: 0, role: "assistant", text: GREETING, actions: nextSteps("greeting") }]);
   const [wide, setWide] = useState(false);
+  const [rest, setRest] = useState(false);
   const [view, setView] = useState<LaneView>("ask");
   const mainHeadRef = useRef<HTMLHeadingElement>(null);
   const [starter, setStarter] = useState<number | null>(null);
@@ -104,6 +108,12 @@ export function LaneChat() {
   );
 
   const shown = open || closing;
+
+  // Let the launcher's idle motion settle after a while (see .dock[data-rest]).
+  useEffect(() => {
+    const t = window.setTimeout(() => setRest(true), IDLE_REST_MS);
+    return () => window.clearTimeout(t);
+  }, []);
 
   useEffect(() => {
     const mq = window.matchMedia(WIDE_QUERY);
@@ -341,7 +351,7 @@ export function LaneChat() {
   );
 
   return (
-    <div className={styles.dock} data-open={open || undefined}>
+    <div className={styles.dock} data-open={open || undefined} data-rest={rest || undefined}>
       {shown ? (
         <div className={styles.stage} data-size={wide ? "wide" : "compact"}>
           <section

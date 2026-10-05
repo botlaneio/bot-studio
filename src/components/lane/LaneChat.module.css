@@ -257,7 +257,8 @@
 .dock :global(.lane-lens) {
   transform-box: fill-box;
   transform-origin: center;
-  animation: lane-glance 7.5s ease-in-out 2s infinite;
+  /* Twice, then it rests at the centre: no endless repaint inside the filtered SVG. */
+  animation: lane-glance 7.5s ease-in-out 2s 2;
   transition: translate 0.6s var(--lane-spring);
 }
 
@@ -272,6 +273,16 @@
 
 .panel[data-typing] :global(.lane-lens) {
   animation: lane-think 0.9s ease-in-out infinite alternate;
+}
+
+/* Idle motion settles. After the first moments on a page LaneChat sets
+   data-rest, and the sway, shadow and glint pause wherever they are (no
+   snap). They wake while the pointer or keyboard focus is on the launcher.
+   On every page this keeps Lane from running animations forever. */
+.dock[data-rest] .launcher:not(:hover):not(:focus-visible) .float,
+.dock[data-rest] .launcher:not(:hover):not(:focus-visible) .shadow,
+.dock[data-rest] .launcher:not(:hover):not(:focus-visible) .front::after {
+  animation-play-state: paused;
 }
 
 @keyframes lane-drift {
@@ -803,7 +814,7 @@
   border-radius: 50%;
   background: var(--lane-bright);
   box-shadow: 0 0 0 0 rgba(61, 155, 255, 0.6);
-  animation: lane-pulse 2.6s ease-out infinite;
+  animation: lane-pulse 2.6s ease-out 3;
 }
 
 @keyframes lane-pulse {

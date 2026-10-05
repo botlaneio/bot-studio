@@ -85,17 +85,17 @@ export function Hero() {
           </Link>
         </div>
 
-        <a className={styles.reel} href="https://botlane.io" target="_blank" rel="noopener" aria-label="Meet botlane.io (opens in a new tab)">
+        <Link className={styles.reel} href="/work" aria-label="Studio reel: see the work">
           <div className={styles.reelHead}>
             <span>Showreel</span>
             <hr />
             <span>\\2026</span>
           </div>
           <div className={styles.reelVideo}>
-            <ShowreelVideo src="/botlane-intro.mp4" poster="/botlane-intro-poster.jpg" />
+            <ShowreelVideo src="/studio-reel.mp4" first="/studio-reel-first.jpg" poster="/studio-reel-poster.jpg" />
           </div>
-          <div className={styles.reelCap}>Meet botlane.io ↗</div>
-        </a>
+          <div className={styles.reelCap}>Studio reel · See the work →</div>
+        </Link>
       </div>
     </section>
   );

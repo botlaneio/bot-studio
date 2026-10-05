@@ -33,7 +33,7 @@ export function InspireClose() {
           </ul>
           <p className={styles.inspirePlace}>
             <span className={styles.tick} aria-hidden="true" />
-            Sheridan, Wyoming
+            Remote studio · US-focused
           </p>
         </div>
         <div className={styles.inspireRight}>

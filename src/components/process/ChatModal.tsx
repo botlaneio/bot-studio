@@ -100,7 +100,7 @@ export function ChatModal({
               <h2 id="chat-title" className={styles.title}>
                 Tell us what you&apos;re building<b>.</b>
               </h2>
-              <p className={styles.lede}>Small studio, worldwide tech. Message, write or call, whichever suits you.</p>
+              <p className={styles.lede}>Small studio, modern tech. Message, write or call, whichever suits you.</p>
             </div>
 
             <ul className={styles.rows}>

@@ -194,11 +194,6 @@
   background: var(--ink);
 }
 
-.clock {
-  color: var(--accent);
-  font-variant-numeric: tabular-nums;
-}
-
 .ctas {
   left: calc(150 * var(--u));
   top: calc(681 * var(--u));

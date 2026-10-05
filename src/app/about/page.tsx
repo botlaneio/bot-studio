@@ -5,13 +5,12 @@ import Link from "next/link";
 import { Arrow } from "@/components/motion/Arrow";
 import { PageHero } from "@/components/page/PageHero";
 import page from "@/components/page/Page.module.css";
-import { SheridanClock } from "@/components/SheridanClock";
 import styles from "./about.module.css";
 
 export const metadata: Metadata = pageMetadata({
   path: "/about",
   title: "About us",
-  description: "Botlane Studios is the design studio of BotLane LLC: a small team in Sheridan, Wyoming, building websites for brands worldwide.",
+  description: "Botlane Studios is the design studio of BotLane LLC: a small studio designing and building websites and web apps for US businesses.",
 });
 
 const PRINCIPLES = [
@@ -35,7 +34,7 @@ export default function AboutPage() {
     <main className={page.page}>
       <PageHero
         kicker="// 00.04° About us"
-        title="A small studio with a worldwide reach"
+        title="A small studio for US businesses"
         mark="."
         lede="Botlane Studios is the design studio of BotLane LLC. We make websites for brands that care how they look, how they read and how fast they load."
       />
@@ -118,13 +117,9 @@ export default function AboutPage() {
       <section className={page.section}>
         <div className={styles.where} data-reveal="">
           <div>
-            <span className={page.label}>Where we are</span>
-            <p className={styles.whereTitle}>Sheridan, Wyoming</p>
-            <p className={styles.whereText}>Working with brands worldwide, across time zones.</p>
-          </div>
-          <div className={styles.clockBox}>
-            <span className={page.label}>Our time</span>
-            <SheridanClock className={styles.clock} />
+            <span className={page.label}>How we work</span>
+            <p className={styles.whereTitle}>Remote studio</p>
+            <p className={styles.whereText}>Working with US businesses, remotely.</p>
           </div>
         </div>
       </section>

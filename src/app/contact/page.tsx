@@ -8,7 +8,7 @@ import styles from "./contact.module.css";
 export const metadata: Metadata = pageMetadata({
   path: "/contact",
   title: "Contact",
-  description: "Talk to Botlane Studios in Sheridan, Wyoming. Email project@botlane.studio or call +1 307 218 5175.",
+  description: "Talk to Botlane Studios about a website or web app. Email project@botlane.studio or call +1 307 218 5175.",
 });
 
 export default function ContactPage() {
@@ -27,9 +27,9 @@ export default function ContactPage() {
             <p className={styles.discuss}>Let’s discuss how Botlane Studios can help make it real.</p>
             <div className={styles.details}>
               <div>
-                <p className={styles.detailLabel}>Sheridan, Wyoming</p>
+                <p className={styles.detailLabel}>Registered address</p>
                 <address className={styles.address}>
-                  Botlane Studios
+                  BotLane LLC
                   <br />
                   30 N Gould St, Ste R
                   <br />

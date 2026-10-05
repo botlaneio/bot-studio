@@ -122,18 +122,6 @@
   color: rgba(255, 255, 255, 0.72);
 }
 
-.clockBox {
-  display: grid;
-  justify-items: end;
-  gap: calc(12 * var(--u));
-}
-
-.clock {
-  font: 500 calc(56 * var(--u)) / 1 var(--mono);
-  color: var(--accent);
-  font-variant-numeric: tabular-nums;
-}
-
 @media (max-width: 899px) {
   .band {
     max-width: calc(100% - 40px);
@@ -188,14 +176,6 @@
 
   .whereText {
     font-size: 16px;
-  }
-
-  .clockBox {
-    justify-items: start;
-  }
-
-  .clock {
-    font-size: 40px;
   }
 }
 

@@ -40,7 +40,7 @@ const FAQ = [
   },
   {
     q: "Do you work with clients outside the US?",
-    a: "Yes. We're based in Sheridan, Wyoming and work with brands worldwide, remotely and across time zones.",
+    a: "Yes. We're a remote studio focused on US businesses, and we can work with clients elsewhere when the project fits.",
   },
   {
     q: "Who owns the website when it's done?",

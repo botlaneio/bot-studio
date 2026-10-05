@@ -49,7 +49,10 @@
   align-items: flex-start;
   gap: calc(40 * var(--u));
   margin-top: calc(36 * var(--u));
-  padding: calc(28 * var(--u)) 0 0;
+  /* 30u = stage's former 40u inset less the current 20u stage padding, plus the
+     original 10u row padding — restores subtitle/lines to pre-446e415 positions
+     while the heading stays flush with the card edge at 20u. */
+  padding: calc(28 * var(--u)) calc(30 * var(--u)) 0;
 }
 
 .subtitle {

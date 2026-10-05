@@ -20,14 +20,25 @@ export function ShowreelVideo({ src, first, poster }: { src: string; first: stri
     const onEnded = () => setEnded(true);
     video.addEventListener("ended", onEnded);
     if (video.ended) setEnded(true);
-    video.play().catch(() => {});
 
-    return () => video.removeEventListener("ended", onEnded);
+    // Start after the page has loaded, so the 1.5 MB reel never competes
+    // with the hero for bandwidth. Until then the first frame shows.
+    const play = () => {
+      video.preload = "auto";
+      video.play().catch(() => {});
+    };
+    if (document.readyState === "complete") play();
+    else window.addEventListener("load", play, { once: true });
+
+    return () => {
+      video.removeEventListener("ended", onEnded);
+      window.removeEventListener("load", play);
+    };
   }, []);
 
   return (
     <>
-      <video ref={ref} src={src} poster={first} muted playsInline preload="auto" aria-hidden="true" />
+      <video ref={ref} src={src} poster={first} muted playsInline preload="none" aria-hidden="true" />
       <img src={poster} alt="" data-show={ended || undefined} />
     </>
   );

@@ -17,8 +17,11 @@ const IMAGES = ["/process/hero.jpg", "/process/card-1.jpg", "/process/card-2.jpg
  *  from the 3D one, at its exact size and spot, with rings that close in on
  *  it like a pointer locator. It opens the chat modal, which pops out of it.
  *
- *  three.js and the scene load only when the visitor nears the section. If a
- *  device cannot draw WebGL, a still of the finished page stands in. */
+ *  three.js (~500 KB) and the scene load only once the page has finished
+ *  loading and the browser is idle, and the visitor is within a screen of the
+ *  section, so they never compete with the hero. Scrolling toward the section
+ *  loads them straight away. If a device cannot draw WebGL, a still of the
+ *  finished page stands in. */
 export function ProcessFilm() {
   const sectionRef = useRef<HTMLElement>(null);
   const mountRef = useRef<HTMLDivElement>(null);
@@ -34,13 +37,17 @@ export function ProcessFilm() {
     if (!section || !mount || !flash) return;
 
     let cancelled = false;
+    let started = false;
     let cleanup: (() => void) | undefined;
+    let idleId = 0;
+    let near: IntersectionObserver | undefined;
 
-    const near = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        near.disconnect();
-        import("./process/scene")
+    const start = () => {
+      if (started || cancelled) return;
+      started = true;
+      near?.disconnect();
+      window.removeEventListener("scroll", onScroll);
+      import("./process/scene")
           .then(({ mountProcessScene }) => {
             if (cancelled) return;
             cleanup = mountProcessScene({
@@ -68,14 +75,35 @@ export function ProcessFilm() {
           .catch(() => {
             if (!cancelled) setFailed(true);
           });
-      },
-      { rootMargin: "150% 0px" },
-    );
-    near.observe(section);
+    };
+
+    // A visitor heading for the section gets the scene immediately.
+    const onScroll = () => {
+      if (section.getBoundingClientRect().top < window.innerHeight * 1.5) start();
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    // Otherwise: after load, when idle, and only if the section is close.
+    const whenIdle = () => {
+      near = new IntersectionObserver(([entry]) => entry.isIntersecting && start(), { rootMargin: "100% 0px" });
+      near.observe(section);
+    };
+    const afterLoad = () => {
+      const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number };
+      if (w.requestIdleCallback) idleId = w.requestIdleCallback(whenIdle, { timeout: 4000 });
+      else idleId = window.setTimeout(whenIdle, 2000);
+    };
+    if (document.readyState === "complete") afterLoad();
+    else window.addEventListener("load", afterLoad, { once: true });
 
     return () => {
       cancelled = true;
-      near.disconnect();
+      near?.disconnect();
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("load", afterLoad);
+      const w = window as Window & { cancelIdleCallback?: (id: number) => void };
+      if (w.cancelIdleCallback) w.cancelIdleCallback(idleId);
+      clearTimeout(idleId);
       cleanup?.();
     };
   }, []);

@@ -2,7 +2,7 @@
 
 Service menu routes now render the six capabilities using the same content and slugs as the menu and index. Unknown service slugs remain 404s.
 
-Project, quote and call requests point to `/contact#inquiry`. No scheduler is configured, so buttons say **Request a call**, not Book a call. The contact form prepares a mail draft; visitors must send it in their email app. It does not imply a successful submission.
+Project, quote and call requests point to `/contact#inquiry`. No scheduler is configured, so buttons say **Request a call**, not Book a call. The contact form posts to `/api/inquiry`, which validates it and emails it to project@botlane.studio through Resend (Reply-To is the visitor). Visitors see "sent" only after Resend accepts the message; on failure they get a prefilled email link instead. Spam is filtered with a honeypot field and a minimum fill time.
 
 Lane now gives local, deterministic answers based on published service and package information. It is labelled **Studio guide** rather than AI assistant. There is no model connection, ticket creation, booking, or message delivery. For bespoke advice, visitors can contact the studio. The guide does not promise prices, delivery dates, or access to client records.
 
@@ -20,4 +20,4 @@ Static pages and capability pages have canonical URLs; Open Graph and Twitter me
 
 ## Still requires infrastructure
 
-A real AI provider, scheduler, server-delivered contact form, and newsletter service are separate integrations. No credentials or destinations have been invented for them.
+A real AI provider, scheduler, and newsletter service are separate integrations. No credentials or destinations have been invented for them.

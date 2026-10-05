@@ -42,6 +42,13 @@ Worker settings in the Cloudflare dashboard (Settings → Builds):
 - Build command: `npm run cf:build`
 - Deploy command: `npx wrangler deploy`
 
+Secrets (Worker → Settings → Variables and Secrets, type **Secret**):
+
+- `RESEND_API_KEY`: sends contact-form inquiries (`/api/inquiry`). Without it, the form shows its email fallback.
+- `INQUIRY_FROM` (optional plain variable): sender address, on a domain verified in Resend. Default `Botlane Studios website <website@botlane.studio>`.
+
+For local `npm run preview`, put them in `.dev.vars` (git-ignored).
+
 Locally:
 
 ```bash

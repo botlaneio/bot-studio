@@ -35,7 +35,7 @@ export function studioReply(message: string): string {
     return "The timeline depends on the scope. A focused launch site is different from a brand and multi-page build. The team will agree a timeline in your written quote; I cannot promise a delivery date.";
   }
   if (/call|book|contact|human|team/.test(text)) {
-    return "Use ‘Talk to the team’ below to prepare a project inquiry or request an intro call. Nothing has been booked or sent by this chat.";
+    return "Use ‘Talk to the team’ below to send a project inquiry or request an intro call. Nothing has been booked or sent by this chat.";
   }
   return "I can compare Websites and Web Apps, explain optional add-ons, or point you to existing client support. For advice specific to your project, use ‘Talk to the team’ below. This guide uses published studio information and cannot send an inquiry for you.";
 }

@@ -37,6 +37,10 @@ export default function PrivacyPage() {
               <strong>When you visit the site:</strong> our hosting provider, Cloudflare, processes standard technical data such as your IP
               address, browser type and the pages requested, to deliver and protect the site.
             </li>
+            <li>
+              <strong>When you use the contact form:</strong> the name, company, email and message you enter. They are sent to our inbox by
+              our email delivery provider, Resend, and are not stored on the website.
+            </li>
           </ul>
           <p>This website does not use advertising or tracking cookies, and we do not currently run analytics on it.</p>
 

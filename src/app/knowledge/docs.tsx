@@ -185,6 +185,10 @@ function Policies() {
           When you visit: Cloudflare processes standard technical data such as your IP address, browser type and the pages requested, to
           deliver and protect the site.
         </li>
+        <li>
+          Contact form messages (name, company, email and message) are delivered to the studio inbox by Resend, an email delivery
+          provider, and are not stored on the website.
+        </li>
         <li>The site does not use advertising or tracking cookies, and does not currently run analytics.</li>
         <li>
           Information is used to reply to an enquiry and to discuss, quote for and deliver a project; to keep the website secure and

@@ -9,6 +9,31 @@ const GREETING =
 
 const CHIPS = ["Websites", "Web apps", "Pricing", "Timeline"] as const;
 
+/** Conversation starters that float up from the launcher as thought bubbles.
+ *  Each one is worded so studioReply gives its matching published answer. */
+const STARTERS = [
+  "What does a website cost?",
+  "Thinking about a web app?",
+  "How long does a project take?",
+  "Why not just use AI?",
+  "Can you design our logo?",
+] as const;
+
+/** Starters timing: first bubble after the page settles, then one at a time. */
+const STARTER_DELAY = 3800;
+const STARTER_SHOW = 5200;
+const STARTER_LEAVE = 380;
+/** Once a visitor has seen the starters, opened Lane or hidden them, they stay away for the session. */
+const STARTER_KEY = "lane-starters-seen";
+
+const markStartersSeen = () => {
+  try {
+    sessionStorage.setItem(STARTER_KEY, "1");
+  } catch {
+    /* Storage can be blocked; the bubbles then just show again next page. */
+  }
+};
+
 /** How long the closing fold-away plays before the panel unmounts. Matches .panel[data-state="closing"]. */
 const CLOSE_MS = 260;
 
@@ -43,6 +68,9 @@ export function LaneChat() {
   const [typing, setTyping] = useState(false);
   const [note, setNote] = useState("");
   const [lines, setLines] = useState<Line[]>([{ id: 0, role: "assistant", text: GREETING }]);
+  const [starter, setStarter] = useState<number | null>(null);
+  const [starterLeaving, setStarterLeaving] = useState(false);
+  const startersOff = useRef(false);
   const nextId = useRef(1);
   const timers = useRef<number[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -67,6 +95,39 @@ export function LaneChat() {
   );
 
   const shown = open || closing;
+
+  /** Hides the thought bubbles for the rest of the session. */
+  const stopStarters = useCallback(() => {
+    startersOff.current = true;
+    setStarter(null);
+    setStarterLeaving(false);
+    markStartersSeen();
+  }, []);
+
+  // Thought bubbles: show each starter in turn, once per session.
+  useEffect(() => {
+    try {
+      if (sessionStorage.getItem(STARTER_KEY)) return;
+    } catch {
+      /* No storage: show them. */
+    }
+    const ids: number[] = [];
+    const at = (fn: () => void, ms: number) => ids.push(window.setTimeout(() => !startersOff.current && fn(), ms));
+    let t = STARTER_DELAY;
+    STARTERS.forEach((_, index) => {
+      at(() => {
+        setStarterLeaving(false);
+        setStarter(index);
+      }, t);
+      t += STARTER_SHOW;
+      at(() => setStarterLeaving(true), t - STARTER_LEAVE);
+    });
+    at(() => {
+      setStarter(null);
+      markStartersSeen();
+    }, t);
+    return () => ids.forEach((id) => window.clearTimeout(id));
+  }, []);
 
   const close = useCallback((returnFocus = true) => {
     setOpen(false);
@@ -98,6 +159,11 @@ export function LaneChat() {
     const top = answered ? Math.min(question.offsetTop - 14, thread.scrollHeight) : thread.scrollHeight;
     thread.scrollTo({ top, behavior });
   }, [lines, typing, shown]);
+
+  const openLane = () => {
+    stopStarters();
+    setOpen(true);
+  };
 
   const ask = (text: string) => {
     const question = text.trim();
@@ -251,13 +317,38 @@ export function LaneChat() {
         </div>
       ) : null}
 
+      {!shown && starter !== null ? (
+        <div className={styles.thought} data-leaving={starterLeaving || undefined}>
+          <button
+            key={starter}
+            type="button"
+            className={styles.thoughtBubble}
+            onClick={() => {
+              const question = STARTERS[starter];
+              openLane();
+              ask(question);
+            }}
+          >
+            <span className={styles.visuallyHidden}>Ask Lane: </span>
+            {STARTERS[starter]}
+          </button>
+          <button type="button" className={styles.thoughtDismiss} onClick={stopStarters} aria-label="Hide suggestions">
+            <svg width="8" height="8" viewBox="0 0 14 14" aria-hidden="true">
+              <path d="M3 3l8 8M11 3 3 11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+          </button>
+          <span className={`${styles.puff} ${styles.puffBig}`} aria-hidden="true" />
+          <span className={`${styles.puff} ${styles.puffSmall}`} aria-hidden="true" />
+        </div>
+      ) : null}
+
       <button
         type="button"
         ref={launcherRef}
         className={styles.launcher}
         aria-expanded={open}
         aria-controls={shown ? panelId : undefined}
-        onClick={() => (open ? close() : setOpen(true))}
+        onClick={() => (open ? close() : openLane())}
         onPointerMove={(e) => track(launcherRef.current, e, ["--lx", "--ly"])}
         onPointerLeave={() => release(launcherRef.current, ["--lx", "--ly"])}
       >

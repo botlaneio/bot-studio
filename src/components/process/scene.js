@@ -336,10 +336,15 @@ export function mountProcessScene({ track: wrapEl, mount, flash, images, onCta }
         ctx.fillStyle = fg
         ctx.font = `600 112px ${SANS}`
         ctx.textBaseline = "alphabetic"
-        const lines = wrap(ctx, headline, w - 40).slice(0, 3)
-        lines.forEach((l, i) => ctx.fillText(l, 12, 118 + i * 124))
+        // Inset the type like the nav's logo (40px of 2048 across a slab of
+        // the same left edge, ~0.28 units): the same gap on the left and
+        // above the capitals, and the underline on the text's left edge.
+        const pad = 56
+        const lines = wrap(ctx, headline, w - pad * 2).slice(0, 3)
+        const top = pad + (ctx.measureText(lines[0] || "U").actualBoundingBoxAscent || 82)
+        lines.forEach((l, i) => ctx.fillText(l, pad, top + i * 124))
         ctx.fillStyle = accentHex
-        ctx.fillRect(14, h - 26, 120, 6)
+        ctx.fillRect(pad, h - 26, 120, 6)
     })
     track(headTex.tex)
 

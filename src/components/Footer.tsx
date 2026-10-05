@@ -145,22 +145,25 @@ export function Footer() {
 
   return (
     <footer id="contact" className={styles.footer}>
-      {/* Brand and contact details first; the black inquiry band closes the page. */}
+      {/* Inquiry and contact details first; the black band (brand, navigation,
+          copyright) closes the page. */}
       <div className={styles.lower}>
         <div className={styles.lowerGrid}>
-          <div className={styles.pitch}>
-            <p className={styles.tagline}>Websites and web apps that connect, scale, and perform.</p>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className={styles.wordmark} src="/logo.svg" alt="Botlane" width={897} height={100} />
-            <p className={styles.blurb}>
-              Websites and web apps designed and built for brands that demand craft, clarity, and performance.
-            </p>
-            <p className={styles.copy}>©2026 BotLane LLC. All rights reserved.</p>
-            <p className={styles.siteLine}>
-              <a href={WEBSITE} target="_blank" rel="noopener">
-                botlane.io
-              </a>
-            </p>
+          <div className={styles.news}>
+            <div className={styles.headingRow}>
+              <h2 className={styles.heading}>
+                Have a project
+                <br />
+                in mind.
+              </h2>
+              <Rosette className={styles.rosette} />
+            </div>
+            <p className={styles.subline}>Tell us what you want to build. We’ll discuss the scope and the next step.</p>
+            <Link className={`${styles.join} arrowHost`} href="/contact#inquiry">
+              Discuss your project
+              <Arrow className={styles.joinArrow} />
+            </Link>
+            <p className={styles.note}>Scope and timeline agreed before work starts.</p>
           </div>
 
           <div className={styles.contacts}>
@@ -198,20 +201,19 @@ export function Footer() {
       </div>
       <div className={styles.top}>
         <div className={styles.topGrid}>
-          <div className={styles.news}>
-            <div className={styles.headingRow}>
-              <h2 className={styles.heading}>
-                Have a project
-                <br />
-                in mind.
-              </h2>
-              <Rosette className={styles.rosette} />
-            </div>
-            <p className={styles.subline}>Tell us what you want to build. We’ll discuss the scope and the next step.</p>
-            <Link className={`${styles.join} arrowHost`} href="/contact#inquiry">
-              Discuss your project
-              <Arrow className={styles.joinArrow} />
-            </Link>
+          <div className={styles.pitch}>
+            <p className={styles.tagline}>Websites and web apps that connect, scale, and perform.</p>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className={styles.wordmark} src="/logo.svg" alt="Botlane" width={897} height={100} />
+            <p className={styles.blurb}>
+              Websites and web apps designed and built for brands that demand craft, clarity, and performance.
+            </p>
+            <p className={styles.copy}>©2026 BotLane LLC. All rights reserved.</p>
+            <p className={styles.siteLine}>
+              <a href={WEBSITE} target="_blank" rel="noopener">
+                botlane.io
+              </a>
+            </p>
           </div>
 
           <div className={styles.cols}>
@@ -243,9 +245,7 @@ export function Footer() {
         </div>
 
         <div className={styles.meta}>
-          <div className={styles.legalBlock}>
-            <p className={styles.note}>Scope and timeline agreed before work starts.</p>
-          </div>
+          <div className={styles.legalBlock} />
           <div className={styles.social}>
             <p className={styles.socialLabel}>Connect with us</p>
             <div className={styles.socialIcons}>

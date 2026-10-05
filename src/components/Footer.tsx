@@ -145,6 +145,57 @@ export function Footer() {
 
   return (
     <footer id="contact" className={styles.footer}>
+      {/* Brand and contact details first; the black inquiry band closes the page. */}
+      <div className={styles.lower}>
+        <div className={styles.lowerGrid}>
+          <div className={styles.pitch}>
+            <p className={styles.tagline}>Websites and web apps that connect, scale, and perform.</p>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className={styles.wordmark} src="/logo.svg" alt="Botlane" width={897} height={100} />
+            <p className={styles.blurb}>
+              Websites and web apps designed and built for brands that demand craft, clarity, and performance.
+            </p>
+            <p className={styles.copy}>©2026 BotLane LLC. All rights reserved.</p>
+            <p className={styles.siteLine}>
+              <a href={WEBSITE} target="_blank" rel="noopener">
+                botlane.io
+              </a>
+            </p>
+          </div>
+
+          <div className={styles.contacts}>
+            <div className={styles.contactTop}>
+              <div>
+                <p className={styles.colLabel}>Registered address</p>
+                <address className={styles.address}>
+                  BotLane LLC
+                  <br />
+                  30 N Gould St, Ste R
+                  <br />
+                  Sheridan, WY 82801
+                </address>
+              </div>
+              <div>
+                <p className={styles.colLabel}>Online</p>
+                <a className={styles.mail} href="mailto:project@botlane.studio">
+                  project@botlane.studio
+                </a>
+              </div>
+            </div>
+            <div className={styles.contactBottom}>
+              <div>
+                <p className={styles.colLabel}>Phone</p>
+                <a className={styles.phone} href="tel:+13072185175">
+                  +1 307 218 5175
+                </a>
+              </div>
+              <a className={`${styles.topLink} arrowHost`} href="#top" aria-label="Back to top">
+                <Arrow className={styles.topArrow} />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className={styles.top}>
         <div className={styles.topGrid}>
           <div className={styles.news}>
@@ -206,57 +257,6 @@ export function Footer() {
               </a> : <span className={styles.socialLink} role="img" aria-label="X"><SocialIcon className={styles.socialIcon} d={X_PATH} fill="#ffffff" /></span>}
               <a className={styles.socialLink} href={TEXT_US} aria-label="Text the studio">
                 <SocialIcon className={styles.socialIcon} d={TEXT_PATH} fill="#ffffff" />
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className={styles.lower}>
-        <div className={styles.lowerGrid}>
-          <div className={styles.pitch}>
-            <p className={styles.tagline}>Websites and web apps that connect, scale, and perform.</p>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className={styles.wordmark} src="/logo.svg" alt="Botlane" width={897} height={100} />
-            <p className={styles.blurb}>
-              Websites and web apps designed and built for brands that demand craft, clarity, and performance.
-            </p>
-            <p className={styles.copy}>©2026 BotLane LLC. All rights reserved.</p>
-            <p className={styles.siteLine}>
-              <a href={WEBSITE} target="_blank" rel="noopener">
-                botlane.io
-              </a>
-            </p>
-          </div>
-
-          <div className={styles.contacts}>
-            <div className={styles.contactTop}>
-              <div>
-                <p className={styles.colLabel}>Registered address</p>
-                <address className={styles.address}>
-                  BotLane LLC
-                  <br />
-                  30 N Gould St, Ste R
-                  <br />
-                  Sheridan, WY 82801
-                </address>
-              </div>
-              <div>
-                <p className={styles.colLabel}>Online</p>
-                <a className={styles.mail} href="mailto:project@botlane.studio">
-                  project@botlane.studio
-                </a>
-              </div>
-            </div>
-            <div className={styles.contactBottom}>
-              <div>
-                <p className={styles.colLabel}>Phone</p>
-                <a className={styles.phone} href="tel:+13072185175">
-                  +1 307 218 5175
-                </a>
-              </div>
-              <a className={`${styles.topLink} arrowHost`} href="#top" aria-label="Back to top">
-                <Arrow className={styles.topArrow} />
               </a>
             </div>
           </div>

@@ -1,0 +1,358 @@
+/* Websites offer page. Builds on Page.module.css (cards, heads, labels)
+   and only adds what the shared system doesn't have. */
+
+.headBody {
+  margin-top: calc(18 * var(--u));
+}
+
+.price {
+  margin: calc(6 * var(--u)) 0 0;
+  font: 500 calc(30 * var(--u)) / 1.1 var(--display);
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+.note {
+  margin: calc(24 * var(--u)) 0 0;
+  color: var(--ink-dim);
+  font-size: calc(14 * var(--u));
+  line-height: 1.6;
+}
+
+.note a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---------- How a project runs ---------- */
+
+.stepsHead,
+.step {
+  display: grid;
+  grid-template-columns: calc(300 * var(--u)) repeat(3, minmax(0, 1fr));
+  gap: calc(40 * var(--u));
+}
+
+.stepsHead {
+  padding-bottom: calc(14 * var(--u));
+  font: 400 calc(11 * var(--u)) / 1 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+.steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-bottom: 1px solid var(--rule);
+}
+
+.step {
+  align-items: start;
+  padding-block: calc(30 * var(--u));
+  border-top: 1px solid var(--rule);
+}
+
+.stepName {
+  display: flex;
+  align-items: baseline;
+  gap: calc(16 * var(--u));
+}
+
+.stepName span {
+  font: 400 calc(12 * var(--u)) / 1 var(--mono);
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.stepName h3 {
+  margin: 0;
+  font: 500 calc(26 * var(--u)) / 1.2 var(--display);
+  letter-spacing: -0.02em;
+}
+
+.step p {
+  margin: 0;
+  font: 400 calc(16 * var(--u)) / 1.6 var(--display);
+  color: rgba(255, 255, 255, 0.74);
+}
+
+/* Column labels repeat inside each cell, but only show on small screens. */
+.step em {
+  display: none;
+}
+
+/* ---------- Proof link ---------- */
+
+.proof {
+  display: grid;
+  grid-template-columns: calc(300 * var(--u)) 1fr auto;
+  gap: calc(40 * var(--u));
+  align-items: center;
+  margin-top: calc(28 * var(--u));
+  padding: calc(22 * var(--u)) 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  font: 400 calc(18 * var(--u)) / 1.4 var(--display);
+  color: var(--ink);
+  transition: color 0.2s var(--ease-out);
+}
+
+.proof > span:last-child {
+  color: var(--accent);
+  font-size: calc(20 * var(--u));
+  transition: transform 0.25s var(--ease-out);
+}
+
+.proof:hover > span:last-child {
+  transform: translateX(4px);
+}
+
+.proof:focus-visible,
+.addon:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* ---------- Add-ons ---------- */
+
+.addons {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-bottom: 1px solid var(--rule);
+}
+
+.addon {
+  display: grid;
+  grid-template-columns: calc(300 * var(--u)) minmax(0, 1fr) calc(200 * var(--u)) auto;
+  gap: calc(40 * var(--u));
+  align-items: baseline;
+  padding-block: calc(24 * var(--u));
+  border-top: 1px solid var(--rule);
+  color: inherit;
+}
+
+.addon h3 {
+  margin: 0;
+  font: 500 calc(22 * var(--u)) / 1.25 var(--display);
+  letter-spacing: -0.02em;
+}
+
+.addon p {
+  max-width: 48ch;
+  margin: 0;
+  font: 400 calc(16 * var(--u)) / 1.6 var(--display);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.addonPrice {
+  font: 400 calc(12 * var(--u)) / 1.4 var(--mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+.addonArrow {
+  color: var(--ink-dim);
+  transition:
+    color 0.2s var(--ease-out),
+    transform 0.25s var(--ease-out);
+}
+
+.addon:hover .addonArrow {
+  color: var(--accent);
+  transform: translateX(4px);
+}
+
+/* ---------- FAQ ---------- */
+
+.faq {
+  margin-left: calc(340 * var(--u));
+  border-top: 1px solid var(--rule);
+}
+
+.qa {
+  border-bottom: 1px solid var(--rule);
+}
+
+.qa summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: calc(22 * var(--u)) 0;
+  font: 500 calc(20 * var(--u)) / 1.3 var(--display);
+  letter-spacing: -0.015em;
+  list-style: none;
+  cursor: pointer;
+}
+
+.qa summary::-webkit-details-marker {
+  display: none;
+}
+
+.qa summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+.plus {
+  position: relative;
+  flex: none;
+  width: 16px;
+  height: 16px;
+}
+
+.plus::before,
+.plus::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background: var(--accent);
+  transition: transform 0.35s var(--ease-out);
+}
+
+.plus::after {
+  transform: rotate(90deg);
+}
+
+.qa[open] .plus::after {
+  transform: rotate(0deg);
+}
+
+.qa p {
+  max-width: calc(680 * var(--u));
+  margin: 0;
+  padding: 0 0 calc(24 * var(--u));
+  font: 400 calc(17 * var(--u)) / 1.6 var(--display);
+  color: rgba(255, 255, 255, 0.74);
+}
+
+/* ---------- Tablet ---------- */
+
+@media (min-width: 900px) and (max-width: 1100px) {
+  .stepsHead,
+  .step {
+    grid-template-columns: calc(220 * var(--u)) repeat(3, minmax(0, 1fr));
+    gap: calc(28 * var(--u));
+  }
+
+  .addon {
+    grid-template-columns: calc(220 * var(--u)) minmax(0, 1fr) auto;
+  }
+
+  .addonPrice {
+    grid-column: 2;
+  }
+
+  .addonArrow {
+    grid-row: 1;
+    grid-column: 3;
+  }
+
+  .proof {
+    grid-template-columns: calc(220 * var(--u)) 1fr auto;
+  }
+
+  .faq {
+    margin-left: calc(260 * var(--u));
+  }
+}
+
+/* ---------- Phones ---------- */
+
+@media (max-width: 899px) {
+  .headBody {
+    margin-top: 12px;
+  }
+
+  .price {
+    font-size: 26px;
+  }
+
+  .note {
+    font-size: 14px;
+  }
+
+  .stepsHead {
+    display: none;
+  }
+
+  .step {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding-block: 22px;
+  }
+
+  .stepName h3 {
+    font-size: 22px;
+  }
+
+  .step p {
+    font-size: 15px;
+  }
+
+  .step em {
+    display: block;
+    margin-bottom: 4px;
+    font: normal 400 11px / 1.4 var(--mono);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+
+  .proof {
+    grid-template-columns: 1fr auto;
+    gap: 8px 16px;
+    font-size: 16px;
+  }
+
+  .proof > span:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .addon {
+    grid-template-columns: 1fr auto;
+    gap: 8px 16px;
+    padding-block: 20px;
+  }
+
+  .addon h3 {
+    font-size: 19px;
+  }
+
+  .addon p {
+    grid-column: 1 / -1;
+    font-size: 15px;
+  }
+
+  .addonPrice {
+    grid-column: 1;
+  }
+
+  .addonArrow {
+    grid-row: 1;
+    grid-column: 2;
+  }
+
+  .faq {
+    margin-left: 0;
+  }
+
+  .qa summary {
+    padding: 18px 0;
+    font-size: 17px;
+  }
+
+  .qa p {
+    padding-bottom: 20px;
+    font-size: 15px;
+  }
+}

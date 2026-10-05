@@ -1,12 +1,20 @@
 /** Default byline for Echoes. Future posts inherit this; there is no per-post author. */
 export const ECHOES_AUTHOR = "Agent Lane";
 
+/** The four topics a note can sit under. */
+export type EchoTopic = "Strategy" | "Design" | "Build" | "Launch";
+
 export type Echo = {
   id: string;
   title: string;
   excerpt: string;
   note: string;
   image: string;
+  topic: EchoTopic;
+  /** Minutes to read. Estimated: the notes are short pieces, about three minutes each. */
+  readTime: number;
+  /** CSS background-position for the cover. Defaults to centre; set it when a crop must keep a subject in frame. */
+  imagePosition?: string;
   featured?: boolean;
   kicker?: string;
 };
@@ -19,6 +27,8 @@ export const ECHOES: Echo[] = [
     excerpt: "Treat the model as part of the product's structure, not a panel added after the design is finished.",
     note: "Note 01",
     image: "/craft/tile-1.jpg",
+    topic: "Strategy",
+    readTime: 4,
     featured: true,
     kicker: "From the studio notebook.",
   },
@@ -28,6 +38,8 @@ export const ECHOES: Echo[] = [
     excerpt: "A sketch is a decision you can throw away. It is not a promise to the next person in the file.",
     note: "Note 02",
     image: "/craft/tile-2.jpg",
+    topic: "Design",
+    readTime: 3,
   },
   {
     id: "the-quiet-parts",
@@ -35,6 +47,8 @@ export const ECHOES: Echo[] = [
     excerpt: "The work people remember is often the spacing, the pause, and the thing that was left out.",
     note: "Note 03",
     image: "/craft/tile-3.jpg",
+    topic: "Design",
+    readTime: 3,
   },
   {
     id: "handed-over",
@@ -42,6 +56,8 @@ export const ECHOES: Echo[] = [
     excerpt: "If the next person cannot run it without you in the room, it is not finished.",
     note: "Note 04",
     image: "/process/card-1.jpg",
+    topic: "Build",
+    readTime: 4,
   },
   {
     id: "pace",
@@ -49,6 +65,8 @@ export const ECHOES: Echo[] = [
     excerpt: "Shipping fast is a choice about what you are willing to learn in public.",
     note: "Note 05",
     image: "/process/card-2.jpg",
+    topic: "Strategy",
+    readTime: 2,
   },
   {
     id: "before-the-build",
@@ -56,6 +74,10 @@ export const ECHOES: Echo[] = [
     excerpt: "Write the constraints down before the interface starts agreeing with everyone.",
     note: "Note 06",
     image: "/echoes/before-the-build-v2.jpg",
+    topic: "Build",
+    readTime: 3,
+    // Pin the robot to the top so no crop ever cuts its head.
+    imagePosition: "center top",
   },
   {
     id: "after-launch",
@@ -63,7 +85,12 @@ export const ECHOES: Echo[] = [
     excerpt: "Launch is the first time the work meets a person who did not brief it.",
     note: "Note 07",
     image: "/process/hero.jpg",
+    topic: "Launch",
+    readTime: 3,
   },
 ];
 
 export const ECHOES_AUTHOR_ROLE = "Studio notes";
+
+/** "3 min read". */
+export const readTimeLabel = (minutes: number) => `${minutes} min read`;

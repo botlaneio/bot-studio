@@ -9,9 +9,20 @@ const INSPIRE_LINES = [
   "Craft, clarity, and performance",
 ];
 
+type InspireCloseProps = {
+  /** The three heading lines; the middle one takes the accent word style. */
+  heading?: readonly [string, string, string];
+  /** Label on the single call button. */
+  ctaLabel?: string;
+};
+
+const DEFAULT_HEADING = ["Let us", "inspire", "your next project"] as const;
+
 /** Full-bleed gradient video behind the Whispers / Echoes close.
- *  Shared so other pages reuse this section instead of copying the markup. */
-export function InspireClose() {
+ *  Shared so other pages reuse this section instead of copying the markup.
+ *  Props are optional; without them the close renders exactly as before. */
+export function InspireClose({ heading = DEFAULT_HEADING, ctaLabel = "Request an intro call" }: InspireCloseProps = {}) {
+  const [first, word, last] = heading;
   return (
     <section className={styles.inspire} aria-label="Start a conversation">
       <LazyVideo className={styles.inspireVideo} src="/inspire-wave.mp4" poster="/inspire-wave-poster.jpg" />
@@ -38,18 +49,18 @@ export function InspireClose() {
         </div>
         <div className={styles.inspireRight}>
           <h2 className={styles.inspireHeading}>
-            <span className={styles.inspireLine}>Let us</span>
+            <span className={styles.inspireLine}>{first}</span>
             <span className={styles.inspireLine}>
-              <span className={styles.inspireWord}>inspire</span>
+              <span className={styles.inspireWord}>{word}</span>
             </span>
-            <span className={styles.inspireLine}>your next project</span>
+            <span className={styles.inspireLine}>{last}</span>
           </h2>
           <blockquote className={styles.inspireQuote}>
             <p>We listen first, stay transparent, and deliver what we promise. Every project matters to us.</p>
             <footer>BotLane LLC</footer>
           </blockquote>
           <a className={`${styles.chat} arrowHost`} href="/contact#inquiry">
-            Request an intro call
+            {ctaLabel}
             <Arrow className={styles.chatArrow} />
           </a>
         </div>

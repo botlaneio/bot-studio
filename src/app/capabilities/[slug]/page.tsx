@@ -10,6 +10,7 @@ import styles from "../capabilities.module.css";
 import { Strategy } from "@/components/strategy/Strategy";
 import { Websites } from "@/components/websites/Websites";
 import { WebApps } from "@/components/webapps/WebApps";
+import { AIIntegrations } from "@/components/ai/AIIntegrations";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -36,6 +37,7 @@ export default async function CapabilityPage({ params }: Props) {
   if (capability.slug === "websites") return <Websites />;
   if (capability.slug === "web-apps") return <WebApps />;
   if (capability.slug === "strategy") return <Strategy />;
+  if (capability.slug === "ai-systems") return <AIIntegrations />;
   return (
     <main className={page.page}>
       <PageHero kicker={`// ${capability.tag}`} title={capability.title} mark="." lede={capability.detail} />

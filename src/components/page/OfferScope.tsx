@@ -11,11 +11,13 @@ type Props = {
   items: ScopeItem[];
   /** Primary button text, e.g. "Discuss your website". */
   cta: string;
+  /** Line under the heading. Defaults to the core-offer line. */
+  intro?: string;
 };
 
 /** "What you get" for an offer page: numbered deliverables with a line on
  *  what each means, then the proposal note beside the next step. */
-export function OfferScope({ label, items, cta }: Props) {
+export function OfferScope({ label, items, cta, intro = "Strategy, design and development, carried by one team from the first conversation to launch." }: Props) {
   return (
     <section className={page.section} aria-labelledby="offer-scope">
       <div className={page.sectionHead}>
@@ -27,7 +29,7 @@ export function OfferScope({ label, items, cta }: Props) {
             What you get<b>.</b>
           </h2>
           <p className={`${page.body} ${styles.intro}`} data-reveal="">
-            Strategy, design and development, carried by one team from the first conversation to launch.
+            {intro}
           </p>
         </div>
       </div>

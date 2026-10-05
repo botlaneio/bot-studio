@@ -1,15 +1,16 @@
 import type { CSSProperties } from "react";
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 import { InspireClose } from "@/components/InspireClose";
 import page from "@/components/page/Page.module.css";
 import { ECHOES, ECHOES_AUTHOR, ECHOES_AUTHOR_ROLE } from "./echoes";
 import styles from "./echoes.module.css";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/echoes" },
+export const metadata: Metadata = pageMetadata({
+  path: "/echoes",
   title: "Echoes",
   description: "Short notes on creativity, strategy and making things work.",
-};
+});
 
 const delay = (s: number) => ({ "--reveal-delay": `${s}s` }) as CSSProperties;
 

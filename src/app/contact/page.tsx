@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 import { InspireClose } from "@/components/InspireClose";
 import { LazyVideo } from "@/components/LazyVideo";
 import { ContactForm } from "./ContactForm";
 import styles from "./contact.module.css";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/contact" },
+export const metadata: Metadata = pageMetadata({
+  path: "/contact",
   title: "Contact",
-  description:
-    "Talk to Botlane Studios in Sheridan, Wyoming. Email project@botlane.studio or call +1 307 218 5175.",
-};
+  description: "Talk to Botlane Studios in Sheridan, Wyoming. Email project@botlane.studio or call +1 307 218 5175.",
+});
 
 export default function ContactPage() {
   return (

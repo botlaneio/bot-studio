@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 import { PageHero } from "@/components/page/PageHero";
 import page from "@/components/page/Page.module.css";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/privacy" },
+export const metadata: Metadata = pageMetadata({
+  path: "/privacy",
   title: "Privacy policy",
   description: "How Botlane Studios (BotLane LLC) handles personal information.",
-};
+});
 
 export default function PrivacyPage() {
   return (

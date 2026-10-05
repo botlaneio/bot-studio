@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 import Image from "next/image";
 import Link from "next/link";
 import { Arrow } from "@/components/motion/Arrow";
@@ -8,12 +9,11 @@ import page from "@/components/page/Page.module.css";
 import { ProcessSamples } from "./ProcessSamples";
 import styles from "./work.module.css";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/work" },
+export const metadata: Metadata = pageMetadata({
+  path: "/work",
   title: "Work",
-  description:
-    "What Botlane Studios has built, the studies we set ourselves, and how we work. A new studio, shown honestly: no borrowed logos or invented case studies.",
-};
+  description: "What Botlane Studios has built, the studies we set ourselves, and how we work. A new studio, shown honestly: no borrowed logos or invented case studies.",
+});
 
 const delay = (s: number) => ({ "--reveal-delay": `${s}s` }) as CSSProperties;
 

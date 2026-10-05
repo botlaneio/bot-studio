@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 import Link from "next/link";
 import { PageHero } from "@/components/page/PageHero";
 import page from "@/components/page/Page.module.css";
 import { DOCS } from "./docs";
 import styles from "./knowledge.module.css";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/knowledge" },
+export const metadata: Metadata = pageMetadata({
+  path: "/knowledge",
   title: "Knowledge",
   description: "Documents about Botlane Studios, the design studio of BotLane LLC, drawn from what this site already says.",
-};
+});
 
 export default function KnowledgePage() {
   return (

@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 import Link from "next/link";
 import { Arrow } from "@/components/motion/Arrow";
 import { PageHero } from "@/components/page/PageHero";
@@ -7,12 +8,11 @@ import page from "@/components/page/Page.module.css";
 import { SheridanClock } from "@/components/SheridanClock";
 import styles from "./about.module.css";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/about" },
+export const metadata: Metadata = pageMetadata({
+  path: "/about",
   title: "About us",
-  description:
-    "Botlane Studios is the design studio of BotLane LLC: a small team in Sheridan, Wyoming, building websites for brands worldwide.",
-};
+  description: "Botlane Studios is the design studio of BotLane LLC: a small team in Sheridan, Wyoming, building websites for brands worldwide.",
+});
 
 const PRINCIPLES = [
   { title: "Craft over volume", text: "We take on fewer projects so each one gets our full attention, down to the last pixel and the last millisecond." },

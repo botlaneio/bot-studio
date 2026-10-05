@@ -7,6 +7,7 @@ import { Nav } from "@/components/Nav";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { LaneChat } from "@/components/lane/LaneChat";
 import { SITE_URL } from "@/lib/site";
+import { STRUCTURED_DATA } from "@/lib/metadata";
 
 const figtree = Figtree({
   variable: "--font-figtree",
@@ -65,6 +66,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         {/* Marks that scripts run, before first paint, so entrance animations
             can start hidden without hiding anything when they do not. */}
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(STRUCTURED_DATA).replace(/</g, "\\u003c") }}
+        />
       </head>
       <body>
         <SmoothScroll />

@@ -3,7 +3,8 @@ import { SITE_URL } from "@/lib/site";
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: { userAgent: "*", allow: "/", disallow: "/preview" },
+    // /preview is not disallowed: crawlers must fetch it to see its noindex tag.
+    rules: { userAgent: "*", allow: "/" },
     sitemap: `${SITE_URL}/sitemap.xml`,
     host: SITE_URL,
   };

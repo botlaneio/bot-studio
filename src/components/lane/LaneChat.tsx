@@ -227,6 +227,7 @@ export function LaneChat() {
     el?.style.setProperty(names[1], "0.5");
   };
 
+  const asked = lines.some((l) => l.role === "user");
   const lastAssistantId = lines.reduce((last, l) => (l.role === "assistant" ? l.id : last), -1);
 
   /** An answer's follow-up: a view in the large window, otherwise a link. */
@@ -257,7 +258,6 @@ export function LaneChat() {
         <img src="/lane/header.webp" alt="" width={704} height={300} decoding="async" />
       </div>
       <div className={styles.headTop}>
-        <p className={styles.kicker}>{"// Studio guide"}</p>
         {withClose ? closeButton : null}
       </div>
       <div className={styles.headBottom}>
@@ -285,7 +285,7 @@ export function LaneChat() {
               </p>
               {line.id === lastAssistantId && !typing && line.actions?.length ? (
                 <div className={styles.nextSteps} aria-label="Next steps" role="group">
-                  {line.actions.map(actionEl)}
+                  {line.actions.slice(0, 2).map(actionEl)}
                 </div>
               ) : null}
             </div>
@@ -304,6 +304,7 @@ export function LaneChat() {
         ) : null}
       </div>
 
+      {!asked && (
       <div className={styles.pills} aria-label="Suggested questions" role="group">
         {CHIPS.map((label, index) => (
           <button key={label} type="button" className={styles.pill} style={{ "--i": index } as CSSProperties} onClick={() => ask(label)} disabled={typing}>
@@ -311,6 +312,7 @@ export function LaneChat() {
           </button>
         ))}
       </div>
+      )}
 
       <form className={styles.composer} onSubmit={onSubmit}>
         <label className={styles.visuallyHidden} htmlFor={fieldId}>
@@ -365,14 +367,10 @@ export function LaneChat() {
                         <span className={styles.railIcon} aria-hidden="true">
                           <ViewIcon view={v} />
                         </span>
-                        <span className={styles.railText}>
-                          <b>{VIEW_META[v].title}</b>
-                          <span>{VIEW_META[v].line}</span>
-                        </span>
+                        <span className={styles.railText}>{VIEW_META[v].title}</span>
                       </button>
                     ))}
                   </nav>
-                  <p className={styles.railFine}>Answers use published studio information. ‘Start a project’ emails your brief to the studio.</p>
                 </aside>
                 <div className={styles.main}>
                   <div className={styles.mainHead}>
@@ -381,7 +379,6 @@ export function LaneChat() {
                         {VIEW_META[view].title}
                         <span className={styles.dot}>.</span>
                       </h2>
-                      <p className={styles.mainLine}>{VIEW_META[view].line}</p>
                     </div>
                     {closeButton}
                   </div>
@@ -396,18 +393,7 @@ export function LaneChat() {
               <>
                 {header(true)}
                 {chat}
-                <div className={styles.actions}>
-                  <a className={styles.primary} href="/contact">
-                    Talk to the team
-                    <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
-                      <path d="M2 6h8M6.5 2.5 10 6 6.5 9.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </a>
-                  <a className={styles.secondary} href="/pricing">
-                    View pricing
-                  </a>
-                </div>
-                <p className={styles.fine}>Answers use published studio information. Messages stay in this browser session.</p>
+<p className={styles.fine}>Answers from published studio information.</p>
               </>
             )}
           </section>

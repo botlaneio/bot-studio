@@ -49,8 +49,10 @@ The site runs as the `bot-studio` Cloudflare Worker, built with
 Worker settings in the Cloudflare dashboard (Settings → Builds):
 
 - Branch control: `main`
-- Build command: `npm run cf:build`
+- Build command: `npx opennextjs-cloudflare build`
 - Deploy command: `npx wrangler deploy`
+
+Use `npx opennextjs-cloudflare build` as the build command going forward, not `npm run build`. Plain `npm run build` skips OpenNext, so `.open-next/worker.js` is never created and the deploy fails.
 
 Secrets (Worker → Settings → Variables and Secrets, type **Secret**):
 

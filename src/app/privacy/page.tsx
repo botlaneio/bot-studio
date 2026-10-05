@@ -14,7 +14,7 @@ export default function PrivacyPage() {
       <PageHero kicker="// Legal" title="Privacy policy" mark="." />
       <section className={page.section}>
         <div className={page.prose}>
-          <p className={page.updated}>Last updated 2 October 2026</p>
+          <p className={page.updated}>Last updated 5 October 2026</p>
 
           <p>
             This policy explains how BotLane LLC (&ldquo;Botlane Studios&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;) handles personal
@@ -24,7 +24,7 @@ export default function PrivacyPage() {
           <h2>Who we are</h2>
           <p>
             BotLane LLC, 30 N Gould St, Ste R, Sheridan, WY 82801, United States. You can reach us at{" "}
-            <a href="mailto:admin@botlane.io">admin@botlane.io</a> or +1 307 218 5715.
+            <a href="mailto:project@botlane.studio">project@botlane.studio</a> or +1 307 218 5715.
           </p>
 
           <h2>What we collect</h2>
@@ -64,7 +64,7 @@ export default function PrivacyPage() {
           <h2>Your choices and rights</h2>
           <p>
             You can ask us to access, correct or delete the personal information we hold about you, or to stop contacting you, by emailing{" "}
-            <a href="mailto:admin@botlane.io">admin@botlane.io</a>. Depending on where you live, you may have further rights under local
+            <a href="mailto:project@botlane.studio">project@botlane.studio</a>. Depending on where you live, you may have further rights under local
             law; we will honour them.
           </p>
 

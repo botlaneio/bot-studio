@@ -17,7 +17,7 @@ export function ContactForm() {
     const body = [`Name: ${name}`, company ? `Company: ${company}` : "", `Email: ${email}`, "", message]
       .filter((line) => line !== "")
       .join("\n");
-    const href = `mailto:admin@botlane.io?subject=${encodeURIComponent("Botlane Studios")}&body=${encodeURIComponent(body)}`;
+    const href = `mailto:project@botlane.studio?subject=${encodeURIComponent("Botlane Studios")}&body=${encodeURIComponent(body)}`;
     window.location.href = href;
   };
 
@@ -43,7 +43,7 @@ export function ContactForm() {
         Prepare email
         <Arrow className={styles.submitArrow} />
       </button>
-      <p className={styles.legal}>This opens a draft in your email app. Review it and send it there. If your email app does not open, write to <a href="mailto:admin@botlane.io">admin@botlane.io</a>.</p>
+      <p className={styles.legal}>This opens a draft in your email app. Review it and send it there. If your email app does not open, write to <a href="mailto:project@botlane.studio">project@botlane.studio</a>.</p>
       <p className={styles.legal}>
         See our <Link href="/terms">Terms of Service</Link>.
       </p>

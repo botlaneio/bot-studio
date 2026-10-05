@@ -4,7 +4,7 @@ import { CAPABILITIES, NAV_CAPABILITIES } from "../capabilities";
 export function studioReply(message: string): string {
   const text = message.toLowerCase();
   if (/existing|support|customer/.test(text)) {
-    return "For an existing project, contact admin@botlane.io with your project name and what you need. You can also use ‘Talk to the team’ below. This guide cannot access project records or create support tickets.";
+    return "For an existing project, contact project@botlane.studio with your project name and what you need. You can also use ‘Talk to the team’ below. This guide cannot access project records or create support tickets.";
   }
   if (/price|pricing|cost|budget|plan|package|quote|compare/.test(text)) {
     return "Websites: from $8,000. Strategy, design, and development are included.\n\nWeb Apps: from $20,000, plus discovery. Strategy, design, and development are included.\n\nSEO and AI are optional add-ons, quoted separately. Every project is still quoted to its agreed scope. The ranges are on the pricing page.";

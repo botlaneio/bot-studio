@@ -242,8 +242,8 @@ export function Footer() {
               </div>
               <div>
                 <p className={styles.colLabel}>Online</p>
-                <a className={styles.mail} href="mailto:admin@botlane.io">
-                  admin@botlane.io
+                <a className={styles.mail} href="mailto:project@botlane.studio">
+                  project@botlane.studio
                 </a>
               </div>
             </div>

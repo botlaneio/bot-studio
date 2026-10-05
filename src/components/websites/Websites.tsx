@@ -7,7 +7,8 @@ import { PageHero } from "../page/PageHero";
 import { OfferScope, type ScopeItem } from "../page/OfferScope";
 import page from "../page/Page.module.css";
 import { WebsiteIntro } from "./WebsiteIntro";
-import styles from "./Websites.module.css";
+import { OfferHead as Head } from "../page/OfferHead";
+import styles from "../page/OfferPage.module.css";
 
 const plan = PLANS.find((p) => p.slug === "websites")!;
 const bands = BANDS.find((b) => b.name === "Websites")!.rows;
@@ -84,27 +85,6 @@ const questions = [
 ];
 
 const delay = (s: number) => ({ "--reveal-delay": `${s}s` }) as CSSProperties;
-
-function Head({ label, title, body, id }: { label: string; title: string; body?: string; id: string }) {
-  return (
-    <div className={page.sectionHead}>
-      <span className={page.label} data-reveal="">
-        {label}
-      </span>
-      <div>
-        <h2 id={id} className={page.h2} data-reveal="">
-          {title}
-          <b>.</b>
-        </h2>
-        {body && (
-          <p className={`${page.body} ${styles.headBody}`} data-reveal="" style={delay(0.05)}>
-            {body}
-          </p>
-        )}
-      </div>
-    </div>
-  );
-}
 
 /** The Websites offer page: one of the studio's two core services. */
 export function Websites() {

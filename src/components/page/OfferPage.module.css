@@ -1,5 +1,5 @@
-/* Websites offer page. Builds on Page.module.css (cards, heads, labels)
-   and only adds what the shared system doesn't have. */
+/* Shared by the core offer pages (Websites, Web Apps). Builds on
+   Page.module.css and only adds what the shared system doesn't have. */
 
 .headBody {
   margin-top: calc(18 * var(--u));

@@ -96,10 +96,12 @@
   background: rgba(255, 255, 255, 0.7);
 }
 
+/* Tinted panel behind the headline and lockup. A solid tint rather than a
+   backdrop blur: blurring over the slowly zooming photo forced the browser to
+   recompute the blur every frame. The photo shows through sharp. */
 .scrim {
-  background: var(--scrim);
-  -webkit-backdrop-filter: blur(18px);
-  backdrop-filter: blur(18px);
+  background: rgba(5, 8, 16, 0.72);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
   border-radius: 14px;
 }
 

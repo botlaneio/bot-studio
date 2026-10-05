@@ -13,7 +13,7 @@
 .stage {
   width: calc(1280 * var(--u));
   margin: 0 auto;
-  padding-inline: calc(40 * var(--u));
+  padding-inline: calc(20 * var(--u));
 }
 
 /* Marker 20x3 and a hairline, above the word, full width of the stage. */
@@ -39,7 +39,7 @@
   margin: calc(28 * var(--u)) 0 0;
   font: 600 calc(318 * var(--u)) / 1.1 var(--display);
   letter-spacing: -0.06em;
-  text-align: center;
+  text-align: left;
   color: #8b9096;
 }
 
@@ -49,7 +49,7 @@
   align-items: flex-start;
   gap: calc(40 * var(--u));
   margin-top: calc(36 * var(--u));
-  padding: calc(28 * var(--u)) calc(10 * var(--u)) 0;
+  padding: calc(28 * var(--u)) 0 0;
 }
 
 .subtitle {

@@ -4,6 +4,11 @@ import { CAPABILITIES, NAV_CAPABILITIES } from "../capabilities";
 /** Local guidance from published content. Never invent prices or claim a handoff. */
 export function studioReply(message: string): string {
   const text = message.toLowerCase();
+  // "Why pay this when AI can build it?" Checked first, so it isn't read as
+  // a plain price question or a request for the AI add-on.
+  if (/\bai\b|chatgpt|artificial intelligence/.test(text) && /why|instead|cheaper|expensive|worth|pay|just use|myself|build it|make it/.test(text)) {
+    return "Fair question. AI can now produce a page in minutes, and for some needs that's enough.\n\nWhat a Botlane project pays for is everything around the page: deciding who your site or app is for and what it must say, design that doesn't look like everyone else's, speed, accessibility and search done properly, and a team accountable for the result.\n\nOnce the project is paid in full, the design and code are yours. The ranges are on the pricing page, or use ‘Talk to the team’ below to compare options for your project.";
+  }
   if (/existing|support|customer/.test(text)) {
     return "For an existing project, contact project@botlane.studio with your project name and what you need. You can also use ‘Talk to the team’ below. This guide cannot access project records or create support tickets.";
   }

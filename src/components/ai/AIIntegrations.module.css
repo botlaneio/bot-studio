@@ -121,7 +121,7 @@
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: calc(28 * var(--u));
-  background: #0a0b0d url("/ai/ai-reel-poster.jpg") center / cover;
+  background: #0a0b0d url("/ai/ai-hero-loop-poster.jpg") center / cover;
   box-shadow:
     0 2px 0 rgba(255, 255, 255, 0.04) inset,
     0 40px 100px rgba(0, 0, 0, 0.7),

@@ -321,7 +321,10 @@ export function AIIntegrations() {
         <div className={styles.stage} data-reveal="" style={delay(0.2)}>
           <div className={styles.glow} aria-hidden="true" />
           <div className={styles.reel}>
-            <LazyVideo className={styles.reelVideo} src="/ai/ai-reel.mp4" poster="/ai/ai-reel-poster.jpg" />
+            {/* 10 s studio-made loop: Lane's lens takes a visitor's question, finds the
+                source in the business's content and draws the answer, then folds back.
+                Source: brand-film/ai-hero (render with render.py). */}
+            <LazyVideo className={styles.reelVideo} src="/ai/ai-hero-loop.mp4" poster="/ai/ai-hero-loop-poster.jpg" />
           </div>
           <div className={`${styles.float} ${styles.floatA}`} aria-hidden="true">
             <span className={styles.floatKey}>Assistant</span>

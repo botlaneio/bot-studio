@@ -24,6 +24,10 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* The reel is portrait and the robot's head starts about 17% down the
+     frame. Cropping from 12% (not the centre) keeps the whole head in view
+     on wide screens, where most of the frame's height is cut. */
+  object-position: 50% 12%;
   filter: brightness(0.7);
 }
 

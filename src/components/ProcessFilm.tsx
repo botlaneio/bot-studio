@@ -17,11 +17,12 @@ const IMAGES = ["/process/hero.jpg", "/process/card-1.jpg", "/process/card-2.jpg
  *  from the 3D one, at its exact size and spot, with rings that close in on
  *  it like a pointer locator. It opens the chat modal, which pops out of it.
  *
- *  three.js (~500 KB) and the scene load only once the page has finished
- *  loading and the browser is idle, and the visitor is within a screen of the
- *  section, so they never compete with the hero. Scrolling toward the section
- *  loads them straight away. If a device cannot draw WebGL, a still of the
- *  finished page stands in. */
+ *  three.js (~500 KB) and the scene load only once the visitor shows intent:
+ *  their first scroll, touch, click or key press, or the section actually
+ *  entering the screen (for example a link straight to #process). A visitor
+ *  who only reads the hero never pays for it, so it cannot compete with the
+ *  hero on a phone. If a device cannot draw WebGL, a still of the finished
+ *  page stands in. */
 export function ProcessFilm() {
   const sectionRef = useRef<HTMLElement>(null);
   const mountRef = useRef<HTMLDivElement>(null);
@@ -39,14 +40,17 @@ export function ProcessFilm() {
     let cancelled = false;
     let started = false;
     let cleanup: (() => void) | undefined;
-    let idleId = 0;
-    let near: IntersectionObserver | undefined;
+    const INTENT = ["scroll", "wheel", "touchstart", "pointerdown", "keydown"] as const;
+
+    const stopListening = () => {
+      seen.disconnect();
+      for (const type of INTENT) window.removeEventListener(type, start);
+    };
 
     const start = () => {
       if (started || cancelled) return;
       started = true;
-      near?.disconnect();
-      window.removeEventListener("scroll", onScroll);
+      stopListening();
       import("./process/scene")
           .then(({ mountProcessScene }) => {
             if (cancelled) return;
@@ -77,33 +81,18 @@ export function ProcessFilm() {
           });
     };
 
-    // A visitor heading for the section gets the scene immediately.
-    const onScroll = () => {
-      if (section.getBoundingClientRect().top < window.innerHeight * 1.5) start();
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-
-    // Otherwise: after load, when idle, and only if the section is close.
-    const whenIdle = () => {
-      near = new IntersectionObserver(([entry]) => entry.isIntersecting && start(), { rootMargin: "100% 0px" });
-      near.observe(section);
-    };
-    const afterLoad = () => {
-      const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number };
-      if (w.requestIdleCallback) idleId = w.requestIdleCallback(whenIdle, { timeout: 4000 });
-      else idleId = window.setTimeout(whenIdle, 2000);
-    };
-    if (document.readyState === "complete") afterLoad();
-    else window.addEventListener("load", afterLoad, { once: true });
+    // First sign of intent: the visitor starts moving through the page.
+    for (const type of INTENT) window.addEventListener(type, start, { passive: true, once: true });
+    // Or the section is already on screen (a deep link, or a tall window).
+    // A section that only touches the bottom edge counts as "intersecting" to
+    // the browser, and on a phone the hero is exactly one screen tall, so it
+    // must be at least a little visible.
+    const seen = new IntersectionObserver(([entry]) => entry.intersectionRatio > 0 && start(), { threshold: 0.02 });
+    seen.observe(section);
 
     return () => {
       cancelled = true;
-      near?.disconnect();
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("load", afterLoad);
-      const w = window as Window & { cancelIdleCallback?: (id: number) => void };
-      if (w.cancelIdleCallback) w.cancelIdleCallback(idleId);
-      clearTimeout(idleId);
+      stopListening();
       cleanup?.();
     };
   }, []);

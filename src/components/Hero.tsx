@@ -15,6 +15,9 @@ const TICKS = [
 
 const WORDS = "Websites and web apps that connect, scale and perform".split(" ");
 
+/** Matches the one-column hero in Hero.module.css. */
+const ONE_COLUMN = "(max-width: 899px)";
+
 const vars = (v: Record<string, string | number>) => v as CSSProperties;
 
 /** The hero, with the template's load sequence: the photo zooms down into
@@ -48,7 +51,7 @@ export function Hero() {
         </h1>
 
         <p className={styles.tagline}>
-          <Scramble text="Quietly crafting for American businesses" delay={1000} duration={1000} />
+          <Scramble text="Quietly crafting for American businesses" delay={1000} duration={1000} staticWhen={ONE_COLUMN} />
         </p>
 
         {/* The brand lockup is display type, not a heading: the headline above is
@@ -62,10 +65,10 @@ export function Hero() {
 
         <div className={styles.message}>
           <p>
-            <Scramble text="Small studio, modern tech." delay={700} />
+            <Scramble text="Small studio, modern tech." delay={700} staticWhen={ONE_COLUMN} />
           </p>
           <p>
-            <Scramble text="Strategy, design and development, together." delay={850} />
+            <Scramble text="Strategy, design and development, together." delay={850} staticWhen={ONE_COLUMN} />
           </p>
         </div>
 

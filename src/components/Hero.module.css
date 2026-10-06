@@ -650,3 +650,29 @@
     font-size: 12px;
   }
 }
+
+/* ---------- phones: hero lines visible from the first paint ---------- */
+/* On one column the mono lines are the largest text on screen, so they skip
+   the decode (Scramble staticWhen) and are never hidden while JavaScript
+   loads. They still rise into place, but without fading, so they count as
+   painted straight away. Keep this query in step with ONE_COLUMN in Hero.tsx. */
+@media (max-width: 899px) {
+  .stage .message :global([data-scramble]),
+  .stage .tagline :global([data-scramble]) {
+    visibility: visible;
+    animation: none;
+  }
+}
+
+@media (max-width: 899px) and (prefers-reduced-motion: no-preference) {
+  .stage .message,
+  .stage .tagline {
+    animation: rise-only 0.9s var(--ease-rise) 0.5s both;
+  }
+}
+
+@keyframes rise-only {
+  from {
+    transform: translateY(14px);
+  }
+}

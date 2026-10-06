@@ -477,3 +477,55 @@
     height: 36px;
   }
 }
+
+/* Phones: the black closing band reads logo, blurb, Navigate and Links side
+   by side, social icons, then the copyright line last. The wrappers step
+   aside (display: contents) so their children can be ordered directly. */
+@media (max-width: 899px) {
+  .top {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .topGrid,
+  .pitch,
+  .meta,
+  .legalBlock {
+    display: contents;
+  }
+
+  .tagline {
+    display: none;
+  }
+
+  .wordmark {
+    order: 1;
+    margin-top: 0;
+  }
+
+  .blurb {
+    order: 2;
+  }
+
+  .cols {
+    order: 3;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 40px;
+  }
+
+  .social {
+    order: 4;
+    margin-top: 40px;
+    min-height: 0;
+  }
+
+  .copy {
+    order: 5;
+    margin-top: 36px;
+  }
+
+  .siteLine {
+    order: 6;
+  }
+}

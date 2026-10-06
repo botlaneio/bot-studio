@@ -190,12 +190,13 @@
   color: #ffffff;
 }
 
+/* Social icons sit in the left column, just above the copyright line. */
 .social {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: calc(24 * var(--u));
-  min-height: 100%;
+  margin-top: calc(30 * var(--u));
 }
 
 .socialIcons {
@@ -260,7 +261,7 @@
 }
 
 .copy {
-  margin-top: calc(28 * var(--u));
+  margin-top: calc(18 * var(--u));
 }
 
 .contacts {

@@ -207,6 +207,19 @@ export function Footer() {
             <p className={styles.blurb}>
               Websites and web apps designed and built for brands that demand craft, clarity, and performance.
             </p>
+            <div className={styles.social}>
+              <div className={styles.socialIcons}>
+                {INSTAGRAM ? <a className={styles.socialLink} href={INSTAGRAM} target="_blank" rel="noopener" aria-label="Instagram">
+                  <InstagramIcon className={styles.socialIcon} />
+                </a> : <span className={styles.socialLink} role="img" aria-label="Instagram"><InstagramIcon className={styles.socialIcon} /></span>}
+                {X ? <a className={styles.socialLink} href={X} target="_blank" rel="noopener" aria-label="X">
+                  <SocialIcon className={styles.socialIcon} d={X_PATH} fill="#ffffff" />
+                </a> : <span className={styles.socialLink} role="img" aria-label="X"><SocialIcon className={styles.socialIcon} d={X_PATH} fill="#ffffff" /></span>}
+                <a className={styles.socialLink} href={TEXT_US} aria-label="Text the studio">
+                  <SocialIcon className={styles.socialIcon} d={TEXT_PATH} fill="#ffffff" />
+                </a>
+              </div>
+            </div>
             <p className={styles.copy}>©2026 BotLane LLC. All rights reserved.</p>
           </div>
 
@@ -234,23 +247,6 @@ export function Footer() {
                   </li>
                 ))}
               </ul>
-            </div>
-          </div>
-        </div>
-
-        <div className={styles.meta}>
-          <div className={styles.legalBlock} />
-          <div className={styles.social}>
-            <div className={styles.socialIcons}>
-              {INSTAGRAM ? <a className={styles.socialLink} href={INSTAGRAM} target="_blank" rel="noopener" aria-label="Instagram">
-                <InstagramIcon className={styles.socialIcon} />
-              </a> : <span className={styles.socialLink} role="img" aria-label="Instagram"><InstagramIcon className={styles.socialIcon} /></span>}
-              {X ? <a className={styles.socialLink} href={X} target="_blank" rel="noopener" aria-label="X">
-                <SocialIcon className={styles.socialIcon} d={X_PATH} fill="#ffffff" />
-              </a> : <span className={styles.socialLink} role="img" aria-label="X"><SocialIcon className={styles.socialIcon} d={X_PATH} fill="#ffffff" /></span>}
-              <a className={styles.socialLink} href={TEXT_US} aria-label="Text the studio">
-                <SocialIcon className={styles.socialIcon} d={TEXT_PATH} fill="#ffffff" />
-              </a>
             </div>
           </div>
         </div>

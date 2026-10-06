@@ -11,19 +11,27 @@ const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/\\-_#";
  *
  *  `inView` runs that same decode the first time the line's
  *  [data-scramble-scope] (or the line itself) scrolls into view, instead of
- *  on load. The hero does not pass it. */
+ *  on load. The hero does not pass it.
+ *
+ *  `staticWhen` is a media query under which the line skips the decode and
+ *  shows its text from the first paint. The hero uses it on phones, where
+ *  these lines are the largest text on screen: hiding them until JavaScript
+ *  runs made them the slowest paint on the page. Pair it with CSS that keeps
+ *  [data-scramble] visible under the same query. */
 export function Scramble({
   text,
   delay = 0,
   duration = 900,
   className,
   inView = false,
+  staticWhen,
 }: {
   text: string;
   delay?: number;
   duration?: number;
   className?: string;
   inView?: boolean;
+  staticWhen?: string;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
 
@@ -31,7 +39,7 @@ export function Scramble({
     const el = ref.current;
     if (!el) return;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) {
+    if (reduce || (staticWhen && window.matchMedia(staticWhen).matches)) {
       el.textContent = text;
       el.style.visibility = "visible";
       return;
@@ -92,7 +100,7 @@ export function Scramble({
       el.textContent = text;
       el.style.visibility = "visible";
     };
-  }, [text, delay, duration, inView]);
+  }, [text, delay, duration, inView, staticWhen]);
 
   return (
     <span className={className}>

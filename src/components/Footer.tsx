@@ -27,7 +27,6 @@ const TEXT_US = "sms:+13072185175";
 /** Show brand icons; enable links when official profile URLs are configured. */
 const INSTAGRAM = process.env.NEXT_PUBLIC_INSTAGRAM_URL;
 const X = process.env.NEXT_PUBLIC_X_URL;
-const WEBSITE = "https://botlane.io";
 
 /** Social glyphs (Simple Icons). Fills are brand colors, not the accent. */
 const INSTAGRAM_PATH =
@@ -208,12 +207,20 @@ export function Footer() {
             <p className={styles.blurb}>
               Websites and web apps designed and built for brands that demand craft, clarity, and performance.
             </p>
+            <div className={styles.social}>
+              <div className={styles.socialIcons}>
+                {INSTAGRAM ? <a className={styles.socialLink} href={INSTAGRAM} target="_blank" rel="noopener" aria-label="Instagram">
+                  <InstagramIcon className={styles.socialIcon} />
+                </a> : <span className={styles.socialLink} role="img" aria-label="Instagram"><InstagramIcon className={styles.socialIcon} /></span>}
+                {X ? <a className={styles.socialLink} href={X} target="_blank" rel="noopener" aria-label="X">
+                  <SocialIcon className={styles.socialIcon} d={X_PATH} fill="#ffffff" />
+                </a> : <span className={styles.socialLink} role="img" aria-label="X"><SocialIcon className={styles.socialIcon} d={X_PATH} fill="#ffffff" /></span>}
+                <a className={styles.socialLink} href={TEXT_US} aria-label="Text the studio">
+                  <SocialIcon className={styles.socialIcon} d={TEXT_PATH} fill="#ffffff" />
+                </a>
+              </div>
+            </div>
             <p className={styles.copy}>©2026 BotLane LLC. All rights reserved.</p>
-            <p className={styles.siteLine}>
-              <a href={WEBSITE} target="_blank" rel="noopener">
-                botlane.io
-              </a>
-            </p>
           </div>
 
           <div className={styles.cols}>
@@ -240,24 +247,6 @@ export function Footer() {
                   </li>
                 ))}
               </ul>
-            </div>
-          </div>
-        </div>
-
-        <div className={styles.meta}>
-          <div className={styles.legalBlock} />
-          <div className={styles.social}>
-            <p className={styles.socialLabel}>Connect with us</p>
-            <div className={styles.socialIcons}>
-              {INSTAGRAM ? <a className={styles.socialLink} href={INSTAGRAM} target="_blank" rel="noopener" aria-label="Instagram">
-                <InstagramIcon className={styles.socialIcon} />
-              </a> : <span className={styles.socialLink} role="img" aria-label="Instagram"><InstagramIcon className={styles.socialIcon} /></span>}
-              {X ? <a className={styles.socialLink} href={X} target="_blank" rel="noopener" aria-label="X">
-                <SocialIcon className={styles.socialIcon} d={X_PATH} fill="#ffffff" />
-              </a> : <span className={styles.socialLink} role="img" aria-label="X"><SocialIcon className={styles.socialIcon} d={X_PATH} fill="#ffffff" /></span>}
-              <a className={styles.socialLink} href={TEXT_US} aria-label="Text the studio">
-                <SocialIcon className={styles.socialIcon} d={TEXT_PATH} fill="#ffffff" />
-              </a>
             </div>
           </div>
         </div>

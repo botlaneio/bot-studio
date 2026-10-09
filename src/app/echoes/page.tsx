@@ -1,9 +1,11 @@
 import type { CSSProperties } from "react";
 import type { Metadata } from "next";
+import Link from "next/link";
 import { pageMetadata } from "@/lib/metadata";
 import { InspireClose } from "@/components/InspireClose";
 import page from "@/components/page/Page.module.css";
 import { ECHOES, ECHOES_AUTHOR, ECHOES_AUTHOR_ROLE, readTimeLabel, type Echo } from "./echoes";
+import { POSTS, EVIDENCE_TAGS, type EvidenceTag, type Post } from "./posts";
 import styles from "./echoes.module.css";
 
 export const metadata: Metadata = pageMetadata({
@@ -188,6 +190,25 @@ export default function EchoesPage() {
               </div>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section className={styles.section} aria-label="Studies and feeds">
+        <div style={{ marginTop: "calc(40 * var(--u))" }}>
+          <p>
+            <strong>Studies</strong> —{" "}
+            <Link href="/echoes/shipping-the-evidence-tag">Every Echoes note now carries its proof</Link>
+            {" "}(Built),{" "}
+            <Link href="/echoes/anatomy-of-an-echoes-note">The anatomy of an Echoes note</Link> (Decided).
+          </p>
+          <p>
+            <strong>Kit</strong> —{" "}
+            <Link href="/echoes/kit">Ungated downloads</Link>
+            : brief template, WCAG 2.2 AA checklist, quote comparison sheet.
+          </p>
+          <p>
+            Feeds: <Link href="/echoes/rss.xml">RSS</Link> ·{" "}<Link href="/echoes/feed.json">JSON Feed</Link>
+          </p>
         </div>
       </section>
 

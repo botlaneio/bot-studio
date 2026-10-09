@@ -1,5 +1,6 @@
 import { PRICE } from "../../lib/pricing";
 import { CAPABILITIES, NAV_CAPABILITIES } from "../capabilities";
+import { citePost, type LaneCitation } from "./citations";
 
 /* Lane's answers. Local guidance from published content only: never invent
    prices, results or timelines, never claim a handoff, booking or sent
@@ -36,6 +37,7 @@ export type Intent =
   | "capability"
   | "time"
   | "call"
+  | "citation"
   | "fallback";
 
 export const STUDIO_EMAIL = "project@botlane.studio";
@@ -135,6 +137,16 @@ export function laneReply(message: string): { text: string; intent: Intent } {
       text: `Websites: from ${PRICE.websitesFrom}. Strategy, design, and development are included.\n\nWeb Apps: from ${PRICE.webAppsFrom}, plus discovery. Strategy, design, and development are included.\n\nSEO and AI are optional add-ons, quoted separately. Every project is still quoted to its agreed scope. The ranges are on the pricing page.`,
     };
   }
+  // Check if any published Echoes post answers this question. Checked before the
+  // broad "ai/seo" and capability catch-alls so a specific published post wins.
+  const citation = citePost(message);
+  if (citation) {
+    return {
+      intent: "citation",
+      text: `${citation.summary}\n\nRead the full note: ${citation.url}`,
+    };
+  }
+
   if (/\bai\b|\bseo\b|discoverability/.test(text)) {
     return { intent: "addons", text: "AI Integrations and SEO are optional add-ons, quoted separately, not part of the core website or web app price." };
   }
@@ -175,9 +187,10 @@ export function laneReply(message: string): { text: string; intent: Intent } {
     };
   }
   if (/call|book|contact|human|team|talk to/.test(text)) {
-    return { intent: "call", text: "Use ‘Start a project’ below to send the team a short brief, or ‘Contact the team’ to email, call or text them. Nothing has been booked or sent from this chat." };
-  }
-  return {
+      return { intent: "call", text: "Use 'Start a project' below to send the team a short brief, or 'Contact the team' to email, call or text them. Nothing has been booked or sent from this chat." };
+    }
+
+    return {
     intent: "fallback",
     text: "I can compare Websites and Web Apps, explain optional add-ons, share price ranges, or point you to existing client support. For advice specific to your project, ‘Start a project’ below sends the team a short brief. Lane answers from published studio information.",
   };
@@ -205,6 +218,7 @@ export function nextSteps(intent: Intent): LaneAction[] {
     case "greeting":
     case "fallback":
       return [A.start, A.prices, A.work];
+    case "citation":
     case "who":
     case "thanks":
     case "call":

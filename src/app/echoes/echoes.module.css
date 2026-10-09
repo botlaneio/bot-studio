@@ -365,6 +365,17 @@
   background: #101216;
 }
 
+/* Clickable post card: the whole note is a link to its page. */
+.noteLink {
+  color: inherit;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.noteLink:hover {
+  background: #16191f;
+}
+
 .noteImage {
   aspect-ratio: 16 / 10;
   background-color: #1b1e24;

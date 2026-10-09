@@ -5,7 +5,7 @@ import { pageMetadata } from "@/lib/metadata";
 import { InspireClose } from "@/components/InspireClose";
 import page from "@/components/page/Page.module.css";
 import { ECHOES, ECHOES_AUTHOR, ECHOES_AUTHOR_ROLE, readTimeLabel, type Echo } from "./echoes";
-import { POSTS, EVIDENCE_TAGS, type EvidenceTag, type Post } from "./posts";
+import { POSTS, postHref, type EvidenceTag, type Post } from "./posts";
 import styles from "./echoes.module.css";
 
 export const metadata: Metadata = pageMetadata({
@@ -13,6 +13,9 @@ export const metadata: Metadata = pageMetadata({
   title: "Echoes",
   description: "Short notes on creativity, strategy and making things work.",
 });
+
+// The hub lists every post, so don't let the CDN hold it for a year.
+export const revalidate = 3600;
 
 const delay = (s: number) => ({ "--reveal-delay": `${s}s` }) as CSSProperties;
 
@@ -70,7 +73,6 @@ function AboutIcon({ name }: { name: (typeof ABOUT)[number]["icon"] }) {
 
 export default function EchoesPage() {
   const featured = ECHOES.find((echo) => echo.featured) ?? ECHOES[0];
-  const rest = ECHOES.filter((echo) => echo !== featured);
 
   return (
     <main className={page.page}>
@@ -167,28 +169,33 @@ export default function EchoesPage() {
               <span className={styles.tick} aria-hidden="true" />
               The notebook
             </p>
-            <h2 id="echoes-more">More notes.</h2>
+            <h2 id="echoes-more">All notes.</h2>
           </div>
-          <p>Strategy, design, build and launch. One idea in each.</p>
+          <p>Every note tagged by its proof — measured, built, decided, briefed or plainly.</p>
         </div>
 
         <div className={styles.notes}>
-          {rest.map((echo, i) => (
-            <article key={echo.id} className={styles.note} data-reveal="" style={delay((i % 3) * 0.05)}>
-              <div className={styles.noteImage} style={cover(echo)} />
+          {POSTS.map((post, i) => (
+            <Link
+              key={post.slug}
+              href={postHref(post.slug)}
+              className={`${styles.note} ${styles.noteLink}`}
+              data-reveal=""
+              style={delay((i % 3) * 0.05)}
+            >
               <div className={styles.noteBody}>
                 <p className={styles.noteMeta}>
-                  <span className={styles.topic}>{echo.topic}</span>
-                  <span>{readTimeLabel(echo.readTime)}</span>
+                  <span className={styles.topic}>{post.tag}</span>
+                  <span>{readTimeLabel(post.readTime)}</span>
                 </p>
-                <h3>{echo.title}</h3>
-                <p className={styles.noteExcerpt}>{echo.excerpt}</p>
+                <h3>{post.title}</h3>
+                <p className={styles.noteExcerpt}>{post.excerpt}</p>
                 <p className={styles.noteFoot}>
-                  <span>{echo.note}</span>
-                  <span>{ECHOES_AUTHOR}</span>
+                  <span>{post.theme}</span>
+                  <span>{post.date}</span>
                 </p>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
       </section>

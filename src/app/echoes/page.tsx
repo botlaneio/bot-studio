@@ -183,6 +183,7 @@ export default function EchoesPage() {
               data-reveal=""
               style={delay((i % 3) * 0.05)}
             >
+              <img className={styles.noteCover} src={`/echoes/covers/${post.slug}.svg`} alt="" loading="lazy" />
               <div className={styles.noteBody}>
                 <p className={styles.noteMeta}>
                   <span className={styles.topic}>{post.tag}</span>

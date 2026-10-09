@@ -376,6 +376,15 @@
   background: #16191f;
 }
 
+/* Typographic cover thumbnail at the top of each post card. */
+.noteCover {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  background: #1b1e24;
+}
+
 .noteImage {
   aspect-ratio: 16 / 10;
   background-color: #1b1e24;

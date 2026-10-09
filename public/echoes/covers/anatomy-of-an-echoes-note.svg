@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" role="img" aria-label="The anatomy of an Echoes note">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b0d12"/>
+      <stop offset="1" stop-color="#12151d"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <circle cx="690" cy="70" r="210" fill="#f5a623" opacity="0.08"/>
+  <rect x="48" y="44" width="20" height="4" fill="#f5a623"/>
+  <text x="80" y="50" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="21" letter-spacing="3" fill="rgba(255,255,255,0.5)">ECHOES</text>
+  <text x="48" y="207" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="48" font-weight="600" letter-spacing="-0.03em" fill="#ffffff"><tspan x="48" dy="0">The anatomy of an Echoes</tspan><tspan x="48" dy="56">note</tspan></text>
+  <rect x="48" y="415" rx="999" width="141" height="38" fill="none" stroke="#f5a623" stroke-opacity="0.6" stroke-width="2"/>
+  <circle cx="72" cy="434" r="6" fill="#f5a623"/>
+  <text x="90" y="439" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="16" letter-spacing="0.06em" fill="#f5a623">DECIDED</text>
+  <text x="48" y="479" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="15" letter-spacing="0.04em" fill="rgba(255,255,255,0.45)">Build  ·  2026-10-08</text>
+</svg>

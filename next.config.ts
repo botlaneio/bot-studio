@@ -22,6 +22,8 @@ const nextConfig: NextConfig = {
   async redirects() {
     // Old botlane.tech URLs reach their botlane.studio page in one hop: retired
     // paths go straight to their replacement, everything else keeps its path.
+    // 301, not Next's default 308: Search Console's Change of Address tool
+    // checks the old domain for 301 redirects.
     const oldHosts = OLD_HOSTS.map((value) => [{ type: "host" as const, value }]);
     return [
       ...oldHosts.flatMap((has) => [
@@ -29,10 +31,10 @@ const nextConfig: NextConfig = {
           source,
           has,
           destination: `${CANONICAL}${destination}`,
-          permanent: true,
+          statusCode: 301 as const,
         })),
-        { source: "/", has, destination: CANONICAL, permanent: true },
-        { source: "/:path*", has, destination: `${CANONICAL}/:path*`, permanent: true },
+        { source: "/", has, destination: CANONICAL, statusCode: 301 as const },
+        { source: "/:path*", has, destination: `${CANONICAL}/:path*`, statusCode: 301 as const },
       ]),
       ...Object.entries(MOVED).map(([source, destination]) => ({ source, destination, permanent: true })),
     ];

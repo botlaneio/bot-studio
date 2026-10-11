@@ -1864,7 +1864,6 @@ export const POSTS: Post[] = [
           { label: "Agency build (WebFX)", value: "$3,000 – $30,000+" },
           { label: "Small-business site with a boutique agency (Digital Applied)", value: "$8,000 – $15,000" },
           { label: "Hosting, per month (WebFX)", value: "$2 – $1,000" },
-          { label: "Firms quoting fixed-price projects at $1,000–$15,000 (GoodFirms, 300+ firms)", value: "63%" },
           { label: "Three-year cost of ownership vs. the build (Digital Applied)", value: "2.0× – 3.4×" },
         ],
       },
@@ -1873,12 +1872,6 @@ export const POSTS: Post[] = [
         label: "Source",
         href: "https://www.webfx.com/web-design/pricing/website-costs/",
         text: "WebFX: how much does a website cost in 2026",
-      },
-      {
-        kind: "link",
-        label: "Source",
-        href: "https://www.goodfirms.co/resources/website-construction-cost-survey",
-        text: "GoodFirms 2026 website cost survey",
       },
       {
         kind: "link",
@@ -1980,7 +1973,7 @@ export const POSTS: Post[] = [
       ],
     },
     caveats: [
-      "The ranges are from public sources (WebFX, GoodFirms, Digital Applied) and vary widely between them. They are market context, not a quote for your project.",
+      "The ranges are from public sources (WebFX and Digital Applied) and vary widely between them. They are market context, not a quote for your project.",
       "The three-year multiplier comes from one study's examples and depends heavily on how much is spent after launch.",
       "Botlane Studios builds websites, so we are not neutral. Our own published ranges are on the pricing page; this note is about the market, not our rate card.",
     ],
@@ -2328,7 +2321,7 @@ export const POSTS: Post[] = [
           { label: "US Google searches ending with no click (SparkToro, Jan–Apr 2026)", value: "68%" },
           { label: "Google searches showing an AI Overview (same study; no official figure)", value: "20%+" },
           { label: "Searches with a click on a result when an AI summary appears, vs 15% without (Pew Research)", value: "8%" },
-          { label: "ChatGPT weekly users (OpenAI, early 2026)", value: "900M" },
+          { label: "ChatGPT weekly users (reported, February 2026)", value: "900M+" },
         ],
       },
       {
@@ -2371,7 +2364,7 @@ export const POSTS: Post[] = [
           "About 68% of US Google searches ended without a single click in the first four months of 2026 (SparkToro, using Similarweb data).",
           "The same study found AI Overviews on more than 20% of Google searches; other trackers report higher figures, and Google publishes none.",
           "When an AI Overview appears, people click a traditional result on 8% of searches, versus 15% without one — roughly half (Pew Research, a study of 68,879 real searches).",
-          "ChatGPT passed 900 million weekly users in early 2026 (OpenAI).",
+          "ChatGPT passed 900 million weekly users in early 2026, according to widely reported figures.",
         ],
       },
       {

@@ -50,7 +50,7 @@ const ASSETS = [
     id: "wcag-checklist",
     title: "WCAG 2.2 AA Checklist for Marketing Sites",
     description:
-      "The AA criteria that actually matter for marketing websites — contrast, focus, target size, labels, reduced motion, plus the 2022 additions (2.5.8, 3.3.7, 3.3.8). Includes a 15-minute test protocol and common failure patterns.",
+      "The AA criteria that actually matter for marketing websites — contrast, focus, target size, labels, reduced motion, plus the WCAG 2.2 additions (2.4.11, 2.5.8, 3.3.7, 3.3.8). Includes a 15-minute test protocol and common failure patterns.",
     tags: ["Accessibility", "Compliance", "Checklist"],
     file: "wcag-22-aa-checklist.md",
     size: "11 KB",

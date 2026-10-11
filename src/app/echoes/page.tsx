@@ -5,7 +5,7 @@ import { pageMetadata } from "@/lib/metadata";
 import { InspireClose } from "@/components/InspireClose";
 import page from "@/components/page/Page.module.css";
 import { ECHOES, ECHOES_AUTHOR, ECHOES_AUTHOR_ROLE, readTimeLabel, type Echo } from "./echoes";
-import { POSTS, postHref, type EvidenceTag, type Post } from "./posts";
+import { POSTS, postHref } from "./posts";
 import styles from "./echoes.module.css";
 
 export const metadata: Metadata = pageMetadata({

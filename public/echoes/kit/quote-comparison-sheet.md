@@ -39,7 +39,7 @@ Most quotes hide the real differences in vague line items. This sheet forces app
 | **22** | **Team Composition** | Who does the work? Senior / junior ratio? Dedicated PM? | | | | |
 | **23** | **Communication Cadence** | Weekly sync? Slack? Async updates? Escalation path? | | | | |
 | **24** | **References / Case Studies** | Similar scope? Live URLs? Contactable clients? | | | | |
-| **25** | **Total Cost (All-In)** | **No hidden fees.** Includes: design, dev, CMS, hosting setup, launch, 30-day warranty | | | | |
+| **25** | **Total Cost (All-In)** | **No hidden fees.** Includes: design, dev, CMS, hosting setup, launch, and any post-launch support stated | | | | |
 
 ---
 
@@ -100,14 +100,14 @@ Max total (25 rows) = 625
 5. *"What's the process when I need a new page/component in 6 months — and what does it cost?"*
 6. *"Who on your team writes the production code? Can I see their GitHub?"*
 7. *"Show me the redirect map for content migration — or confirm you'll build it."*
-8. *"What's excluded from the 30-day warranty? Security patches? Browser updates? CMS updates?"*
+8. *"What happens if something breaks after launch? What's covered, for how long, and what's excluded — security patches, browser updates, CMS updates?"*
 
 ---
 
 ## Caveats (Read Before Deciding)
 
 1. **A high score ≠ the right partner.** Culture, communication, and trust don't show in a spreadsheet.
-2. **The cheapest adequate proposal often costs more.** Fixing bad code, re-platforming, or re-designing later costs 3–5×.
+2. **The cheapest adequate proposal often costs more.** Fixing bad code, re-platforming, or re-designing later can cost more than doing it properly once.
 3. **References matter more than scores.** Talk to two recent clients. Ask: "What went wrong? How did they handle it?"
 4. **This sheet compares proposals, not people.** A great proposal from a team that ghosts you is worthless.
 5. **Your requirements change.** The best partner helps you navigate change — the process (row 21) matters more than the initial scope.
@@ -146,7 +146,7 @@ Max total (25 rows) = 625
 ☐ Payment: tied to milestones, not calendar
 ☐ Changes: defined process, priced
 ☐ Team: named seniors, not "our team"
-☐ Support: 30-day warranty + retainer option
+☐ Support: post-launch cover defined in writing
 ☐ References: 2+ similar projects, live URLs
 ☐ Total: all-in, no hidden fees
 ```

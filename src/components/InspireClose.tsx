@@ -5,7 +5,7 @@ import styles from "@/app/echoes/echoes.module.css";
 /** Plus-lines in the inspire close. No template stats or years. */
 const INSPIRE_LINES = [
   "Websites with the care of a product",
-  "One project at a time",
+  "Every project quoted in writing",
   "Craft, clarity, and performance",
 ];
 

@@ -13,8 +13,8 @@ import {
   type Block,
   type EvidenceItem,
   type InlinePart,
-  type Post,
 } from "../posts";
+import { ECHOES_AUTHOR } from "../echoes";
 import styles from "../post.module.css";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -44,7 +44,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url,
       publishedTime: post.date,
       modifiedTime: post.updated ?? post.date,
-      authors: [post.author ?? "Agent Lane"],
+      authors: [post.author ?? ECHOES_AUTHOR],
       section: post.theme,
       images: [{ url: image, width: 1200, height: 630, alt: `${post.title} — ${post.tag}` }],
     },
@@ -199,7 +199,7 @@ export default async function PostPage({ params }: Props) {
   if (!post) notFound();
 
   const tag = EVIDENCE_TAGS[post.tag];
-  const author = post.author ?? "Agent Lane";
+  const author = post.author ?? ECHOES_AUTHOR;
   const related = post.related.map((r) => ({ ...r, target: postBySlug(r.slug) }));
 
   return (

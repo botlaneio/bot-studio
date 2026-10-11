@@ -13,6 +13,9 @@ const OLD_HOSTS = ["botlane.tech", "www.botlane.tech"];
 /** Retired paths and where they now live. */
 const MOVED: Record<string, string> = {
   "/capabilities/brand-identity": "/capabilities/websites",
+  // Echoes notes withdrawn in the October 2026 content review.
+  "/echoes/our-sites-real-mobile-performance": "/echoes/core-web-vitals-small-business",
+  "/echoes/what-one-project-at-a-time-actually-constrains": "/echoes",
 };
 
 const nextConfig: NextConfig = {

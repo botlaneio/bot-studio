@@ -1,5 +1,5 @@
-/** Default byline for Echoes. Future posts inherit this; there is no per-post author. */
-export const ECHOES_AUTHOR = "Agent Lane";
+/** Byline for Echoes. Posts are written by the studio, not a named person. */
+export const ECHOES_AUTHOR = "Botlane Studio";
 
 /** The four topics a note can sit under. */
 export type EchoTopic = "Strategy" | "Design" | "Build" | "Launch";

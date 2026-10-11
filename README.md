@@ -16,7 +16,7 @@ npm install
 npm run dev      # http://localhost:3000
 npm run build    # production build
 npm run lint
-npm test         # unit tests (contact form, Lane chat guide, prices)
+npm test         # unit tests (contact form, Lane chat guide, prices, Echoes content)
 ```
 
 ## Where things are
@@ -28,10 +28,21 @@ npm test         # unit tests (contact form, Lane chat guide, prices)
 - `src/lib/site.ts` — the site origin used for canonical URLs, sitemap and social cards
 - `src/lib/pricing.ts` — **every published price**; the pricing page and the Lane chat guide read from here
 - `src/lib/inquiry.ts`, `src/app/api/inquiry/route.ts` — contact-form validation and delivery
-- `src/components/lane/` — the Lane chat guide (answers from published content only)
+- `src/components/lane/` — the Lane chat guide. It answers locally from published content only: no AI provider, booking or message delivery is connected
+- `src/app/echoes/posts.ts` — every Echoes post (the hub, post pages, RSS/JSON feeds and sitemap read from it); each post needs a matching entry in `src/components/lane/citations.ts`
+- `scripts/generate-echoes-covers.mjs` — writes the post covers to `public/echoes/covers/`; re-run after adding or retitling a post
+- `public/echoes/kit/` — the free downloads listed on `/echoes/kit`
 - `src/app/work/` — the Work page (honest proof: in-house work, labelled studies, samples)
 - `src/components/LazyVideo.tsx` — background videos that load only near the screen
 - `public/` — photography, videos and posters, logo, favicons
+- `brand-film/` — source for studio-made motion pieces (not deployed)
+
+### Not connected
+
+There is no scheduler (buttons say **Request a call**), no newsletter and no AI
+provider. Instagram and X icons in the footer stay hidden until
+`NEXT_PUBLIC_INSTAGRAM_URL` / `NEXT_PUBLIC_X_URL` are set as Cloudflare build
+variables (see `.env.example`).
 
 ### The `--u` unit
 

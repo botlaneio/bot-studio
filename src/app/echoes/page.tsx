@@ -183,6 +183,8 @@ export default function EchoesPage() {
               data-reveal=""
               style={delay((i % 3) * 0.05)}
             >
+              {/* SVG covers: next/image would serve them unoptimized anyway. */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img className={styles.noteCover} src={`/echoes/covers/${post.slug}.svg`} alt="" loading="lazy" />
               <div className={styles.noteBody}>
                 <p className={styles.noteMeta}>

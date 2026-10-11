@@ -191,9 +191,13 @@ function Policies() {
         </li>
         <li>
           Contact form messages (name, company, email and message) are delivered to the studio inbox by Resend, an email delivery
-          provider, and are not stored on the website.
+          provider, and are not stored on the website. Each message also carries the page it was sent from, the first page opened in
+          that browser tab and the referring website&apos;s name, if any.
         </li>
-        <li>The site does not use advertising or tracking cookies, and does not currently run analytics.</li>
+        <li>
+          Visits are counted with Cloudflare Web Analytics, which sets no cookies and does not identify visitors. The site does not use
+          cookies for advertising, analytics or tracking.
+        </li>
         <li>
           Information is used to reply to an enquiry and to discuss, quote for and deliver a project; to keep the website secure and
           working; and to meet legal, tax and accounting obligations. It is not sold, and it is not used for advertising.

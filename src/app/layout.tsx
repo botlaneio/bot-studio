@@ -6,6 +6,7 @@ import { RevealObserver } from "@/components/motion/RevealObserver";
 import { Nav } from "@/components/Nav";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { LaneChat } from "@/components/lane/LaneChat";
+import { ArrivalNote } from "@/components/ArrivalNote";
 import { SITE_URL } from "@/lib/site";
 import { STRUCTURED_DATA } from "@/lib/metadata";
 
@@ -73,6 +74,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       </head>
       <body>
         <SmoothScroll />
+        <ArrivalNote />
         <RevealObserver />
         {/* "Back to top" lands here on every page. */}
         <div id="top" />

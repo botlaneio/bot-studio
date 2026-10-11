@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { Arrow } from "@/components/motion/Arrow";
 import { STUDIO_INBOX } from "@/lib/inquiry";
+import { inquirySource } from "@/lib/visitSource";
 import styles from "./contact.module.css";
 
 type Status = "idle" | "sending" | "sent" | "error";
@@ -45,7 +46,7 @@ export function ContactForm() {
       const res = await fetch("/api/inquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, renderedAt: renderedAt.current }),
+        body: JSON.stringify({ ...data, renderedAt: renderedAt.current, source: inquirySource("contact") }),
       });
       const out = (await res.json().catch(() => ({}))) as { ok?: boolean; fields?: FieldErrors };
       if (res.ok && out.ok) {

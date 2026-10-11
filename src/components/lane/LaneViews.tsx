@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import Image from "next/image";
 import { BANDS } from "@/lib/pricing";
+import { inquirySource } from "@/lib/visitSource";
 import { STUDIO_EMAIL, STUDIO_PHONE, STUDIO_PHONE_HREF, type LaneView } from "./studioReply";
 import styles from "./LaneChat.module.css";
 
@@ -64,7 +65,7 @@ export function LaneBrief({ initialKind }: { initialKind?: Kind }) {
       const res = await fetch("/api/inquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, company, message, website: (e.currentTarget.elements.namedItem("website") as HTMLInputElement)?.value ?? "", renderedAt: renderedAt.current }),
+        body: JSON.stringify({ name, email, company, message, website: (e.currentTarget.elements.namedItem("website") as HTMLInputElement)?.value ?? "", renderedAt: renderedAt.current, source: inquirySource("lane") }),
       });
       const data = (await res.json().catch(() => ({}))) as { ok?: boolean; fields?: Record<string, string> };
       if (res.ok && data.ok) setStatus({ state: "sent" });

@@ -15,7 +15,7 @@ export default function PrivacyPage() {
       <PageHero kicker="// Legal" title="Privacy policy" mark="." />
       <section className={page.section}>
         <div className={page.prose}>
-          <p className={page.updated}>Last updated 5 October 2026</p>
+          <p className={page.updated}>Last updated 12 October 2026</p>
 
           <p>
             This policy explains how BotLane LLC (&ldquo;Botlane Studios&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;) handles personal
@@ -39,11 +39,18 @@ export default function PrivacyPage() {
               address, browser type and the pages requested, to deliver and protect the site.
             </li>
             <li>
+              <strong>Visit statistics:</strong> we use Cloudflare Web Analytics to count visits: the pages viewed, the website that linked
+              to us, browser, device type and country. It sets no cookies and does not identify you or follow you across other websites.
+            </li>
+            <li>
               <strong>When you use the contact form:</strong> the name, company, email and message you enter. They are sent to our inbox by
-              our email delivery provider, Resend, and are not stored on the website.
+              our email delivery provider, Resend, and are not stored on the website. With your message we include the page you sent it from,
+              the first page you opened on this site, the website that linked you here (its name only, such as a search engine) and any
+              campaign tags on that link. Your browser keeps these in the open tab only until you close it, and they are sent only if you send
+              a message. The same applies to a brief sent through Lane, our site guide.
             </li>
           </ul>
-          <p>This website does not use advertising or tracking cookies, and we do not currently run analytics on it.</p>
+          <p>This website does not use cookies for advertising, analytics or tracking.</p>
 
           <h2>How we use it</h2>
           <ul>

@@ -16,7 +16,7 @@ This covers the AA criteria that actually matter for marketing sites — the one
 ### 1.1 Non-text Content (1.1.1 — A)
 - [ ] All images have meaningful `alt` text (or `alt=""` for decorative)
 - [ ] Icon fonts / SVGs have accessible labels (`aria-label` or `<title>`)
-- [ ] Complex charts / infographics have a text equivalent nearby or in `longdesc`
+- [ ] Complex charts / infographics have a text equivalent nearby or linked
 - [ ] CAPTCHAs have an audio alternative (or better: don't use CAPTCHAs)
 
 ### 1.2 Time-based Media (1.2.x — A/AA)
@@ -68,8 +68,8 @@ This covers the AA criteria that actually matter for marketing sites — the one
 - [ ] Page has a descriptive `<title>` (2.4.2 — A)
 - [ ] Multiple ways to find pages: nav, search, sitemap (2.4.5 — AA)
 - [ ] Headings and labels are descriptive (2.4.6 — AA)
-- [ ] **Focus indicator** is visible, ≥ 2px thick, 3:1 contrast against adjacent (2.4.11 — AA, 2.4.13 — AAA)
-- [ ] Focus not obscured by sticky headers/footers (2.4.12 — AA)
+- [ ] Focused element is not hidden by sticky headers/footers (2.4.11 — AA) — *WCAG 2.2*
+- [ ] Focus indicator is ≥ 2px thick with 3:1 contrast (2.4.13 — AAA — *recommended, not required for AA*)
 
 ### 2.5 Input Modalities (2.5.x — A/AA)
 - [ ] Pointer gestures have single-pointer alternative (2.5.1 — A)
@@ -98,7 +98,7 @@ This covers the AA criteria that actually matter for marketing sites — the one
 - [ ] **Labels/instructions** provided for inputs (3.3.2 — A)
 - [ ] Error suggestions provided when known (3.3.3 — AA)
 - [ ] **Error prevention** for legal/financial/data: reversible, checked, confirmed (3.3.4 — AA)
-- [ ] **Redundant entry** avoided — user doesn't re-enter same info (3.3.7 — AA) — *WCAG 2.2*
+- [ ] **Redundant entry** avoided — user doesn't re-enter same info (3.3.7 — A) — *WCAG 2.2*
 - [ ] **Accessible authentication** — no cognitive function test (CAPTCHA, memory) for login (3.3.8 — AA) — *WCAG 2.2*
 
 ---
@@ -125,7 +125,7 @@ This covers the AA criteria that actually matter for marketing sites — the one
 | 5 | 2.4.1 Skip Link (A) | Keyboard users bypass nav to reach your value prop |
 | 6 | 3.3.2 Labels (A) | Unlabeled forms = abandoned inquiries |
 | 7 | 1.3.1 Info & Relationships (A) | Semantic structure = SEO + accessibility win |
-| 8 | 2.4.11/13 Focus Appearance (AA/AAA) | Visible focus = professional polish, legal safety |
+| 8 | 2.4.11 Focus Not Obscured (AA) | Sticky headers and cookie banners must not hide the focused element — *WCAG 2.2* |
 
 ### Medium Impact
 | # | Criterion | Notes |
@@ -134,7 +134,7 @@ This covers the AA criteria that actually matter for marketing sites — the one
 | 10 | 1.4.12 Text Spacing (AA) | User stylesheets override your design — don't break |
 | 11 | 2.2.2 Pause/Stop (A) | Auto-playing hero video, testimonial carousel |
 | 12 | 2.4.3 Focus Order (A) | Tab order matches visual flow |
-| 13 | 3.3.7 Redundant Entry (AA) | Multi-step forms remember what user typed — *WCAG 2.2* |
+| 13 | 3.3.7 Redundant Entry (A) | Multi-step forms remember what user typed — *WCAG 2.2* |
 | 14 | 3.3.8 Accessible Auth (AA) | If you have a client portal — *WCAG 2.2* |
 
 ### Lower Priority (Context-Dependent)
@@ -152,7 +152,7 @@ This covers the AA criteria that actually matter for marketing sites — the one
 1. **Turn off CSS** — does content order make sense? (1.3.2)
 2. **Tab through the page** — can you see focus? reach everything? (2.4.7, 2.1.1)
 3. **Zoom to 200%** — does anything break, overlap, disappear? (1.4.4)
-4. **Run axe-core / WAVE** — fix the red errors first (automated catches ~30%)
+4. **Run axe-core / WAVE** — fix the red errors first (automated tools catch only some issues)
 5. **Test one form** with NVDA / VoiceOver — hear the labels? (3.3.2, 4.1.2)
 6. **Check contrast** on hero, CTAs, form borders — use a tool (1.4.3, 1.4.11)
 7. **Verify `prefers-reduced-motion`** — animations stop? (2.3.3)
@@ -181,14 +181,14 @@ This covers the AA criteria that actually matter for marketing sites — the one
 | Form error: only red border | 1.4.1, 3.3.1 | Add error text + `aria-describedby` |
 | Carousel auto-plays, no pause | 2.2.2 | Add pause button, pause on hover/focus |
 | Mobile CTA: 36×36px but tap target 20×20px | 2.5.8 | Increase padding to 24×24px CSS |
-| Sticky header obscures focused element | 2.4.12 | `scroll-padding-top: header-height` |
+| Sticky header obscures focused element | 2.4.11 | `scroll-padding-top: header-height` |
 | "Read more" links with no context | 2.4.4 | `aria-label="Read more about [topic]"` |
 | Icon-only button (no label) | 4.1.2 | `aria-label="Open menu"` |
 | Color-only required field indicator | 1.4.1 | Add asterisk + "Required" text |
 
 ---
 
-## WCAG 2.2 Additions (vs 2.1)
+## WCAG 2.2 Additions (vs 2.1, published October 2023)
 
 | Criterion | Level | What Changed |
 |-----------|-------|--------------|
@@ -209,7 +209,6 @@ This covers the AA criteria that actually matter for marketing sites — the one
 - [WCAG 2.2 Quick Reference](https://www.w3.org/WAI/WCAG22/quickref/) — filter by level AA
 - [axe-core](https://github.com/dequelabs/axe-core) — automated testing
 - [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/)
-- [Focus Visible Bookmarklet](https://www.scottohara.me/blog/2020/03/19/focus-visible.html)
 - [WCAG 2.2 Understanding Docs](https://www.w3.org/WAI/WCAG22/Understanding/)
 
 ---

@@ -33,7 +33,7 @@ function load(filePath) {
   return exports;
 }
 
-const { studioReply, laneReply } = load("src/components/lane/studioReply.ts");
+const { laneReply } = load("src/components/lane/studioReply.ts");
 const { validateCitations, CITATIONS, citePost, normalizeForMatch } = load("src/components/lane/citations.ts");
 
 // --- Integrity: citation index is well-formed ---

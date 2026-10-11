@@ -16,6 +16,7 @@
  * receives it as a parameter.
  */
 
+import { BANDS, PRICE } from "../../lib/pricing";
 import { ECHOES_AUTHOR, readTimeLabel } from "./echoes";
 
 /** The five evidence tags. A post is not finished without one. */
@@ -28,7 +29,7 @@ export const EVIDENCE_TAGS: Record<EvidenceTag, { label: string; meaning: string
   Measured: { label: "Measured", meaning: "Real numbers — Lighthouse, Core Web Vitals, before and after." },
   Built: { label: "Built", meaning: "Real code, a live link, the actual file." },
   Decided: { label: "Decided", meaning: "A real decision, the options rejected, and why." },
-  Briefed: { label: "Briefed", meaning: "A self-set brief, taken from brief to design to build to a measured result." },
+  Briefed: { label: "Briefed", meaning: "A self-set brief, taken from brief to finished design, and labelled as a study." },
   Plainly: { label: "Plainly", meaning: "A buyer-facing guide with nothing to sell in the sentence." },
 };
 
@@ -69,7 +70,7 @@ export type Post = {
   /** ISO date, `yyyy-mm-dd`. */
   date: string;
   updated?: string;
-  /** Defaults to Agent Lane. */
+  /** Defaults to the studio byline (ECHOES_AUTHOR). */
   author?: string;
   evidence: EvidenceItem[];
   body: Block[];
@@ -115,7 +116,6 @@ export const POSTS: Post[] = [
           { label: "Evidence tags", value: "5" },
           { label: "Feeds", value: "2 — RSS and JSON" },
           { label: "Runtime dependencies added", value: "0" },
-          { label: "Stock photos used", value: "0" },
         ],
       },
     ],
@@ -295,9 +295,9 @@ export const POSTS: Post[] = [
 {
     slug: "three-things-we-didnt-build",
     title: "Three things we talked ourselves out of building on our own site",
-    excerpt: "A comment system, a newsletter, and a dark-mode toggle — rejected in favor of what the site is actually for.",
+    excerpt: "A comment system, a newsletter, and a light/dark theme toggle — rejected in favor of what the site is actually for.",
     intro:
-      "We cut three features from our own site before they shipped: a comment system, a newsletter, and a dark-mode toggle. Each seemed reasonable at first. Each would have pulled time from the work we actually sell. The decision rule was simple: if it does not serve the client-facing proof or the studio's own operating cadence, it does not ship.",
+      "We cut three features from our own site before they shipped: a comment system, a newsletter, and a light/dark theme toggle. Each seemed reasonable at first. Each would have pulled time from the work we actually sell. The decision rule was simple: if it does not serve the client-facing proof or the studio's own operating cadence, it does not ship.",
     tag: "Decided",
     theme: "Strategy",
     readTime: 4,
@@ -307,7 +307,7 @@ export const POSTS: Post[] = [
         kind: "quote",
         label: "The filter we used",
         text: "If it does not serve the client-facing proof or the studio's operating cadence, it does not ship.",
-        source: "Internal decision log",
+        source: "Botlane Studios",
       },
     ],
     body: [
@@ -345,19 +345,19 @@ export const POSTS: Post[] = [
       },
       {
         kind: "h2",
-        text: "3. A dark-mode toggle",
+        text: "3. A theme toggle",
       },
       {
         kind: "p",
-        text: "What we considered: a theme switcher in the header, persisting preference to localStorage.",
+        text: "What we considered: a switch in the header between the dark design and a light version, remembered between visits.",
       },
       {
         kind: "p",
-        text: "Why we rejected it: the toggle is theater. It adds JavaScript, a flash-of-wrong-theme on load, and a maintenance surface for something the OS already handles. The site uses `prefers-color-scheme` and respects the system setting. That is the correct default; a toggle only exists to override a correct default.",
+        text: "Why we rejected it: the site has one deliberate design — black, white and cobalt — and a toggle means designing, testing and maintaining a second one. It also adds JavaScript and a flash of the wrong theme on load.",
       },
       {
         kind: "p",
-        text: "What we do instead: system-preference dark mode, no toggle, no script. The page renders correctly in both modes because the design tokens were built for it from the start.",
+        text: "What we do instead: one theme, designed properly. The dark design is the brand, not a mode.",
       },
     ],
     takeaway: {
@@ -370,7 +370,7 @@ export const POSTS: Post[] = [
       ],
     },
     caveats: [
-      "These are our rejections for our site. A client project with different constraints may legitimately need comments, a newsletter, or a theme toggle.",
+      "These are our rejections for our site. A client project with different constraints may legitimately need comments, a newsletter, or a light and dark theme.",
       "We did not A/B test these. The decision was made on principle and maintenance cost, not conversion data.",
       "The comment system rejection assumes the evidence block is sufficient for verification. If readers disagree, the feeds are open — they can respond on their own sites.",
     ],
@@ -380,221 +380,95 @@ export const POSTS: Post[] = [
   {
     slug: "why-we-publish-price-bands",
     title: "Why we publish price bands instead of \"contact us\"",
-    excerpt: "We publish price bands for web builds and strategy work because \"contact us\" hides the same information from everyone, not just buyers who want to waste our time.",
-    intro: "We publish price bands — not exact quotes, not \"contact us\" — because the question a serious buyer actually has is not \"how cheap are you\" but \"am I in the right room.\" A band answers that in ten seconds; \"contact us\" hides it behind a form. The rejected alternative was opaque pricing with a discovery call gate; the reason is trust, not marketing.",
+    excerpt: "We publish price ranges for websites and web apps because the first question a serious buyer has is whether they are in the right room, and a range answers it before anyone books a call.",
+    intro: "We publish price bands, not exact quotes and not \"contact us\". The first question a serious buyer has is not \"how cheap are you\" but \"am I in the right room\", and a range answers it before anyone books a call. Every project is still a tailored written quote; the bands show where that quote is likely to land.",
     tag: "Decided",
     theme: "Strategy",
-    readTime: 5,
+    readTime: 4,
     date: "2026-10-08",
+    updated: "2026-10-12",
     evidence: [
       {
-        kind: "quote",
-        label: "The decision",
-        text: "We publish bands. Not exact quotes. Not \"contact us\".",
-        source: "Pillar P1 — Decided"
-      },
-      {
         kind: "metrics",
-        label: "What the bands cover",
+        label: "The bands, as published on the pricing page",
         values: [
-          {
-            label: "Web builds (landing)",
-            value: "£4,800 – £8,500"
-          },
-          {
-            label: "Strategy + design sprints",
-            value: "£2,400 – £6,000"
-          },
-          {
-            label: "Retainers (monthly)",
-            value: "£1,200 – £3,600"
-          }
-        ]
+          ...BANDS.flatMap((group) => group.rows.map((row) => ({ label: `${group.name} · ${row.name}`, value: row.price }))),
+          { label: "Brand identity · optional add-on", value: PRICE.brandIdentity },
+        ],
       },
       {
         kind: "link",
         label: "Where the bands live",
-        href: "/capabilities/websites",
-        text: "The capabilities page with full context."
-      }
+        href: "/pricing",
+        text: "The pricing page, with what each band covers.",
+      },
     ],
     body: [
       {
         kind: "h2",
-        text: "The decision"
+        text: "The decision",
       },
       {
         kind: "p",
-        text: "Botlane publishes approximate price bands for its three main offerings. They are ranges, not promises. The rejected alternative was a \"contact us for a quote\" model — common in agency websites — because it treats pricing as something to reveal only after a conversation, which favors buyers with time and punishes those with urgency."
+        text: `Botlane Studios publishes price ranges for its two core offers and its one priced add-on. Websites start at ${PRICE.websitesFrom}. Web Apps start at ${PRICE.webAppsFrom}, after a paid discovery phase. Brand identity is an optional add-on at ${PRICE.brandIdentity}. They are ranges, not promises: the written proposal sets the actual price and scope.`,
       },
       {
         kind: "h2",
-        text: "Why not \"contact us\""
+        text: "Why not \"contact us\"",
       },
       {
         kind: "p",
-        text: "\"Contact us\" serves two legitimate functions — qualifying complex scopes and opening a relationship — but it does not serve transparency. A buyer who is comparing studios loses time for nothing; a studio that hides prices signals either that it does not know them or that it wants leverage in negotiation. Neither is a good look for a practice that asks clients to trust it with brand and product."
+        text: "\"Contact us\" serves two legitimate functions — qualifying complex scopes and opening a relationship — but it does not serve transparency. A buyer comparing studios loses time for nothing, and a studio that hides its prices signals either that it does not know them or that it wants leverage in the negotiation. Neither is a good look for a practice that asks clients to trust it with their brand and product.",
       },
       {
         kind: "h2",
-        text: "What the bands actually say"
+        text: "What the bands actually say",
       },
       {
         kind: "p",
-        text: "They say where a project usually lands, with the variables that move it: scope, timeline, and whether the studio is designing or building on an existing system. They are not a quote engine. They are a filter — and filters work both ways."
+        text: "Each band is tied to scope, not to the size of a client's budget. A Focused website is a small number of layouts built on an existing brand with copy the client supplies; a Signature site adds more layouts, a CMS and scoped custom motion. Web apps begin with paid discovery, because a build cannot be priced honestly before the workflow is understood. The bands are a filter, and filters work both ways.",
       },
-      {
-        kind: "h2",
-        text: "Honest caveats"
-      },
-      {
-        kind: "p",
-        text: "A band is not a fixed-price contract. Projects outside the band exist — smaller micro-sites below the floor, larger platforms above the ceiling — and are handled case by case. The bands also do not include third-party licensing, which is itemized separately."
-      }
     ],
     takeaway: {
       title: "The band is the filter",
-      text: "Publish enough price information that the right clients self-select, and be honest about where the range breaks.",
+      text: "Publish enough price information that the right clients can self-select, and be clear about where a range stops applying.",
       items: [
         "A price band is a filter, not a quote.",
-        "Rejected alternative: \"contact us\" gate with no transparency.",
-        "Caveat: ranges, not contracts; out-of-band scopes handled separately."
-      ]
+        "Tie each band to scope, so a buyer can see what moves the price.",
+        "Say plainly that the written proposal decides.",
+      ],
     },
     caveats: [
-      "These are approximate ranges, not fixed-price promises. Exact quotes still require a brief.",
-      "The rejected alternative (\"contact us\") is not wrong for complex enterprise scopes; we just don't make it the default.",
-      "Bands reflect 2025–2026 engagements only; future rates may shift with scope and market conditions."
+      "These are ranges, not fixed prices. The written proposal sets the price and the scope, and it takes precedence over anything on this site.",
+      "Third-party costs, such as hosting, domains or licences, are set out in the proposal, not in the bands.",
+      "SEO programmes and AI integrations are quoted to scope; they have no published figure.",
+      "\"Contact us\" is not wrong for every business. We just chose not to make it ours.",
     ],
     related: [
-      {
-        slug: "shipping-the-evidence-tag",
-        title: "Every Echoes note now carries its proof"
-      },
-      {
-        slug: "anatomy-of-an-echoes-note",
-        title: "The anatomy of an Echoes note"
-      }
+      { slug: "what-8000-buys", title: "What an $8,000 website quote should spell out" },
+      { slug: "how-to-tell-good-web-design-quote-from-bad", title: "How to tell a good web design quote from a bad one" },
     ],
-    cta: {
-      label: "See the capabilities",
-      href: "/capabilities/websites"
-    },
+    cta: { label: "See the price guide", href: "/pricing" },
     faq: [
       {
         q: "Are these fixed prices?",
-        a: "No — they are approximate bands. An exact quote requires a brief."
+        a: "No. They are ranges. Every project is a tailored written quote, and the proposal decides.",
       },
       {
         q: "Why not \"contact us\" for everything?",
-        a: "It hides information from serious buyers and slows comparison. Bands filter both directions."
+        a: "It hides information from serious buyers and slows down comparison. A published range lets both sides see quickly whether a conversation is worth having.",
       },
       {
-        q: "What if my project is outside the band?",
-        a: "Handled case by case — smaller and larger scopes exist, just less often."
-      }
-    ]
-  },
-  {
-    slug: "what-one-project-at-a-time-actually-constrains",
-    title: "What \"one project at a time\" actually constrains",
-    excerpt: "\"One project at a time\" is a scheduling and focus rule, not a revenue promise — it protects calendar predictability and design depth at the cost of slower billing growth.",
-    intro: "\"One project at a time\" is a scheduling and focus rule, not a revenue promise. It protects calendar predictability, design depth, and the studio's capacity to say no — at the cost of slower billing growth and occasional idle gaps between projects. It does not guarantee quality; that comes from the process behind it. The rule is worth it when your bottleneck is attention, not pipeline.",
-    tag: "Decided",
-    theme: "Strategy",
-    readTime: 5,
-    date: "2026-10-09",
-    evidence: [
-      {
-        kind: "quote",
-        label: "The decision",
-        text: "One project at a time — or the calendar promises nothing.",
-        source: "Internal scheduling decision, 2026"
+        q: "What if my project is bigger than the bands?",
+        a: "Complex websites are priced after discovery, and larger web apps are quoted in phases rather than as one fixed total.",
       },
-      {
-        kind: "metrics",
-        label: "What the decision rejected",
-        values: [
-          {
-            label: "Overlapping builds",
-            value: "Two clients, one designer — neither gets the full answer"
-          },
-          {
-            label: "Retainer model as default",
-            value: "Locks scope before it is defined"
-          },
-          {
-            label: "Saying yes to every inbound",
-            value: "Fills the calendar; empties the work"
-          }
-        ]
-      }
     ],
-    body: [
-      {
-        kind: "h2",
-        text: "What it actually constrains"
-      },
-      {
-        kind: "h3",
-        text: "1. The schedule, honestly"
-      },
-      {
-        kind: "p",
-        text: "One project at a time means the calendar is a single-threaded promise. A six-week build cannot overlap with another six-week build — so a second inquiry either waits or walks. That is the real cost: lost revenue from the projects you do not start. The gain is that the project you are in never competes with someone else's deadline for your attention."
-      },
-      {
-        kind: "h3",
-        text: "2. Revenue — slower, not smaller"
-      },
-      {
-        kind: "p",
-        text: "A studio that books sequentially grows revenue by extending the calendar, not stacking it. Peak monthly revenue is lower; three-year revenue may be the same or higher if the work earns the repeat business it would have lost to rushed deliverables. The honest trade: a single-threaded studio is a smaller business with deeper output."
-      },
-      {
-        kind: "h3",
-        text: "3. Focus — the only non-negotiable"
-      },
-      {
-        kind: "p",
-        text: "Design quality drops sharply when attention splits. Not gradually — sharply. A single open build lets the designer carry context: the client's language, the site's structure, the decisions made two weeks ago. Two open builds split that context and produce work that reads like it was made by two people. It was."
-      }
-    ],
-    takeaway: {
-      title: "What you can take",
-      text: "Three honest checks before you commit to a scheduling model.",
-      items: [
-        "If your studio's bottleneck is design quality, single-thread it. If your bottleneck is cash, it is not the fix.",
-        "Tell clients the calendar up front — a single-threaded studio is a feature, not an apology.",
-        "Measure the cost of overlap honestly: not just the second client's fee, but the first client's satisfaction drop."
-      ]
-    },
-    caveats: [
-      "This is our scheduling decision for our studio, not an industry rule. A larger team can parallelize without splitting focus; a solo practice has no other option.",
-      "The revenue claim is approximate — it depends on price, retention, and market.",
-      "We have not A/B tested single-threaded against overlapping builds; the decision is based on observed quality drops, not a controlled study.",
-      "A studio with different discipline (engineering-led, production-heavy) may find the trade-off different."
-    ],
-    related: [
-      {
-        slug: "anatomy-of-an-echoes-note",
-        title: "The anatomy of an Echoes note"
-      },
-      {
-        slug: "when-you-dont-need-a-custom-website",
-        title: "When you don't need a custom website — and what to do instead"
-      }
-    ],
-    cta: {
-      label: "See how we run projects",
-      href: "/capabilities/websites"
-    }
   },
   {
     slug: "figma-to-nextjs-no-page-builder",
     title: "Designed in Figma, rebuilt by hand: why no page builder",
     excerpt: "The studio's site is designed in Figma and rebuilt in Next.js by hand — no Webflow, no Squarespace, no WordPress builder. The decision, the options we rejected, and the trade we accept.",
-    intro: "The studio's site is designed in Figma and rebuilt in Next.js by hand. There is no Webflow, Squarespace, or WordPress builder in the middle. This is a decision, not an accident — it trades a little speed for the ability to own every pixel, ship with zero runtime dependencies, and never be blocked by a third-party platform's pricing or feature roadmap. Here is the decision, the rejected options, and the honest cost of it.",
+    intro: "The studio's site is designed in Figma and rebuilt in Next.js by hand. There is no Webflow, Squarespace, or WordPress builder in the middle. This is a decision, not an accident — it trades build speed for owning every pixel and never being blocked by a page builder's pricing or feature roadmap. Here is the decision, the rejected options, and the honest cost of it.",
     tag: "Decided",
     theme: "Design",
     readTime: 7,
@@ -604,13 +478,13 @@ export const POSTS: Post[] = [
         kind: "quote",
         label: "The design direction",
         text: "Design in Figma. Build in Next.js. Nothing in between.",
-        source: "The studio's build contract"
+        source: "Botlane Studios"
       },
       {
         kind: "link",
         label: "The live site",
         href: "https://botlane.studio",
-        text: "The rebuilt site — no CMS layer, no page-builder markup."
+        text: "The rebuilt site — no page-builder markup."
       },
       {
         kind: "metrics",
@@ -625,10 +499,6 @@ export const POSTS: Post[] = [
             value: "0"
           },
           {
-            label: "Rebuild time vs. builder",
-            value: "~2x longer"
-          },
-          {
             label: "Full design ownership",
             value: "Yes"
           }
@@ -636,7 +506,7 @@ export const POSTS: Post[] = [
       },
       {
         kind: "code",
-        label: "The actual build",
+        label: "The pattern",
         code: "// No page-builder wrapper — the component IS the page\nexport default function Page() {\n  return <article className={styles.article}>...</article>;\n}\n// Every pixel authored in Figma is authored again in JSX."
       }
     ],
@@ -679,7 +549,7 @@ export const POSTS: Post[] = [
         items: [
           "Full design ownership — no third-party builder markup, no subscription lock.",
           "A single source of truth — Figma for design, JSX for production, same layout rules.",
-          "Zero runtime CMS dependencies — the site ships as static pages.",
+          "No page-builder or CMS platform at runtime — almost every page is prerendered.",
           "A build the studio can show — the site is the proof of the service it sells."
         ]
       }
@@ -715,238 +585,168 @@ export const POSTS: Post[] = [
     faq: [
       {
         q: "Why not just use a page builder?",
-        a: "A builder trades ownership for speed. For a studio whose site is the proof of its craft, owning every pixel and shipping with zero runtime dependencies matters more than the hours saved."
+        a: "A builder trades ownership for speed. For a studio whose site is the proof of its craft, owning every pixel matters more than the hours saved."
       },
       {
         q: "Doesn't hand-rebuilding take longer?",
-        a: "Yes — roughly twice as long. We accept that cost because the site is a build, not a marketing tool that needs frequent edits."
+        a: "Yes. We accept that cost because the site is a build, not a marketing tool that needs frequent edits."
       }
     ]
   },
   {
     slug: "forme-knitwear",
     title: "FORME: a knitwear label that has to feel tactile on a phone",
-    excerpt: "FORME was a self-set study, not a client job. We gave ourselves the problem of making a knitwear label feel tactile on a phone screen, then took it from a one-page brief through structure, design and build, and measured the result.",
-    intro: "FORME was a self-set study, not a client job. We gave ourselves the problem of making a knitwear label feel tactile on a phone, then took it from a one-page brief through structure, design and build, and measured the result. The evidence below is the actual brief, the before and after, and the live route.",
+    excerpt: "FORME is a self-initiated study, not a client project: an identity for a quiet knitwear label that has to feel as tactile on a phone screen as it does in the hand.",
+    intro: "FORME is a self-initiated study, not a client project. We set ourselves one problem: a quiet knitwear label that has to feel as tactile on a phone screen as it does in the hand. Here is the brief, the three choices the identity rests on, and what the study does not prove.",
     tag: "Briefed",
     theme: "Design",
-    readTime: 8,
+    readTime: 4,
     date: "2026-10-08",
+    updated: "2026-10-12",
     evidence: [
       {
         kind: "quote",
         label: "The brief, in one line",
-        text: "A knitwear label must feel tactile on a phone screen — texture, weight, warmth of wool through glass.",
-        source: "FORME self-set brief"
-      },
-      {
-        kind: "metrics",
-        label: "Before vs. after (simulated Lighthouse)",
-        values: [
-          {
-            label: "Before — performance",
-            value: "~72"
-          },
-          {
-            label: "Before — accessibility",
-            value: "~88"
-          },
-          {
-            label: "After — performance",
-            value: "~91"
-          },
-          {
-            label: "After — accessibility",
-            value: "~98"
-          }
-        ]
+        text: "A quiet knitwear label that has to feel as tactile on a phone screen as it does in the hand.",
+        source: "FORME, self-initiated study",
       },
       {
         kind: "link",
-        label: "The live route",
-        href: "/echoes/forme-knitwear",
-        text: "FORME study route, wired into the site."
-      }
+        label: "See the study",
+        href: "/work#studies-title",
+        text: "FORME on the Work page: poster, packaging, an embossed garment tag and a mobile storefront.",
+      },
     ],
     body: [
       {
         kind: "h2",
-        text: "What the brief demanded"
+        text: "What the brief asked for",
+      },
+      {
+        kind: "p",
+        text: "Knitwear is bought by touch. On a phone there is no touch, so the identity has to do that work: let texture and the garment lead, and keep everything else quiet enough not to compete with it.",
+      },
+      {
+        kind: "h2",
+        text: "The three choices",
       },
       {
         kind: "ol",
         items: [
-          "Tactile language: the site must feel like the garment.",
-          "Mobile-first: the first interaction happens on a phone screen.",
-          "No video: real photography only.",
-          "Measure: Lighthouse performance and accessibility, before and after."
-        ]
+          "A high-contrast serif wordmark, with a single F monogram for tags and embossing.",
+          "Bone, black and one oxblood accent, so the clothes carry the colour.",
+          "A storefront where product photography leads and type steps back.",
+        ],
       },
       {
         kind: "h2",
-        text: "From before to after"
+        text: "Why those choices",
       },
       {
         kind: "p",
-        text: "Before, the label read as a flat product grid: cold white background, sharp product shots only, geometric sans type with no hierarchy, no texture close-ups. After, the same subject is shown through close-up weave shots, a warm muted palette (oat, moss, stone), serif display type with generous line-height, and full-width texture images on a mobile-first single-page site. The design was not redesigned — its intent was made visible."
+        text: "The monogram exists because a label lives on small things — a garment tag, an embossed card — where a full wordmark does not fit. The palette is restrained so it never fights the product. And the storefront gives the photography the space, because on a phone the photograph is the closest a visitor gets to the fabric.",
       },
-      {
-        kind: "h2",
-        text: "Why it worked"
-      },
-      {
-        kind: "p",
-        text: "When a brand is about touch, the site must simulate touch before it sells it. The brief's first rule — tactile language — forced every design decision through one question: does this make the wool feel closer or farther away? The measured result (performance ~91, accessibility ~98) is the side effect of a design that stopped fighting the phone and started working with it."
-      }
     ],
     takeaway: {
       title: "What you can take",
-      text: "Three rules from the study.",
+      text: "Three questions from the study that apply to any product brand.",
       items: [
-        "A one-page brief that fits on a single screen — audience, promise, constraints, measure.",
-        "Before/after must show the same subject, same lighting, different intent — not a redesign, a proof.",
-        "When a brand is about touch, the site must simulate touch before it sells it."
-      ]
+        "Write the brief as one sentence about how the product should feel, not what the site should contain.",
+        "Check the identity at its smallest use — a tag, an icon, a favicon — before its largest.",
+        "If the product has colour, let the brand step back from it.",
+      ],
     },
     caveats: [
-      "This was a self-set study, not a commissioned label site; no real transactions or customer data.",
-      "The \"live\" link is a demo route; it does not represent an operating business.",
-      "Lighthouse scores are environment-dependent; the numbers shown are from this workspace's build, not a production server.",
-      "The tactile effect depends heavily on screen quality; it does not translate the same way across all devices."
+      "FORME is a self-initiated study, not a client project. There is no real label, no customers and no sales behind it.",
+      "The images show the identity applied as a concept; they are not a working shop.",
+      "No performance, accessibility or user measurements were taken. The study shows design thinking, not results.",
     ],
     related: [
-      {
-        slug: "anatomy-of-an-echoes-note",
-        title: "The anatomy of an Echoes note"
-      },
-      {
-        slug: "shipping-the-evidence-tag",
-        title: "Every Echoes note now carries its proof"
-      }
+      { slug: "northline-senior-not-cold", title: "NORTHLINE: senior, not cold — branding a consultancy" },
+      { slug: "why-we-practise-on-imagined-clients", title: "Why we practise on imagined clients" },
     ],
-    cta: {
-      label: "See how we build sites this way",
-      href: "/capabilities/websites"
-    }
+    cta: { label: "See the Work page", href: "/work" },
   },
   {
     slug: "northline-senior-not-cold",
     title: "NORTHLINE: senior, not cold — branding a consultancy",
-    excerpt: "A self-set study in branding a consultancy to feel experienced rather than corporate-cold: one color, one accent, a signature rule, and caveats at the page level.",
-    intro: "A consultancy identity that reads as experienced rather than corporate-cold. No stock photography, no blue-gradient logos, no \"we empower\" copy. The brand must work in a single-color print, survive a low-contrast screen, and age well over five-plus years. Measured by one question: does a senior buyer trust it at first glance?",
+    excerpt: "NORTHLINE is a self-initiated study, not a client project: an identity for a strategy consultancy that needs to look senior without looking cold.",
+    intro: "NORTHLINE is a self-initiated study, not a client project. The brief: a strategy consultancy that needs to look senior without looking cold. Here are the three choices the identity rests on, why we made them, and what the study does not prove.",
     tag: "Briefed",
     theme: "Strategy",
-    readTime: 10,
+    readTime: 4,
     date: "2026-10-08",
+    updated: "2026-10-12",
     evidence: [
       {
         kind: "quote",
         label: "The brief, in one line",
-        text: "Does a senior buyer trust it at first glance?",
-        source: "NORTHLINE self-set brief"
+        text: "A strategy consultancy that needs to look senior without looking cold.",
+        source: "NORTHLINE, self-initiated study",
       },
       {
-        kind: "metrics",
-        label: "The system",
-        values: [
-          {
-            label: "Colors",
-            value: "One navy + one gold accent on warm white"
-          },
-          {
-            label: "Typefaces",
-            value: "One serif, one sans — no second decorative font"
-          },
-          {
-            label: "Signature",
-            value: "A 1pt gold rule, 48pt wide, always left-aligned"
-          },
-          {
-            label: "Print",
-            value: "Survives single-color (black-only) reproduction"
-          }
-        ]
-      }
+        kind: "link",
+        label: "See the study",
+        href: "/work#studies-title",
+        text: "NORTHLINE on the Work page: office signage, a hardback report, business cards and a tablet website.",
+      },
     ],
     body: [
       {
         kind: "h2",
-        text: "Naming"
+        text: "What the brief asked for",
       },
       {
         kind: "p",
-        text: "NORTHLINE — a directional, unshowy word. It implies navigation and seniority without claiming innovation or breakthrough. The line metaphor extends naturally into typography (a thin horizontal rule as a signature) and layout (content aligned to a single baseline grid)."
+        text: "Consultancies tend to fail in one of two directions: corporate and forgettable, or trying so hard to look modern that they stop looking trustworthy. NORTHLINE had to read as experienced to a senior buyer while still feeling like people you would want in the room.",
       },
       {
         kind: "h2",
-        text: "Visual system"
+        text: "The three choices",
       },
       {
-        kind: "ul",
+        kind: "ol",
         items: [
-          "One color: a deep navy (#0B1A2E) on warm white (#F5F1EB), with a muted gold accent (#C5A56A) reserved for the horizontal rule only.",
-          "Typography: a single serif for titles (authority) and a single sans for body (clarity).",
-          "Signature: a 1pt gold rule under the name, 48pt wide, always left-aligned, never centered.",
-          "No logos beyond wordmark + rule. The identity lives in spacing, not ornament."
-        ]
+          "A single-stroke peak mark that still reads on a business card or a sign.",
+          "Navy, silver and white, with one short line of copy: people, ideas, progress.",
+          "Clear hierarchy across proposals, reports and the website, so the brand feels consistent wherever clients meet it.",
+        ],
       },
       {
         kind: "h2",
-        text: "Voice rules"
-      },
-      {
-        kind: "ul",
-        items: [
-          "First-person plural when describing the firm's perspective; direct address only in CTAs.",
-          "Short sentences over compound ones. No adjectives that cannot be verified (\"world-class\", \"cutting-edge\").",
-          "Every page ends with a caveat."
-        ]
-      },
-      {
-        kind: "h2",
-        text: "Measured result"
+        text: "Why those choices",
       },
       {
         kind: "p",
-        text: "The identity was verified against the brief: senior (serif headline, restrained palette), not cold (warm white background, gold accent, no pure black), and durable (single-color printable, no gradient dependencies). The gold rule renders at 1pt on 300 DPI print and remains visible at 150% browser zoom."
-      }
+        text: "A consultancy is met mostly on paper and on screens it does not control — a proposal on a client's desk, a report in a board pack. So the mark is simple enough to survive a business card, the palette is restrained, and the real work of the identity is in the hierarchy of its documents, because that is where a buyer forms a view of the firm.",
+      },
     ],
     takeaway: {
       title: "What you can take",
-      text: "A minimal identity you can replicate.",
+      text: "Three checks for any professional-services brand.",
       items: [
-        "A self-set brief with a real measurement criterion (\"does a senior buyer trust it?\").",
-        "A minimal identity built on one color + one accent, printable in gray.",
-        "A signature rule as the only ornament — replicable, never decorative for its own sake.",
-        "Caveats included at the page level, not buried in a footer."
-      ]
+        "Design for where clients actually meet you — often a document, not the website.",
+        "Test the mark at its smallest size first.",
+        "Let consistency across touchpoints carry the seniority, rather than ornament.",
+      ],
     },
     caveats: [
-      "This is a self-set study, not a commissioned brand identity with real clients.",
-      "No real-world adoption data (traffic, conversions, brand recall) was measured — only design consistency and print tests.",
-      "The gold accent requires CMYK proofing; on uncalibrated monitors it may appear brown."
+      "NORTHLINE is a self-initiated study, not a client project. There is no real firm and no clients behind it.",
+      "The images show the identity applied as a concept, not production signage or printed material.",
+      "Nothing was measured with real buyers. The study shows design thinking, not results.",
     ],
     related: [
-      {
-        slug: "forme-knitwear",
-        title: "FORME: a knitwear label that has to feel tactile on a phone"
-      },
-      {
-        slug: "anatomy-of-an-echoes-note",
-        title: "The anatomy of an Echoes note"
-      }
+      { slug: "forme-knitwear", title: "FORME: a knitwear label that has to feel tactile on a phone" },
+      { slug: "why-we-practise-on-imagined-clients", title: "Why we practise on imagined clients" },
     ],
-    cta: {
-      label: "See how we build sites this way",
-      href: "/capabilities/websites"
-    }
+    cta: { label: "See the Work page", href: "/work" },
   },
 {
     slug: "one-page-website-brief-template",
     title: "The one-page brief we write before anything is drawn",
     excerpt: "The template we use to force clarity before design starts — outcome, audience, constraints, non-negotiables, success criteria, and the decision needed today. Ungated Markdown download.",
     intro:
-      "Every project that ships clean started with a brief that fit on one page. This note publishes the exact template we use at Botlane Studios: eleven sections that force the hard decisions before a single pixel is designed. The template is the takeaway — download it, adapt it, use it.",
+      "A brief that fits on one page forces the hard decisions before a single pixel is designed. This note publishes the template we use at Botlane Studios: eleven sections, from the outcome you are betting on to the decision needed today. The template is the takeaway — download it, adapt it, use it.",
     tag: "Briefed",
     theme: "Strategy",
     readTime: 5,
@@ -1000,7 +800,7 @@ export const POSTS: Post[] = [
       },
       {
         kind: "p",
-        text: "We send this template to the client before the kickoff call. They fill what they can; we fill the rest together. The completed brief becomes the contract for the design and build phases — every design decision and every scope question traces back to a line in this document. If a stakeholder asks for something not in the brief, the answer is: \"Is it in the brief? If not, it is a change request.\"",
+        text: "We share this template before the first working session. The client fills in what they can; we fill in the rest together. The completed brief then feeds the written proposal, which is what sets the scope — so every design decision and scope question can be traced back to a line in it.",
       },
       {
         kind: "h2",
@@ -1026,7 +826,7 @@ export const POSTS: Post[] = [
       ],
     },
     caveats: [
-      "This template reflects how Botlane Studios works — a small, senior team that moves fast. Larger organisations may need more formal governance.",
+      "This template reflects how Botlane Studios works. Larger organisations may need more formal governance.",
       "The template does not replace a proper discovery phase; it captures the output of one.",
       "A filled brief is only as good as the honesty behind it. A wish list forced onto one page is still a wish list.",
       "We are a studio, not a process consultancy. This is our notebook, not a universal standard.",
@@ -1040,8 +840,8 @@ export const POSTS: Post[] = [
   {
     slug: "why-we-practise-on-imagined-clients",
     title: "Why we practise on imagined clients",
-    excerpt: "Self-set studies are the studio's practice ground — not a substitute for real clients, but the condition that keeps real work sharp.",
-    intro: "We practise on imagined clients because real clients rarely expose the full shape of our process, and we need to see the whole shape to improve it. A self-set study removes the filters real work imposes on purpose — we set the brief, choose the constraints, design, build, and measure it ourselves.",
+    excerpt: "Self-set studies are the studio's practice ground — not a substitute for client work, but an honest way to show how the studio thinks while it is new.",
+    intro: "We practise on imagined clients because a studio needs a way to show its thinking before it has client work to show, and because a self-set brief exposes the whole process. We set the brief, choose the constraints and carry the design through ourselves — and we label every study as exactly that.",
     tag: "Briefed",
     theme: "Design",
     readTime: 5,
@@ -1057,11 +857,11 @@ export const POSTS: Post[] = [
     body: [
       {
         kind: "h2",
-        text: "Why real work hides the process"
+        text: "Why a self-set brief shows the whole process"
       },
       {
         kind: "p",
-        text: "A live project has constraints we don't choose — deadlines, budgets, legacy systems — and that is good; it is the work. But it also hides the design process: the brief is inherited, the outcome is negotiated away, the build is clipped. A self-set study removes those filters on purpose. It is the Briefed tag at work — proof that a design can complete its full arc from brief to result."
+        text: "A live project has constraints nobody chooses — deadlines, budgets, legacy systems — and that is good; it is the work. But client work often hides the design process: the brief is inherited and the outcome is negotiated. A self-set study shows the whole arc from brief to design, which is what the Briefed tag means."
       },
       {
         kind: "h2",
@@ -1070,8 +870,8 @@ export const POSTS: Post[] = [
       {
         kind: "ul",
         items: [
-          "It protects our standard from atrophying between real commissions.",
-          "It protects the habit of finishing — of carrying a brief through to a measured result rather than a polished mock.",
+          "It keeps the standard visible while the studio is new and has no client work to show.",
+          "It protects the habit of finishing — carrying a brief through to a considered design rather than a single polished image.",
           "It protects the honesty of what we show: because we wrote the brief, we cannot blame it on the client when something fails. The failure is ours, and that makes the evidence real."
         ]
       }
@@ -1081,13 +881,13 @@ export const POSTS: Post[] = [
       text: "The practice rule.",
       items: [
         "Practise on a self-set brief when real work isn't exposing the full process.",
-        "Finish to a measured result, not a mock — that is the habit worth protecting.",
+        "Finish the arc from brief to design — that is the habit worth protecting.",
         "Own the failure: a brief you wrote yourself cannot be blamed on a client."
       ]
     },
     caveats: [
       "Imagined clients are not stand-ins for real ones. There is no negotiation, no budget pressure, no external stakeholder reviewing our work at the wrong moment.",
-      "A self-set study proves craft, not commercial resilience. We say that plainly."
+      "A self-set study shows craft, not commercial results. Every study on this site is labelled \"Self-initiated study · Not a client project\"."
     ],
     related: [
       {
@@ -1104,156 +904,19 @@ export const POSTS: Post[] = [
       href: "/capabilities/websites"
     }
   },
-{
-    slug: "our-sites-real-mobile-performance",
-    title: "Our site's real mobile performance — measured, and the changes we're making",
-    excerpt: "We measured botlane.studio on a throttled mobile profile: Performance 76, LCP 3.1s, INP 330ms, CLS 0. Here is what is slow, why, and the exact changes we are making — no invented score, no pretend before-and-after.",
-    intro:
-      "We measured our own site on a throttled mobile profile, and we are publishing the numbers that need work, not the ones we wish we had: Performance 76, LCP 3.1 s, INP 330 ms, CLS 0. The hero loads slowly, and our animation JavaScript blocks taps. Here is the plan, and this note updates as each change ships.",
-    tag: "Measured",
-    theme: "Build",
-    readTime: 7,
-    date: "2026-10-09",
-    evidence: [
-      {
-        kind: "metrics",
-        label: "botlane.studio — Lighthouse lab run (mobile, throttled)",
-        values: [
-          { label: "Performance score", value: "76 / 100" },
-          { label: "Largest Contentful Paint (LCP)", value: "3.1 s — needs improvement (good ≤ 2.5 s)" },
-          { label: "Interaction to Next Paint (INP)", value: "330 ms — needs improvement (good ≤ 200 ms)" },
-          { label: "Cumulative Layout Shift (CLS)", value: "0 — good (good ≤ 0.1)" },
-          { label: "Total Blocking Time (main-thread JS)", value: "160 ms" },
-          { label: "Server response (TTFB)", value: "510 ms" },
-          { label: "Total page weight", value: "2.6 MB" },
-        ],
-      },
-      {
-        kind: "link",
-        label: "Run it yourself",
-        href: "https://pagespeed.web.dev/analysis/https-botlane-studio",
-        text: "PageSpeed Insights for botlane.studio",
-      },
-    ],
-    body: [
-      {
-        kind: "h2",
-        text: "What we measured, and where the numbers come from",
-      },
-      {
-        kind: "p",
-        text: "The numbers above are one Lighthouse lab run on a throttled mobile profile, taken on 2026-10-08 and already published in our [Core Web Vitals note](/echoes/core-web-vitals-small-business). We repeat them here because this note is about the work, not the explanation: two of our three Core Web Vitals need improvement, and one is already good.",
-      },
-      {
-        kind: "h2",
-        text: "The two numbers that need work",
-      },
-      {
-        kind: "h3",
-        text: "LCP 3.1 s — the hero is the whole story",
-      },
-      {
-        kind: "p",
-        text: "Largest Contentful Paint measures when the biggest thing in the viewport finishes painting. On our homepage that thing is the hero — the headline and the photograph behind it. It takes 3.1 seconds in the lab against a 2.5 second 'good' threshold. Part of that is the 510 ms server response, and part is render-blocking work that waits to animate the hero instead of painting it first.",
-      },
-      {
-        kind: "p",
-        text: "The plan for LCP: paint the hero lines at first paint instead of animating them in, make the hero image the first thing the browser fetches — right format, right size, preloaded — and load the heavier scene only when someone actually asks for it.",
-      },
-      {
-        kind: "h3",
-        text: "INP 330 ms — the main thread is busy",
-      },
-      {
-        kind: "p",
-        text: "Interaction to Next Paint measures the worst delay between a tap and the page responding. Our lab proxy is 330 ms against a 200 ms 'good' threshold, and the culprit is JavaScript doing too much on the main thread: the decode-text animation, the motion, and the 3D scene all run up front, so the browser is busy at the moment a visitor taps.",
-      },
-      {
-        kind: "p",
-        text: "The plan for INP: load the 3D scene on intent rather than at load, code-split the animation so it is not all running at once, and honour prefers-reduced-motion so visitors who ask for less motion get less work.",
-      },
-      {
-        kind: "h2",
-        text: "CLS 0 — the one that is already good",
-      },
-      {
-        kind: "p",
-        text: "Cumulative Layout Shift measures whether the page jumps while it loads. Ours is 0 because we reserve space for images and fonts, so nothing moves after it paints. We are keeping that: every change in this plan must not trade a layout shift for a faster paint.",
-      },
-      {
-        kind: "h2",
-        text: "The plan, in the order we will do it",
-      },
-      {
-        kind: "ol",
-        items: [
-          "Fix LCP first — the hero is what most visitors see first, so it earns the first fix: paint the headline early, preload the hero image, and stop blocking the first paint on animation.",
-          "Then INP — free the main thread: load the 3D scene on intent, split the animation code, and honour reduced motion.",
-          "Measure after each change — re-run Lighthouse, and publish the real before and after with the diff.",
-        ],
-      },
-      {
-        kind: "h2",
-        text: "Why we publish a score that needs work",
-      },
-      {
-        kind: "p",
-        text: "Performance is design, and a scoreboard that only showed good news would not be worth reading. The Measured tag means real numbers, including the ones we would rather were better. We did not publish a 98, and we will not publish a before-and-after we have not actually measured. This note is the starting line.",
-      },
-    ],
-    takeaway: {
-      title: "What you can take",
-      text: "Two fixes and one rule, for any site.",
-      items: [
-        "Find your LCP element — usually the hero — and make it load first, not last.",
-        "Find what blocks your main thread — animation, widgets, a heavy framework — and defer it until it is needed.",
-        "Measure after every change. A fix you did not measure is a claim, not a result.",
-      ],
-    },
-    caveats: [
-      "These are lab numbers from one throttled mobile Lighthouse run, not field data. Real visitors in CrUX will see different numbers, and Google ranks on field data, not this run.",
-      "The INP figure is a lab proxy (max potential FID), not a real-user INP measurement.",
-      "This note reports what we measured and what we plan. It does not claim a 98 score, and it does not claim the fixes are done — the before-and-after numbers and diffs will be added here as each change actually ships and is re-measured.",
-      "We are not claiming these fixes will change our ranking. Core Web Vitals are one signal among many.",
-      "This is our plan for our site. Your bottleneck may be different — measure yours before you copy ours.",
-    ],
-    related: [
-      { slug: "core-web-vitals-small-business", title: "Core Web Vitals for a small business site, in plain English" },
-      { slug: "shipping-the-evidence-tag", title: "Every Echoes note now carries its proof" },
-    ],
-    cta: { label: "See how we build performant sites", href: "/capabilities/websites" },
-    faq: [
-      {
-        q: "Why are you publishing a score that needs work?",
-        a: "Because the Measured tag means real numbers, including the ones we would rather were better. A scoreboard that only showed good news would not be worth reading. Performance is design — we prove it by showing the work, not by hiding the score.",
-      },
-      {
-        q: "When will your numbers improve?",
-        a: "When the changes ship and are re-measured. We will update this note with the real before and after, plus the diff, each time. We will not publish an improvement we have not measured.",
-      },
-      {
-        q: "What should I fix first on my own site?",
-        a: "LCP first — find the element that is your Largest Contentful Paint, usually the hero, and make it load first. Then INP — find what blocks the main thread and defer it. Measure after every change.",
-      },
-      {
-        q: "How do I measure my own site?",
-        a: "Run PageSpeed Insights on your homepage. It reports the same three Core Web Vitals. Lab data is for debugging; field data in CrUX is what Google actually uses for ranking.",
-      },
-    ],
-  },
   {
     slug: "your-site-feels-slow-on-a-phone",
     title: "Your site feels slow on a phone — the five usual causes",
-    excerpt: "Five measured causes behind a phone-slow site, each with its 2026 threshold and a real example — from the hero image that blocks LCP to the gap between lab and field data.",
-    intro: "A phone-slow site is almost never one bug — it is usually one of five causes, and each maps to a measurable Core Web Vital. The hero image blocks Largest Contentful Paint, JavaScript hydration blocks Interaction to Next Paint, embeds shift the layout, unchunked JavaScript starves the main thread, and the numbers you measure in a lab rarely match what real visitors see. Here are the five, with their 2026 thresholds.",
-    tag: "Measured",
+    excerpt: "Five common causes behind a site that feels slow on a phone, each tied to a Core Web Vital — from the hero image that delays LCP to the gap between lab and field data.",
+    intro: "A phone-slow site is almost never one bug — it is usually one of five causes, and each maps to a measurable Core Web Vital. The hero image blocks Largest Contentful Paint, JavaScript hydration blocks Interaction to Next Paint, embeds shift the layout, unchunked JavaScript starves the main thread, and the numbers you measure in a lab rarely match what real visitors see. Here are the five, with Google's thresholds.",
+    tag: "Plainly",
     theme: "Build",
     readTime: 9,
     date: "2026-10-08",
     evidence: [
       {
         kind: "metrics",
-        label: "The 2026 thresholds the five causes miss",
+        label: "Google's thresholds the five causes miss",
         values: [
           {
             label: "Largest Contentful Paint (LCP)",
@@ -1271,8 +934,8 @@ export const POSTS: Post[] = [
       },
       {
         kind: "link",
-        label: "The reference crawl",
-        href: "https://web.dev/vitals/",
+        label: "The source",
+        href: "https://web.dev/articles/vitals",
         text: "Web.dev Core Web Vitals guidance"
       }
     ],
@@ -1283,7 +946,7 @@ export const POSTS: Post[] = [
       },
       {
         kind: "p",
-        text: "The largest element in the viewport is usually the hero image or headline, and Largest Contentful Paint measures exactly when it finishes painting. A full-resolution hero loaded late — no width/height, wrong format, no preload, and render-blocking CSS above it — pushes LCP past the 2.5 second threshold. This is the single most common cause in a 10,000-site crawl (BugViso), because it is the easiest to overlook and the cheapest to fix."
+        text: "The largest element in the viewport is usually the hero image or headline, and Largest Contentful Paint measures exactly when it finishes painting. A full-resolution hero loaded late — no width/height, wrong format, no preload, and render-blocking CSS above it — pushes LCP past the 2.5 second threshold. It is one of the easiest causes to overlook and one of the cheapest to fix."
       },
       {
         kind: "h2",
@@ -1332,7 +995,7 @@ export const POSTS: Post[] = [
       "These are the five most common causes, not a complete list — and none of them is specific to your site. Measure yours before you fix anything.",
       "Lab numbers (Lighthouse) and field data (CrUX) measure different things; a green lab score does not guarantee a fast real-world experience.",
       "The three Core Web Vitals move independently — a site can pass one and fail the other two, and fixing one does not automatically fix the others.",
-      "Thresholds and citations are drawn from public 2026 sources (BugViso, Web.dev, SEO-Kreativ); they are a starting point, not a diagnosis."
+      "Thresholds are Google's published values (web.dev); they are a starting point, not a diagnosis."
     ],
     related: [
       {
@@ -1340,8 +1003,8 @@ export const POSTS: Post[] = [
         title: "Core Web Vitals for a small business site, in plain English"
       },
       {
-        slug: "our-sites-real-mobile-performance",
-        title: "Our site's real mobile performance — measured, and the changes we're making"
+        slug: "designing-for-reduced-motion",
+        title: "Designing for reduced motion without killing the design"
       }
     ],
     cta: {
@@ -1349,36 +1012,37 @@ export const POSTS: Post[] = [
       href: "/capabilities/websites"
     }
   },
-{
+  {
     slug: "core-web-vitals-small-business",
     title: "Core Web Vitals for a small business site, in plain English",
-    excerpt: "Our studio site scores 76 on performance. LCP 3.1s (needs work), INP 330ms (needs work), CLS 0 (excellent). Here is what those numbers actually mean for a business owner.",
-    intro:
-      "Core Web Vitals are three numbers Google uses to measure whether a site feels fast and stable to real people. Our studio site at botlane.studio scores 76 overall: Largest Contentful Paint 3.1 seconds (needs improvement), Interaction to Next Paint 330 milliseconds (needs improvement), Cumulative Layout Shift 0 (excellent). This note explains what each metric means in plain language, why the thresholds exist, and what a small business owner should actually do about them.",
-    tag: "Measured",
+    excerpt: "Core Web Vitals are three numbers Google uses to judge whether a site feels fast and stable: loading, response to a tap, and whether the page jumps. Here is what each means and what to do about it.",
+    intro: "Core Web Vitals are three numbers Google uses to judge whether a site feels fast and stable to real people: how quickly the main content appears (LCP), how quickly the page responds to a tap (INP), and whether things jump around while it loads (CLS). This note explains each in plain language and what a small business owner should actually do about them.",
+    tag: "Plainly",
     theme: "Launch",
-    readTime: 8,
+    readTime: 6,
     date: "2026-10-08",
+    updated: "2026-10-12",
     evidence: [
       {
         kind: "metrics",
-        label: "botlane.studio — Lighthouse lab run (mobile, throttled)",
+        label: "Google's thresholds (measured at the 75th percentile of real visits)",
         values: [
-          { label: "Performance score", value: "76 / 100" },
-          { label: "Largest Contentful Paint (LCP)", value: "3.1 s — needs improvement (good ≤ 2.5 s)" },
-          { label: "Interaction to Next Paint (INP)", value: "330 ms — needs improvement (good ≤ 200 ms)" },
-          { label: "Cumulative Layout Shift (CLS)", value: "0 — good (good ≤ 0.1)" },
-          { label: "First Contentful Paint", value: "2.3 s" },
-          { label: "Total Blocking Time", value: "160 ms" },
-          { label: "Server response time (TTFB)", value: "510 ms" },
-          { label: "Total page weight", value: "2.6 MB" },
+          { label: "Largest Contentful Paint (LCP)", value: "good ≤ 2.5 s · poor > 4 s" },
+          { label: "Interaction to Next Paint (INP)", value: "good ≤ 200 ms · poor > 500 ms" },
+          { label: "Cumulative Layout Shift (CLS)", value: "good ≤ 0.1 · poor > 0.25" },
         ],
       },
       {
         kind: "link",
-        label: "Run it yourself",
-        href: "https://pagespeed.web.dev/analysis/https-botlane-studio",
-        text: "PageSpeed Insights for botlane.studio",
+        label: "The source",
+        href: "https://web.dev/articles/vitals",
+        text: "web.dev: Web Vitals",
+      },
+      {
+        kind: "link",
+        label: "Measure your own site",
+        href: "https://pagespeed.web.dev/",
+        text: "PageSpeed Insights",
       },
     ],
     body: [
@@ -1388,7 +1052,7 @@ export const POSTS: Post[] = [
       },
       {
         kind: "p",
-        text: "Google calls them \"Core Web Vitals,\" but they are just three questions every visitor asks without knowing it:",
+        text: "Google calls them \"Core Web Vitals\", but they are three questions every visitor asks without knowing it:",
       },
       {
         kind: "ul",
@@ -1400,7 +1064,7 @@ export const POSTS: Post[] = [
       },
       {
         kind: "p",
-        text: "Google uses these as a ranking signal. But the real reason to care is simpler: visitors leave when a site feels slow or broken. The thresholds are not arbitrary — they map to human perception.",
+        text: "Google uses them as one of many ranking signals. The better reason to care is simpler: visitors leave when a site feels slow or broken.",
       },
       {
         kind: "h2",
@@ -1408,15 +1072,7 @@ export const POSTS: Post[] = [
       },
       {
         kind: "p",
-        text: "LCP measures when the largest text block or image in the viewport finishes painting. On our homepage that is the hero headline. It took 3.1 seconds in the lab. The \"good\" threshold is 2.5 seconds.",
-      },
-      {
-        kind: "p",
-        text: "Why 2.5 seconds? Research shows that is roughly the point where people start to wonder if the page is broken. Under 2.5s feels instant; over 4s feels broken. We sit in the middle — visible, but not snappy.",
-      },
-      {
-        kind: "p",
-        text: "For a small business site, the LCP element is usually your headline, hero image, or primary call to action. If that loads late, the visitor sees a blank or half-loaded page and may bounce.",
+        text: "LCP measures when the largest image or block of text in the first screen finishes painting. On most small business sites that is the hero image or the headline. Good is 2.5 seconds or less; over 4 seconds is rated poor. If it loads late, the visitor sees a blank or half-built page and may leave.",
       },
       {
         kind: "h2",
@@ -1424,11 +1080,7 @@ export const POSTS: Post[] = [
       },
       {
         kind: "p",
-        text: "INP (which replaced First Input Delay in 2024) measures the worst latency a user experiences when they interact — click a button, open a menu, type in a field. Our max potential FID proxy is 330 ms. The \"good\" threshold is 200 ms.",
-      },
-      {
-        kind: "p",
-        text: "Above 200 ms, the delay becomes perceptible. Above 500 ms, it feels laggy. Our 330 ms means there is JavaScript work on the main thread that blocks the browser from responding instantly. For a small business site, this often comes from third-party scripts (chat widgets, analytics, heavy frameworks) or unoptimised React/Vue hydration.",
+        text: "INP replaced First Input Delay in March 2024. It measures how long the page takes to respond visibly when someone clicks a button, opens a menu or types in a field. Good is 200 milliseconds or less; over 500 is rated poor. Slow INP usually means JavaScript is keeping the browser busy — often third-party scripts such as chat widgets, or a heavy framework doing too much work up front.",
       },
       {
         kind: "h2",
@@ -1436,23 +1088,7 @@ export const POSTS: Post[] = [
       },
       {
         kind: "p",
-        text: "CLS measures unexpected movement. A score of 0 means nothing shifted after it painted. This is our strongest metric. It happens because we reserve space for images and fonts, and we do not inject content above existing content after load.",
-      },
-      {
-        kind: "p",
-        text: "For a small business site, CLS problems usually come from: images without width/height, ads or embeds that load late and push content down, or web fonts that swap and reflow text. Fixing CLS is often the cheapest win — just add dimensions and font-display: swap.",
-      },
-      {
-        kind: "h2",
-        text: "What the thresholds mean for you",
-      },
-      {
-        kind: "ul",
-        items: [
-          "Good on all three → you get a small ranking boost and, more importantly, visitors do not fight the site.",
-          "One metric needs improvement → fix that one first. The ROI is highest on the worst metric.",
-          "Two or more need improvement → the site feels slow. Prioritise LCP (revenue impact) then INP (trust impact).",
-        ],
+        text: "CLS measures unexpected movement while the page loads. Good is 0.1 or less. The usual causes are images without set dimensions, ads or embeds that push content down when they arrive, and web fonts that reflow text when they swap in. Fixing CLS is often the cheapest win: give every image and embed its space before it loads.",
       },
       {
         kind: "h2",
@@ -1461,11 +1097,11 @@ export const POSTS: Post[] = [
       {
         kind: "ol",
         items: [
-          "Run PageSpeed Insights on your homepage and your top landing page. Note the three Core Web Vitals numbers.",
-          "If LCP > 2.5s: optimise the hero image (WebP, correct dimensions, preload), reduce render-blocking CSS/JS, and check TTFB (hosting, caching).",
-          "If INP > 200ms: audit third-party scripts, defer non-critical JS, and consider lighter alternatives for heavy widgets.",
-          "If CLS > 0.1: add width/height to all images and iframes, reserve space for ads/embeds, and use font-display: swap.",
-          "Re-test after each change. Lab data (Lighthouse) is consistent; field data (CrUX) is what Google actually uses for ranking.",
+          "Run PageSpeed Insights on your homepage and your most visited landing page. Note the three numbers.",
+          "If LCP is over 2.5 s: serve the hero image in a modern format at the right size, load it first, and check how quickly your hosting responds.",
+          "If INP is over 200 ms: list your third-party scripts, remove what you do not use, and load the rest after the page is interactive.",
+          "If CLS is over 0.1: set width and height on images and iframes, and reserve space for anything that loads late.",
+          "Re-test after each change, and judge progress on field data, not one lab run.",
         ],
       },
       {
@@ -1474,171 +1110,130 @@ export const POSTS: Post[] = [
       },
       {
         kind: "p",
-        text: "The numbers above are from a single Lighthouse lab run on a throttled mobile profile. Real users (field data, via Chrome User Experience Report) will see different numbers depending on their device, network, and geography. Google ranks based on field data (28-day rolling window). Lab data is for debugging; field data is for ranking.",
+        text: "PageSpeed Insights shows two kinds of numbers. Lab data comes from a single simulated visit and is useful for debugging. Field data comes from real Chrome users over the previous 28 days (the Chrome User Experience Report), and it is what Google's assessment uses. A small site may not have enough traffic to show field data at all; in that case, use the lab numbers as a guide, not a verdict.",
       },
     ],
     takeaway: {
       title: "What you can take",
       text: "Three questions, three numbers, one checklist.",
       items: [
-        "LCP ≤ 2.5s — the main content arrives fast",
-        "INP ≤ 200ms — taps and clicks feel instant",
+        "LCP ≤ 2.5 s — the main content arrives fast",
+        "INP ≤ 200 ms — taps and clicks feel instant",
         "CLS ≤ 0.1 — nothing jumps while you read",
-        "Run PageSpeed Insights on your top two pages. Fix the worst metric first.",
+        "Run PageSpeed Insights on your top two pages and fix the worst number first.",
       ],
     },
     caveats: [
-      "These are lab numbers from one throttled mobile run on 2026-10-08. Your visitors' field data (CrUX) will differ and is what Google actually uses for ranking.",
-      "The INP proxy (max potential FID = 330 ms) is a lab upper bound, not a real-user measurement. True INP requires field data.",
-      "This note explains the metrics and our numbers; it does not claim fixing them will guarantee a ranking change. Many signals affect ranking.",
-      "We are a studio, not a Core Web Vitals consultancy. This is our notebook, not a prescription for your site.",
+      "Thresholds are Google's published values at the time of writing; check web.dev if you are reading this much later.",
+      "Core Web Vitals are one ranking signal among many. Improving them does not guarantee a ranking change.",
+      "This is a plain-language guide, not a diagnosis of your site. Measure yours before you fix anything.",
     ],
     related: [
-      { slug: "shipping-the-evidence-tag", title: "Every Echoes note now carries its proof" },
-      { slug: "anatomy-of-an-echoes-note", title: "The anatomy of an Echoes note" },
+      { slug: "your-site-feels-slow-on-a-phone", title: "Your site feels slow on a phone — the five usual causes" },
+      { slug: "designing-for-reduced-motion", title: "Designing for reduced motion without killing the design" },
     ],
     cta: { label: "See how we build performant sites", href: "/capabilities/websites" },
     faq: [
       {
         q: "What are Core Web Vitals?",
-        a: "Three metrics Google uses to measure loading (LCP), interactivity (INP), and visual stability (CLS). They are a ranking signal and a proxy for user experience.",
-      },
-      {
-        q: "Why does our studio site not pass all three?",
-        a: "Our LCP (3.1s) and INP proxy (330ms) are in the 'needs improvement' range. The hero image and main-thread JavaScript are the main contributors. We are honest about it — the tag is Measured, not Perfect.",
+        a: "Three measurements Google uses for loading (LCP), responsiveness (INP) and visual stability (CLS). They are a ranking signal and a reasonable proxy for how a site feels.",
       },
       {
         q: "Do I need to hit 'good' on all three to rank well?",
-        a: "No. Core Web Vitals are one of many ranking signals. Content, relevance, and authority matter more. But good vitals remove a reason for Google to rank you lower, and they directly improve conversion.",
+        a: "No. They are one of many signals, and relevance and content matter more. But a site that feels slow loses visitors whatever its ranking.",
       },
       {
         q: "What is the difference between lab and field data?",
-        a: "Lab data (Lighthouse) runs in a controlled environment with throttling. Field data (CrUX) comes from real Chrome users who opted in. Google ranks on field data. Use lab to debug, field to track.",
+        a: "Lab data is one simulated visit, useful for debugging. Field data comes from real Chrome users over 28 days and is what Google's assessment uses.",
       },
     ],
   },
   {
     slug: "designing-for-reduced-motion",
     title: "Designing for reduced motion without killing the design",
-    excerpt: "A before-and-after on the studio's hero: gating animation behind prefers-reduced-motion, removing a useless parallax layer, and ending with a design that looks finished either way.",
-    intro: "The studio's hero used a 2-second keyframe animation, a continuously rotating logo, and a parallax layer that made the page unreadable for anyone who sets prefers-reduced-motion: reduce. We gated the animation, replaced the rotation, removed the parallax, and the design did not flatten — it finished. Here is the before, the after, and the measured numbers.",
-    tag: "Measured",
+    excerpt: "What this site does when a visitor asks their device for less motion: every moving part either stops or never starts, and the page still looks finished.",
+    intro: "When a visitor turns on \"reduce motion\" in their device settings, this site honours it. Smooth scrolling, the hero reel, background videos, the decoding text, the 3D scene's drift and the photo films all either stop or never start — and the page still looks finished, because the still state was designed first. Here is exactly what changes, with the code.",
+    tag: "Built",
     theme: "Design",
-    readTime: 7,
+    readTime: 5,
     date: "2026-10-08",
+    updated: "2026-10-12",
     evidence: [
       {
-        kind: "metrics",
-        label: "Same device, same conditions (Chrome Lighthouse, mid-range Windows laptop)",
-        values: [
-          {
-            label: "LCP before",
-            value: "3.8 s"
-          },
-          {
-            label: "LCP after",
-            value: "2.1 s"
-          },
-          {
-            label: "CLS before",
-            value: "0.18"
-          },
-          {
-            label: "CLS after",
-            value: "0.01"
-          },
-          {
-            label: "Blocked animation frames before",
-            value: "~120 over 3 s"
-          },
-          {
-            label: "Blocked animation frames after",
-            value: "~8"
-          },
-          {
-            label: "prefers-reduced-motion before",
-            value: "no handling"
-          },
-          {
-            label: "prefers-reduced-motion after",
-            value: "handled"
-          }
-        ]
+        kind: "code",
+        label: "The pattern, from src/components/ShowreelVideo.tsx",
+        code: "// Reduced motion: never start; CSS keeps the poster on top.\nif (window.matchMedia(\"(prefers-reduced-motion: reduce)\").matches) return;",
       },
       {
-        kind: "link",
-        label: "The live demo",
-        href: "/echoes/reduced-motion-demo",
-        text: "A two-state demo toggled by a real prefers-reduced-motion media query."
-      }
+        kind: "metrics",
+        label: "What changes when a visitor asks for less motion",
+        values: [
+          { label: "Scrolling", value: "Native browser scrolling; the smooth-scroll library never starts" },
+          { label: "Hero reel", value: "Poster image only; the video never plays" },
+          { label: "Background videos", value: "Poster only; the video file is never downloaded" },
+          { label: "Decoding text", value: "The final text appears at once" },
+          { label: "Photo films", value: "Never autoplay" },
+          { label: "3D process scene", value: "No idle drift and no pointer tilt" },
+          { label: "Image tiles", value: "No parallax and no custom cursor" },
+          { label: "Lane, the site guide", value: "Answers appear without the typing pause" },
+        ],
+      },
     ],
     body: [
       {
         kind: "h2",
-        text: "Before: the motion-heavy design"
+        text: "One rule, applied everywhere",
       },
       {
         kind: "p",
-        text: "The original landing hero used a 2-second CSS keyframe animation on the headline and a staggered fade-in on the cards. The logo rotated continuously. Below the fold, a parallax layer tracked the mouse. It looked polished on high-end hardware with default motion preferences; it made the page unreadable to anyone who asked for less motion."
+        text: "Every moving part on the site checks the same thing before it starts: the visitor's prefers-reduced-motion setting. If it is set to reduce, the component does nothing and the still version stays on screen. In CSS, entrance animations such as the hero photograph's settle are written inside a no-preference media query, so they only exist for visitors who have not asked for less motion.",
       },
       {
         kind: "h2",
-        text: "After: the reduced-motion design"
+        text: "Why the design does not flatten",
       },
       {
-        kind: "ol",
+        kind: "p",
+        text: "The still state is not a fallback; it is the design. The reel's poster is a composed frame, the decoding text resolves to the same words, and the layout, type and spacing do not change. Motion is added on top of a finished page, so taking it away leaves a finished page.",
+      },
+      {
+        kind: "h2",
+        text: "What we chose not to do",
+      },
+      {
+        kind: "ul",
         items: [
-          "The hero animation is now gated behind prefers-reduced-motion: reduce — it only plays when the user has not asked for reduced motion; reduced-motion users see a static, high-contrast layout with the same type scale and spacing.",
-          "The continuous logo rotation is replaced by a static state; reduced-motion users see the logo at rest, which is what the design was meant to look like.",
-          "The parallax layer was removed entirely — it never worked well on low-powered devices and had no reduced-motion equivalent.",
-          "Card fade-ins are replaced with instant layout; no layout shift, no blocked frames."
-        ]
+          "A site-wide \"pause animations\" toggle. The operating-system setting already exists, and honouring it means visitors do not have to find a second switch on every site.",
+          "Slowing motion down instead of stopping it. Slower motion is still motion, and for some people it is the movement itself that causes the problem.",
+        ],
       },
-      {
-        kind: "h2",
-        text: "Why the design did not flatten"
-      },
-      {
-        kind: "p",
-        text: "The design does not look flattened; it looks finished. The reduced-motion state is not a degraded version of the animated one — it is the same hierarchy, the same type, the same spacing, rendered without movement. That is the real design decision: animated only when requested, finished either way."
-      }
     ],
     takeaway: {
       title: "What you can take",
-      text: "Three rules for reduced motion.",
+      text: "Three rules for reduced motion on any site.",
       items: [
-        "Gate animation behind prefers-reduced-motion: reduce — never run it unconditionally.",
-        "Design the static state first, then add motion as an enhancement, not the reverse.",
-        "Removing motion that has no reduced-motion equivalent is a feature, not a loss."
-      ]
+        "Check prefers-reduced-motion before every animation, video and scroll effect starts — not just in CSS.",
+        "Design the still state first, then add motion on top.",
+        "For videos, show the poster and skip the download; it saves data as well as motion.",
+      ],
     },
     caveats: [
-      "These numbers were measured on one device, one browser, one network profile. They show the direction, not a universal benchmark.",
-      "Removing animation improves LCP and CLS; it does not improve accessibility by itself — reduced-motion handling is the accessibility work, the performance improvement is a side effect.",
-      "The design is not \"animated by default, broken for reduced-motion users\". It is \"animated only when requested, finished either way\".",
-      "There is no third-party audit; verification is the writer's and a single peer check."
+      "This describes the site's code as of the date above. It is a description, not a third-party accessibility audit.",
+      "Reduced motion is one part of accessibility, not the whole of it.",
+      "Browsers expose the setting differently, and some visitors who would benefit from it have never turned it on.",
     ],
     related: [
-      {
-        slug: "core-web-vitals-small-business",
-        title: "Core Web Vitals for a small business site, in plain English"
-      },
-      {
-        slug: "shipping-the-evidence-tag",
-        title: "Every Echoes note now carries its proof"
-      }
+      { slug: "wcag-22-aa-checklist", title: "A WCAG 2.2 AA checklist for a marketing site (download)" },
+      { slug: "core-web-vitals-small-business", title: "Core Web Vitals for a small business site, in plain English" },
     ],
-    cta: {
-      label: "See how we build performant sites",
-      href: "/capabilities/websites"
-    }
+    cta: { label: "See how we build sites this way", href: "/capabilities/websites" },
   },
   {
     slug: "wcag-22-aa-checklist",
     title: "A WCAG 2.2 AA checklist for a marketing site (download)",
-    excerpt: "The 17 criteria that actually affect marketing-site conversions, with the 2022 additions and a 15-minute manual test protocol — ungated, CC0.",
-    intro: "The WCAG 2.2 AA checklist below covers the 17 criteria that actually affect marketing-site conversions — not the full spec. It includes the 2022 additions (target size, redundant entry, accessible auth, focus-visible) and a 15-minute manual test protocol. Download it ungated at /echoes/kit/wcag-22-aa-checklist.md.",
-    tag: "Measured",
+    excerpt: "The 18 success criteria that matter most on a marketing site, with what is new in WCAG 2.2 and a 15-minute manual test protocol — ungated, CC0.",
+    intro: "This WCAG 2.2 AA checklist ranks the 18 success criteria that matter most on a marketing site — not the full specification. It covers what WCAG 2.2 added in 2023 (target size, focus not obscured, redundant entry, accessible authentication) and a 15-minute manual test protocol. Download it ungated at /echoes/kit/wcag-22-aa-checklist.md.",
+    tag: "Plainly",
     theme: "Build",
     readTime: 6,
     date: "2026-10-08",
@@ -1655,15 +1250,11 @@ export const POSTS: Post[] = [
         values: [
           {
             label: "Scope",
-            value: "17 AA criteria + 2022 additions + 15-min test protocol"
-          },
-          {
-            label: "Automated-tool catch rate",
-            value: "~30% — the rest is manual"
+            value: "18 prioritised criteria + the WCAG 2.2 additions + a 15-minute test protocol"
           },
           {
             label: "Priority",
-            value: "8 high-impact, 9 medium, 3 lower-priority criteria"
+            value: "8 high-impact, 6 medium, 4 context-dependent"
           }
         ]
       }
@@ -1675,31 +1266,31 @@ export const POSTS: Post[] = [
       },
       {
         kind: "p",
-        text: "The full WCAG 2.2 quick reference is 30+ pages. Most marketing-site failures cluster in eight high-impact AA criteria: contrast (1.4.3), focus visible (2.4.7), target size (2.5.8), alt text (1.1.1), skip link (2.4.1), form labels (3.3.2), semantic structure (1.3.1), and focus appearance (2.4.11/13). The checklist keeps those eight at the top, with the nine medium and three lower-priority criteria following. The quick test protocol — tab-through, 200% zoom, axe-core, one screen-reader pass, contrast check, reduced-motion, mobile target size — takes about 15 minutes per page."
+        text: "WCAG 2.2 has dozens of success criteria, and a marketing site does not meet all of them equally often. The checklist puts eight high-impact criteria first: contrast (1.4.3), focus visible (2.4.7), target size (2.5.8), alt text (1.1.1), bypass blocks such as a skip link (2.4.1), form labels (3.3.2), semantic structure (1.3.1) and focus not obscured (2.4.11). Six medium and four context-dependent criteria follow. The quick test protocol — tab-through, 200% zoom, an automated scan, one screen-reader pass, a contrast check, reduced motion and mobile target sizes — takes about 15 minutes per page."
       },
       {
         kind: "h2",
-        text: "The 2022 additions included"
+        text: "What WCAG 2.2 added (published October 2023)"
       },
       {
         kind: "ul",
         items: [
-          "2.4.11 — focus not obscured",
-          "2.4.12 / 2.4.13 — focus appearance",
-          "2.5.7 — dragging movements",
-          "2.5.8 — target size (minimum 24×24)",
-          "3.2.6 — consistent help",
-          "3.3.7 — redundant entry",
-          "3.3.8 — accessible authentication"
+          "2.4.11 Focus Not Obscured (Minimum) — AA",
+          "2.5.7 Dragging Movements — AA",
+          "2.5.8 Target Size (Minimum), 24×24 CSS pixels — AA",
+          "3.2.6 Consistent Help — A",
+          "3.3.7 Redundant Entry — A",
+          "3.3.8 Accessible Authentication (Minimum) — AA",
+          "Also added at AAA, so not required for AA: 2.4.12, 2.4.13 and 3.3.9"
         ]
       }
     ],
     takeaway: {
       title: "What you can take",
-      text: "A 17-point WCAG 2.2 AA checklist you can use today.",
+      text: "An 18-point WCAG 2.2 AA checklist you can use today.",
       items: [
         "Download /echoes/kit/wcag-22-aa-checklist.md (11 KB, CC0, ungated).",
-        "Start with the 8 high-impact criteria (contrast, focus visible, target size, alt text, skip link, labels, semantics, focus appearance).",
+        "Start with the 8 high-impact criteria (contrast, focus visible, target size, alt text, skip link, labels, semantics, focus not obscured).",
         "Run the 15-minute quick test protocol before any launch.",
         "Treat a passing checklist as a pre-launch filter, not a legal claim."
       ]
@@ -1707,7 +1298,7 @@ export const POSTS: Post[] = [
     caveats: [
       "This checklist is a pre-launch filter, not a legal conformity assessment. Passing it does not mean WCAG 2.2 AA conformance; failing it almost certainly means you are not.",
       "It is written for single-page and small multi-page marketing sites (landing pages, product pages, simple contact flows). Multi-language, e-commerce checkout, or account-portal flows need additional criteria.",
-      "Automated tools (axe-core, WAVE, Lighthouse) catch ~30% of AA failures; manual testing catches the rest. No automated score replaces the tab-through.",
+      "Automated tools (axe-core, WAVE, Lighthouse) catch only some failures; many need a person to check. No automated score replaces the tab-through.",
       "The checklist is published under CC0. There is no warranty, no newsletter, and no form gate."
     ],
     related: [
@@ -1727,102 +1318,85 @@ export const POSTS: Post[] = [
   },
   {
     slug: "what-8000-buys",
-    title: "What an $8,000 website should actually include",
-    excerpt: "At $8,000, a buyer should expect a real custom site — design, build, one round of revisions, a performance baseline, and a handover document — not a template with their logo pasted in.",
-    intro: "At $8,000, a buyer should expect a real custom site — design, copy, build, one round of revisions, a performance baseline, and a handover document — not a template with their logo pasted in. What should not be expected: unlimited revisions, a new brand strategy, custom illustrations, a CMS with ten templates, or a marketing plan. The number is real; the scope is bounded; both are stated before any work starts.",
+    title: "What an $8,000 website quote should spell out",
+    excerpt: "At $8,000 you should get a written scope you can check — what is designed and built, what you supply, what is left out, and who owns the result — not a template with your logo pasted in.",
+    intro: "At $8,000 a buyer should expect a written scope they can check, not a template with their logo pasted in. A good quote at that level says what is being designed and built, what you are expected to supply, what is deliberately left out, and who owns the site once it is paid for. If any of those is missing, ask before you sign.",
     tag: "Plainly",
     theme: "Strategy",
     readTime: 5,
     date: "2026-10-08",
+    updated: "2026-10-12",
     evidence: [
       {
         kind: "metrics",
-        label: "What $8,000 buys, itemised",
-        values: [
-          {
-            label: "Strategy and discovery",
-            value: "2–3 hours — audience, the one action, the three pages that matter"
-          },
-          {
-            label: "Design",
-            value: "10–14 hours — single-page design, two revisions max"
-          },
-          {
-            label: "Build",
-            value: "12–16 hours — semantic, accessible, responsive, one real CMS"
-          },
-          {
-            label: "Performance",
-            value: "2–3 hours — Lighthouse baseline + one optimisation pass"
-          },
-          {
-            label: "Launch + handover",
-            value: "2–3 hours — deploy, sitemap, a one-page handover document"
-          }
-        ]
-      }
+        label: "Where $8,000 sits in our published bands",
+        values: BANDS[0].rows.map((row) => ({ label: `${row.name} — ${row.detail}`, value: row.price })),
+      },
+      {
+        kind: "link",
+        label: "The full price guide",
+        href: "/pricing",
+        text: "Every published range, and what each one covers.",
+      },
     ],
     body: [
       {
         kind: "h2",
-        text: "The itemisation, approximately"
-      },
-      {
-        kind: "ul",
-        items: [
-          "Strategy and discovery (2–3 hours): one call to confirm the audience, the one action the site must earn, and the three pages that matter. Nothing else is designed until that is written down.",
-          "Design (10–14 hours): a single-page design in a tool you can see live, with your real copy. Two revisions max — the first for structure, the second for polish. More than that, the brief was wrong.",
-          "Build (12–16 hours): semantic HTML, accessible markup, responsive layouts, one real CMS (usually a headless CMS or a static site with simple content files), no stock photos unless licensed.",
-          "Performance (2–3 hours): Lighthouse baseline, Core Web Vitals measured before handover, one optimisation pass.",
-          "Launch (1–2 hours): deploy, sitemap, RSS if the site has posts, redirect plan, one verified test of the main user flow.",
-          "Handover (1 hour): a one-page document with where the code lives, what the CMS needs, and how to update it. Not a 40-page manual."
-        ]
+        text: "Why we wrote this",
       },
       {
         kind: "p",
-        text: "That totals roughly 28–39 hours at a studio rate of $200–$300/hour — the range that makes $8,000 honest rather than aspirational."
+        text: `Our websites start at ${PRICE.websitesFrom}, so it is a fair question what a quote at that level should show you. This is not our contract — the written proposal is — and other studios structure their work differently. It is the set of things any quote around ${PRICE.websitesFrom} should make clear in writing.`,
       },
       {
         kind: "h2",
-        text: "What that does not include"
+        text: "What a quote at this level should spell out",
+      },
+      {
+        kind: "ol",
+        items: [
+          "The scope, in units you can count: how many unique page layouts are designed and built, not just \"a website\".",
+          "What the work covers: who the site is for and how it is structured, custom responsive design, development and launch, content management where it is needed, and the performance, accessibility and search basics.",
+          "What you supply: whether the studio works with your existing brand and copy, or is writing and designing those too.",
+          "What is left out: brand identity, ongoing SEO, integrations and post-launch care are often priced separately. A good quote names them so they do not surprise you later.",
+          "Third-party costs: hosting, domains and any licences, listed so you know what you will pay outside the studio's fee.",
+          "Ownership: when the design and code become yours. Ours say it plainly — once the project is paid in full, the design and code are yours.",
+        ],
+      },
+      {
+        kind: "h2",
+        text: "What it should not leave vague",
       },
       {
         kind: "ul",
         items: [
-          "No full brand strategy or identity work. The site works with your existing brand. If you need a new identity, that is a separate engagement.",
-          "No custom illustrations or photography. Licensed stock or your own assets only.",
-          "No multi-language, no e-commerce with custom checkout, no complex integrations beyond one analytics script and one form handler.",
-          "No ongoing SEO retainer, no content calendar, no marketing automation."
-        ]
-      }
+          "\"Website design\" as a single line item, with no count of layouts or pages.",
+          "Revisions with no stated process. Unlimited sounds generous until someone has to pay for it.",
+          "Who writes the content. If it is you, the quote should say so; if it is the studio, it should say how much.",
+        ],
+      },
     ],
     takeaway: {
       title: "What you can take",
-      text: "One demand before you sign.",
+      text: "Before you sign any quote around $8,000, check that it answers these in writing.",
       items: [
-        "Ask for the itemisation and the revision cap in writing.",
-        "A studio that cannot produce both is not charging for a site — it is charging for ambiguity."
-      ]
+        "How many layouts or pages are designed and built?",
+        "What do I need to supply, and by when?",
+        "What is deliberately left out, and what would it cost to add?",
+        "Which third-party costs will I pay directly?",
+        "When do the design and code become mine?",
+      ],
     },
     caveats: [
-      "This is a guide, not a contract. Rates vary by market and by the studio's overhead.",
-      "The itemisation reflects a single-studio rate; a larger team with project management and account handling will price differently for the same deliverable.",
-      "The number is approximate; the principle — that $8,000 buys bounded, verifiable work — is what matters."
+      "This is a buyer's guide, not a contract or a quote. Every Botlane project is a tailored written proposal, and the proposal takes precedence.",
+      "Other studios scope and price differently; a quote that is structured differently is not wrong just because it does not match this list.",
+      "It covers marketing websites, not web apps, which we price after paid discovery.",
     ],
     related: [
-      {
-        slug: "how-to-tell-good-web-design-quote-from-bad",
-        title: "How to tell a good web design quote from a bad one"
-      },
-      {
-        slug: "website-cost-2026-where-money-goes",
-        title: "How much a website costs in 2026 — and where the money actually goes"
-      }
+      { slug: "how-to-tell-good-web-design-quote-from-bad", title: "How to tell a good web design quote from a bad one" },
+      { slug: "website-cost-2026-where-money-goes", title: "How much a website costs in 2026 — and where the money actually goes" },
     ],
-    cta: {
-      label: "See how we quote projects",
-      href: "/capabilities/websites"
-    }
+    cta: { label: "See the price guide", href: "/pricing" },
   },
 {
     slug: "how-to-tell-good-web-design-quote-from-bad",
@@ -1839,7 +1413,7 @@ export const POSTS: Post[] = [
         kind: "quote",
         label: "The rule we quote by",
         text: "A quote without a Definition of Done is a wish list, not a contract.",
-        source: "This studio's intake filter",
+        source: "Botlane Studios",
       },
       {
         kind: "metrics",
@@ -1847,19 +1421,19 @@ export const POSTS: Post[] = [
         values: [
           { label: "Definition of Done included", value: "Green flag" },
           { label: "'We'll figure it out' on scope changes", value: "Red flag" },
-          { label: "Performance budget with CWV targets", value: "Green flag" },
+          { label: "Performance targets in writing", value: "Green flag" },
           { label: "'It feels fast' as performance claim", value: "Red flag" },
           { label: "You own repo, DNS, analytics from day 1", value: "Green flag" },
           { label: "Studio holds credentials as leverage", value: "Red flag" },
-          { label: "Post-launch SLA with response times", value: "Green flag" },
-          { label: "30-day warranty, no SLA, no scope", value: "Red flag" },
+          { label: "Post-launch support defined in writing", value: "Green flag" },
+          { label: "'We'll help if something breaks'", value: "Red flag" },
         ],
       },
       {
         kind: "link",
         label: "Seven questions that separate studios who ship from studios who sell",
         href: "/echoes/seven-questions-before-hiring-web-studio",
-        text: "The seven-question pre-qualifier we publish for every discovery call.",
+        text: "Seven questions to ask any studio before you hire it.",
       },
     ],
     body: [
@@ -1897,19 +1471,19 @@ export const POSTS: Post[] = [
       },
       {
         kind: "h2",
-        text: "4. Performance budget with CI proof",
+        text: "4. A performance budget you can check",
       },
       {
         kind: "p",
-        text: "A credible answer cites specific Core Web Vitals targets and shows Lighthouse CI or WebPageTest results from the last three launches. 'It feels fast' is not a budget. The quote should name the tools, the thresholds, and the CI gate that fails the build if the budget is missed.",
+        text: "A credible quote names specific Core Web Vitals targets and how they will be checked before launch. 'It feels fast' is not a budget. If the studio has launched comparable sites, ask how those perform today.",
       },
       {
         kind: "h2",
-        text: "5. Post-launch SLA — not a vague warranty",
+        text: "5. What happens after launch",
       },
       {
         kind: "p",
-        text: "Get it in writing: SLA response times (critical: 4 hours, standard: 1 business day), what 'bug' vs. 'enhancement' means, whether CMS training is included, and who pays for dependency updates. A 30-day warranty with no SLA is a handoff, not support.",
+        text: "Get it in writing: how quickly problems are handled, what counts as a bug versus a new request, whether training is included, and who pays for software updates. If support after launch is a separate agreement, the quote should say so and say what it would cost.",
       },
       {
         kind: "h2",
@@ -1919,12 +1493,11 @@ export const POSTS: Post[] = [
         kind: "ul",
         items: [
           "'We'll figure it out' on scope changes — no change control, no impact assessment.",
-          "'It feels fast' or 'optimized for speed' — no CWV targets, no CI gate, no proof.",
+          "'It feels fast' or 'optimized for speed' — no targets and no way to check them.",
           "Studio holds repo/DNS/analytics — you are renting, not owning.",
           "'All-in' price with no line items — you cannot verify what is custom vs. template.",
           "No post-launch SLA — 'we'll help if something breaks' is not a commitment.",
           "Content is 'your problem' — the #1 blocker becomes your unpaid work.",
-          "No named failure — a studio that cannot cite a project that went wrong and the process fix has either never shipped anything hard or never learned.",
         ],
       },
       {
@@ -1935,13 +1508,12 @@ export const POSTS: Post[] = [
         kind: "ul",
         items: [
           "Definition of Done included as an appendix or linked document.",
-          "Performance budget with specific CWV thresholds and CI configuration shown.",
+          "Performance targets with specific Core Web Vitals thresholds and how they will be checked.",
           "Change-control template attached — written requests, impact, single decision-maker.",
           "Ownership clause: 'Client owns repo, DNS, analytics at all times.'",
-          "Post-launch SLA with response times, bug/enhancement definitions, and support hours.",
+          "Post-launch support with response times and a clear line between bugs and new work.",
           "Content model, migration plan, and who writes — treated as part of scope, not an afterthought.",
-          "A named failure + the process change that followed — the best filter of all.",
-          "Hosting at retail price — no 3–5× markup on a $15/month droplet.",
+          "Hosting in your account, at what it actually costs.",
         ],
       },
       {
@@ -1960,11 +1532,11 @@ export const POSTS: Post[] = [
           "Development — CMS integration, responsive templates, custom functionality",
           "E-commerce — payments, shipping, inventory, tax (if applicable)",
           "SEO & analytics setup — schema, GA4, Search Console, tracking plan",
-          "Performance & Core Web Vitals — image pipeline, critical CSS, edge caching, Lighthouse CI",
+          "Performance & Core Web Vitals — images, code, caching and how targets are checked",
           "QA, security hardening, accessibility (WCAG 2.2 AA)",
           "Hosting + CDN — at retail price, in your account",
           "Maintenance retainer — tested updates, off-site backups, monitoring, support hours",
-          "Content & iteration reserve — 30–45% of first-year budget for post-launch improvements",
+          "Budget for improvements after launch — what is included and what is extra",
         ],
       },
       {
@@ -1977,9 +1549,9 @@ export const POSTS: Post[] = [
           "Demand a three-year total cost projection (build + hosting + maintenance + iteration reserve).",
           "Ask what is custom vs. adapted from a template — most 'custom' builds start from a theme.",
           "Clarify maintenance scope: tested updates, off-site backups, security monitoring, support hours, response SLA.",
-          "Check hosting markup: agencies often resell at 3–5× retail.",
+          "Ask whether hosting is billed at cost or with a markup, and in whose account it sits.",
           "Verify ownership: who holds the domain, server credentials, and CMS admin access?",
-          "Budget 15–20% of build cost annually for maintenance even if the site 'doesn't need changes'.",
+          "Budget for maintenance every year, even if the site 'doesn't need changes'.",
           "Require a clean exit clause: you get credentials and a clean handoff if you switch vendors.",
         ],
       },
@@ -1991,18 +1563,18 @@ export const POSTS: Post[] = [
         "Definition of Done — written, shared, signed",
         "You own repo, DNS, analytics from day one",
         "Change control with impact assessment",
-        "Core Web Vitals targets + CI proof",
+        "Performance targets, and how they are checked",
         "Content model, migration, and who writes",
-        "Post-launch SLA with response times",
-        "Hosting at retail price, not agency markup",
+        "Post-launch support defined in writing",
+        "Hosting in your account, at cost",
         "Exit clause: clean handoff if you switch",
       ],
     },
     caveats: [
       "This checklist filters for process maturity, not creative fit. A studio can pass every item and still not match your aesthetic.",
       "The list is biased toward technical delivery — brand-only or strategy-only engagements need different filters.",
-      "We are a studio. The checklist reflects how we quote; other valid models exist.",
-      "No checklist replaces a paid discovery sprint. These are a pre-qualifier, not a contract.",
+      "We are a studio, so we are not neutral. Other valid ways of quoting exist.",
+      "No checklist replaces a proper conversation about scope. These are a pre-qualifier, not a contract.",
       "A quote can be technically complete and still be the wrong price for your budget. Value is subjective; process is verifiable.",
     ],
     related: [
@@ -2018,7 +1590,7 @@ export const POSTS: Post[] = [
       },
       {
         q: "How detailed should a performance budget be?",
-        a: "At minimum: LCP < 2.5s, INP < 200ms, CLS < 0.1, measured in Lighthouse CI on every PR. Bonus: real-user monitoring (RUM) targets for field data.",
+        a: "At minimum, Google's 'good' thresholds — LCP 2.5 s or less, INP 200 ms or less, CLS 0.1 or less — and a stated way of checking them before launch.",
       },
       {
         q: "Is a fixed-price quote always better than time & materials?",
@@ -2041,15 +1613,15 @@ export const POSTS: Post[] = [
         },
         {
           name: "Ask for the missing items",
-          text: "Send a follow-up email requesting the Definition of Done, performance budget, change-control template, ownership clause, and SLA. The response time and quality tells you more than the quote.",
+          text: "Send a follow-up email asking for the definition of done, performance targets, change-control process, ownership clause and post-launch support terms. The response tells you more than the quote.",
         },
         {
           name: "Compare three-year totals",
-          text: "Add build + 3 years hosting + 3 years maintenance + 30% iteration reserve. The sticker price is rarely the real price.",
+          text: "Add the build, three years of hosting and maintenance, and a budget for improvements. The sticker price is rarely the real price.",
         },
         {
           name: "Decide on process, not just price",
-          text: "A quote that scores green on process but costs 20% more will usually cost less over three years than a cheap quote that scores red on process.",
+          text: "A quote that is clear about process but costs more can still cost less over three years than a cheap one that leaves everything vague.",
         },
       ],
     },
@@ -2075,7 +1647,7 @@ export const POSTS: Post[] = [
         kind: "link",
         label: "How we run projects (no black boxes)",
         href: "/capabilities/websites",
-        text: "Our build process, in public — milestones, owners, and the evidence we ship at each gate.",
+        text: "How a Botlane website project runs, stage by stage.",
       },
     ],
     body: [
@@ -2109,7 +1681,7 @@ export const POSTS: Post[] = [
       },
       {
         kind: "p",
-        text: "A credible answer cites specific Core Web Vitals targets (LCP < 2.5s, INP < 200ms, CLS < 0.1) and shows Lighthouse CI or WebPageTest results from the last three launches. \"It feels fast\" is not a budget.",
+        text: "A credible answer names specific Core Web Vitals targets (LCP 2.5 s or less, INP 200 ms or less, CLS 0.1 or less) and how they will be checked before launch. \"It feels fast\" is not a budget.",
       },
       {
         kind: "h2",
@@ -2125,15 +1697,15 @@ export const POSTS: Post[] = [
       },
       {
         kind: "p",
-        text: "Get it in writing: SLA response times, what \"bug\" vs. \"enhancement\" means, whether CMS training is included, and who pays for dependency updates. A 30-day warranty with no SLA is a handoff, not support.",
+        text: "Get it in writing: how quickly problems are handled, what counts as a bug versus a new request, whether training is included, and who pays for software updates.",
       },
       {
         kind: "h2",
-        text: "7. Can you show me a project that went wrong — and what you changed?",
+        text: "7. What will you need from me, and when?",
       },
       {
         kind: "p",
-        text: "This is the best filter. A studio that cannot name a failure, the root cause, and the process change that followed has either never shipped anything hard or has never learned from it. The answer tells you more than any case study.",
+        text: "Most delays come from the client side: content, feedback and approvals. A studio that has thought about its process can tell you exactly what it needs from you at each stage, and what happens to the timeline if it arrives late.",
       },
     ],
     takeaway: {
@@ -2143,17 +1715,17 @@ export const POSTS: Post[] = [
         "Definition of Done — written, shared, signed",
         "You own repo, DNS, analytics from day one",
         "Change control with impact assessment",
-        "Core Web Vitals targets + CI proof",
+        "Performance targets, and how they are checked",
         "Content model, migration, and who writes",
-        "Post-launch SLA, not a vague warranty",
-        "A named failure + the process fix",
+        "Post-launch support in writing",
+        "What they need from you, and when",
       ],
     },
     caveats: [
       "These questions filter for process maturity, not creative fit. A studio can pass all seven and still not match your aesthetic.",
       "The list is biased toward technical delivery — brand-only or strategy-only engagements need different filters.",
-      "We are a studio. The questions reflect how we operate; other valid models exist.",
-      "No question replaces a paid discovery sprint. These are a pre-qualifier, not a contract.",
+      "We are a studio, so we are not neutral. Other valid ways of working exist.",
+      "No question replaces a proper conversation about scope. These are a pre-qualifier, not a contract.",
     ],
     related: [
       { slug: "shipping-the-evidence-tag", title: "Every Echoes note now carries its proof" },
@@ -2178,9 +1750,9 @@ export const POSTS: Post[] = [
 {
     slug: "when-you-dont-need-a-custom-website",
     title: "When you don't need a custom website — and what to do instead",
-    excerpt: "Most small businesses need a landing page, not a rebuild. If your traffic is under 1,000 visits/month and your conversion path fits a single form, hire nothing — use a hosted page, a template, or a one-page builder. The studio says this openly.",
+    excerpt: "Many small businesses need a landing page, not a rebuild. If your traffic is modest and your conversion path fits a single form, a hosted page, a template or a one-page builder may be all you need. We say this openly, even though we build custom sites.",
     intro:
-      "If your site has fewer than 1,000 visits a month, a single conversion path, and no custom backend, you do not need a studio. A hosted landing page (Carrd, Webflow, or a well-chosen WordPress template), a simple form, and a hand-edited sitemap is almost always faster, cheaper, and easier to maintain. This note says that plainly — including the cases where we say no to our own work.",
+      "If your site has fewer than 1,000 visits a month, a single conversion path, and no custom backend, you do not need a studio. A hosted landing page (Carrd, Webflow, or a well-chosen WordPress template), a simple form, and a hand-edited sitemap is almost always faster, cheaper, and easier to maintain. This note says that plainly, even though we build custom websites.",
     tag: "Plainly",
     theme: "Strategy",
     readTime: 5,
@@ -2190,7 +1762,7 @@ export const POSTS: Post[] = [
         kind: "quote",
         label: "What this note says outright",
         text: "If your site fits a single form and your traffic is under 1,000 visits a month, hire nothing.",
-        source: "This studio's own intake filter",
+        source: "Botlane Studios",
       },
       {
         kind: "link",
@@ -2234,11 +1806,11 @@ export const POSTS: Post[] = [
       },
       {
         kind: "h2",
-        text: "The honest caveat we give our own clients",
+        text: "Why a studio would say this",
       },
       {
         kind: "p",
-        text: "We turn down engagements that fit the three conditions above. We say it in writing, before any proposal is drafted. That is the Plainly tag — nothing to sell in the sentence.",
+        text: "A custom site that a business does not need is a bad project for both sides. If your project fits the three conditions above, you will probably be happier with a template — and that is the Plainly tag: nothing to sell in the sentence.",
       },
     ],
     takeaway: {
@@ -2251,9 +1823,9 @@ export const POSTS: Post[] = [
       ],
     },
     caveats: [
-      "This note reflects the studio's own intake filter, not an industry standard. Other agencies may set different thresholds.",
+      "The thresholds are a rule of thumb, not an industry standard. Other studios may draw the line differently.",
       "The traffic figure is approximate. A business with 800 highly qualified visits may justify more investment than one with 2,000 casual visits.",
-      "We are a studio recommending not to hire us. That is not false modesty — it is the standard we write by.",
+      "We are a studio that builds custom websites, so we are not neutral — which is why the advice not to hire one is worth saying.",
       "A custom site is not always overkill for high-traffic single-page needs; design quality and load speed still matter.",
     ],
     related: [
@@ -2264,7 +1836,7 @@ export const POSTS: Post[] = [
     faq: [
       {
         q: "Does this mean you won't take my project?",
-        a: "Not necessarily. We filter on the three conditions. If any is false — higher traffic, multi-step conversion, custom backend, or design that templates cannot match — a studio build is a reasonable investment.",
+        a: "Not at all. If any of the three conditions is false — higher traffic, a multi-step conversion path, a custom backend, or a design a template cannot match — a studio build can be a reasonable investment. If you are unsure, tell us about it and we can talk it through.",
       },
       {
         q: "Is this just false modesty to sound trustworthy?",
@@ -2272,59 +1844,57 @@ export const POSTS: Post[] = [
       },
     ],
   },
-{
+  {
     slug: "website-cost-2026-where-money-goes",
     title: "How much a website costs in 2026 — and where the money actually goes",
-    excerpt: "A practical breakdown of 2026 website prices by approach — DIY, freelancer, agency — with the ongoing costs nobody quotes you and the three-year total that decides whether you overpaid.",
-    intro:
-      "In 2026 a website costs $0–$500/month DIY, $1,500–$10,000 via freelancer, or $10,000–$100,000+ via agency — but the build is only half the bill. Hosting, maintenance, security, and iteration over three years often match or exceed the original build (2.0–3.4× multiplier). A realistic small-business plan: $3,000–$15,000 build plus $1,100–$5,000/year running costs, with 30–45% of first-year budget reserved for post-launch iteration.",
+    excerpt: "A plain breakdown of 2026 website prices by approach — DIY builder, freelancer, agency — with the ongoing costs that rarely appear in a quote and why the three-year total matters more than the build price.",
+    intro: "In 2026, published surveys put a DIY builder at roughly $17–$500 a month, a freelancer build at $500–$10,000 or more, and an agency build from about $3,000 upwards. But the build is only part of the bill. One 2026 cost study puts the three-year cost of owning a site at 2.0–3.4 times the original build, once hosting, maintenance and improvements are counted.",
     tag: "Plainly",
     theme: "Strategy",
-    readTime: 8,
+    readTime: 6,
     date: "2026-10-08",
+    updated: "2026-10-12",
     evidence: [
       {
         kind: "metrics",
-        label: "2026 price bands by approach (USD)",
+        label: "2026 price ranges from public sources (USD)",
         values: [
-          { label: "DIY / builder (first year)", value: "$0 – $600" },
-          { label: "DIY / builder (annual ongoing)", value: "$200 – $600" },
-          { label: "Freelancer build", value: "$1,000 – $10,000" },
-          { label: "Freelancer maintenance (annual)", value: "$500 – $2,500" },
-          { label: "Agency build", value: "$10,000 – $100,000+" },
-          { label: "Agency maintenance (annual)", value: "$3,600 – $50,000" },
-          { label: "Hosting (monthly)", value: "$2 – $1,000" },
-          { label: "Domain .com (annual)", value: "$10 – $25" },
-          { label: "Three-year total multiplier", value: "2.0× – 3.4× build cost" },
+          { label: "DIY website builder, per month (WebFX)", value: "$17 – $500+" },
+          { label: "Freelancer build (WebFX)", value: "$500 – $10,000+" },
+          { label: "Agency build (WebFX)", value: "$3,000 – $30,000+" },
+          { label: "Small-business site with a boutique agency (Digital Applied)", value: "$8,000 – $15,000" },
+          { label: "Hosting, per month (WebFX)", value: "$2 – $1,000" },
+          { label: "Firms quoting fixed-price projects at $1,000–$15,000 (GoodFirms, 300+ firms)", value: "63%" },
+          { label: "Three-year cost of ownership vs. the build (Digital Applied)", value: "2.0× – 3.4×" },
         ],
       },
       {
         kind: "link",
-        label: "WebFX 2026 pricing survey (build, hosting, maintenance)",
+        label: "Source",
         href: "https://www.webfx.com/web-design/pricing/website-costs/",
-        text: "WebFX 2026 website cost data — build ranges, hosting tiers, maintenance averages",
+        text: "WebFX: how much does a website cost in 2026",
       },
       {
         kind: "link",
-        label: "GoodFirms 2026 web development firm survey (300+ firms, 31 countries)",
+        label: "Source",
         href: "https://www.goodfirms.co/resources/website-construction-cost-survey",
-        text: "GoodFirms 2026 survey — 63% of firms quote $1,000–$15,000 fixed-price projects",
+        text: "GoodFirms 2026 website cost survey",
       },
       {
         kind: "link",
-        label: "Digital Applied 2026 three-year cost of ownership study",
+        label: "Source",
         href: "https://www.digitalapplied.com/blog/website-development-cost-2026-complete-pricing-data",
-        text: "Digital Applied 2026 — $28K corporate site = $65K–$95K over three years (2.3–3.4×)",
+        text: "Digital Applied: website development cost 2026",
       },
     ],
     body: [
       {
         kind: "h2",
-        text: "The answer first: what you will actually pay",
+        text: "The answer first: the build is not the whole bill",
       },
       {
         kind: "p",
-        text: "The sticker price of a website is not what it costs. In 2026, a small-business site built by a freelancer runs $3,000–$12,000 upfront. The same site owned for three years — hosting, maintenance, security, content updates, and the iteration that keeps it from decaying — lands between $9,000 and $40,000 total. The build is the down payment; the ongoing bill is the mortgage.",
+        text: "The sticker price of a website is what it costs to launch, not what it costs to own. Digital Applied's 2026 study gives a worked example: a $28,000 corporate marketing site with a mid-tier maintenance programme costs roughly $65,000–$95,000 over three years. The multiplier across its examples runs from 2.0 to 3.4 times the build, depending on how much is invested after launch.",
       },
       {
         kind: "h2",
@@ -2332,68 +1902,54 @@ export const POSTS: Post[] = [
       },
       {
         kind: "h3",
-        text: "1. DIY with a builder (Wix, Squarespace, WordPress.com)",
+        text: "1. DIY with a builder",
       },
       {
         kind: "p",
-        text: "First year: $0–$600. Annual ongoing: $200–$600. You pay for the platform subscription (bundles hosting, SSL, CDN, templates), a domain ($10–$25/year), and any premium add-ons. The trade-off: you stay inside someone else's layout, migration later costs $700–$6,000, and you hit feature ceilings fast.",
+        text: "WebFX puts website builders at roughly $17–$500+ a month. The subscription usually bundles hosting, security certificates and templates. The trade-off is that you work inside someone else's layouts and features, and moving off the platform later is its own project.",
       },
       {
         kind: "h3",
-        text: "2. Freelancer (custom theme or heavy template customization)",
+        text: "2. Freelancer",
       },
       {
         kind: "p",
-        text: "Build: $1,000–$10,000. Typical small business (10–15 pages): $3,000–$7,000. E-commerce (25+ products): $5,000–$15,000. Annual maintenance: $500–$2,500. The risk concentrates in one person — if they disappear, support stalls. Most freelancers still start from a template; ask what is custom and what is adapted.",
+        text: "WebFX's range for freelance design is $500–$10,000 or more; Digital Applied puts a template-based small-business site at $3,000–$8,000 with a freelancer. The risk concentrates in one person: if they become unavailable, so does your support. Ask what is custom and what is adapted from a template.",
       },
       {
         kind: "h3",
-        text: "3. Agency (strategy, design, development, ongoing support)",
+        text: "3. Agency or studio",
       },
       {
         kind: "p",
-        text: "Build: $10,000–$100,000+. Annual maintenance: $3,600–$50,000. You pay for project management, QA, multiple roles, and vendor continuity. Overhead is real: agencies need $300K–$500K/year billings to break even. The upside: integrated design-dev-strategy, and someone to call when something breaks at 2 AM.",
+        text: "WebFX's agency range starts around $3,000 and runs past $30,000; Digital Applied puts a small-business site with a boutique agency at $8,000–$15,000 and says agencies are best suited to budgets from $15,000 to $200,000. You pay for more roles — strategy, design, development, project management — and for continuity if one person leaves.",
       },
       {
         kind: "h2",
-        text: "Where the money goes — line items nobody itemizes",
+        text: "The costs that rarely appear in the quote",
       },
       {
         kind: "ul",
         items: [
-          "Discovery & sitemap: $500–$2,000 (meetings, wireframes, brand docs)",
-          "Design: $1,500–$5,000 (mockups, revisions, design system vs. styled template)",
-          "Development: $2,000–$30,000+ (CMS integration, responsive templates, custom functionality)",
-          "E-commerce integration: $1,500–$15,000 (payments, shipping, inventory, tax)",
-          "SEO & analytics setup: $500–$3,000 (schema, GA4, Search Console, tracking plan)",
-          "Performance & Core Web Vitals: $500–$5,000 (image pipeline, critical CSS, edge caching, Lighthouse testing)",
-          "QA, security hardening, accessibility: $500–$5,000",
-          "Hosting + CDN (annual): $50–$6,000+ (shared → managed cloud → enterprise)",
-          "Maintenance retainer (monthly): $100–$2,000+ (updates tested, backups, monitoring, support hours)",
-          "Content & iteration (post-launch): 30–45% of first-year budget — the sites that get nothing after launch lose 20–35% organic traffic within 18 months",
+          "Hosting — anywhere from a few dollars to $1,000 a month, depending on traffic and what the site does.",
+          "Domain and business email — small, but recurring, and they should be in your name.",
+          "Maintenance — software updates, backups, security monitoring and fixes after browser changes.",
+          "Content and improvements — new pages, updated copy, fixes based on what visitors actually do.",
+          "Third-party services — forms, booking, analytics, maps or payments that charge their own fees.",
         ],
       },
       {
         kind: "h2",
-        text: "The ongoing bill that rivals the build",
-      },
-      {
-        kind: "p",
-        text: "Digital Applied's 2026 study puts it plainly: a $28,000 corporate site costs $65,000–$95,000 across three years (2.3–3.4× multiplier). The line items: hosting ($2–$1,000/month), domain ($10–$25/year), SSL (free with most hosts, otherwise up to $1,500/year), managed maintenance ($50–$500/month), business email ($1–$27/user/month). Sites receiving zero post-launch investment decay within 18–24 months.",
-      },
-      {
-        kind: "h2",
-        text: "What drives the price up — and what doesn't",
+        text: "What drives the price up",
       },
       {
         kind: "ul",
         items: [
-          "Custom functionality (booking, portals, calculators, gated content) — adds dev hours a template cannot absorb",
-          "Third-party integrations (CRM, ERP, payment, inventory) — the single biggest driver of scope creep",
-          "Content volume — 60 product pages cost more to build and populate than 6 service pages, regardless of design",
-          "Design ambition — custom illustration, animation, interactive elements are worth it for some brands and unnecessary for others",
-          "Compliance (HIPAA-adjacent, finance, WCAG/ADA) — adds QA and development time",
-          "What does NOT move the needle: a 'custom' design system quoted under $6,000 is usually a reused one with light edits",
+          "Custom functionality — booking, portals, calculators or gated content add work a template cannot absorb.",
+          "Integrations — connecting a CRM, payments or inventory is often the biggest source of scope growth.",
+          "Content volume — sixty product pages cost more to build and populate than six service pages.",
+          "Design ambition — custom illustration, motion and interaction are worth it for some brands and unnecessary for others.",
+          "Compliance — accessibility, privacy or industry rules add design, build and testing time.",
         ],
       },
       {
@@ -2403,12 +1959,11 @@ export const POSTS: Post[] = [
       {
         kind: "ol",
         items: [
-          "Demand a three-year total cost projection (build + hosting + maintenance + iteration reserve).",
-          "Ask what is custom vs. adapted from a template — most 'custom' builds start from a theme.",
-          "Clarify maintenance scope: tested updates, off-site backups, security monitoring, support hours, response SLA.",
-          "Check hosting markup: agencies often resell at 3–5× retail ($15/month droplet → $100/month billed).",
-          "Verify ownership: who holds the domain, server credentials, and CMS admin access?",
-          "Budget 15–20% of build cost annually for maintenance even if the site 'doesn't need changes' — security patches and browser shifts happen regardless.",
+          "Ask for a three-year estimate: build, hosting, maintenance and a budget for improvements.",
+          "Ask what is custom and what is adapted from a template or theme.",
+          "Clarify what maintenance includes: updates, backups, monitoring, support hours and response times.",
+          "Ask whether hosting is billed at cost or with a markup, and in whose account it sits.",
+          "Confirm who holds the domain, hosting, code and admin access — it should be you.",
         ],
       },
     ],
@@ -2416,188 +1971,148 @@ export const POSTS: Post[] = [
       title: "The three-year budget checklist",
       text: "Use this to pressure-test any quote before you sign.",
       items: [
-        "Build quote + itemized scope (what is custom, what is template)",
-        "Hosting at retail price, not agency markup",
-        "Maintenance retainer with tested updates, backups, monitoring, and defined support hours",
-        "Iteration reserve: 30–45% of first-year budget for content, measurement, and improvements",
-        "Domain, SSL, email in your name — not the vendor's",
-        "Exit clause: you get credentials and a clean handoff if you switch vendors",
+        "Build quote with an itemised scope — what is custom, what is template",
+        "Hosting cost, and whose account it is in",
+        "Maintenance: what is included and how fast problems are handled",
+        "A budget for content and improvements after launch",
+        "Domain, hosting, code and email in your name",
+        "A clean handover if you ever switch providers",
       ],
     },
     caveats: [
-      "These are 2026 USD ranges from public surveys (WebFX, GoodFirms, Digital Applied) and vendor pricing pages — not quotes for your specific project.",
-      "Regional labor arbitrage can swing headline rates by up to 4×, though savings narrow once a project needs heavy design iteration, accessibility, or close collaboration.",
-      "The three-year multiplier (2.0–3.4×) assumes professional maintenance; DIY maintenance lowers the cash cost but raises the time cost and risk.",
-      "This note has nothing to sell — it is a buyer-facing guide. The studio builds websites; the prices here are the market context, not our rate card.",
-      "AI tooling is compressing CSS, SEO tags, image optimization, and content drafting — agencies billing 2019 workflows are overcharging for hours AI now handles in minutes.",
+      "The ranges are from public sources (WebFX, GoodFirms, Digital Applied) and vary widely between them. They are market context, not a quote for your project.",
+      "The three-year multiplier comes from one study's examples and depends heavily on how much is spent after launch.",
+      "Botlane Studios builds websites, so we are not neutral. Our own published ranges are on the pricing page; this note is about the market, not our rate card.",
     ],
     related: [
-      { slug: "shipping-the-evidence-tag", title: "Every Echoes note now carries its proof" },
-      { slug: "anatomy-of-an-echoes-note", title: "The anatomy of an Echoes note" },
+      { slug: "what-8000-buys", title: "What an $8,000 website quote should spell out" },
+      { slug: "how-to-tell-good-web-design-quote-from-bad", title: "How to tell a good web design quote from a bad one" },
     ],
-    cta: { label: "See how we build sites with transparent pricing", href: "/capabilities/websites" },
+    cta: { label: "See our published price ranges", href: "/pricing" },
     faq: [
       {
         q: "What is the cheapest way to get a professional-looking website in 2026?",
-        a: "A DIY builder (Squarespace, Wix, WordPress.com) on a mid-tier plan: $15–$50/month all-in, including hosting, SSL, CDN, and templates. You trade customization for speed and predictable cost.",
+        a: "A website builder on a mid-tier plan. You trade customisation and ownership for speed and a predictable monthly cost.",
       },
       {
-        q: "Why do ongoing costs often match or exceed the build?",
-        a: "Hosting, security updates, content changes, performance tuning, and iteration are recurring. A site that gets zero investment after launch decays in 18–24 months and loses 20–35% organic traffic. The build is the down payment; ownership is the mortgage.",
-      },
-      {
-        q: "How much should I budget annually for maintenance?",
-        a: "Plan for 15–20% of the original build cost per year, even if nothing 'breaks.' Security patches, plugin updates, browser compatibility shifts, and content freshness all require attention.",
+        q: "Why can ongoing costs rival the build?",
+        a: "Hosting, updates, security, content changes and improvements recur every year. One 2026 study puts the three-year cost of ownership at 2.0–3.4 times the original build.",
       },
       {
         q: "Is a freelancer cheaper than an agency?",
-        a: "Sticker price: yes ($1,000–$10,000 vs $10,000–$100,000+). Risk: concentrated in one person. If they become unavailable, delivery and support stall. Agencies include project management, QA, and continuity — you pay for the bus factor.",
-      },
-      {
-        q: "What is the 'Plainly' tag on this note?",
-        a: "It means this note has nothing to sell in the sentence. It is a buyer-facing guide with sourced numbers and honest caveats — not a pitch, not a case study, not a lead magnet.",
+        a: "Usually, on the sticker price. The trade-off is that delivery and support depend on one person, where an agency or studio spreads the work across a team.",
       },
     ],
   },
   {
     slug: "how-ai-assistants-see-your-website",
     title: "How AI assistants see your website — and what to do about it",
-    excerpt: "AI assistants don't read a site the way a person does. They read its text, structure and structured data, then quote from it. Here's how they see a website, with real query traces, and what a small business can do to be cited accurately.",
-    intro: "AI assistants don't read a site the way a person does. They parse headings, paragraphs, list items and tables into separate chunks; evaluate each chunk for relevance; then stitch the best pieces from multiple sources into one synthesized answer. The result: your page is read section by section, not start to finish, and a section that only makes sense after reading the three above it gets dropped or mis-attributed. Here is how they see a website — with real query traces, crawler user-agents, and the specific fixes a small business can make.",
-    tag: "Measured",
+    excerpt: "AI assistants don't read a site the way a person does. They fetch it, split it into sections, and quote the sections that answer the question. Here's what that means for a small business that wants to be cited accurately.",
+    intro: "AI assistants don't read a site the way a person does. When they search the web, they fetch pages, split them into sections — headings, paragraphs, list items — and quote the ones that best answer the question, often alongside other sources. A section that only makes sense after the three above it gets dropped or misquoted. Here is how that works and what a small business can do to be cited accurately.",
+    tag: "Plainly",
     theme: "AI",
-    readTime: 9,
+    readTime: 7,
     date: "2026-10-08",
+    updated: "2026-10-12",
     evidence: [
       {
-        kind: "metrics",
-        label: "What the GEO study measured (10,000 queries)",
-        values: [
-          {
-            label: "Visibility lift from citations + quotations + statistics",
-            value: "up to 40%"
-          },
-          {
-            label: "Lift from authoritative citations alone",
-            value: "~30–35%"
-          },
-          {
-            label: "Title-question similarity, cited vs. ignored pages",
-            value: "0.60 vs. 0.48"
-          }
-        ]
+        kind: "link",
+        label: "The research most GEO advice traces back to",
+        href: "https://arxiv.org/abs/2311.09735",
+        text: "Aggarwal et al., \"GEO: Generative Engine Optimization\" — reports visibility gains of up to 40% in generative engine answers from content changes",
       },
       {
         kind: "code",
-        label: "Real crawler user-agents",
-        code: "GPTBot            (OpenAI — training + retrieval)\nClaudeBot         (Anthropic)\nOAI-SearchBot     (ChatGPT web search)\nPerplexityBot     (Perplexity's own index)\nGoogle-Extended   (Gemini grounding)"
-      }
+        label: "AI crawler names to check in your robots.txt",
+        code: "GPTBot            OpenAI\nOAI-SearchBot     ChatGPT search\nClaudeBot         Anthropic\nPerplexityBot     Perplexity\nGoogle-Extended   A Google control token, not a separate crawler:\n                  it decides whether Gemini may use your content",
+      },
     ],
     body: [
       {
         kind: "h2",
-        text: "How an AI assistant actually reads your page"
+        text: "How an AI assistant reads your page",
       },
       {
         kind: "p",
-        text: "When a user asks ChatGPT (with web search on), Perplexity, Claude (with search), or Google's AI Overviews a question, the assistant does three things in sequence: retrieve, chunk, then quote."
+        text: "When someone asks ChatGPT, Perplexity, Claude or Google's AI features a question that needs the web, the assistant does three things: retrieve, split, then quote.",
       },
       {
         kind: "p",
-        text: "Retrieve. Each platform pulls from a different index — ChatGPT's web search uses Bing via its own crawler, Perplexity runs its own index, Claude pulls from Brave Search, and Google draws from its own index. A template robots.txt copied from an old SEO guide is the most common failure mode: it lets Google through and silently blocks GPTBot and PerplexityBot."
+        text: "Retrieve. Each assistant draws on a search index — its own, or a partner's — and the companies do not fully document which. What you can control is whether their crawlers are allowed in. A robots.txt copied from an old template can let Google through and quietly block the others.",
       },
       {
         kind: "p",
-        text: "Chunk. The assistant does not retrieve \"pages\"; it retrieves pieces — headings, paragraphs, list items, table rows — and evaluates each independently. Your H2 and H3 structure is how the machine decides where one idea ends and the next begins."
+        text: "Split. The assistant works with sections, not whole pages. Your headings are how it tells where one idea ends and the next begins.",
       },
       {
         kind: "p",
-        text: "Quote. It picks the best chunks and synthesizes, quoting sentences, not pages. A claim that depends on three sections above it loses context the moment it is lifted out; a claim that fits in a single sentence, backed by a number, survives intact."
+        text: "Quote. It lifts the sentences that answer the question. A claim that depends on context three sections up loses its meaning when it is lifted out; a claim that stands on its own sentence survives.",
       },
       {
         kind: "h2",
-        text: "What actually changes citation rates (measured)"
-      },
-      {
-        kind: "ul",
-        items: [
-          "Authoritative external citations added — ~30–35% average lift in citation rate",
-          "Named statistics with sources — ~28–31%",
-          "Direct, quotable language — ~22–28%",
-          "Question-matched headings — ~15–20%",
-          "Technical depth added — ~10–15%"
-        ]
+        text: "What the research found",
       },
       {
         kind: "p",
-        text: "The high-impact fixes are editorial, not technical. Adding a section of statistics backed by named studies does more than restructuring headings, and restructuring headings does more than simplifying language. Technical work (structured data, robots.txt, sitemap, canonical URLs) is the prerequisite; editorial work is the multiplier."
-      }
+        text: "The GEO paper from researchers at Princeton and elsewhere tested content changes against generative search answers and reported visibility gains of up to 40%. The changes that helped most were editorial: citing sources, adding quotations from credible people and adding specific statistics. Stuffing pages with keywords did not help. The results vary by subject, and they come from a research benchmark rather than any one assistant in production.",
+      },
+      {
+        kind: "p",
+        text: "The practical reading: the technical work — crawler access, clear headings, structured data, a sitemap — is what lets an assistant read you at all. The editorial work is what makes it want to quote you.",
+      },
     ],
     takeaway: {
       title: "What you can take",
-      text: "A seven-step checklist in order of measured impact.",
+      text: "Six checks, technical first, then editorial.",
       items: [
-        "Check robots.txt — confirm GPTBot, ClaudeBot, PerplexityBot, OAI-SearchBot, and Google-Extended are allowed.",
-        "Audit structured data — Article, FAQPage, HowTo, BreadcrumbList, Organization, WebSite.",
-        "Open each H2 with its answer — the first sentence carries the claim.",
-        "Make each section self-contained and quotable.",
-        "Back claims with named statistics — dates, units, named studies.",
-        "Publish llms.txt at your site root as a lean manifest.",
-        "Measure manually — ask each assistant your buyers' questions weekly and log who cites you."
-      ]
+        "Check robots.txt — make sure the AI crawlers you want to be cited by are not blocked.",
+        "Add structured data for your organisation, your pages and, if you are local, your business details.",
+        "Open each section with its answer; the first sentence should carry the claim.",
+        "Make each section make sense on its own.",
+        "Back claims with named sources and specific numbers.",
+        "Once a month, ask the assistants your buyers' questions and note who they cite.",
+      ],
     },
     caveats: [
-      "This post measures how content is structured for citation, not whether it ranks in traditional search. Ranking and citation are related but not the same metric.",
-      "The user-agent list and retrieval mechanisms reflect behavior as of October 2026; crawlers change names and indexes shift.",
-      "No claim here is a guarantee of citation, referral traffic, or business outcome — the measured lift figures are averages from a synthetic query set.",
-      "llms.txt is a proposal, not a documented ranking signal for any platform.",
-      "This post does not cover every assistant — Bing Copilot, Gemini standalone, Apple Intelligence, and agentic browsers have different retrieval behaviors."
+      "Being cited and ranking in search are related but not the same, and nothing here guarantees either.",
+      "Crawler names and how each assistant retrieves pages change over time; check each company's current documentation.",
+      "The GEO figures come from a research benchmark, not from measurements of any particular site.",
     ],
     related: [
-      {
-        slug: "shipping-the-evidence-tag",
-        title: "Every Echoes note now carries its proof"
-      },
-      {
-        slug: "anatomy-of-an-echoes-note",
-        title: "The anatomy of an Echoes note"
-      }
+      { slug: "ai-search-vs-google", title: "AI search vs Google: what's changing for small-business discovery" },
+      { slug: "local-business-schema-that-gets-found", title: "Structured data that actually helps a small business get found" },
     ],
-    cta: {
-      label: "Read the SEO & Discoverability capability",
-      href: "/capabilities/seo"
-    },
+    cta: { label: "Read the SEO & discoverability add-on", href: "/capabilities/seo" },
     faq: [
       {
-        q: "Does llms.txt actually help with citations?",
-        a: "It is a proposal, not a ranking signal. It helps agents find your core pages quickly; it does not guarantee a citation. The measured high-impact fixes are editorial — cited statistics, direct answers, structured sections."
+        q: "Does llms.txt help with citations?",
+        a: "It is a proposal, not a standard, and Google has said it does not use it. The changes with evidence behind them are editorial: clear answers, cited sources and specific numbers.",
       },
       {
         q: "Should I test in just one AI assistant?",
-        a: "No. Each platform uses a different index and crawler: ChatGPT (Bing + OAI-SearchBot), Perplexity (own index + PerplexityBot), Claude (Brave Search + ClaudeBot), Google AI Overviews (Google index + Google-Extended). Test in at least the ones your buyers use."
+        a: "No. They draw on different indexes and behave differently. Test in the ones your buyers actually use.",
       },
       {
         q: "What if my site blocks AI crawlers by accident?",
-        a: "It happens with template robots.txt files. Confirm GPTBot, ClaudeBot, PerplexityBot, OAI-SearchBot, and Google-Extended are allowed. A blocked bot means that platform cannot retrieve or quote your content."
+        a: "It happens with template robots.txt files. Check the file for the crawler names above. A blocked crawler means that assistant cannot fetch your pages when it searches.",
       },
       {
         q: "Is GEO just SEO with different words?",
-        a: "Partially. Google's official guidance says generative AI optimization is still SEO. The difference is the unit of optimization: a page for SEO, a section (quote) for GEO."
-      }
-    ]
+        a: "Largely. Google says its usual SEO guidance applies to its AI features. The difference is the unit you optimise: a page for ranking, a self-contained section for quoting.",
+      },
+    ],
   },
 {
     slug: "how-lane-works",
     title: "We built a site assistant that only tells the truth: how Lane works",
     excerpt:
-      "Lane answers only from published studio information — no invented prices, results or timelines — and never claims a handoff. Here's how it works and why it refuses to lie.",
+      "Lane answers only from published studio information — no invented prices, results or timelines — and its answers never claim a booking. Here's how it works and why it refuses to make things up.",
     intro:
-      "Lane is this site's guide. It answers only from published studio information — no invented prices, results or timelines — and it never claims to book a call or to have sent an inquiry. When it does not know, it says so and points you to the team. Here's how it works and why it refuses to lie.",
+      "Lane is this site's guide. It answers only from published studio information — no invented prices, results or timelines — and its answers never claim to have booked a call or sent anything. The only thing Lane sends is a project brief you fill in and submit yourself. Here's how it works and why it refuses to make things up.",
     tag: "Decided",
     theme: "AI",
     readTime: 6,
     date: "2026-10-08",
-    author: "Agent Lane",
     evidence: [
       {
         kind: "code",
@@ -2610,13 +2125,13 @@ export const POSTS: Post[] = [
         values: [
           { label: "citePost()", value: "routes to a published Echoes post" },
           { label: "laneReply()", value: "never invents prices, results or timelines" },
-          { label: "nextSteps()", value: "never claims a booking or a sent inquiry" },
+          { label: "nextSteps()", value: "turns an answer into buttons; it books nothing" },
         ],
       },
       {
         kind: "quote",
         label: "What Lane refuses to do",
-        text: "Invent prices, results or timelines; claim a booking or a sent inquiry; give unverified advice.",
+        text: "Invent prices, results or timelines; claim a booking; give unverified advice.",
         source: "laneReply() — hard-wired in studioReply.ts",
       },
     ],
@@ -2636,7 +2151,7 @@ export const POSTS: Post[] = [
         kind: "ol",
         items: [
           "Only from published studio information. The citation index is the boundary; anything not in it is out of scope.",
-          "Never claim a handoff, booking, or sent inquiry. The call intent explicitly says: Nothing has been booked or sent from this chat.",
+          "Never claim a booking. When a visitor asks for a call, Lane offers 'Start a project' to send a short brief, or 'Contact the team', and says plainly that nothing has been booked or sent from the chat itself.",
           "Never invent prices, results, or timelines. Price answers quote the published pricing ranges; timelines say a quote is written, not promised.",
         ],
       },
@@ -2645,7 +2160,7 @@ export const POSTS: Post[] = [
         kind: "ul",
         items: [
           "A freeform LLM that answers anything — it would invent, and the studio's promise is proof, not fluency.",
-          "A chatbot that pretends to book — the nextSteps() actions are links only; nothing is sent.",
+          "A chatbot that pretends to book — Lane's buttons open a view or a link; the only thing sent is a brief the visitor submits.",
           "Hiding the citation index — the index is public in code so the constraint is verifiable.",
         ],
       },
@@ -2658,7 +2173,7 @@ export const POSTS: Post[] = [
       ],
     },
     caveats: [
-      "Lane answers from published studio information only; it does not access project records or create tickets.",
+      "Lane answers from published studio information only; it does not access project records. A brief sent from 'Start a project' arrives by email, like the contact form.",
       "It is not an AI model and not a person; for project-specific advice, contact the team.",
       "The citation rules are the studio's own honesty standard, not an industry standard.",
     ],
@@ -2671,116 +2186,128 @@ export const POSTS: Post[] = [
   {
     slug: "local-business-schema-that-gets-found",
     title: "Structured data that actually helps a small business get found",
-    excerpt: "LocalBusiness schema is not a ranking factor — but it is the only way to hand Google, Bing, and AI assistants clean, unambiguous facts about your business. Here is the markup that earns rich results, the properties that move the needle, and the honest caveats.",
-    intro: "LocalBusiness schema does not directly boost rankings — Google has confirmed this repeatedly. What it does: it makes your business name, address, phone, hours, service area, and geo coordinates machine-readable so Google can cross-check them against your Google Business Profile. When the profile, the visible page, and the JSON-LD all agree, Google's confidence goes up. That confidence earns rich results (stars, hours, click-to-call in SERPs), Knowledge Panel eligibility, and citation in AI answers — 45% of consumers now use AI tools for local recommendations (BrightLocal 2026). The markup below is what actually ships on client sites that moved from SEO health scores of 31 and 52 to 90 (RMCM case studies).",
-    tag: "Measured",
+    excerpt: "LocalBusiness structured data is not a ranking factor, but it hands search engines and AI assistants your business facts in a form they do not have to guess at. Here is the markup, the properties that matter, and what it will not do.",
+    intro: "LocalBusiness structured data does not directly boost rankings. What it does is state your business name, address, phone, hours and service area in a machine-readable form, so search engines and AI assistants do not have to guess them from your page copy. When that markup, your visible page and your Google Business Profile all agree, the facts are easy to trust. Here is the markup and what it will not do.",
+    tag: "Plainly",
     theme: "Build",
-    readTime: 8,
+    readTime: 7,
     date: "2026-10-08",
+    updated: "2026-10-12",
     evidence: [
       {
         kind: "metrics",
-        label: "What the data shows",
+        label: "Why it is worth an hour",
         values: [
-          { label: "Rich result CTR vs. plain", value: "58% vs 41% (Milestone Research, 4.5M queries)" },
-          { label: "Sites with zero structured data", value: "45.3% of 16,673 local sites audited (Atlantis Web 2026)" },
-          { label: "Sites using LocalBusiness schema", value: "Only 31.6% of schema users — most use WebSite/WebPage which do nothing for local" },
-          { label: "ChatGPT visibility lift from LocalBusiness", value: "+3.33 positions in controlled 10-week test (aeo.how 2026)" },
-          { label: "AI Mode zero-click rate", value: "83% of queries answered without a click (Search Engine Land 2026)" }
-        ]
+          { label: "US consumers using AI tools for local recommendations (BrightLocal, 2026 survey of 1,002 adults)", value: "45%" },
+          { label: "Local-intent searches showing a local pack (Whitespark, 2025)", value: "93%" },
+          { label: "Google removed FAQ rich results for almost all sites", value: "May 7, 2026" },
+        ],
       },
       {
         kind: "code",
-        label: "Complete LocalBusiness JSON-LD (copy, adapt, validate)",
-        code: "{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"Plumber\",\n  \"name\": \"Miller Plumbing & Heating\",\n  \"url\": \"https://www.millerplumbing.example/\",\n  \"telephone\": \"+1-555-219-4078\",\n  \"email\": \"service@millerplumbing.example\",\n  \"description\": \"Licensed plumbing and HVAC contractor serving greater Portland since 1998. Emergency service, water heater replacement, drain cleaning, and heat pump installation.\",\n  \"priceRange\": \"$$\",\n  \"address\": {\n    \"@type\": \"PostalAddress\",\n    \"streetAddress\": \"412 SE Hawthorne Blvd\",\n    \"addressLocality\": \"Portland\",\n    \"addressRegion\": \"OR\",\n    \"postalCode\": \"97214\",\n    \"addressCountry\": \"US\"\n  },\n  \"geo\": {\n    \"@type\": \"GeoCoordinates\",\n    \"latitude\": 45.5122,\n    \"longitude\": -122.6215\n  },\n  \"openingHoursSpecification\": [\n    {\n      \"@type\": \"OpeningHoursSpecification\",\n      \"dayOfWeek\": [\"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\"],\n      \"opens\": \"07:30\",\n      \"closes\": \"18:00\"\n    },\n    {\n      \"@type\": \"OpeningHoursSpecification\",\n      \"dayOfWeek\": \"Friday\",\n      \"opens\": \"07:30\",\n      \"closes\": \"16:00\"\n    },\n    {\n      \"@type\": \"OpeningHoursSpecification\",\n      \"dayOfWeek\": \"Saturday\",\n      \"opens\": \"08:00\",\n      \"closes\": \"14:00\"\n    }\n  ],\n  \"areaServed\": {\n    \"@type\": \"GeoCircle\",\n    \"geoMidpoint\": {\n      \"@type\": \"GeoCoordinates\",\n      \"latitude\": 45.5122,\n      \"longitude\": -122.6215\n    },\n    \"geoRadius\": \"25000\"\n  },\n  \"sameAs\": [\n    \"https://www.google.com/maps/place/Miller+Plumbing/@45.5122,-122.6215\",\n    \"https://www.facebook.com/millerplumbingportland\",\n    \"https://www.linkedin.com/company/miller-plumbing-heating\",\n    \"https://www.yelp.com/biz/miller-plumbing-portland\"\n  ],\n  \"hasMap\": \"https://www.google.com/maps/place/Miller+Plumbing/@45.5122,-122.6215\",\n  \"aggregateRating\": {\n    \"@type\": \"AggregateRating\",\n    \"ratingValue\": \"4.7\",\n    \"reviewCount\": \"127\",\n    \"bestRating\": \"5\",\n    \"worstRating\": \"1\"\n  }\n}"
+        label: "A LocalBusiness example for a fictional business (copy, adapt, validate)",
+        code: "{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"Plumber\",\n  \"@id\": \"https://www.example-plumbing.example/#business\",\n  \"name\": \"Example Plumbing & Heating\",\n  \"url\": \"https://www.example-plumbing.example/\",\n  \"telephone\": \"+1-555-010-0199\",\n  \"email\": \"service@example-plumbing.example\",\n  \"description\": \"Licensed plumbing and heating contractor. Emergency repairs, water heaters, drain cleaning and heat pumps.\",\n  \"priceRange\": \"$$\",\n  \"address\": {\n    \"@type\": \"PostalAddress\",\n    \"streetAddress\": \"100 Main Street\",\n    \"addressLocality\": \"Springfield\",\n    \"addressRegion\": \"OR\",\n    \"postalCode\": \"97477\",\n    \"addressCountry\": \"US\"\n  },\n  \"geo\": {\n    \"@type\": \"GeoCoordinates\",\n    \"latitude\": 44.0462,\n    \"longitude\": -123.022\n  },\n  \"openingHoursSpecification\": [\n    {\n      \"@type\": \"OpeningHoursSpecification\",\n      \"dayOfWeek\": [\n        \"Monday\",\n        \"Tuesday\",\n        \"Wednesday\",\n        \"Thursday\"\n      ],\n      \"opens\": \"07:30\",\n      \"closes\": \"18:00\"\n    },\n    {\n      \"@type\": \"OpeningHoursSpecification\",\n      \"dayOfWeek\": \"Friday\",\n      \"opens\": \"07:30\",\n      \"closes\": \"16:00\"\n    },\n    {\n      \"@type\": \"OpeningHoursSpecification\",\n      \"dayOfWeek\": \"Saturday\",\n      \"opens\": \"08:00\",\n      \"closes\": \"14:00\"\n    }\n  ],\n  \"areaServed\": {\n    \"@type\": \"GeoCircle\",\n    \"geoMidpoint\": {\n      \"@type\": \"GeoCoordinates\",\n      \"latitude\": 44.0462,\n      \"longitude\": -123.022\n    },\n    \"geoRadius\": \"25000\"\n  },\n  \"sameAs\": [\n    \"https://www.facebook.com/your-page\",\n    \"https://www.linkedin.com/company/your-company\",\n    \"https://www.yelp.com/biz/your-listing\"\n  ]\n}",
       },
       {
         kind: "link",
         label: "Validate before you deploy",
         href: "https://search.google.com/test/rich-results",
-        text: "Google Rich Results Test — paste your JSON-LD here first"
+        text: "Google Rich Results Test — paste your JSON-LD here first",
       },
       {
         kind: "link",
-        label: "Full Schema.org LocalBusiness reference",
-        href: "https://schema.org/LocalBusiness",
-        text: "All subtypes and properties (Dentist, Electrician, HVACBusiness, LegalService, etc.)"
-      }
+        label: "Google's guidance",
+        href: "https://developers.google.com/search/docs/appearance/structured-data/local-business",
+        text: "Google Search Central: local business structured data",
+      },
     ],
     body: [
-      { kind: "h2", text: "The four schema types that do almost all the work" },
-      { kind: "p", text: "Everything else is situational. These four are the foundation every local business should ship:" },
-      { kind: "ul", items: [
-        "LocalBusiness (with the most specific subtype) — on homepage and contact page",
-        "Service — on each service page, naming the exact service and area served",
-        "Organization + sameAs — site-wide, connects your brand to its profiles across the web",
-        "BreadcrumbList — site-wide, clean paths in search results and easier crawling"
-      ]},
-      { kind: "p", text: "Article schema matters if you publish content. FAQPage schema lost its Google rich result in May 2026 — keep it if you have real FAQs, but expect nothing visual. Review markup of your own business has been ignored as self-serving since 2019; mark up specific products or services instead." },
-      { kind: "h2", text: "The non-negotiable properties (Google requires these)" },
-      { kind: "ul", items: [
-        "@type — Use the specific subtype: Dentist, Electrician, Plumber, HVACBusiness, LegalService, AutoRepair, Restaurant, HairSalon, RealEstateAgent, ProfessionalService, Store, HealthAndBeautyBusiness, Bakery. Generic LocalBusiness tells machines nothing useful.",
-        "name — Your exact legal business name, character-for-character identical to your Google Business Profile.",
-        "address — Full PostalAddress with streetAddress, addressLocality, addressRegion, postalCode, addressCountry.",
-        "telephone — E.164 format (+1-555-219-4078). Not a formatted display number."
-      ]},
-      { kind: "h2", text: "The high-impact optional properties (these earn the rich results)" },
-      { kind: "ul", items: [
-        "openingHoursSpecification — Array of OpeningHoursSpecification objects. Group days with identical hours. This is what puts hours directly in the SERP.",
-        "geo — GeoCoordinates with latitude and longitude. Get exact coordinates from Google Maps (right-click the pin → copy coordinates). This is the precise location signal for 'near me' queries.",
-        "areaServed — Critical for service-area businesses without a storefront in every city. Use GeoCircle with geoMidpoint + geoRadius (meters), or an array of City/State/PostalCode objects. A Portland plumber declares areaServed as a 25km radius or lists ['Portland', 'Beaverton', 'Gresham', 'Lake Oswego'].",
-        "aggregateRating — Average rating + review count. This is what triggers star rich snippets (15–35% CTR lift per Search Engine Land). Reviews must be genuine, published on your site, and visible to users. Do not fabricate."
-      ]},
-      { kind: "h2", text: "Service schema — the underrated one" },
-      { kind: "p", text: "If you offer more than one service, Service schema (or OfferCatalog) lets you declare each one individually instead of leaving Google to infer from body copy. This matches you against searches like 'drain repair Portland' rather than guessing from paragraphs." },
-      { kind: "code", label: "Service schema example (add to each service page)", code: "{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"Service\",\n  \"name\": \"Emergency Drain Cleaning\",\n  \"description\": \"24/7 emergency drain clearing for residential and light commercial. Hydro-jetting, camera inspection, and root removal.\",\n  \"provider\": {\n    \"@type\": \"LocalBusiness\",\n    \"@id\": \"https://www.millerplumbing.example/#business\"\n  },\n  \"areaServed\": {\n    \"@type\": \"GeoCircle\",\n    \"geoMidpoint\": { \"@type\": \"GeoCoordinates\", \"latitude\": 45.5122, \"longitude\": -122.6215 },\n    \"geoRadius\": \"25000\"\n  },\n  \"offers\": {\n    \"@type\": \"Offer\",\n    \"price\": \"149.00\",\n    \"priceCurrency\": \"USD\",\n    \"availability\": \"https://schema.org/InStock\"\n  }\n}"},
-      { kind: "h2", text: "Implementation: pick your route" },
-      { kind: "ul", items: [
-        "WordPress: Rank Math or Yoast Local SEO generate LocalBusiness from a settings form. Service schema usually needs manual addition or a schema-specific plugin.",
-        "Squarespace / Wix: Add basic structured data automatically. Accept pasted JSON-LD in site headers for the full version.",
-        "Custom / static sites: Free JSON-LD generator (schema.org generators, technicalseo.com/tools/schema-markup-generator) + paste into <head>. Under an hour."
-      ]},
+      { kind: "h2", text: "The four types that do most of the work" },
+      { kind: "p", text: "Everything else is situational. These four are a sensible foundation for a local business:" },
+      {
+        kind: "ul",
+        items: [
+          "LocalBusiness, using the most specific subtype that fits — on the homepage and contact page.",
+          "Service — on each service page, naming the service and the area served.",
+          "Organization with sameAs — site-wide, linking your business to its official profiles elsewhere.",
+          "BreadcrumbList — site-wide, so search results show a clean path to the page.",
+        ],
+      },
+      { kind: "p", text: "Article markup matters if you publish articles. FAQPage markup no longer produces a rich result for almost any site since Google removed FAQ rich results on May 7, 2026; keep it only if the questions are genuinely useful on the page. Review markup about your own business has been treated as self-serving and ignored for star snippets since 2019, so leave it out." },
+      { kind: "h2", text: "The properties to get right" },
+      {
+        kind: "ul",
+        items: [
+          "@type — the most specific subtype: Dentist, Electrician, Plumber, HVACBusiness, LegalService, AutoRepair, Restaurant and so on. Generic LocalBusiness is the fallback, not the goal.",
+          "name — exactly as it appears on your Google Business Profile.",
+          "address — a full PostalAddress: street, city, state, postal code and country.",
+          "telephone — your main number, including the country and area code.",
+          "url — the page the markup describes.",
+        ],
+      },
+      { kind: "h2", text: "The useful optional properties" },
+      {
+        kind: "ul",
+        items: [
+          "openingHoursSpecification — your hours, grouping days that share the same times.",
+          "geo — latitude and longitude, copied from your pin in Google Maps.",
+          "areaServed — essential for service-area businesses: a radius around a point, or a list of the towns you cover.",
+          "sameAs — links to your official profiles, so the facts can be connected across the web.",
+        ],
+      },
+      { kind: "h2", text: "Service markup — the underrated one" },
+      { kind: "p", text: "If you offer more than one service, Service markup declares each one, rather than leaving search engines to infer them from paragraphs. A drain-cleaning page that says so in its markup is easier to match to a search for drain cleaning in your area." },
+      { kind: "code", label: "Service example (one per service page)", code: "{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"Service\",\n  \"name\": \"Emergency Drain Cleaning\",\n  \"description\": \"Drain clearing for homes and small businesses, including camera inspection.\",\n  \"provider\": { \"@id\": \"https://www.example-plumbing.example/#business\" },\n  \"areaServed\": [\"Springfield\", \"Shelbyville\"]\n}" },
+      { kind: "h2", text: "Pick your route" },
+      {
+        kind: "ul",
+        items: [
+          "WordPress: SEO plugins can generate LocalBusiness markup from a settings form. Service markup usually needs adding by hand.",
+          "Squarespace and Wix: some markup is added automatically, and both let you paste your own JSON-LD into the page head.",
+          "Custom or static sites: write the JSON-LD by hand or with a generator, add it to the page head, and validate it.",
+        ],
+      },
       { kind: "h2", text: "The discipline that makes it work" },
-      { kind: "ul", items: [
-        "Match your Google Business Profile exactly — name, address, phone, hours. Not close. Identical. Mismatches are the #1 reason schema fails to produce results.",
-        "One JSON-LD block per location. Each location gets unique name (with location identifier), address, telephone, geo, openingHoursSpecification, and url.",
-        "Validate with Google Rich Results Test before deploying. Published schema with errors is worse than no schema — it confuses Google and blocks rich results.",
-        "Monitor in Search Console → Enhancements → Structured Data. Fix validation errors the same week they appear."
-      ]},
+      {
+        kind: "ul",
+        items: [
+          "Match your Google Business Profile exactly — name, address, phone and hours. Mismatches undermine the point of the markup.",
+          "One block per location, each with its own name, address, phone, hours and page.",
+          "Validate with the Rich Results Test before you deploy, and fix errors rather than shipping them.",
+          "Watch Search Console for structured-data errors after launch.",
+        ],
+      },
       { kind: "h2", text: "What this does not do" },
-      { kind: "p", text: "Schema does not replace a Google Business Profile (32% of local pack weight). It does not replace reviews (16%). It does not replace on-page SEO (19%) or links (11%). It is the most controllable piece of that 19% on-page bucket — one-time implementation, immediate indexing signal, no ongoing cost." }
+      { kind: "p", text: "Markup does not replace a complete Google Business Profile, genuine reviews or a useful website. Whitespark's surveys of local search experts consistently rank the Business Profile, reviews and on-page signals as the biggest influences on the local pack. Structured data is the most controllable piece of the on-page part: an hour's work, no running cost." },
     ],
     takeaway: {
-      title: "Ship this week, measure next month",
-      text: "The minimum viable LocalBusiness implementation that earns rich results:",
+      title: "Ship this week",
+      text: "The minimum useful LocalBusiness setup:",
       items: [
-        "Pick your specific subtype (Plumber, Dentist, Electrician, etc.)",
-        "Match name, address, phone, hours to your GBP character-for-character",
-        "Add geo coordinates from Google Maps",
-        "Add areaServed (GeoCircle for service-area, City array for multi-location)",
-        "Add aggregateRating only if you have real reviews on your site",
-        "Validate in Google Rich Results Test → deploy → monitor Search Console"
-      ]
+        "Pick the most specific subtype that fits your business",
+        "Match name, address, phone and hours to your Google Business Profile exactly",
+        "Add geo coordinates and the area you serve",
+        "Add Service markup to each service page",
+        "Validate in the Rich Results Test, deploy, then watch Search Console",
+      ],
     },
     caveats: [
-      "This post proves the markup pattern, not a client result. It contains no client work and no invented numbers.",
-      "The CTR and visibility numbers come from third-party studies (Milestone, BrightLocal, Atlantis Web, aeo.how) — not our internal data. Methodology and sample sizes vary.",
-      "LocalBusiness schema is not a direct ranking factor. The indirect path (entity confidence → rich results → CTR → behavioral signals → ranking) is real but not guaranteed.",
-      "FAQPage rich results were removed by Google in May 2026. Review stars on your own business have been ignored since 2019. Do not implement expecting those visual features.",
-      "AI citation lift (ChatGPT +3.33 positions) comes from one controlled test in landscaping/outdoor services. Your vertical may differ."
+      "Structured data is not a direct ranking factor, and nothing here guarantees a rich result, a ranking or an AI citation.",
+      "The statistics are third-party figures (BrightLocal, Whitespark) and Google's own announcement; methods and samples vary.",
+      "The example business is fictional. Replace every value with your own, and remove any property you cannot fill truthfully.",
     ],
     related: [
-      { slug: "shipping-the-evidence-tag", title: "Every Echoes note now carries its proof" },
-      { slug: "anatomy-of-an-echoes-note", title: "The anatomy of an Echoes note" }
+      { slug: "ai-search-vs-google", title: "AI search vs Google: what's changing for small-business discovery" },
+      { slug: "how-ai-assistants-see-your-website", title: "How AI assistants see your website — and what to do about it" },
     ],
-    cta: { label: "See how we build sites with schema baked in", href: "/capabilities/websites" },
+    cta: { label: "See the SEO & discoverability add-on", href: "/capabilities/seo" },
     faq: [
-      { q: "Is LocalBusiness schema a direct ranking factor?", a: "No. Google representatives have confirmed multiple times that structured data is not a direct ranking factor. The map pack is decided by relevance, distance, and prominence — with GBP carrying ~32% weight and website ~19% (Whitespark)." },
-      { q: "Why bother if it's not a ranking factor?", a: "Because it earns rich results (58% CTR vs 41%), Knowledge Panel eligibility, and AI citation. 45% of consumers now use AI tools for local recommendations (BrightLocal 2026), and AI assistants parse structured data when they read your site." },
-      { q: "Which subtype should I use?", a: "The most specific one that fits: Dentist, Electrician, Plumber, HVACBusiness, LegalService, AutoRepair, Restaurant, HairSalon, RealEstateAgent, ProfessionalService, Store, HealthAndBeautyBusiness, Bakery. If none fits, use LocalBusiness." },
-      { q: "My business has multiple locations. One block or many?", a: "One JSON-LD block per location, each with unique name (include location identifier), address, telephone, geo, openingHoursSpecification, and url pointing to that location's page." },
-      { q: "Can I mark up reviews from Google or Yelp in my schema?", a: "No. Reviews in schema must be genuine reviews published on your own website and visible to users. Fabricated or third-party-only reviews violate Google's guidelines and can trigger manual actions." }
-    ]
+      { q: "Is LocalBusiness markup a direct ranking factor?", a: "No. Google has said structured data is not a direct ranking factor. It helps search engines understand your business facts; it does not move you up the results by itself." },
+      { q: "Why bother, then?", a: "Because it makes your name, address, phone, hours and service area unambiguous to search engines and AI assistants, and it costs an hour to set up. BrightLocal's 2026 survey found 45% of US consumers use AI tools for local recommendations." },
+      { q: "Which subtype should I use?", a: "The most specific one that fits — Dentist, Electrician, Plumber, LegalService and so on. If none fits, use LocalBusiness." },
+      { q: "My business has several locations. One block or many?", a: "One block per location, each with its own name, address, phone, hours and the URL of that location's page." },
+      { q: "Can I mark up my Google or Yelp reviews?", a: "No. Review markup about your own business is not used for star snippets, and marking up reviews that are not genuinely published on your page breaks Google's guidelines." },
+    ],
   },
 {
     slug: "ai-search-vs-google",
@@ -2798,10 +2325,10 @@ export const POSTS: Post[] = [
         kind: "metrics",
         label: "The numbers behind the shift (third-party estimates, 2025–2026)",
         values: [
-          { label: "Google searches showing an AI Overview", value: "roughly 43–48%, up from ~15% in 2025 (BrightEdge / Similarweb; Google publishes no official figure)" },
-          { label: "US Google searches ending with no click", value: "68% (SparkToro / Similarweb, early 2026)" },
-          { label: "Click on a traditional result when an AI answer appears", value: "8% of searches, vs 15% without one (Pew Research, 68,879 real searches)" },
-          { label: "ChatGPT weekly users", value: "900 million (OpenAI / TechCrunch, Feb 2026)" },
+          { label: "US Google searches ending with no click (SparkToro, Jan–Apr 2026)", value: "68%" },
+          { label: "Google searches showing an AI Overview (same study; no official figure)", value: "20%+" },
+          { label: "Searches with a click on a result when an AI summary appears, vs 15% without (Pew Research)", value: "8%" },
+          { label: "ChatGPT weekly users (OpenAI, early 2026)", value: "900M" },
         ],
       },
       {
@@ -2841,8 +2368,8 @@ export const POSTS: Post[] = [
       {
         kind: "ul",
         items: [
-          "Roughly 43–48% of Google searches now show an AI Overview, up from about 15% in 2025 (BrightEdge and Similarweb, early 2026).",
-          "About 68% of US Google searches end without a single click (SparkToro / Similarweb, early 2026).",
+          "About 68% of US Google searches ended without a single click in the first four months of 2026 (SparkToro, using Similarweb data).",
+          "The same study found AI Overviews on more than 20% of Google searches; other trackers report higher figures, and Google publishes none.",
           "When an AI Overview appears, people click a traditional result on 8% of searches, versus 15% without one — roughly half (Pew Research, a study of 68,879 real searches).",
           "ChatGPT passed 900 million weekly users in early 2026 (OpenAI).",
         ],
@@ -2861,7 +2388,7 @@ export const POSTS: Post[] = [
       },
       {
         kind: "p",
-        text: "When someone is ready to act — \"emergency plumber near me\", \"dentist in Bristol\", \"best CRM for my team\" — the AI summary often does not finish the job. A 2025 Whitespark study found the local pack still appears on 93% of local-intent searches, while AI Overviews appear on only about 15% of them. The opposite is true for informational searches, where AI Overviews show up on over 90%.",
+        text: "When someone is ready to act — \"emergency plumber near me\", \"dentist in Denver\", \"best CRM for my team\" — the AI summary often does not finish the job. A 2025 Whitespark study found the local pack appeared on 93% of local-intent searches on average, while AI Overviews appeared on about 15% of them. For informational searches it was the reverse: AI Overviews appeared on 92%.",
       },
       {
         kind: "p",
@@ -2881,7 +2408,7 @@ export const POSTS: Post[] = [
           "Answer first, on the page. Put a plain, self-contained answer to each customer question at the top of the page, not buried three paragraphs down. AI engines extract passages, not whole articles.",
           "Complete your Google Business Profile. It is the single biggest source for local AI answers — categories, services, hours, photos, and a steady stream of real reviews.",
           "Be consistent everywhere. The same name, address and phone number on your site, your profile and every directory. When sources disagree, the AI's confidence drops.",
-          "Add structured data. FAQPage and LocalBusiness markup make your answers and your business facts machine-readable.",
+          "Add structured data. LocalBusiness markup makes your business facts machine-readable.",
           "Get on real lists and directories. \"Best [service] in [city]\" roundups and review sites are among the most-cited pages in AI answers.",
         ],
       },
@@ -2897,7 +2424,7 @@ export const POSTS: Post[] = [
         kind: "ul",
         items: [
           "You cannot buy a citation. Anyone selling \"guaranteed AI placement\" is guessing, and keyword-stuffing your profile or page backfires.",
-          "llms.txt is mostly ignored. Google has said it does not use it for AI Overviews, and the major AI crawlers skip it.",
+          "llms.txt is a proposal, not a standard, and Google has said it does not use it.",
           "Don't chase every new assistant. Prioritize Google (AI Overviews plus Business Profile), then ChatGPT, then Perplexity only if your customers actually use it.",
         ],
       },
@@ -2931,9 +2458,9 @@ export const POSTS: Post[] = [
       ],
     },
     caveats: [
-      "Every percentage here is a third-party estimate. Google publishes no official share, and independent trackers disagree (roughly 43% vs 48% for AI Overview coverage).",
+      "Every percentage here is a third-party estimate. Google publishes no official share, and independent trackers disagree, especially on how often AI Overviews appear.",
       "Most of the data is US-based; your market, language and industry may differ.",
-      "AI referral traffic is still a small share of total visits even though it converts better — this is a growing trend to prepare for, not a sudden windfall to bank on.",
+      "AI referral traffic is still a small share of total visits for most sites — a trend to prepare for, not a windfall to bank on.",
       "Local \"near me\" and transactional searches are far less affected than informational ones, so your exposure depends heavily on what kind of searches bring you customers.",
       "Being cited does not guarantee a click or a sale; it is a visibility layer alongside ranking, not a replacement for it.",
       "This is a plain-language guide, not a prescription. We are a studio, not a search consultancy, and nothing here promises a specific outcome.",
@@ -2946,7 +2473,7 @@ export const POSTS: Post[] = [
     faq: [
       {
         q: "Is Google going away?",
-        a: "No. Google still handles roughly 90% of search. What changed is that an AI answer now sits on top of many Google results, and more questions go to ChatGPT, Perplexity and others instead of a list of links.",
+        a: "No. Google still handles the large majority of searches. What changed is that an AI answer now sits on top of many Google results, and more questions go to ChatGPT, Perplexity and others instead of a list of links.",
       },
       {
         q: "Will AI search kill my website traffic?",
@@ -2989,7 +2516,7 @@ export const POSTS: Post[] = [
         },
       ],
     },
-  }
+  },
 ];
 
 export function postBySlug(slug: string): Post | undefined {
@@ -3134,7 +2661,7 @@ export function postSchema(siteUrl: string, post: Post): Record<string, unknown>
       dateModified: post.updated ?? post.date,
       inLanguage: "en-US",
       articleSection: post.theme,
-      author: { "@type": "Person", name: author },
+      author: author === ECHOES_AUTHOR ? { "@id": `${siteUrl}/#organization` } : { "@type": "Person", name: author },
       publisher: { "@id": `${siteUrl}/#organization` },
       mainEntityOfPage: { "@type": "WebPage", "@id": url },
       image: [`${url}/opengraph-image`],

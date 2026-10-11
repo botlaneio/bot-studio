@@ -1,6 +1,6 @@
 import { PRICE } from "../../lib/pricing";
 import { CAPABILITIES, NAV_CAPABILITIES } from "../capabilities";
-import { citePost, type LaneCitation } from "./citations";
+import { citePost } from "./citations";
 
 /* Lane's answers. Local guidance from published content only: never invent
    prices, results or timelines, never claim a handoff, booking or sent

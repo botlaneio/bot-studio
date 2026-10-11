@@ -39,6 +39,8 @@ export function ShowreelVideo({ src, first, poster }: { src: string; first: stri
   return (
     <>
       <video ref={ref} src={src} poster={first} muted playsInline preload="none" aria-hidden="true" />
+      {/* The end-card still sits over the video frame-for-frame; it must match the video's box exactly. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={poster} alt="" data-show={ended || undefined} />
     </>
   );

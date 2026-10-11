@@ -11,6 +11,13 @@
  * published without its proof (an evidence tag) and its receipts (the evidence
  * block).
  *
+ * Adding a post: append it here, add its entry to
+ * `src/components/lane/citations.ts` in the same change, run
+ * `node scripts/generate-echoes-covers.mjs` for its cover, and commit. Never
+ * write a post into a copy of this file; read the current file before editing
+ * so parallel writers cannot overwrite each other. `tests/echoes.test.mjs`
+ * fails if posts and citations drift apart.
+ *
  * Keep this module free of `@/` imports so the unit tests can load it in a
  * bare VM (see `tests/echoes.test.mjs`). Anything that needs the site origin
  * receives it as a parameter.

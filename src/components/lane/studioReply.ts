@@ -68,7 +68,7 @@ export function laneReply(message: string): { text: string; intent: Intent } {
   if (/who are you|what are you|are you (a |an )?(bot|robot|ai|human|real|person)|is this (a )?(bot|ai|human)/.test(text)) {
     return {
       intent: "who",
-      text: "I'm Lane, Botlane Studios' site guide. I answer from the studio's published information. I'm not an AI model and not a person, so for anything specific to your project, use ‘Contact the team’ below.",
+      text: "I'm Lane, Botlane Studio's site guide. I answer from the studio's published information. I'm not an AI model and not a person, so for anything specific to your project, use ‘Contact the team’ below.",
     };
   }
   if (/existing (client|customer|project|account)|already (a |working with )?(client|customer|you)|i am (a |an )?(current |existing )?client|support (request|ticket)|\bbilling\b|\binvoice\b/.test(text)) {
@@ -98,7 +98,7 @@ export function laneReply(message: string): { text: string; intent: Intent } {
   if (/where are you|based|located|location|your office|time ?zone|which country/.test(text)) {
     return {
       intent: "location",
-      text: "Botlane Studios is the studio of BotLane LLC, a US company registered in Wyoming, and works with businesses across the US.",
+      text: "Botlane Studio is the studio of BotLane LLC, a US company registered in Wyoming, and works with businesses across the US.",
     };
   }
   if (/start(ing)? (a |my |our )?(new )?project|get started|hire (you|the studio)|work with you|kick ?off|ready to (start|begin)|let'?s (start|begin|build)/.test(text)) {

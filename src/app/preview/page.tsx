@@ -3,7 +3,7 @@ import { ClayPreview } from "@/components/preview/ClayPreview";
 
 export const metadata: Metadata = {
   title: "Preview: clay direction",
-  description: "A private design preview of a light, tactile direction for Botlane Studios.",
+  description: "A private design preview of a light, tactile direction for Botlane Studio.",
   robots: { index: false, follow: false },
 };
 

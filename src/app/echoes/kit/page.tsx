@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/echoes/kit" },
   openGraph: {
     type: "website",
-    siteName: "Botlane Studios",
+    siteName: "Botlane Studio",
     title: "Kit — Templates, checklists, and tools you can take",
     description:
       "Ungated downloads from Echoes: a one-page website brief template, a WCAG 2.2 AA checklist for marketing sites, and a quote comparison sheet.",

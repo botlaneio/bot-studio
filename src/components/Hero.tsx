@@ -27,7 +27,7 @@ const vars = (v: Record<string, string | number>) => v as CSSProperties;
  *  text (Scramble). */
 export function Hero() {
   return (
-    <section className={styles.hero} aria-label="Botlane Studios">
+    <section className={styles.hero} aria-label="Botlane Studio">
       <div className={styles.bg} aria-hidden="true">
         <div className={styles.photo} />
       </div>
@@ -59,7 +59,7 @@ export function Hero() {
         <p className={`${styles.lockup} ${styles.scrim}`}>
           <span className={styles.rise}>
             <span className={styles.accent}>Botlane</span>
-            <span>\Studios</span>
+            <span>\Studio</span>
           </span>
         </p>
 

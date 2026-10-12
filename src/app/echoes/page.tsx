@@ -36,7 +36,7 @@ const ABOUT = [
   {
     label: "What Echoes is",
     title: "A studio notebook, kept in public.",
-    body: "Short notes from inside Botlane Studios: the decisions, the constraints, and why we made them.",
+    body: "Short notes from inside Botlane Studio: the decisions, the constraints, and why we made them.",
     icon: "note",
   },
   {

@@ -33,15 +33,15 @@ const poppins = Poppins({
 });
 
 
-const TITLE = "Botlane Studios — Websites and web apps";
+const TITLE = "Botlane Studio — Websites and web apps";
 const DESCRIPTION =
-  "Botlane Studios designs and builds websites and web apps for brands that care about craft, clarity and performance. A BotLane LLC studio.";
+  "Botlane Studio designs and builds websites and web apps for brands that care about craft, clarity and performance. A BotLane LLC studio.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: { default: TITLE, template: "%s — Botlane Studios" },
+  title: { default: TITLE, template: "%s — Botlane Studio" },
   description: DESCRIPTION,
-  applicationName: "Botlane Studios",
+  applicationName: "Botlane Studio",
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },
@@ -52,11 +52,11 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION, images: ["/hero.jpg"] },
   openGraph: {
     type: "website",
-    siteName: "Botlane Studios",
+    siteName: "Botlane Studio",
     title: TITLE,
     description: DESCRIPTION,
     url: SITE_URL,
-    images: [{ url: "/hero.jpg", alt: "Botlane Studios — cobalt floral portrait" }],
+    images: [{ url: "/hero.jpg", alt: "Botlane Studio — cobalt floral portrait" }],
   },
 };
 

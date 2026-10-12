@@ -314,7 +314,7 @@ export const POSTS: Post[] = [
         kind: "quote",
         label: "The filter we used",
         text: "If it does not serve the client-facing proof or the studio's operating cadence, it does not ship.",
-        source: "Botlane Studios",
+        source: "Botlane Studio",
       },
     ],
     body: [
@@ -417,7 +417,7 @@ export const POSTS: Post[] = [
       },
       {
         kind: "p",
-        text: `Botlane Studios publishes price ranges for its two core offers and its one priced add-on. Websites start at ${PRICE.websitesFrom}. Web Apps start at ${PRICE.webAppsFrom}, after a paid discovery phase. Brand identity is an optional add-on at ${PRICE.brandIdentity}. They are ranges, not promises: the written proposal sets the actual price and scope.`,
+        text: `Botlane Studio publishes price ranges for its two core offers and its one priced add-on. Websites start at ${PRICE.websitesFrom}. Web Apps start at ${PRICE.webAppsFrom}, after a paid discovery phase. Brand identity is an optional add-on at ${PRICE.brandIdentity}. They are ranges, not promises: the written proposal sets the actual price and scope.`,
       },
       {
         kind: "h2",
@@ -485,7 +485,7 @@ export const POSTS: Post[] = [
         kind: "quote",
         label: "The design direction",
         text: "Design in Figma. Build in Next.js. Nothing in between.",
-        source: "Botlane Studios"
+        source: "Botlane Studio"
       },
       {
         kind: "link",
@@ -753,7 +753,7 @@ export const POSTS: Post[] = [
     title: "The one-page brief we write before anything is drawn",
     excerpt: "The template we use to force clarity before design starts — outcome, audience, constraints, non-negotiables, success criteria, and the decision needed today. Ungated Markdown download.",
     intro:
-      "A brief that fits on one page forces the hard decisions before a single pixel is designed. This note publishes the template we use at Botlane Studios: eleven sections, from the outcome you are betting on to the decision needed today. The template is the takeaway — download it, adapt it, use it.",
+      "A brief that fits on one page forces the hard decisions before a single pixel is designed. This note publishes the template we use at Botlane Studio: eleven sections, from the outcome you are betting on to the decision needed today. The template is the takeaway — download it, adapt it, use it.",
     tag: "Briefed",
     theme: "Strategy",
     readTime: 5,
@@ -833,7 +833,7 @@ export const POSTS: Post[] = [
       ],
     },
     caveats: [
-      "This template reflects how Botlane Studios works. Larger organisations may need more formal governance.",
+      "This template reflects how Botlane Studio works. Larger organisations may need more formal governance.",
       "The template does not replace a proper discovery phase; it captures the output of one.",
       "A filled brief is only as good as the honesty behind it. A wish list forced onto one page is still a wish list.",
       "We are a studio, not a process consultancy. This is our notebook, not a universal standard.",
@@ -1420,7 +1420,7 @@ export const POSTS: Post[] = [
         kind: "quote",
         label: "The rule we quote by",
         text: "A quote without a Definition of Done is a wish list, not a contract.",
-        source: "Botlane Studios",
+        source: "Botlane Studio",
       },
       {
         kind: "metrics",
@@ -1769,7 +1769,7 @@ export const POSTS: Post[] = [
         kind: "quote",
         label: "What this note says outright",
         text: "If your site fits a single form and your traffic is under 1,000 visits a month, hire nothing.",
-        source: "Botlane Studios",
+        source: "Botlane Studio",
       },
       {
         kind: "link",
@@ -1982,7 +1982,7 @@ export const POSTS: Post[] = [
     caveats: [
       "The ranges are from public sources (WebFX and Digital Applied) and vary widely between them. They are market context, not a quote for your project.",
       "The three-year multiplier comes from one study's examples and depends heavily on how much is spent after launch.",
-      "Botlane Studios builds websites, so we are not neutral. Our own published ranges are on the pricing page; this note is about the market, not our rate card.",
+      "Botlane Studio builds websites, so we are not neutral. Our own published ranges are on the pricing page; this note is about the market, not our rate card.",
     ],
     related: [
       { slug: "what-8000-buys", title: "What an $8,000 website quote should spell out" },
@@ -2745,13 +2745,13 @@ export function rssXml(siteUrl: string, posts: Post[]): string {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Echoes — Botlane Studios</title>
+    <title>Echoes — Botlane Studio</title>
     <link>${escapeXml(`${siteUrl}/echoes`)}</link>
     <atom:link href="${escapeXml(`${siteUrl}/echoes/rss.xml`)}" rel="self" type="application/rss+xml" />
     <description>A studio notebook, kept in public. Every note carries its proof.</description>
     <language>en-us</language>
     <lastBuildDate>${latest}</lastBuildDate>
-    <generator>Botlane Studios</generator>
+    <generator>Botlane Studio</generator>
 ${items}
   </channel>
 </rss>
@@ -2761,7 +2761,7 @@ ${items}
 export function jsonFeed(siteUrl: string, posts: Post[]): string {
   const feed = {
     version: "https://jsonfeed.org/version/1.1",
-    title: "Echoes — Botlane Studios",
+    title: "Echoes — Botlane Studio",
     home_page_url: `${siteUrl}/echoes`,
     feed_url: `${siteUrl}/echoes/feed.json`,
     description: "A studio notebook, kept in public. Every note carries its proof.",

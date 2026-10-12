@@ -213,8 +213,8 @@ This covers the AA criteria that actually matter for marketing sites — the one
 
 ---
 
-*This checklist is published by Botlane Studios under the Echoes promise: no newsletter wall, no fluff.  
+*This checklist is published by Botlane Studio under the Echoes promise: no newsletter wall, no fluff.  
 Use it, adapt it, share it. If it catches one accessibility bug before launch, it did its job.*
 
-**Source:** `/echoes/kit` — Botlane Studios  
+**Source:** `/echoes/kit` — Botlane Studio  
 **License:** CC0 (public domain) — do whatever you want with it.

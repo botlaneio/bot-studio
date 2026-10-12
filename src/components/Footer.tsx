@@ -203,7 +203,7 @@ export function Footer() {
           <div className={styles.pitch}>
             <p className={styles.tagline}>Websites and web apps that connect, scale, and perform.</p>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className={styles.wordmark} src="/logo.svg" alt="Botlane" width={897} height={100} />
+            <img className={styles.wordmark} src="/logo.svg" alt="Botlane" width={845} height={100} />
             <p className={styles.blurb}>
               Websites and web apps designed and built for brands that demand craft, clarity, and performance.
             </p>

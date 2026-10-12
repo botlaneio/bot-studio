@@ -16,13 +16,13 @@ const NAV = [
 
 const TILES = ["/process/card-1.jpg", "/process/card-2.jpg", "/process/card-3.jpg"];
 
-const TEXT_US = `sms:+13072185175?&body=${encodeURIComponent("Hi Botlane Studios, I'd like to talk about a project.")}`;
+const TEXT_US = `sms:+13072185175?&body=${encodeURIComponent("Hi Botlane Studio, I'd like to talk about a project.")}`;
 
 const i = (n: number) => ({ "--i": n }) as CSSProperties;
 
 /** A design preview of a light, tactile ("clay") direction: the hero as a
  *  raised browser window that settles in on load and tilts with the
- *  pointer, a clay version of the Studios icon on its corner, then the
+ *  pointer, a clay version of the Studio icon on its corner, then the
  *  capabilities as clay cards and a closing call to action. Built from CSS
  *  alone: layered highlights and shadows, no 3D engine. */
 export function ClayPreview() {
@@ -60,7 +60,7 @@ export function ClayPreview() {
       </div>
 
       {/* ---------- Hero: the window ---------- */}
-      <section className={styles.hero} aria-label="Botlane Studios">
+      <section className={styles.hero} aria-label="Botlane Studio">
         <div ref={stageRef} className={styles.stage} onPointerMove={onMove} onPointerLeave={onLeave}>
           <div className={styles.window}>
             <div className={styles.chrome} aria-hidden="true">
@@ -73,9 +73,9 @@ export function ClayPreview() {
             </div>
 
             <nav className={`${styles.nav} ${styles.slab}`} style={i(0)} aria-label="Preview">
-              <Link href="/" className={styles.logo} aria-label="Botlane Studios home">
+              <Link href="/" className={styles.logo} aria-label="Botlane Studio home">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/logo-dark.svg" alt="Botlane Studios" width={897} height={100} />
+                <img src="/logo-dark.svg" alt="Botlane Studio" width={845} height={100} />
               </Link>
               <span className={styles.navLinks}>
                 {NAV.map((n) => (
@@ -123,7 +123,7 @@ export function ClayPreview() {
             </div>
           </div>
 
-          {/* The Studios icon in clay: plate, slot and lamp, blinking like the logo. */}
+          {/* The Studio icon in clay: plate, slot and lamp, blinking like the logo. */}
           <div className={styles.icon} aria-hidden="true">
             <div className={styles.plate}>
               <div className={styles.slot}>

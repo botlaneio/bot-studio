@@ -37,7 +37,7 @@ const scenes: FilmScene[] = [
   {
     label: "The point",
     title: <>Less repetition.<br />More attention.</>,
-    copy: "Botlane Studios. AI where it earns its place.",
+    copy: "Botlane Studio. AI where it earns its place.",
     image: "/ai/time.webp",
   },
 ];
@@ -149,10 +149,10 @@ export function AIIntegrations() {
         lede="Assistants, search and automations, designed and built into your website or app where they serve a clear purpose."
       />
 
-      <section className={page.section} aria-label="An introduction to how Botlane Studios builds AI features">
+      <section className={page.section} aria-label="An introduction to how Botlane Studio builds AI features">
         <EditorialFilm
           scenes={scenes}
-          name="Botlane Studios: our approach to AI integrations"
+          name="Botlane Studio: our approach to AI integrations"
           signature="Botlane / AI Integrations"
           summary="AI that answers from your own content, hands over to a person when it matters, and takes repetitive work off your team."
         />

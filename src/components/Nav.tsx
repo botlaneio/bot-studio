@@ -120,11 +120,11 @@ export function Nav() {
       <div className={styles.inner}>
         {/* The logo SVG carries its own shutter-flash animation, so it stays an
             <img>. A dark-lettered copy fades in over light sections. */}
-        <Link className={styles.logo} href="/" aria-label="Botlane Studios home">
+        <Link className={styles.logo} href="/" aria-label="Botlane Studio home">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo.svg" alt="Botlane Studios" width={897} height={100} />
+          <img src="/logo.svg" alt="Botlane Studio" width={845} height={100} />
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className={styles.logoDark} src="/logo-dark.svg" alt="" width={897} height={100} />
+          <img className={styles.logoDark} src="/logo-dark.svg" alt="" width={845} height={100} />
         </Link>
 
         <nav className={styles.links} aria-label="Main">

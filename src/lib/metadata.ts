@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { STUDIO_INBOX } from "@/lib/inquiry";
 import { SITE_URL } from "@/lib/site";
 
-export const SITE_NAME = "Botlane Studios";
-export const SHARE_IMAGE = { url: "/hero.jpg", alt: "Botlane Studios — cobalt floral portrait" };
+export const SITE_NAME = "Botlane Studio";
+export const SHARE_IMAGE = { url: "/hero.jpg", alt: "Botlane Studio — cobalt floral portrait" };
 
 /**
  * Per-page metadata: title, description, canonical, and the link preview

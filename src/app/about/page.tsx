@@ -10,7 +10,7 @@ import styles from "./about.module.css";
 export const metadata: Metadata = pageMetadata({
   path: "/about",
   title: "About us",
-  description: "Botlane Studios is the design studio of BotLane LLC: a small studio designing and building websites and web apps for US businesses.",
+  description: "Botlane Studio is the design studio of BotLane LLC: a small studio designing and building websites and web apps for US businesses.",
 });
 
 const PRINCIPLES = [
@@ -36,7 +36,7 @@ export default function AboutPage() {
         kicker="// 00.04° About us"
         title="A small studio for US businesses"
         mark="."
-        lede="Botlane Studios is the design studio of BotLane LLC. We make websites for brands that care how they look, how they read and how fast they load."
+        lede="Botlane Studio is the design studio of BotLane LLC. We make websites for brands that care how they look, how they read and how fast they load."
       />
 
       {/* Atmosphere: one of the studio's images, full width. */}
@@ -58,7 +58,7 @@ export default function AboutPage() {
               <a className={styles.inline} href="https://botlane.io" target="_blank" rel="noopener">
                 botlane.io
               </a>
-              . Botlane Studios brings the same standards to the web: considered design, motion with a purpose and engineering that holds
+              . Botlane Studio brings the same standards to the web: considered design, motion with a purpose and engineering that holds
               up, for brands that want a site to be proud of.
             </p>
             <p className={page.body} data-reveal="" style={delay(0.1)}>

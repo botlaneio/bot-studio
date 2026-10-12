@@ -111,7 +111,7 @@ export const CITATIONS: LaneCitation[] = [
     slug: "one-page-website-brief-template",
     title: "The one-page brief we write before anything is drawn",
     url: "/echoes/one-page-website-brief-template",
-    summary: "A brief that fits on one page forces the hard decisions before a single pixel is designed. This note publishes the template we use at Botlane Studios: eleven sections, from the outcome you are betting on to the decision needed today. The template is the takeaway — download it, adapt it, use it.",
+    summary: "A brief that fits on one page forces the hard decisions before a single pixel is designed. This note publishes the template we use at Botlane Studio: eleven sections, from the outcome you are betting on to the decision needed today. The template is the takeaway — download it, adapt it, use it.",
     queries: [
       "what is a one page website brief",
       "how do you write a website brief",

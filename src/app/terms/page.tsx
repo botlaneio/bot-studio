@@ -6,7 +6,7 @@ import page from "@/components/page/Page.module.css";
 export const metadata: Metadata = pageMetadata({
   path: "/terms",
   title: "Terms of use",
-  description: "The terms for using the Botlane Studios website.",
+  description: "The terms for using the Botlane Studio website.",
 });
 
 export default function TermsPage() {
@@ -18,7 +18,7 @@ export default function TermsPage() {
           <p className={page.updated}>Last updated 5 October 2026</p>
 
           <p>
-            These terms govern your use of this website, operated by BotLane LLC (&ldquo;Botlane Studios&rdquo;, &ldquo;we&rdquo;,
+            These terms govern your use of this website, operated by BotLane LLC (&ldquo;Botlane Studio&rdquo;, &ldquo;we&rdquo;,
             &ldquo;us&rdquo;), 30 N Gould St, Ste R, Sheridan, WY 82801, United States. By using the site you agree to them.
           </p>
 
@@ -30,7 +30,7 @@ export default function TermsPage() {
 
           <h2>Content and intellectual property</h2>
           <p>
-            The site&apos;s design, text, graphics, code and the Botlane Studios name and marks belong to BotLane LLC or its licensors. Some
+            The site&apos;s design, text, graphics, code and the Botlane Studio name and marks belong to BotLane LLC or its licensors. Some
             imagery is used under licence and does not depict work for our clients. You may not reproduce or reuse site content without our
             written permission.
           </p>

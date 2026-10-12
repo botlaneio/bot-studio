@@ -141,7 +141,7 @@
 .lockup {
   left: calc(132 * var(--u));
   top: calc(307 * var(--u));
-  width: calc(901 * var(--u));
+  width: calc(846 * var(--u)); /* fits "Botlane\Studio" with the same 18u side padding */
   height: calc(152 * var(--u));
   display: flex;
   align-items: center;

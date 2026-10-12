@@ -6,7 +6,7 @@ import page from "@/components/page/Page.module.css";
 export const metadata: Metadata = pageMetadata({
   path: "/privacy",
   title: "Privacy policy",
-  description: "How Botlane Studios (BotLane LLC) handles personal information.",
+  description: "How Botlane Studio (BotLane LLC) handles personal information.",
 });
 
 export default function PrivacyPage() {
@@ -18,7 +18,7 @@ export default function PrivacyPage() {
           <p className={page.updated}>Last updated 12 October 2026</p>
 
           <p>
-            This policy explains how BotLane LLC (&ldquo;Botlane Studios&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;) handles personal
+            This policy explains how BotLane LLC (&ldquo;Botlane Studio&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;) handles personal
             information when you visit this website or get in touch with us.
           </p>
 

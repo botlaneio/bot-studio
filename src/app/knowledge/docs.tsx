@@ -13,13 +13,13 @@ export const DOCS: Doc[] = [
   {
     slug: "company-overview",
     title: "Company overview",
-    description: "Botlane Studios is the design studio of BotLane LLC, a US company registered in Wyoming.",
+    description: "Botlane Studio is the design studio of BotLane LLC, a US company registered in Wyoming.",
     summary: "The design studio of BotLane LLC. Websites and web apps for US businesses.",
   },
   {
     slug: "mission-and-vision",
     title: "Mission and vision",
-    description: "Botlane Studios designs and builds websites and web apps, with craft, clarity, and performance.",
+    description: "Botlane Studio designs and builds websites and web apps, with craft, clarity, and performance.",
     summary: "Design and build websites and web apps, with craft, clarity, and performance.",
   },
   {
@@ -31,7 +31,7 @@ export const DOCS: Doc[] = [
   {
     slug: "team",
     title: "Team",
-    description: "Botlane Studios is a small studio of BotLane LLC.",
+    description: "Botlane Studio is a small studio of BotLane LLC.",
     summary: "A small studio of BotLane LLC.",
   },
   {
@@ -43,7 +43,7 @@ export const DOCS: Doc[] = [
   {
     slug: "policies",
     title: "Policies",
-    description: "Where to read the Botlane Studios privacy policy and terms of use.",
+    description: "Where to read the Botlane Studio privacy policy and terms of use.",
     summary: "The privacy policy and the terms of use already published on this site.",
   },
 ];
@@ -82,7 +82,7 @@ export function DocBody({ slug }: { slug: string }) {
 function CompanyOverview() {
   return (
     <>
-      <p>Botlane Studios is the design studio of BotLane LLC. It designs and builds websites and web apps.</p>
+      <p>Botlane Studio is the design studio of BotLane LLC. It designs and builds websites and web apps.</p>
       <p>
         Registered address:
         <br />
@@ -107,7 +107,7 @@ function CompanyOverview() {
 }
 
 function Mission() {
-  return <p>Botlane Studios designs and builds websites and web apps, with craft, clarity, and performance.</p>;
+  return <p>Botlane Studio designs and builds websites and web apps, with craft, clarity, and performance.</p>;
 }
 
 function Services() {
@@ -130,7 +130,7 @@ function Services() {
 function Team() {
   return (
     <>
-      <p>Botlane Studios is a small studio of BotLane LLC.</p>
+      <p>Botlane Studio is a small studio of BotLane LLC.</p>
       <p>
         <a href="mailto:project@botlane.studio">project@botlane.studio</a>
         <br />
@@ -176,7 +176,7 @@ function Policies() {
         Full page: <Link href="/privacy">Privacy policy</Link>. Last updated 5 October 2026.
       </p>
       <p>
-        It explains how BotLane LLC (&ldquo;Botlane Studios&rdquo;) handles personal information when you visit this website or get in
+        It explains how BotLane LLC (&ldquo;Botlane Studio&rdquo;) handles personal information when you visit this website or get in
         touch. The company address is 30 N Gould St, Ste R, Sheridan, WY 82801. Contact is{" "}
         <a href="mailto:project@botlane.studio">project@botlane.studio</a> or +1 307 218 5175.
       </p>
@@ -230,7 +230,7 @@ function Policies() {
           authorisation, or to copy it in bulk.
         </li>
         <li>
-          The site&apos;s design, text, graphics, code and the Botlane Studios name and marks belong to BotLane LLC or its licensors. Some
+          The site&apos;s design, text, graphics, code and the Botlane Studio name and marks belong to BotLane LLC or its licensors. Some
           imagery is used under licence and does not depict work for clients. You may not reproduce or reuse site content without written
           permission.
         </li>

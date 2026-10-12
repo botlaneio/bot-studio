@@ -92,7 +92,7 @@ export function Websites() {
     <main className={page.page}>
       <PageHero kicker="// Core offer" title={plan.name} mark="." lede={plan.pitch} />
 
-      <section className={page.section} aria-label="An introduction to how Botlane Studios creates websites">
+      <section className={page.section} aria-label="An introduction to how Botlane Studio creates websites">
         <WebsiteIntro />
       </section>
 

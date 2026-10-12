@@ -155,8 +155,8 @@ Max total (25 rows) = 625
 
 ---
 
-*This sheet is published by Botlane Studios under the Echoes promise: no newsletter wall, no fluff.  
+*This sheet is published by Botlane Studio under the Echoes promise: no newsletter wall, no fluff.  
 Use it, adapt it, share it. If it saves you one bad hire, it did its job.*
 
-**Source:** `/echoes/kit` — Botlane Studios  
+**Source:** `/echoes/kit` — Botlane Studio  
 **License:** CC0 (public domain) — do whatever you want with it.

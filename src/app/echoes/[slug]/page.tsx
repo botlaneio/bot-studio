@@ -31,14 +31,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!post) return { title: "Echoes" };
   const url = `${SITE_URL}/echoes/${post.slug}`;
   const image = `${url}/opengraph-image`;
-  const title = `${post.title} — Botlane Studios`;
+  const title = `${post.title} — Botlane Studio`;
   return {
     title: post.title,
     description: post.excerpt,
     alternates: { canonical: `/echoes/${post.slug}` },
     openGraph: {
       type: "article",
-      siteName: "Botlane Studios",
+      siteName: "Botlane Studio",
       title,
       description: post.excerpt,
       url,

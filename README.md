@@ -1,6 +1,6 @@
-# Botlane Studios
+# Botlane Studio
 
-The website for Botlane Studios, a BotLane LLC studio, live at
+The website for Botlane Studio, a BotLane LLC studio, live at
 [botlane.studio](https://botlane.studio). Rebuilt in code from the studio's Figma
 design (1280px artboard), accent `#0077E6`.
 
@@ -79,7 +79,7 @@ Previews don't inherit production secrets, so the contact form on a preview show
 Secrets (Worker → Settings → Variables and Secrets, type **Secret**):
 
 - `RESEND_API_KEY`: sends contact-form inquiries (`/api/inquiry`). Without it, the form shows its email fallback.
-- `INQUIRY_FROM` (optional plain variable): sender address, on a domain verified in Resend. Default `Botlane Studios website <website@botlane.studio>`.
+- `INQUIRY_FROM` (optional plain variable): sender address, on a domain verified in Resend. Default `Botlane Studio website <website@botlane.studio>`.
 
 For local `npm run preview`, put them in `.dev.vars` (git-ignored).
 

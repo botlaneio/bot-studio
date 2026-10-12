@@ -12,7 +12,7 @@ import styles from "./work.module.css";
 export const metadata: Metadata = pageMetadata({
   path: "/work",
   title: "Work",
-  description: "What Botlane Studios has built, the studies we set ourselves, and how we work. A new studio, shown honestly: no borrowed logos or invented case studies.",
+  description: "What Botlane Studio has built, the studies we set ourselves, and how we work. A new studio, shown honestly: no borrowed logos or invented case studies.",
 });
 
 const delay = (s: number) => ({ "--reveal-delay": `${s}s` }) as CSSProperties;

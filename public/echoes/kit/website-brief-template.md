@@ -104,8 +104,8 @@ A brief that cannot be completed in one page is not a brief — it is a wish lis
 
 ---
 
-*This template is published by Botlane Studios under the Echoes promise: no newsletter wall, no fluff.  
+*This template is published by Botlane Studio under the Echoes promise: no newsletter wall, no fluff.  
 Use it, adapt it, share it. If it saves you a bad brief, it did its job.*
 
-**Source:** `/echoes/kit` — Botlane Studios  
+**Source:** `/echoes/kit` — Botlane Studio  
 **License:** CC0 (public domain) — do whatever you want with it.

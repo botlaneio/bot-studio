@@ -44,7 +44,7 @@ const scenes: FilmScene[] = [
   {
     label: "The launch",
     title: <>Software.<br />Doing the work.</>,
-    copy: "Botlane Studios. From discovery to launch.",
+    copy: "Botlane Studio. From discovery to launch.",
     image: "/capability-development.webp",
     focus: "50% 50%",
   },
@@ -134,10 +134,10 @@ export function WebApps() {
     <main className={page.page}>
       <PageHero kicker="// Core offer" title={plan.name} mark="." lede={plan.pitch} />
 
-      <section className={page.section} aria-label="An introduction to how Botlane Studios builds web apps">
+      <section className={page.section} aria-label="An introduction to how Botlane Studio builds web apps">
         <EditorialFilm
           scenes={scenes}
-          name="Botlane Studios: our approach to web apps"
+          name="Botlane Studio: our approach to web apps"
           signature="Botlane / Web Apps"
           summary="We start from the work your business already does, shape it around the people who use it, and build software that does that work."
         />

@@ -37,7 +37,7 @@ const scenes: FilmScene[] = [
   {
     label: "The visit",
     title: <>Found by the<br />people you want.</>,
-    copy: "Botlane Studios. Search, done honestly.",
+    copy: "Botlane Studio. Search, done honestly.",
     image: "/seo/found.webp",
   },
 ];
@@ -149,10 +149,10 @@ export function SEO() {
         lede="A programme that helps the right people find your website, beyond the technical basics every build already includes."
       />
 
-      <section className={page.section} aria-label="An introduction to how Botlane Studios approaches search">
+      <section className={page.section} aria-label="An introduction to how Botlane Studio approaches search">
         <EditorialFilm
           scenes={scenes}
-          name="Botlane Studios: our approach to SEO"
+          name="Botlane Studio: our approach to SEO"
           signature="Botlane / SEO"
           summary="We learn what your customers search for, answer it with useful, well-built pages, and report honestly on what changes."
         />

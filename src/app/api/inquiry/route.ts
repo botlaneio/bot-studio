@@ -5,7 +5,7 @@ import { inquiryEmail, parseInquiry } from "@/lib/inquiry";
  *  Needs the Worker secret RESEND_API_KEY. INQUIRY_FROM (optional) sets the
  *  sender, which must be on a domain verified in Resend. */
 
-const DEFAULT_FROM = "Botlane Studios website <website@botlane.studio>";
+const DEFAULT_FROM = "Botlane Studio website <website@botlane.studio>";
 
 function readEnv(name: string): string | undefined {
   try {

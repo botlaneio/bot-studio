@@ -8,7 +8,7 @@ import styles from "./ChatModal.module.css";
 const CLOSE_MS = 320;
 
 /** Opens a text to the studio's US line (Quo), with a first line ready to send. */
-const TEXT_US = `sms:+13072185175?&body=${encodeURIComponent("Hi Botlane Studios, I'd like to talk about a project.")}`;
+const TEXT_US = `sms:+13072185175?&body=${encodeURIComponent("Hi Botlane Studio, I'd like to talk about a project.")}`;
 
 /** A message bubble. */
 const TEXT_PATH =

@@ -57,13 +57,24 @@ The site runs as the `bot-studio` Cloudflare Worker, built with
 [OpenNext for Cloudflare](https://opennext.js.org/cloudflare) (`wrangler.jsonc`,
 `open-next.config.ts`). Cloudflare builds it from this repo on every push.
 
-Worker settings in the Cloudflare dashboard (Settings → Builds):
+Worker settings in the Cloudflare dashboard (Settings → Builds). Production and
+Previews Base are configured separately; both need the OpenNext build command.
 
-- Branch control: `main`
+Production:
+
+- Production branch: `main`
 - Build command: `npx opennextjs-cloudflare build`
 - Deploy command: `npx wrangler deploy`
 
-Use `npx opennextjs-cloudflare build` as the build command going forward, not `npm run build`. Plain `npm run build` skips OpenNext, so `.open-next/worker.js` is never created and the deploy fails.
+Previews Base (every other branch, so each PR gets a preview link):
+
+- Builds for Preview branches: on
+- Build command: `npx opennextjs-cloudflare build`
+- Preview command: `npx wrangler preview`
+
+Never use `npm run build` as either build command. Plain `npm run build` skips OpenNext, so `.open-next/worker.js` is never created and the deploy or preview fails.
+
+Previews don't inherit production secrets, so the contact form on a preview shows its email fallback instead of sending. Add `RESEND_API_KEY` as a preview secret (`npx wrangler preview secret`) only if a preview needs to send real email.
 
 Secrets (Worker → Settings → Variables and Secrets, type **Secret**):
 

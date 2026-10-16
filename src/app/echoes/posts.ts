@@ -2517,6 +2517,174 @@ export const POSTS: Post[] = [
       ],
     },
   },
+  {
+    slug: "booking-the-appointment",
+    title: "Booking the appointment: a dentist's site from brief to measured result",
+    excerpt: "A self-initiated study carried from a one-page brief to a measured result: a dentist's site that scores 100 across Lighthouse and puts the booking first.",
+    intro:
+      "We set ourselves one brief — an independent dentist whose site has one job: turn visitors into booked appointments, not just look trustworthy — and carried it from one page to a measured result. The build scores 100 across Lighthouse's performance, accessibility, best-practices and SEO categories, with a 1.1-second largest-contentful-paint and a 15 KB page, against a representative baseline of 75 and 13.7 seconds.",
+    tag: "Measured",
+    theme: "Build",
+    readTime: 9,
+    date: "2026-10-16",
+    evidence: [
+      {
+        kind: "quote",
+        label: "The brief, in one line",
+        text: "An independent dental practice whose site has to turn visitors into booked appointments, not just look trustworthy.",
+        source: "Northgate Dental, self-initiated study brief",
+      },
+      {
+        kind: "metrics",
+        label: "Before and after, measured (Lighthouse, mobile, simulated throttling)",
+        values: [
+          { label: "Performance — typical baseline", value: "75" },
+          { label: "Performance — this build", value: "100" },
+          { label: "Largest contentful paint — baseline", value: "13.7 s" },
+          { label: "Largest contentful paint — this build", value: "1.1 s" },
+          { label: "Accessibility — baseline", value: "85" },
+          { label: "Accessibility — this build", value: "100" },
+          { label: "Page weight — baseline → build", value: "2.4 MB → 15 KB" },
+        ],
+      },
+      {
+        kind: "link",
+        label: "The live build",
+        href: "https://botlaneio.github.io/northgate-dental-study/",
+        text: "Northgate Dental, deployed — the exact site this study measures.",
+      },
+    ],
+    body: [
+      {
+        kind: "h2",
+        text: "The brief",
+      },
+      {
+        kind: "p",
+        text: "The practice is imagined, the brief is not. It is the same one-page template we publish at [the one-page brief](/echoes/one-page-website-brief-template), filled in for a single local business. Six decisions on one page:",
+      },
+      {
+        kind: "ul",
+        items: [
+          "The outcome we are betting on: a visitor books an appointment in under a minute, from any page, without having to call.",
+          "The audience: local families and working adults, mostly on a phone, usually in a hurry or in pain.",
+          "The non-negotiables: the booking sits above the fold, the cost is stated plainly, and the site is honest about who works there.",
+          "The success criteria, measurable: Lighthouse 90 or better across the board, a largest-contentful-paint under 2.5 seconds, and the booking reachable in one tap.",
+        ],
+      },
+      {
+        kind: "h2",
+        text: "The structure",
+      },
+      {
+        kind: "p",
+        text: "Two pages, not twelve. A homepage that answers the three questions a new patient actually has — do you take my insurance, can I get in soon, and is this going to hurt — and a booking page with five fields. That is the whole sitemap, because that is the whole job.",
+      },
+      {
+        kind: "h2",
+        text: "The design",
+      },
+      {
+        kind: "p",
+        text: "Booking-first, not trust-first. The first interactive element is 'Book an appointment', and the hero shows the next available slot instead of a slogan. There are no stock photos of smiling patients, because a nervous patient reads credentials, hours and honesty — and those are text, not imagery.",
+      },
+      {
+        kind: "h2",
+        text: "The build",
+      },
+      {
+        kind: "p",
+        text: "Plain HTML and CSS. No framework, no JavaScript beyond what the browser ships, no images a patient has to wait for. The whole page is about 15 KB. That is the design decision: every kilobyte of framework is a second of a patient's patience.",
+      },
+      {
+        kind: "h2",
+        text: "The measured result",
+      },
+      {
+        kind: "p",
+        text: "We measured two things — this build, and a representative baseline built for the comparison: the same practice on a dated template, with a full-resolution hero image and the booking buried at the bottom. Same Lighthouse, same simulated mobile connection.",
+      },
+      {
+        kind: "ul",
+        items: [
+          "Performance: 75 in the baseline, 100 in the build.",
+          "Largest contentful paint: 13.7 seconds down to 1.1 seconds.",
+          "Page weight: 2.4 MB down to 15 KB.",
+          "Accessibility: 85 to 100 — the baseline was missing a language tag and a main landmark.",
+        ],
+      },
+      {
+        kind: "p",
+        text: "The booking itself moved from the bottom of the page to the first element of the hero. That is not a number a scoreboard can show, but it is the point of the study: a site can look trustworthy and still fail the one job it was built for.",
+      },
+    ],
+    takeaway: {
+      title: "What you can take",
+      text: "Three rules this study restates for any local-business site.",
+      items: [
+        "Put the one action you want above the fold — for a practice, that is the booking, not the welcome.",
+        "Measure the baseline first, so the 'after' is a number you can defend, not a feeling.",
+        "A fast, accessible page is the trust signal no hero photo can replace.",
+      ],
+    },
+    caveats: [
+      "Northgate Dental is a self-initiated study, not a client project. There is no real practice, no dentist and no patients behind it.",
+      "The numbers are Lighthouse lab runs on a simulated mobile connection, not real visitor telemetry. Field numbers will differ, usually for the better on a fast connection.",
+      "The baseline is a representative 'typical' site we built for the comparison, not a named competitor's live site. It shares the same content, so the only differences are the build choices.",
+      "No real people booked through this site. 'Booked appointments' is the outcome the build is designed to drive, not a result we can claim yet.",
+      "A 100 score is on this small static site. A real practice site with a booking system, CRM and analytics will score differently.",
+    ],
+    related: [
+      { slug: "forme-knitwear", title: "FORME: a knitwear label that has to feel tactile on a phone" },
+      { slug: "northline-senior-not-cold", title: "NORTHLINE: senior, not cold — branding a consultancy" },
+      { slug: "why-we-practise-on-imagined-clients", title: "Why we practise on imagined clients" },
+      { slug: "one-page-website-brief-template", title: "The one-page brief we write before anything is drawn" },
+      { slug: "core-web-vitals-small-business", title: "Core Web Vitals for a small business site, in plain English" },
+    ],
+    cta: { label: "See how we build sites this way", href: "/capabilities/websites" },
+    faq: [
+      {
+        q: "Is Northgate Dental a real practice?",
+        a: "No. It is an imagined practice — a self-initiated study, which is how the studio shows the full process without a client. The site is real code, deployed and measured; the practice is not.",
+      },
+      {
+        q: "How is a study 'Measured' if there are no real patients?",
+        a: "The Measured tag means the claims rest on numbers you can check: Lighthouse scores and timings, measured on the live build. It does not claim real patient conversion, and the caveats say so explicitly.",
+      },
+      {
+        q: "Where can I see the live site?",
+        a: "At https://botlaneio.github.io/northgate-dental-study/ — the exact build this study measures.",
+      },
+      {
+        q: "Why a dentist?",
+        a: "Because a local practice is the clearest test of the question the study asks: does the site turn a visitor into a booked appointment, or just look trustworthy?",
+      },
+    ],
+    howTo: {
+      steps: [
+        {
+          name: "Write the one-page brief",
+          text: "Six decisions on one page: the outcome, the audience, the non-negotiables, and the measurable success criteria. Nothing is drawn until the brief is full.",
+        },
+        {
+          name: "Fix the structure",
+          text: "Two pages, not twelve: a homepage that answers the questions a new patient actually asks, and a booking page with five fields.",
+        },
+        {
+          name: "Design booking-first",
+          text: "Put the one action above the fold. Trade stock imagery for credentials, hours and honest copy.",
+        },
+        {
+          name: "Build without weight",
+          text: "Plain HTML and CSS, no framework, no images a visitor has to wait for.",
+        },
+        {
+          name: "Measure against a baseline",
+          text: "Build a representative 'before', run the same Lighthouse profile on both, and report the numbers.",
+        },
+      ],
+    },
+  },
 ];
 
 export function postBySlug(slug: string): Post | undefined {

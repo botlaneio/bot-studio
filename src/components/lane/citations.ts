@@ -277,6 +277,18 @@ export const CITATIONS: LaneCitation[] = [
       "is google search changing for small business",
       "what is changing with ai search and google",
     ],
+  },
+  {
+    slug: "booking-the-appointment",
+    title: "Booking the appointment: a dentist's site from brief to measured result",
+    url: "/echoes/booking-the-appointment",
+    summary: "We set ourselves one brief — an independent dentist whose site has one job: turn visitors into booked appointments, not just look trustworthy — and carried it from one page to a measured result. The build scores 100 across Lighthouse's performance, accessibility, best-practices and SEO categories, with a 1.1-second largest-contentful-paint and a 15 KB page, against a representative baseline of 75 and 13.7 seconds.",
+    queries: [
+      "what was the dentist study",
+      "how did you design a dentist website",
+      "how do you turn visitors into booked appointments",
+      "dentist website that gets bookings",
+    ],
   }
 ];
 
